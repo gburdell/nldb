@@ -1,0 +1,5 @@
+6-mar-2012
+==========
++ grabbed source from //http://sourceforge.net/projects/nldb
+  (thanx kpfalzer), and started adding some jni stuff.
+  Plan on using jni to hook to C/C++ to add tcl cli.
