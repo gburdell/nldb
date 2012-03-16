@@ -1,0 +1,21 @@
+9-mar-2012
+==========
+a) tcl/C++ side sends Object[] to jni.TclBridge.execute.
+b) For debug, TclBridge will print args to execute.
+c) The print stream shall be replayable to enavle java side to run w/o tcl/C++ side.
+d) That means that every object returned by TclBridge needs to have its Object.toString()
+   value recorded in hash, along w/ outgoing object.
+e) That way, TclBridge.print emits toString value for its object args.
+f) During replay, the hash value for the string key is used; since during replay the tcl/C++ side
+   is not actually getting jobject created as return during Command processing.
+
+to make/run:
+
+make debug && make -C tcl8.4.19 debug JVM_ROOT=/usr/lib/jvm/java-6-sun-1.6.0.26 && ( setenv LD_LIBRARY_PATH /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64/server ; gdb -x gdb.ini tcl8.4.19/dist/debug/linux/nl_shell )
+
+
+13-mar-2012
+===========
+Configue netbeans Build|Packaging to Copy dependent libs to dist/lib.
+That (relative) path is added to jar manifest.  Thus, set class.path to
+dist/nldb.jar, so underlying lib gets pulled indirectly via manifest.
