@@ -100,9 +100,7 @@ public class Cell {
                 instPin = m_ref.getPort(portName);
                 if (null == instPin) {
                     ok = false;
-                    String msg = "reference/pin \""+m_ref.getName()+"/"+portName+"\""
-                                 + " does not exist";
-                    error(msg);
+                    error("LINK-3", m_ref.getName(), portName);
                 } else {
                     netsConnected = mapOfConnsByPinName.get(portName);
                     ok &= addPinConn(netsConnected, instPin);

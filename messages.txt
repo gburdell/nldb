@@ -1,0 +1,19 @@
+//	Format is: code format_string
+//  Do ***NOT*** use tabs in this file!!
+
+DEFN-1  module '%s' already defined
+
+// antlr.RecognitionException
+PARSE-1  %s:%d:%d: %s
+// pre-formatted: antlr.xxx
+PARSE-2  %s
+
+FILE-1  %s: creating ...
+
+LINK-1  linking %s ...
+LINK-2  link (%s) time: %d (secs)
+LINK-3  reference/pin '%s/%s' does not exist
+LINK-4  reference '%s' undefined
+
+TIM-1   %s: processed in %d (secs)
+TIM-2   %d (secs): total elapsed

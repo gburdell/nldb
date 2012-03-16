@@ -27,7 +27,6 @@ import  java.io.*;
 import  java.util.*;
 import static nldb.Util.info;
 import static nldb.Util.error;
-import static nldb.Util.getErrCnt;
 import static nldb.Util.vnm;
 /**
  *
@@ -36,7 +35,7 @@ import static nldb.Util.vnm;
 public class Save {
     public Save(Module top, String fname) {
         m_top = top;
-        info(fname+": generating ...");
+        info("FILE-1", fname);
         init(fname);
         save();
     }

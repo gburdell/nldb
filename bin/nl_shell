@@ -1,0 +1,96 @@
+#!/bin/csh -f
+#
+#  The MIT License
+# 
+#  Copyright 2010 Karl W. Pfalzer.
+#  Copyright 2012 George P. Burdell
+# 
+#  Permission is hereby granted, free of charge, to any person obtaining a copy
+#  of this software and associated documentation files (the "Software"), to deal
+#  in the Software without restriction, including without limitation the rights
+#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#  copies of the Software, and to permit persons to whom the Software is
+#  furnished to do so, subject to the following conditions:
+# 
+#  The above copyright notice and this permission notice shall be included in
+#  all copies or substantial portions of the Software.
+# 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+#  THE SOFTWARE.
+#
+
+set dir=$0:h  #directory part
+if (${dir} == ${0}) set dir=.
+set cdir=$PWD #current dir
+cd $dir
+set dir=`pwd` #canonical dir
+cd $cdir
+
+# establish root of installation
+setenv NLDB_ROOT ${dir:h}
+
+#Options to pass into JNI/JVM
+#
+setenv NLSH_JOPTS "-Dtool.root=${NLDB_ROOT}"
+setenv NLSH_JOPTS "${NLSH_JOPTS}:-Djava.class.path=${NLDB_ROOT}/dist/nldb.jar"
+
+#See jdk1.6.0_25/jre/lib/amd64/server/Xusage.txt for -X details.
+
+set Xmx="-Xmx16g"
+set vopt=0
+
+#Pull off -J options
+set nargv=()
+foreach i ($*)
+	if (0 < `echo $i | egrep -c '^\-J'`) then
+		set i=`echo $i | sed 's/\-J//'`
+		if (0 < `echo $i | egrep -c '^\-Xmx'`) then
+			set Xmx=${i}
+		else
+			setenv NLSH_JOPTS "${NLSH_JOPTS}:${i}"
+		endif
+	else 
+		if (0 < `echo $i | egrep -c '^\-v$'`) then
+			set vopt=1
+		else
+			set nargv=($nargv $i)
+		endif
+	endif
+end
+
+#Add the required ones
+setenv NLSH_JOPTS "${NLSH_JOPTS}:${Xmx}"
+
+#JVM lib path (to .so)
+set jvmDir=/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64/server
+if (! $?LD_LIBRARY_PATH) setenv LD_LIBRARY_PATH ""
+setenv LD_LIBRARY_PATH "${jvmDir}:${LD_LIBRARY_PATH}"
+
+#relative to NLDB_ROOT
+set nlShell="${NLDB_ROOT}/tcl/tcl8.4.19/dist/debug/linux/nl_shell"
+
+set pecho="/bin/echo -e"
+if (${vopt}) then
+	$pecho "\nNLSH_JOPTS\n=========="	
+	foreach i (`echo ${NLSH_JOPTS} | sed 's/:/ /g'`)
+		echo "  ${i}"
+	end
+	$pecho "\nnl_shell=${nlShell}"
+	$pecho "\nOptions passed to nl_shell directly"
+	echo   "==================================="
+	foreach i ($nargv)
+		echo "  ${i}"
+	end
+	echo ""
+endif
+
+if ($?GDB) then
+	gdb ${nlShell}
+else
+	exec ${nlShell} ${nargv}
+endif

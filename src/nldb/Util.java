@@ -23,43 +23,157 @@
 #  THE SOFTWARE.
 */
 package nldb;
-
+import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import static nldb.MessageMgr.message;
+import static nldb.MessageMgr.getErrorCnt;
 /**
  *
  * @author kpfalzer
  */
 public final class Util {
-    public static void error(Exception ex) {
-        ex.printStackTrace();
-        System.exit(1);
-    }
-    public static void invariant(boolean cond) {
-        if (false == cond) {
-            error(new Exception("invariant failed"));
-        }
-    }
-    public static void error(String msg) {
-        System.err.println("Error: "+msg);
-        m_errCnt++;
-    }
-    public static int getErrCnt() {
-        return m_errCnt;
-    }
-    public static void info(String msg) {
-        System.out.println("Info: "+msg);
-        m_infoCnt++;
-    }
-    public static int getInfoCnt() {
-        return m_infoCnt;
-    }
     /**
      * Generate Verilog style name
      * @param nm name to Verilog-ize.
      * @return Verilog style name.
      */
-    static String vnm(String nm) {
+    public static String vnm(String nm) {
         return (nm.startsWith("\\")) ? (nm+" ") : nm;
     }
-    private static int m_infoCnt = 0;
-    private static int m_errCnt = 0;
+
+    public static void info(String code, Object... args) {
+        message('I', code, args);
+    }
+    
+    public static void warn(String code, Object... args) {
+        message('W', code, args);
+    }
+    
+    public static void error(String code, Object... args) {
+        message('E', code, args);
+    }
+    
+    public static void error(Exception ex) {
+        fatal(ex);
+    }
+    
+    public static int getErrorMsgCnt() {
+        return getErrorCnt();
+    }
+    
+    /** Creates a new instance of Utils */
+    public static String stripDoubleQuotes (final String s) {
+        int len = s.length();
+        String ns = s.substring(1, len-1);
+        return ns;
+    }
+
+    @SuppressWarnings("CallToPrintStackTrace")
+    public static void invariant(boolean c) {
+        if (false == c) {
+            Thread.dumpStack();
+            System.exit(1);
+        }
+    }
+
+    private final static String stDOT = ".";
+
+    public static String getToolRoot() {
+        String root = System.getProperty("tool.root");
+        if (null == root) {
+            root = stDOT;
+        }
+        return root;
+    }
+
+    public static void fatal(Exception ex) {
+        PrintStream err = System.err;
+        err.print(ex.getMessage());
+        ex.printStackTrace(err);
+        System.exit(1);
+    }
+
+    /**Lookup property value.
+     *
+     * @param prop  property name
+     * @return true if property exists and set to "true" or else false.
+     */
+    public static boolean getPropertyAsBool(String prop) {
+        String pv = System.getProperty(prop);
+        boolean v = (null == pv) ? false : Boolean.parseBoolean(pv);
+        return v;
+    }
+    public static int getPropertyAsInt(String nm) {
+        int rval = Integer.MIN_VALUE;
+        String str = System.getProperty(nm);
+        if (null != str) {
+            rval = Integer.parseInt(str);
+        }
+        return rval;
+    }
+    public static void abnormalExit(Exception ex) {
+        System.err.println(ex.getMessage());
+        ex.printStackTrace(System.err);
+        System.exit(1);
+    }
+
+    public static List<String> arrayToList(String s[]) {
+        return Arrays.asList(s);
+    }
+
+    public static String[] toStringArray(Object args[]) {
+        final int n = args.length;
+        String rval[] = new String[n];
+        for (int i = 0; i < n; i++) {
+            rval[i] = downCast(args[i]);
+        }
+        return rval;
+    }
+    
+    public static <T> List<T> addTo(List<T> list, T ele) {
+        if (null == list) {
+            list = new LinkedList<T>();
+        }
+        list.add(ele);
+        return list;
+    }
+
+    public static String nl() {
+        return NL;
+    }
+
+    /** Return a null x as an empty collection. */
+    public static <T> T asEmpty(T x, T empty) {
+        return (null != x) ? x : empty;
+    }
+
+    @SuppressWarnings("unchecked")
+	public static <T> T downCast(Object o) {
+		return (T)o;
+	}
+
+    public static String toCamelCase(String s) {
+        StringBuilder rval = new StringBuilder();
+        char c = 0;
+        for (int i = 0; i < s.length(); i++) {
+            c = s.charAt(i);
+            if (0 == i) {
+                rval.append(Character.toUpperCase(c));
+            } else if (c != '_') {
+                if (s.charAt(i-1) == '_') {
+                    c = Character.toUpperCase(c);
+                }
+                rval.append(c);
+            }
+        }
+        return rval.toString();
+    }
+
+    public static void exit(int status) {
+        System.exit(status);
+    }
+
+    public final static String NL = System.getProperty("line.separator");
 }

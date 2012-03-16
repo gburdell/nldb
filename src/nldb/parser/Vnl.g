@@ -28,6 +28,8 @@ import  java.util.List;
 import  java.util.LinkedList;
 import  nldb.*;
 import static nldb.Util.invariant;
+import static nldb.Util.error;
+import static nldb.Util.warn;
 }
 options {
     language="Java";
@@ -38,8 +40,36 @@ options {
     k=2;
 }
 {
-    /**TODO*/
+    private static Library stWorkLib = Library.getWorkLib();
 
+	@Override
+    public void reportError(RecognitionException ex) {
+        String m = ex.getMessage();
+        if (null == m) {m = "unknown parse error";}
+        error("PARSE-1", ex.getFilename(), ex.getLine(), ex.getColumn(), m);
+    }
+
+	@Override
+    public void reportError(String s) {
+        error("PARSE-2", s);
+    }
+
+	@Override
+    public void reportWarning(String s) {
+		warn("PARSE-2", s);
+    }
+
+public void start() {
+try {
+    source_text();
+}
+catch (RecognitionException re) {
+error("PARSE-2", re.toString());
+}
+catch (TokenStreamException re) {
+error("PARSE-2", re.toString());  
+}
+}
 }
 
 //A.1.2 Verilog source text
@@ -55,7 +85,11 @@ description
 module_declaration
 { String mid=null; List<String> lopd=null; Module mod=null;}
 :   "module" mid=module_identifier (lopd=list_of_ports)? SEMI
-            {mod = new Module(mid,lopd);}
+            {	mod = new Module(mid,lopd);
+				if (!stWorkLib.add(mod)) {
+					error("DEFN-1", mid);
+				}
+			}
         (module_item[mod])*
         "endmodule"
 ;
