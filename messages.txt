@@ -9,6 +9,7 @@ PARSE-1  %s:%d:%d: %s
 PARSE-2  %s
 
 FILE-1  %s: creating ...
+FILE-2  %s: cannot %s file
 
 LINK-1  linking %s ...
 LINK-2  link (%s) time: %d (secs)

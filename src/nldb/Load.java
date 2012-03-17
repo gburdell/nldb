@@ -30,6 +30,7 @@ import java.util.zip.GZIPInputStream;
 import nldb.parser.*;
 import static nldb.Util.info;
 import static nldb.Util.getErrorMsgCnt;
+import static nldb.Util.warn;
 
 /**
  *
@@ -110,6 +111,10 @@ public class Load {
                 InputStream ins = null;
                 InputStreamReader insRdr = null;
                 fn = argv[i];
+                if (! new File(fn).canRead()) {
+                    warn("FILE-2", fn, "read");
+                    continue;
+                }
                 if (fn.endsWith(".gz")) {
                     ins = new GZIPInputStream(new FileInputStream(fn));
                     lexer = new VnlLexer(ins);

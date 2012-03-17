@@ -314,7 +314,8 @@ Return 1 on success; else 0 if any parsing error(s).
 }
 	{
 		if {[aph::parseOpts opts args]} {return}; #did help/usage
-		nldb $opts(*command*) [join $fileName]
+		#make fileName separate elements
+		eval nldb $opts(*command*) $fileName
 	}
 }
 
