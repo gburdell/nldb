@@ -1,0 +1,7 @@
+/dist/release/
+/build/release/
+/dist/debug/
+/build/debug/
+/nbproject/private/
+/build/profile/
+/dist/profile/
