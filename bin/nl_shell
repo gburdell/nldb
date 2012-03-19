@@ -37,7 +37,7 @@ setenv NLDB_ROOT ${dir:h}
 #Options to pass into JNI/JVM
 #
 setenv NLSH_JOPTS "-Dtool.root=${NLDB_ROOT}"
-setenv NLSH_JOPTS "${NLSH_JOPTS}:-Djava.class.path=${NLDB_ROOT}/dist/nldb.jar"
+setenv NLSH_JOPTS "${NLSH_JOPTS}^-Djava.class.path=${NLDB_ROOT}/dist/nldb.jar"
 
 #See jdk1.6.0_25/jre/lib/amd64/server/Xusage.txt for -X details.
 
@@ -52,7 +52,7 @@ foreach i ($*)
 		if (0 < `echo $i | egrep -c '^\-Xmx'`) then
 			set Xmx=${i}
 		else
-			setenv NLSH_JOPTS "${NLSH_JOPTS}:${i}"
+			setenv NLSH_JOPTS "${NLSH_JOPTS}^${i}"
 		endif
 	else 
 		if (0 < `echo $i | egrep -c '^\-v$'`) then
@@ -64,7 +64,7 @@ foreach i ($*)
 end
 
 #Add the required ones
-setenv NLSH_JOPTS "${NLSH_JOPTS}:${Xmx}"
+setenv NLSH_JOPTS "${NLSH_JOPTS}^${Xmx}"
 
 #JVM lib path (to .so)
 set jvmDir=/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64/server
@@ -72,12 +72,17 @@ if (! $?LD_LIBRARY_PATH) setenv LD_LIBRARY_PATH ""
 setenv LD_LIBRARY_PATH "${jvmDir}:${LD_LIBRARY_PATH}"
 
 #relative to NLDB_ROOT
-set nlShell="${NLDB_ROOT}/tcl/tcl8.4.19/dist/debug/linux/nl_shell"
+if ($?NLSH_DEBUG) then
+	set variant=debug
+else
+	set variant=release
+endif
+set nlShell="${NLDB_ROOT}/tcl/tcl8.4.19/dist/${variant}/linux/nl_shell"
 
 set pecho="/bin/echo -e"
 if (${vopt}) then
 	$pecho "\nNLSH_JOPTS\n=========="	
-	foreach i (`echo ${NLSH_JOPTS} | sed 's/:/ /g'`)
+	foreach i (`echo ${NLSH_JOPTS} | sed 's/\^/ /g'`)
 		echo "  ${i}"
 	end
 	$pecho "\nnl_shell=${nlShell}"
@@ -89,7 +94,7 @@ if (${vopt}) then
 	echo ""
 endif
 
-if ($?GDB) then
+if ($?NLSH_DEBUG) then
 	gdb ${nlShell}
 else
 	exec ${nlShell} ${nargv}

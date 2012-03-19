@@ -35,7 +35,7 @@ namespace nldb {
     static void initApp() {
         //Tcl initialization
         Tcl_RegisterObjType(&NldbshTclObjType);
-        Jni *pjni = new Jni(getenv("NLSH_JOPTS"));
+        Jni *pjni = new Jni(getenv("NLSH_JOPTS"), '^');
         Commands::getTheOne().setObjType(NldbshTclObjType).setJni(pjni);
     }
 }
