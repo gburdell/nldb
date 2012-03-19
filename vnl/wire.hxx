@@ -2,6 +2,7 @@
  * 
  * vnl - verilog netlist
  * Copyright (c) 2006-2010  Karl W. Pfalzer
+ * Copyright (c) 2012-      George P. Burdell
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -64,8 +65,8 @@ namespace vnl {
             return !isBus();
         }
 
-        void add(TRcPinRef conn);
-        void add(TRcWire conn);
+        void add(TRcPinRef &conn);
+        void add(TRcWire &conn);
         void add(TRcObject conn);
 
         virtual bool isPort() const {

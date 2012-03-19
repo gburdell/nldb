@@ -2,6 +2,7 @@
  * 
  * vnl - verilog netlist
  * Copyright (c) 2006-2010  Karl W. Pfalzer
+ * Copyright (c) 2012-      George P. Burdell
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +31,7 @@ namespace vnl {
     static string stTypeName = "bus";
     const unsigned Bus::stTypeId = Object::getNextTypeId(stTypeName);
 
-    Bus::Bus(const TRcBus bus)
+    Bus::Bus(const TRcBus &bus)
     : m_lb(bus->m_lb), m_rb(bus->m_rb) {
     }
 
@@ -64,7 +65,7 @@ namespace vnl {
     }
 
     bool
-    Bus::inRange(const TRcBus b) const {
+    Bus::inRange(const TRcBus &b) const {
         bool ok = inRange(b->getLb()) && inRange(b->getRb());
         return ok;
     }
@@ -81,7 +82,7 @@ namespace vnl {
     }
 
     bool
-    operator ==(const TRcBus a, const TRcBus b) {
+    operator ==(const TRcBus &a, const TRcBus &b) {
         return (a->isScalar() == b->isScalar()) &&
                 (a->getLb() == b->getLb()) &&
                 (a->getRb() == b->getRb());

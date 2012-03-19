@@ -2,6 +2,7 @@
 //
 //vnl - verilog netlist
 //Copyright (c) 2006-2010  Karl W. Pfalzer
+//Copyright (c) 2012-      George P. Burdell
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
 //of this software and associated documentation files (the "Software"), to deal
@@ -60,7 +61,7 @@ namespace vnl {
 
     void
     Message::message(EType type, string code,
-            TRcLocation loc, string s1, string s2, string s3) {
+            const TRcLocation &loc, string s1, string s2, string s3) {
         string xloc = loc->toString();
         string msg = fmessage(type, code, xloc, s1, s2, s3);
         message(type, msg);
@@ -87,7 +88,7 @@ namespace vnl {
     }
 
     void error(string code,
-            TRcLocation loc, string s1, string s2, string s3) {
+            const TRcLocation &loc, string s1, string s2, string s3) {
         Message::getTheOne().message(Message::eError, code, loc, s1, s2, s3);
     }
     

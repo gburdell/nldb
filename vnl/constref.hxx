@@ -2,6 +2,7 @@
  * 
  * vnl - verilog netlist
  * Copyright (c) 2006-2010  Karl W. Pfalzer
+ * Copyright (c) 2012-      George P. Burdell
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,14 +43,14 @@ namespace vnl {
          * @param basedNumber based number.
          * @throw 1 for size has NUM-1 error; 2 for basedNumber has NUM-1 error.
          */
-        explicit ConstRef(TRcToken size, TRcToken basedNumber) throw (unsigned);
+        explicit ConstRef(TRcToken &size, TRcToken &basedNumber) throw (unsigned);
 
         /**
          * Construct based number.
          * @param basedNumber based number.
          * @throw 2 for basedNumber has NUM-1 error.
          */
-        explicit ConstRef(TRcToken basedNumber) throw (unsigned);
+        explicit ConstRef(TRcToken &basedNumber) throw (unsigned);
 
         string toString() const;
 
@@ -76,7 +77,7 @@ namespace vnl {
          * @param n number of bits.
          * @throw 1 or 2 (see above constructors) on malformed number.
          */
-        void init(TRcToken basedNumber, unsigned n = 1) throw (unsigned);
+        void init(TRcToken &basedNumber, unsigned n = 1) throw (unsigned);
 
         //Not allowed
         COPY_CONSTRUCTOR_DECL(ConstRef);

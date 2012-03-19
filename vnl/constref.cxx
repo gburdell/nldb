@@ -28,11 +28,11 @@
 namespace vnl {
     using std::ostringstream;
 
-    ConstRef::ConstRef(TRcToken basedNumber) throw (unsigned) {
+    ConstRef::ConstRef(TRcToken &basedNumber) throw (unsigned) {
         init(basedNumber);
     }
 
-    ConstRef::ConstRef(TRcToken size, TRcToken basedNumber) throw (unsigned) {
+    ConstRef::ConstRef(TRcToken &size, TRcToken &basedNumber) throw (unsigned) {
         unsigned n;
         if (! size->toUnsigned(n)) {
             throw (1);
@@ -41,7 +41,7 @@ namespace vnl {
     }
 
     void
-    ConstRef::init(TRcToken basedNumber, unsigned n) throw (unsigned) {
+    ConstRef::init(TRcToken &basedNumber, unsigned n) throw (unsigned) {
         m_bits.resize(n);
         if (! basedNumber->toBits(m_bits)) {
             throw (2);

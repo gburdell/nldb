@@ -58,7 +58,7 @@ namespace vnl {
     }
 
     static void
-    createEntry(TRcConnsByPortName connsByName, string pin, TRcConnList conns) {
+    createEntry(TRcConnsByPortName &connsByName, string pin, TRcConnList &conns) {
         const unsigned n = conns.isValid() ? conns->size() : 0;
         TBitConns car(n);
         if (0 < n) {
@@ -71,7 +71,7 @@ namespace vnl {
         connsByName->operator[](pin) = car;
     }
 
-    Parser::Parser(TRcLexer lexer)
+    Parser::Parser(TRcLexer &lexer)
     : m_lexer(lexer), m_errCnt(0) {
     }
 
@@ -130,7 +130,7 @@ namespace vnl {
     }
 
     void
-    Parser::start(TRcLibrary lib) {
+    Parser::start(TRcLibrary &lib) {
         // moduleDeclaration*
         TRcToken tok;
         while (la(0)->getType() == Token::eModule) {
@@ -148,7 +148,7 @@ namespace vnl {
     }
 
     TRcModule
-    Parser::moduleDeclaration(TRcLibrary lib) {
+    Parser::moduleDeclaration(TRcLibrary &lib) {
         // _ module
         TRcModule mod;
         try {
@@ -175,7 +175,7 @@ namespace vnl {
     }
 
     void
-    Parser::portDeclarations(TRcModule mod) throw (unsigned) {
+    Parser::portDeclarations(TRcModule &mod) throw (unsigned) {
         // module ident ( _
         //TODO: need to add ansi style
         TRcPort port;
@@ -200,7 +200,7 @@ namespace vnl {
     }
 
     void
-    Parser::moduleItems(TRcModule mod) throw (unsigned) {
+    Parser::moduleItems(TRcModule &mod) throw (unsigned) {
         TRcToken tok;
         EType type;
         bool stay = true;
@@ -230,7 +230,7 @@ namespace vnl {
     }
 
     void
-    Parser::wireDefinition(TRcModule mod) throw (unsigned) {
+    Parser::wireDefinition(TRcModule &mod) throw (unsigned) {
         // _ input|output|inout|wire
         TRcToken tok = la(0);
         Port::EDirection dir = Port::eUnknown;
@@ -305,7 +305,7 @@ namespace vnl {
     }
 
     void
-    Parser::moduleInstantiation(TRcModule mod) throw (unsigned) {
+    Parser::moduleInstantiation(TRcModule &mod) throw (unsigned) {
         // _ ident
         TRcToken refNm = expectAccept(Token::eIdent);
         for (bool stay = true; stay;) {
@@ -322,8 +322,8 @@ namespace vnl {
     }
 
     void
-    Parser::moduleInstantiation(TRcModule mod, TRcToken refNm,
-            TRcToken instNm) throw (unsigned) {
+    Parser::moduleInstantiation(TRcModule &mod, TRcToken &refNm,
+            TRcToken &instNm) throw (unsigned) {
         // refNm instNm ( _
         //TODO add by position
         /*For now, just do by pin name
@@ -368,7 +368,7 @@ namespace vnl {
     }
 
     TRcConnList
-    Parser::connections(TRcModule mod) throw (unsigned) {
+    Parser::connections(TRcModule &mod) throw (unsigned) {
         TRcConnList items;
         for (bool stay = true; stay;) {
             if (la(0)->isType(Token::eRParen)) {
@@ -391,7 +391,7 @@ namespace vnl {
     }
 
     TRcConnList
-    Parser::expression(TRcModule mod) throw (unsigned) {
+    Parser::expression(TRcModule &mod) throw (unsigned) {
         /*
          * expression: primary
          *           | concatenation
@@ -415,7 +415,7 @@ namespace vnl {
     }
 
     TRcConnList
-    Parser::primary(TRcModule mod) throw (unsigned) {
+    Parser::primary(TRcModule &mod) throw (unsigned) {
         /*
          * primary: uint? based
          *        | ident range?
@@ -458,7 +458,7 @@ namespace vnl {
     }
 
     TRcConnList
-    Parser::concatentation(TRcModule mod) throw (unsigned) {
+    Parser::concatentation(TRcModule &mod) throw (unsigned) {
         /*
          * concatenation: { expr (, expr)* }
          *              | { uint concatenation }     //repeated concat
@@ -503,7 +503,7 @@ namespace vnl {
     }
 
     static void
-    addTo(TRcObject lhs, TRcObject rhs) {
+    addTo(TRcObject &lhs, TRcObject &rhs) {
         if (lhs->isType(Wire::stTypeId)) {
             TRcWire wire = Wire::downcast(lhs);
             wire->add(rhs);
@@ -524,7 +524,7 @@ namespace vnl {
      * @param rhs update lsh w/ corresponding entry.
      */
     static void
-    expand(TRcConnList lhs, TRcConnList rhs) {
+    expand(TRcConnList &lhs, TRcConnList &rhs) {
         ASSERT_TRUE(lhs->size() == rhs->size());
         TRcObject obj[2];
         TConnList::iterator iter[2] = {lhs->begin(), rhs->begin()};
@@ -547,7 +547,7 @@ namespace vnl {
     }
 
     void
-    Parser::assignStatement(TRcModule mod) throw (unsigned) {
+    Parser::assignStatement(TRcModule &mod) throw (unsigned) {
         // _ assign
         TRcToken loc = expectAccept(Token::eAssign);
         TRcConnList lhs = expression(mod);
@@ -565,7 +565,7 @@ namespace vnl {
     }
 
     unsigned
-    Parser::toUnsigned(TRcToken tok) throw (unsigned) {
+    Parser::toUnsigned(TRcToken &tok) throw (unsigned) {
         unsigned uint;
         if (!tok->toUnsigned(uint)) {
 
@@ -576,7 +576,7 @@ namespace vnl {
     }
 
     TRcConnList
-    Parser::toBits(TRcToken size, TRcToken based, TRcModule mod) throw (unsigned) {
+    Parser::toBits(TRcToken &size, TRcToken &based, TRcModule &mod) throw (unsigned) {
         TRcConstRef cref;
         if (size.isNull()) {
             string s = based->getText();

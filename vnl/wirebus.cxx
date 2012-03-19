@@ -30,7 +30,7 @@ namespace vnl {
     static string stTypeName = "wirebus";
     const unsigned WireBus::stTypeId = Object::getNextTypeId(stTypeName);
 
-    WireBus::WireBus(string name, const TRcBus bus)
+    WireBus::WireBus(string name, const TRcBus &bus)
     : Wire(name), Bus(bus), m_pinConns(bus->getLength() - 1) {
     }
 

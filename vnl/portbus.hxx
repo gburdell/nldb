@@ -2,6 +2,7 @@
  * 
  * vnl - verilog netlist
  * Copyright (c) 2006-2010  Karl W. Pfalzer
+ * Copyright (c) 2012-      George P. Burdell
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +33,7 @@ namespace vnl {
 
     class PortBus : virtual public Object, virtual public WireBus, public Port {
     public:
-        explicit PortBus(string name, EDirection dir, const TRcBus bus);
+        explicit PortBus(string name, EDirection dir, const TRcBus &bus);
 
         static const TRcPortBus downcast(const TRcObject &r) {
             return xyzzy::downcast<Object, PortBus > (r);

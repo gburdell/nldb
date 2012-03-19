@@ -1,6 +1,7 @@
 /* The MIT License
  * 
  * vnl - verilog netlist
+ * Copyright (c) 2012-      George P. Burdell
  * Copyright (c) 2006-2010  Karl W. Pfalzer
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -35,7 +36,7 @@ namespace vnl {
      */
     class WireBitRef : virtual public Object {
     public:
-        explicit WireBitRef(TRcWireBus wire, unsigned bitIx);
+        explicit WireBitRef(TRcWireBus &wire, unsigned bitIx);
 
         /**
          * Bit blast to list.
@@ -43,13 +44,13 @@ namespace vnl {
          * @param range (sub-range) to expand top bits.
          * @return list of TRcWireBitRef (begin() is MSB).
          */
-        static TRcConnList bitBlast(TRcWireBus bus, TRcBus range);
+        static TRcConnList bitBlast(TRcWireBus &bus, TRcBus &range);
 
-        void add(TRcPinRef conn) {
+        void add(TRcPinRef &conn) {
             add(upcast(conn));
         }
 
-        void add(TRcWire conn) {
+        void add(TRcWire &conn) {
             add(upcast(conn));
         }
 

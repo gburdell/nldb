@@ -2,6 +2,7 @@
 //
 //vnl - verilog netlist
 //Copyright (c) 2006-2010  Karl W. Pfalzer
+//Copyright (c) 2012-      George P. Burdell
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
 //of this software and associated documentation files (the "Software"), to deal
@@ -99,7 +100,7 @@ namespace vnl {
          * @param o an object of type to compare.
          * @return true if this and other object are same type.
          */
-        bool isA(const TRcObject o) const;
+        bool isA(const TRcObject &o) const;
 
         /**
          * Return object's typeName.

@@ -2,6 +2,7 @@
  * 
  * vnl - verilog netlist
  * Copyright (c) 2006-2010  Karl W. Pfalzer
+ * Copyright (c) 2012-      George P. Burdell
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -56,17 +57,17 @@ namespace vnl {
          * @param mod module to add.
          * @return false if module already exists; else true (if added).
          */
-        bool add(TRcModule mod);
+        bool add(TRcModule &mod);
 
         /**
          * Get first module added.
          * @return first module successfully added (could be null).
          */
-        const TRcModule getFirstAdded() const {
+        const TRcModule& getFirstAdded() const {
             return m_firstAdded;
         }
 
-        TRcModule getFirstAdded() {
+        TRcModule& getFirstAdded() {
             return m_firstAdded;
         }
 

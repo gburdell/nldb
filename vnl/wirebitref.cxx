@@ -2,6 +2,7 @@
  * 
  * vnl - verilog netlist
  * Copyright (c) 2006-2010  Karl W. Pfalzer
+ * Copyright (c) 2012-      George P. Burdell
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +32,7 @@ namespace vnl {
     static string stTypeName = "wirebitref";
     const unsigned WireBitRef::stTypeId = Object::getNextTypeId(stTypeName);
 
-    WireBitRef::WireBitRef(TRcWireBus wire, unsigned bitIx)
+    WireBitRef::WireBitRef(TRcWireBus &wire, unsigned bitIx)
     : m_wireBus(wire), m_bitIx(bitIx) {
     }
 
@@ -43,7 +44,7 @@ namespace vnl {
     }
 
     TRcConnList
-    WireBitRef::bitBlast(TRcWireBus bus, TRcBus range) {
+    WireBitRef::bitBlast(TRcWireBus &bus, TRcBus &range) {
         TRcConnList bits = new TConnList();
         TRcWireBitRef wref;
         TRcObject asObj;

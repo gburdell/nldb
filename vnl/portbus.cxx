@@ -2,6 +2,7 @@
  * 
  * vnl - verilog netlist
  * Copyright (c) 2006-2010  Karl W. Pfalzer
+ * Copyright (c) 2012-      George P. Burdell
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +28,7 @@ namespace vnl {
     static string stTypeName = "portbus";
     const unsigned PortBus::stTypeId = Object::getNextTypeId(stTypeName);
 
-    PortBus::PortBus(string name, EDirection dir, const TRcBus bus)
+    PortBus::PortBus(string name, EDirection dir, const TRcBus &bus)
     : Wire(name), WireBus(name, bus), Port(name, dir) {
     }
 

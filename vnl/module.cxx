@@ -126,7 +126,7 @@ namespace vnl {
     }
 
     void
-    Module::replace(TRcPort from, TRcWire to) {
+    Module::replace(TRcPort &from, TRcWire &to) {
         string nm = to->getName();
         ASSERT_TRUE(from->getName() == nm);
         t_wiresByName::iterator where = m_wiresByName.find(nm);
@@ -136,7 +136,7 @@ namespace vnl {
     }
 
     void
-    Module::addWire(TRcWire wire) {
+    Module::addWire(TRcWire &wire) {
         string nm = wire->getName();
         ASSERT_TRUE(!hasWire(nm));
         m_wiresByName[nm] = wire;
@@ -148,7 +148,7 @@ namespace vnl {
     }
 
     void
-    Module::addCell(TRcCell cell) {
+    Module::addCell(TRcCell &cell) {
         string nm = cell->getInstName();
         ASSERT_TRUE(!hasCell(nm));
         m_cellsByName[nm] = cell;

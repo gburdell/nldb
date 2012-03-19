@@ -2,6 +2,7 @@
  * 
  * vnl - verilog netlist
  * Copyright (c) 2006-2010  Karl W. Pfalzer
+ * Copyright (c) 2012-      George P. Burdell
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +38,7 @@ namespace vnl {
         explicit Bus(unsigned lb, unsigned rb) : m_lb(lb), m_rb(rb) {
         }
 
-        explicit Bus(const TRcBus bus);
+        explicit Bus(const TRcBus &bus);
 
         bool hasRb() const {
             return (m_rb != stNotUsed);
@@ -83,7 +84,7 @@ namespace vnl {
          * @param b bus to check.
          * @return if bus in range.
          */
-        bool inRange(const TRcBus b) const;
+        bool inRange(const TRcBus &b) const;
         
         static const TRcBus downcast(const TRcObject &r) {
             return xyzzy::downcast<Object, Bus > (r);
@@ -129,9 +130,9 @@ namespace vnl {
         return xyzzy::upcast<Object, Bus > (p);
     }
 
-    bool operator ==(const TRcBus a, const TRcBus b);
+    bool operator ==(const TRcBus &a, const TRcBus &b);
 
-    inline bool operator !=(const TRcBus a, const TRcBus b) {
+    inline bool operator !=(const TRcBus &a, const TRcBus &b) {
         return !(a == b);
     }
 

@@ -2,6 +2,7 @@
  * 
  * vnl - verilog netlist
  * Copyright (c) 2006-2010  Karl W. Pfalzer
+ * Copyright (c) 2012-      George P. Burdell
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,14 +31,14 @@ namespace vnl {
 
     class Cell : virtual public Object {
     public:
-        explicit Cell(string refNm, string instNm, TRcConnsByPortName conns);
+        explicit Cell(string refNm, string instNm, TRcConnsByPortName &conns);
 
         /**
          * This should be called after cell is created.
          * Update wires w/ PinRef (to cell).
          * @param cell update wires w/ PinRef to this cell.
          */
-        static void updateWires(TRcCell cell);
+        static void updateWires(TRcCell &cell);
         
         string getRefName() const {
             return m_refNm;
@@ -47,10 +48,10 @@ namespace vnl {
             return m_instNm;
         }
 
-        const TRcObject getRef() const {
+        const TRcObject& getRef() const {
             return m_ref;
         }
-        TRcObject getRef() {
+        TRcObject& getRef() {
             return m_ref;
         }
         
@@ -60,7 +61,7 @@ namespace vnl {
             return m_ref.isValid();
         }
         
-        void setRef(TRcObject ref) {
+        void setRef(TRcObject &ref) {
             m_ref = ref;
         }
         

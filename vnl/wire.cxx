@@ -2,6 +2,7 @@
  * 
  * vnl - verilog netlist
  * Copyright (c) 2006-2010  Karl W. Pfalzer
+ * Copyright (c) 2012-      George P. Burdell
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,12 +40,12 @@ namespace vnl {
     }
 
     void
-    Wire::add(TRcPinRef conn) {
+    Wire::add(TRcPinRef &conn) {
         add(upcast(conn));
     }
 
     void
-    Wire::add(TRcWire conn) {
+    Wire::add(TRcWire &conn) {
         add(upcast(conn));
     }
 

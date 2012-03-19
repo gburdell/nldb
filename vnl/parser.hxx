@@ -2,6 +2,7 @@
 //
 //vnl - verilog netlist
 //Copyright (c) 2006-2010  Karl W. Pfalzer
+//Copyright (c) 2012-      George P. Burdell
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
 //of this software and associated documentation files (the "Software"), to deal
@@ -42,9 +43,9 @@ namespace vnl {
     public:
         typedef Token::EType EType;
 
-        explicit Parser(TRcLexer lexer);
+        explicit Parser(TRcLexer &lexer);
 
-        void start(TRcLibrary lib);
+        void start(TRcLibrary &lib);
         
         unsigned getErrorCnt() const {
             return m_errCnt;
@@ -96,32 +97,32 @@ namespace vnl {
          */
         void slurpUntil(EType type = Token::eSemi);
 
-        TRcModule moduleDeclaration(TRcLibrary lib);
+        TRcModule moduleDeclaration(TRcLibrary &lib);
 
-        void portDeclarations(TRcModule mod) throw (unsigned);
+        void portDeclarations(TRcModule &mod) throw (unsigned);
 
-        void moduleItems(TRcModule mod) throw (unsigned);
+        void moduleItems(TRcModule &mod) throw (unsigned);
 
-        void wireDefinition(TRcModule mod) throw (unsigned);
+        void wireDefinition(TRcModule &mod) throw (unsigned);
 
-        void assignStatement(TRcModule mod) throw (unsigned);
+        void assignStatement(TRcModule &mod) throw (unsigned);
 
-        void moduleInstantiation(TRcModule mod) throw (unsigned);
+        void moduleInstantiation(TRcModule &mod) throw (unsigned);
 
-        void moduleInstantiation(TRcModule mod, TRcToken refNm,
-                TRcToken instNm) throw (unsigned);
+        void moduleInstantiation(TRcModule &mod, TRcToken &refNm,
+                TRcToken &instNm) throw (unsigned);
 
-        TRcConnList connections(TRcModule mod) throw (unsigned);
+        TRcConnList connections(TRcModule &mod) throw (unsigned);
 
-        TRcConnList expression(TRcModule mod) throw (unsigned);
+        TRcConnList expression(TRcModule &mod) throw (unsigned);
 
-        TRcConnList primary(TRcModule mod) throw (unsigned);
+        TRcConnList primary(TRcModule &mod) throw (unsigned);
 
-        TRcConnList concatentation(TRcModule mod) throw (unsigned);
+        TRcConnList concatentation(TRcModule &mod) throw (unsigned);
 
         TRcBus range() throw (unsigned);
 
-        unsigned toUnsigned(TRcToken) throw (unsigned);
+        unsigned toUnsigned(TRcToken&) throw (unsigned);
 
         /**
          * Convert based number to list of const wires.
@@ -130,7 +131,7 @@ namespace vnl {
          * @param mod module containing const wire 0/1.
          * @return list of const wire (begin() is MSB)
          */
-        TRcConnList toBits(TRcToken size, TRcToken based, TRcModule mod) throw (unsigned);
+        TRcConnList toBits(TRcToken &size, TRcToken &based, TRcModule &mod) throw (unsigned);
 
         COPY_CONSTRUCTOR_DECL(Parser);
     };

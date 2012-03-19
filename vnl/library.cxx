@@ -31,7 +31,7 @@ namespace vnl {
     static string stTypeName = "library";
     const unsigned Library::stTypeId = Object::getNextTypeId(stTypeName);
 
-    bool Library::add(TRcModule mod) {
+    bool Library::add(TRcModule &mod) {
         string nm = mod->getName();
         bool ok = !hasModule(nm);
         if (ok) {

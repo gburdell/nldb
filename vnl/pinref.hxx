@@ -2,6 +2,7 @@
  * 
  * vnl - verilog netlist
  * Copyright (c) 2006-2010  Karl W. Pfalzer
+ * Copyright (c) 2012-      George P. Burdell
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,13 +44,13 @@ namespace vnl {
          *  lbOffset is 0.  Upon use, if lbOffset>0, then portNm needs to be
          *  a bus.
          */
-        explicit PinRef(TRcCell inst, string portNm, unsigned lbOffset = 0);
+        explicit PinRef(TRcCell &inst, string portNm, unsigned lbOffset = 0);
 
-        const TRcCell getCell() const {
+        const TRcCell& getCell() const {
             return m_cell;
         }
 
-        TRcCell getCell() {
+        TRcCell& getCell() {
             return m_cell;
         }
 

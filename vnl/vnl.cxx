@@ -2,6 +2,7 @@
 //
 //vnl - verilog netlist
 //Copyright (c) 2006-2010  Karl W. Pfalzer
+//Copyright (c) 2012-      George P. Burdell
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
 //of this software and associated documentation files (the "Software"), to deal
@@ -62,7 +63,7 @@ namespace vnl {
     }
 
     bool
-    Object::isA(const TRcObject o) const {
+    Object::isA(const TRcObject &o) const {
         return (getTypeId() == o->getTypeId());
     }
 

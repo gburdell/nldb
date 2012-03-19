@@ -2,6 +2,7 @@
  * 
  * vnl - verilog netlist
  * Copyright (c) 2006-2010  Karl W. Pfalzer
+ * Copyright (c) 2012-      George P. Burdell
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +37,7 @@ namespace vnl {
     static string stTypeName = "pinref";
     const unsigned PinRef::stTypeId = Object::getNextTypeId(stTypeName);
 
-    PinRef::PinRef(TRcCell cell, string portNm, unsigned lbOffset)
+    PinRef::PinRef(TRcCell &cell, string portNm, unsigned lbOffset)
     : m_cell(cell), m_portNm(portNm), m_lbOffset(lbOffset) {
     }
 

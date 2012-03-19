@@ -2,6 +2,7 @@
  * 
  * vnl - verilog netlist
  * Copyright (c) 2006-2010  Karl W. Pfalzer
+ * Copyright (c) 2012-      George P. Burdell
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -53,7 +54,7 @@ namespace vnl {
          */
         void appendPortDecl(string nm);
         
-        void addWire(TRcWire wire);
+        void addWire(TRcWire &wire);
         
         /**
          * Check if port is declared.
@@ -80,7 +81,7 @@ namespace vnl {
          */
         bool hasCell(string nm) const;
         
-        void addCell(TRcCell cell);
+        void addCell(TRcCell &cell);
         
         /**
          * Get wire by name.
@@ -159,7 +160,7 @@ namespace vnl {
          * @param from port to replace.
          * @param to replace with this port (as wire).
          */
-        void replace(TRcPort from, TRcWire to);
+        void replace(TRcPort &from, TRcWire &to);
         friend class Parser;    //allow Parser to replace
         
         static const unsigned stTypeId;

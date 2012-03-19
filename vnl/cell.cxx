@@ -32,7 +32,7 @@ namespace vnl {
     static string stTypeName = "cell";
     const unsigned Cell::stTypeId = Object::getNextTypeId(stTypeName);
 
-    Cell::Cell(string refNm, string instNm, TRcConnsByPortName conns)
+    Cell::Cell(string refNm, string instNm, TRcConnsByPortName &conns)
     : m_refNm(refNm), m_instNm(instNm), m_connsByPortName(conns) {
     }
 
@@ -54,7 +54,7 @@ namespace vnl {
      * Add PinRef entries to wires.
      */
     void
-    Cell::updateWires(TRcCell cell) {
+    Cell::updateWires(TRcCell &cell) {
         unsigned n;
         string portNm;
         TRcPinRef pinRef;
