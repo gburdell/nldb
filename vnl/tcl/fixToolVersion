@@ -1,0 +1,8 @@
+#!/bin/csh -f
+
+set inf=$1
+set outf=/tmp/${inf:t}.tmp.$$
+sed -e "s/.*string stToolVersion.*/    static const string stToolVersion = @q@nl_shell v`date +%Y-%m-%d_%H.%M.%S`@q@\;/" -e s/@q@/\"/g ${inf} >! $outf
+mv -f $outf $inf
+
+

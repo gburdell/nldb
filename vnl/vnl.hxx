@@ -112,6 +112,12 @@ namespace vnl {
             return (typeId == getTypeId());
         }
 
+        /**
+         * Get typeId for this class.
+         * @return typeId for this class.
+         */
+        virtual unsigned getTypeId() const;
+
     protected:
 
         virtual ~Object() {
@@ -130,12 +136,6 @@ namespace vnl {
         static unsigned getNextTypeId(string typeName);
 
     private:
-        /**
-         * Get typeId for this class.
-         * @return typeId for this class.
-         */
-        virtual unsigned getTypeId() const;
-
         COPY_CONSTRUCTOR_DECL(Object);
 
         static unsigned stTypeId;
