@@ -80,7 +80,7 @@ namespace vnl {
          * Can't use TRcModule since Cell includes/need Module,
          * and Module includes/needs Cell.
          */
-        TRcObject   m_ref; //upcast from TRcModule
+        TRcObject   m_ref; //upcast from TRcModule (or Libcell)
         
         /**
          * Map of pin connections by pin/port name.

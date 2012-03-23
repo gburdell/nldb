@@ -31,6 +31,23 @@
 #include "xyzzy/slist.hxx"
 #include "xyzzy/exception.hxx"
 
+#if !defined(DECL_CLASS)
+#define DECL_CLASS(_cls)                \
+    class _cls ;                        \
+    typedef PTRcObjPtr<_cls> TRc##_cls
+#endif
+
+//Simpler reference counting w/ no (easy) base<-->derived
+#define DECL_CLASS_SIMPLE_RC(_cls)      \
+    class _cls ;                        \
+    typedef PTRcPtr<_cls> TRc##_cls
+
+#if !defined(COPY_CONSTRUCTOR_DECL)
+#define COPY_CONSTRUCTOR_DECL(_cls)   \
+	_cls(const _cls &);               \
+	_cls& operator=(const _cls &)
+#endif
+
 namespace slf {
     using std::string;
     using std::list;
@@ -42,22 +59,20 @@ namespace slf {
     using xyzzy::TException;
     using xyzzy::PTSlist;
 
-    class Lexer;
-    class Token;
-    class Parser;
+    DECL_CLASS_SIMPLE_RC(Lexer);
+    DECL_CLASS_SIMPLE_RC(Token);
+    DECL_CLASS_SIMPLE_RC(Parser);
 
-    typedef PTRcPtr<Token> TRcToken;
-    typedef PTRcPtr<Lexer> TRcLexer;
-    typedef PTRcPtr<Parser> TRcParser;
+	//The following used to build up AST.
+	DECL_CLASS(LibraryEle);
+	DECL_CLASS(KeyValue);	//subclass of LibraryEle;
+	DECL_CLASS(LibCell);	//subclass of LibraryEle;
 
-#define DECL_CLASS(_cls)                \
-    class _cls ;                        \
-    typedef PTRcObjPtr<_cls> TRc##_cls
-
-#define COPY_CONSTRUCTOR_DECL(_cls)   \
-	_cls(const _cls &);           \
-	_cls& operator=(const _cls &)
-
+	DECL_CLASS_SIMPLE_RC(ValueSet);
+	DECL_CLASS_SIMPLE_RC(ValueType);
+	DECL_CLASS_SIMPLE_RC(Expr);
+	DECL_CLASS_SIMPLE_RC(ExprVal);
+	DECL_CLASS_SIMPLE_RC(ExprOp);
 }
 
 #endif

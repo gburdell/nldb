@@ -79,9 +79,9 @@ endif
 OTHER_DOTA := ../vnl/dist/${VARIANT}/${OS}/vnl.a \
               ../xyzzy/dist/${VARIANT}/${OS}/xyzzy.a
 
-${DIST_DIR}/${VARIANT}/${OS}/test: \
-		${DIST_DIR}/${VARIANT}/${OS}/${LIBNM}.a \
-		${OTHER_DOTA}
+${DIST_DIR}/${VARIANT}/${OS}/test: ${DIST_DIR}/${VARIANT}/${OS}/${LIBNM}.a
+	${MAKE} -C ../xyzzy ${VARIANT}
+	${MAKE} -C ../vnl ${VARIANT}
 	g++ ${CFLAGS} -o ${@} ${<} ${OTHER_DOTA}
 
 .PHONY: %.objdir
@@ -112,5 +112,7 @@ ${DIST_DIR}/${VARIANT}/${OS}/${LIBNM}.a: ${O_FILES}
 .PHONY: clean
 clean:
 	-rm -rf build
+	${MAKE} -C ../vnl   ${@}
+	${MAKE} -C ../xyzzy ${@}
 	-find ${DIST_DIR}/*/${OS} -name '*.a' -exec rm -f {} \;
 

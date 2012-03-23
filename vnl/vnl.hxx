@@ -64,6 +64,7 @@ namespace vnl {
     DECL_CLASS(WireBitRef);
     DECL_CLASS(Library);
     DECL_CLASS(Module);
+    DECL_CLASS(LibCell);
     DECL_CLASS(Port);
     DECL_CLASS(Wire);
     DECL_CLASS(Cell);

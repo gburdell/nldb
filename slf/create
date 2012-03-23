@@ -1,0 +1,7 @@
+#!/bin/csh -f
+
+foreach P2 (LibraryEle KeyValue LibCell ValueSet ValueType Expr ExprVal ExprOp)
+	set P1=`echo $P2 | tr 'A-Z' 'a-z'`	
+	set hxx=${P1}.hxx
+	sed -e "s/@P1@/${P1}/g" -e "s/@P2@/${P2}/g" < tmpl_hxx >! $hxx
+end

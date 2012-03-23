@@ -1,6 +1,6 @@
 //The MIT License
 //
-//slf - Synopsys Liberty File
+//slf - Synopsys Library File
 //Copyright (c) 2012-      George P. Burdell
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,20 +20,9 @@
 //LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //THE SOFTWARE.
-
-#include <sstream>
-#include "xyzzy/assert.hxx"
-#include "slf/token.hxx"
+#include "slf/libcell.hxx"
 
 namespace slf {
-    using std::ostringstream;
-
-    string
-    Token::toString() const {
-        ostringstream oss;
-        oss << m_loc->toString() << ": " << m_text;
-        return oss.str();
-    }
-
-}
+    LibCell::~LibCell() {}
+};
 
