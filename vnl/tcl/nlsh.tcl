@@ -315,7 +315,7 @@ Return 1 on success; else 0 if any parsing error(s).
 	{
 		if {[aph::parseOpts opts args]} {return}; #did help/usage
 		#make fileName separate elements
-		eval nlsh $opts(*command*) $fileName
+		nlsh $opts(*command*) $fileName
 	}
 }
 

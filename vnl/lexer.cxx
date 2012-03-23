@@ -386,7 +386,7 @@ int main(int argc, char *argv[]) {
             tok = lexer.nextToken();
             if (Token::eEOF == tok->getType()) break; //while
             loc = tok->getLocation();
-            //cout << "DBG:" << loc->m_lnum << ":" << loc->m_col << ": " << tok->getText() << endl;
+            //cout << "DBG:" << tok->toString() << endl;
         }
     }
     return 0;

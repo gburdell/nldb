@@ -98,6 +98,13 @@ namespace vnltcl {
     TRcStringAr listAsStringAr(Tcl_Interp *interp, Tcl_Obj *lobj) throw (TclError);
     
     Tcl_Obj* newStringObj(bool b);
+    
+    /**
+     * Check that file is readable.
+     * @param fn filename to check.
+     * @return true if readable.
+     */
+    bool isFileReadable(string fn);
 }
 
 #endif	/* VNLTCL_UTIL_HXX */

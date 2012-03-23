@@ -58,7 +58,7 @@ namespace vnltcl {
     typedef PTArray<string> TStringAr;
     typedef PTRcArray<string> TRcStringAr;
 
-    static const string stToolVersion = "nl_shell v2012-03-22_10.23.14";
+    static const string stToolVersion = "nl_shell v2012-03-22_11.18.51";
     static const char *stPtrPfx = "_obj";
     static const string stNilArg = "_";
     // add 2 for 0x
@@ -134,6 +134,7 @@ namespace vnltcl {
     }
 
 #ifdef TODO
+
     static
     TRcCollection
     filter(TRcCollection &coll, const int argc, Tcl_Obj *CONST argv[]) throw (TclError) {
@@ -162,13 +163,13 @@ namespace vnltcl {
         return rval;
     }
 #endif
-    
+
     TRcLibrary&
     getDesignLib(bool createIfNull) {
         TRcLibrary &lib = Commands::getTheOne().getState().m_designLib;
         if (lib.isNull() && createIfNull) {
             lib = new vnl::Library("design");
-        }        
+        }
         return lib;
     }
 
@@ -177,15 +178,15 @@ namespace vnltcl {
         TRcLibrary &lib = Commands::getTheOne().getState().m_slfLib;
         if (lib.isNull() && createIfNull) {
             lib = new vnl::Library("slf");
-        }        
-        return lib;        
+        }
+        return lib;
     }
 
     TRcModule&
     setCurrentDesign(TRcModule &mod) {
         TRcModule &r = Commands::getTheOne().getState().m_currDesn;
         r = mod;
-        return r; 
+        return r;
     }
 
     /**
@@ -387,10 +388,15 @@ namespace vnltcl {
         TRcStringAr fnames = listAsStringAr(getInterp(), argv[0]);
         bool ok = true;
         for (int i = 0; ok && (i < fnames.length()); i++) {
-            vnl::TRcLexer lexer = new vnl::Lexer(fnames[i]);
-            vnl::Parser parser(lexer);
-            parser.start(lib);
-            ok &= (0 == parser.getErrorCnt());
+            if (isFileReadable(fnames[i])) {
+                vnl::TRcLexer lexer = new vnl::Lexer(fnames[i]);
+                vnl::Parser parser(lexer);
+                parser.start(lib);
+                ok &= (0 == parser.getErrorCnt());
+            } else {
+                error("FILE-1", fnames[i], "read");
+                ok = false;
+            }
         }
         if (!ok) {
             throw TclError(getInterp(), "PARSE-1", "");
@@ -437,6 +443,7 @@ namespace vnltcl {
     }
 
 #ifdef TODO
+
     Tcl_Obj*
     Commands::readSlf(const int argc, Tcl_Obj *CONST argv[]) throw (TclError) {
         ASSERT_TRUE(1 == argc);

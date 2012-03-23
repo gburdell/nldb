@@ -67,7 +67,7 @@ namespace vnl {
         bool isType(EType type) const {
             return (getType() == type);
         }
-        
+
         bool isEOF() const {
             return isType(eEOF);
         }
@@ -78,7 +78,7 @@ namespace vnl {
          * @return true on successful conversion; else false.
          */
         bool toUnsigned(unsigned &u) const;
-        
+
         /**
          * Convert token to bit vector.
          * @param bits reference to return value (in caller).
@@ -88,6 +88,8 @@ namespace vnl {
          * @return true on successful conversion; else false.
          */
         bool toBits(PTArray<bool> &bits) const;
+
+        string toString() const;
         
         //Allow default constructor
 

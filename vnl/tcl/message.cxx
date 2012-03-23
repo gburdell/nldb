@@ -45,6 +45,7 @@ namespace vnltcl {
         m_fmtByCode["EDIT-2"]  = "insert %s '%s' into design '%s'";
         m_fmtByCode["EDIT-3"]  = "unable to remove %s '%s' from design '%s'";
         m_fmtByCode["EDIT-4"]  = "remove %s '%s' from design '%s'";
+        m_fmtByCode["FILE-1"]  = "%s: cannot %s file";
         m_fmtByCode["LINK-1"]  = "'%s' reference unresolved";
         m_fmtByCode["OBJ-1"]   = "%s '%s' does not exist in current design";
         m_fmtByCode["OBJ-2"]   = "'%s' does not refer to an object";

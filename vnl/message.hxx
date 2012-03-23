@@ -66,6 +66,8 @@ namespace vnl {
 
         void message(EType type, string msg);
 
+		void addFmtByCode(string code, string fmt);
+
     private:
         typedef map<string, string> t_fmtByCode;
 

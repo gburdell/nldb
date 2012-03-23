@@ -59,6 +59,10 @@ namespace vnl {
         m_fmtByCode["VNL-WIRE-2"] = "%s: wire '%s' redefined";
     }
 
+    void Message::addFmtByCode(string code, string fmt) {
+        m_fmtByCode[code] = fmt;
+    }
+
     void
     Message::message(EType type, string code,
             const TRcLocation &loc, string s1, string s2, string s3) {
@@ -91,7 +95,7 @@ namespace vnl {
             const TRcLocation &loc, string s1, string s2, string s3) {
         Message::getTheOne().message(Message::eError, code, loc, s1, s2, s3);
     }
-    
+
     void info(string code, string s1, string s2, string s3, string s4) {
         string msg = Message::getTheOne().fmessage(Message::eInfo, code, s1, s2, s3, s4);
         Message::getTheOne().message(Message::eInfo, msg);

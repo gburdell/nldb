@@ -21,30 +21,34 @@
 //LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //THE SOFTWARE.
+#include <fstream>
 #include <cstdarg>
+#include <iosfwd>
 #include "tcl.h"
 #include "tclDecls.h"
 #include "vnl/tcl/util.hxx"
 #include "vnl/tcl/message.hxx"
 
 namespace vnltcl {
-    TclError::TclError() 
-    :   m_type(eMsgDone) {
-    }
+    using namespace std;
     
-    TclError::TclError(Tcl_Interp *interp, string msg) 
-    :   m_type(eRawMsg) {
+    TclError::TclError()
+    : m_type(eMsgDone) {
+    }
+
+    TclError::TclError(Tcl_Interp *interp, string msg)
+    : m_type(eRawMsg) {
         Message::getTheOne().error(interp, msg);
     }
-    
-    TclError::TclError(Tcl_Interp *interp, string code, 
-                       string s1, string s2, string s3, string s4) 
-    :   m_type(eFmtMsg) {
+
+    TclError::TclError(Tcl_Interp *interp, string code,
+            string s1, string s2, string s3, string s4)
+    : m_type(eFmtMsg) {
         Message::getTheOne().error(interp, code, s1, s2, s3, s4);
     }
 
-    TRcStringAr listAsStringAr(Tcl_Interp *interp, Tcl_Obj *lobj) 
-                throw (TclError) {
+    TRcStringAr listAsStringAr(Tcl_Interp *interp, Tcl_Obj *lobj)
+    throw (TclError) {
         TRcStringAr rval;
         int cnt;
         Tcl_Obj **peles;
@@ -61,22 +65,22 @@ namespace vnltcl {
         }
         return rval;
     }
-     
+
     int to_i(Tcl_Interp *interp, Tcl_Obj CONST* obj) throw (TclError) {
         int i;
-        if (TCL_ERROR == Tcl_GetIntFromObj(interp, const_cast<Tcl_Obj*>(obj), &i)) {
+        if (TCL_ERROR == Tcl_GetIntFromObj(interp, const_cast<Tcl_Obj*> (obj), &i)) {
             throw TclError();
         }
         return i;
     }
-    
+
     string to_s(int i) {
         static char buf[64];
         sprintf(buf, "%d", i);
         string r = buf;
         return r;
     }
-    
+
     Tcl_Obj* newStringObj(bool b) {
         string bs = b ? "true" : "false";
         return newStringObj(bs);
@@ -87,6 +91,13 @@ namespace vnltcl {
         sscanf(pDouble, "%lf", &dbl);
         return Tcl_NewDoubleObj(dbl);
     }
-    
+
+    bool isFileReadable(string fn) {
+        ifstream ifs(fn.c_str());
+        bool ok = ifs.good();
+        ifs.close();
+        return ok;
+    }
+
 }
 

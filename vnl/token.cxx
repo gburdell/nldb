@@ -27,6 +27,7 @@
 
 namespace vnl {
     using std::stringstream;
+    using std::ostringstream;
     using std::hex;
     using std::oct;
 
@@ -95,6 +96,13 @@ namespace vnl {
             bits[k] = false;
         }
         return ok;
+    }
+
+    string
+    Token::toString() const {
+        ostringstream oss;
+        oss << m_loc->toString() << ": " << m_text;
+        return oss.str();
     }
 }
 
