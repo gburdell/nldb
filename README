@@ -1,3 +1,14 @@
+22-mar-2012
+===========
++ JNI+nldb proved too slow and memory hog on some huge designs worked
+  w/ kpfalzer.  We did get JNI + Tcl going (though).
++ After some discussions, decided to switch to all c++.
++ kpfalzer passwd along a verilog netlist parser and dbase in c++.
++ I bolted on a tclsh wrapper and works (see vnl/tcl/README).
++ I took the parser/slf.g and converted to lexer/parser.cxx.
++ So, we have a path to netlist manipulator using c++ and tcl.
++ progress continues...
+
 6-mar-2012
 ==========
 + grabbed source from //http://sourceforge.net/projects/nldb
