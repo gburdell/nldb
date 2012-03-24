@@ -105,7 +105,7 @@ namespace vnl {
         }
         return tok;
     }
-
+    
     bool
     Parser::expect(EType type, unsigned i) {
         bool ok = test(type, i);

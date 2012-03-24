@@ -130,11 +130,15 @@ namespace slf {
                     ASSERT_TRUE(m_ifs.good());
                 }
             }
+            if ('\\' == m_ch) { //skip standalone
+                m_ch = 0;       //force to get next
+                continue;
+            }
             if (tok.isNull()) {
                 m_buf[m_pos++] = m_ch;
                 if (isspace(m_ch)) {
                     whiteSpace();
-                } else if (isalpha(m_ch) || (m_ch == '_') || (m_ch == '\\')) {
+                } else if (isalpha(m_ch) || (m_ch == '_')) {
                     tok = ident();
                 } else if (isdigit(m_ch) || (m_ch == '-')) {
                     tok = number();
@@ -265,22 +269,20 @@ namespace slf {
 
     TRcToken
     Lexer::ident() { //or keyword
+        //('a'..'z'|'A'..'Z'|'_') _ ('a'..'z'|'A'..'Z'|'_'|'0'..'9'|'.'|'/')*
         m_type = Token::eIdent;
         unsigned col = m_col;
-        bool isEscaped = ('\\' == m_ch);
         m_pos = 0;
-        if (!isEscaped) { //drop escape
-            m_buf[m_pos++] = m_ch;
-        }
+        m_buf[m_pos++] = m_ch;
         while (true) {
             if (getCharCheckEOF()) {
                 m_ch = -1;
                 break;
             }
-            if ((isEscaped && !isspace(m_ch)) || 
-                    ('_' == m_ch) || 
-                    isalnum(m_ch) || 
-                    ('.' == m_ch)       //Yuk! really allowed in ident
+            if (isalnum(m_ch) ||
+                    ('_' == m_ch) ||
+                    ('.' == m_ch) ||
+                    ('/' == m_ch) //Yuk! really allowed in ident
                     ) {
                 m_buf[m_pos++] = m_ch;
             } else {
@@ -288,12 +290,10 @@ namespace slf {
             }
         }
         TRcToken tok = createToken(col);
-        if (!isEscaped) {
-            //check for keyword
-            t_keywordMap::const_iterator iter = stKeywordMap.find(tok->m_text);
-            if (iter != stKeywordMap.end()) {
-                tok->m_type = iter->second;
-            }
+        //check for keyword
+        t_keywordMap::const_iterator iter = stKeywordMap.find(tok->m_text);
+        if (iter != stKeywordMap.end()) {
+            tok->m_type = iter->second;
         }
         reset(m_ch);
         return tok;

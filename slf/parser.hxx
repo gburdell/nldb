@@ -81,6 +81,12 @@ namespace slf {
         TRcToken accept(unsigned n = 1);
 
         /**
+         * Unconditionally take next token.
+         * @return next token.
+         */
+        TRcToken nextToken();
+        
+        /**
          * Check token type at la(i).
          * @param type check if this type.
          * @return true if la(i) is same as type.

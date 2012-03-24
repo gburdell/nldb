@@ -78,6 +78,12 @@ namespace slf {
         return tok;
     }
 
+    TRcToken
+    Parser::nextToken() {
+        la(0);
+        return accept();
+    }
+
     bool
     Parser::expect(EType type, unsigned i) {
         bool ok = test(type, i);
@@ -164,7 +170,7 @@ namespace slf {
         TRcLibCell libcell;
         expectAccept(Token::eCell);
         expectAccept(Token::eLParen);
-        TRcToken tok = accept();
+        TRcToken tok = nextToken();
         string cellNm;
         if (Token::eIdent == tok->getType()) {
             cellNm = tok->getText();
@@ -185,7 +191,7 @@ namespace slf {
     Parser::keyValue() throw (unsigned) {
         TRcKeyValue keyval;
         TRcToken id = expectAccept(Token::eIdent);
-        TRcToken tok = accept();
+        TRcToken tok = nextToken();
         if (Token::eColon == tok->getType()) {
             // COLON _ value_type (SEMI)?
             TRcValueType valtype = valueType();
