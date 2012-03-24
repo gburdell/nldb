@@ -25,25 +25,34 @@
 #define  _vnl_libcell_hxx_
 
 #include "vnl/vnl.hxx"
+#include "vnl/unate.hxx"
 
 namespace vnl {
-    using std::map;
 
     class LibCell : virtual public Object {
     public:
-        explicit LibCell(string name)
-        : m_name(name) {
-        }
+        explicit LibCell(string name);
 
         string getName() const {
             return m_name;
         }
 
+        void setArea(double ar) {
+            m_area = ar;
+        }
+
+        double getArea() const {
+            return m_area;
+        }
+
         virtual ~LibCell();
 
-    private:
+    protected:
         const string m_name;
+        double m_area;
+        Unate m_unate;
 
+    private:
         //Not allowed
         COPY_CONSTRUCTOR_DECL(LibCell);
 
