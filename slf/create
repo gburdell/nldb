@@ -1,7 +1,9 @@
 #!/bin/csh -f
 
-foreach P2 (LibraryEle KeyValue LibCell ValueSet ValueType Expr ExprVal ExprOp)
+foreach P2 (LibraryEle KeyValue LibCell Bus ValueSet ValueType Expr ExprVal ExprOp Number)
 	set P1=`echo $P2 | tr 'A-Z' 'a-z'`	
 	set hxx=${P1}.hxx
-	sed -e "s/@P1@/${P1}/g" -e "s/@P2@/${P2}/g" < tmpl_hxx >! $hxx
+	set cxx=${P1}.cxx
+	#sed -e "s/@P1@/${P1}/g" -e "s/@P2@/${P2}/g" < tmpl_hxx >! $hxx
+	sed -e "s/@P1@/${P1}/g" -e "s/@P2@/${P2}/g" < tmpl_cxx >! $cxx
 end

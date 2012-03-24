@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-#include "slf/libcell.hxx"
+#include "slf/expr.hxx"
 
 namespace slf {
-    LibCell::~LibCell() {}
+    Expr::~Expr() {}
 }

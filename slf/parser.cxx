@@ -43,6 +43,72 @@ namespace slf {
         error("SLF-PARSE-2", tok->getLocation(), tok->getText());
     }
 
+    Parser::Parser(TRcLexer &lexer)
+    : m_lexer(lexer), m_errCnt(0) {
+    }
+
+    TRcToken
+    Parser::la(unsigned i) {
+        TRcToken tok;
+        if (i < m_toks.size()) {
+            tok = m_toks[i];
+        } else {
+            unsigned n = 1 + (i - m_toks.size());
+            for (int j = 0; j < n; j++) {
+                tok = m_lexer->nextToken();
+                m_toks.push_back(tok);
+            }
+        }
+        return tok;
+    }
+
+    bool
+    Parser::test(EType type, unsigned i) {
+        TRcToken tok = la(i);
+        return (tok->getType() == type);
+    }
+
+    TRcToken
+    Parser::accept(unsigned n) {
+        ASSERT_TRUE(n <= m_toks.size());
+        TRcToken tok = m_toks[n - 1];
+        for (unsigned i = 0; i < n; i++) {
+            m_toks.pop_front();
+        }
+        return tok;
+    }
+
+    bool
+    Parser::expect(EType type, unsigned i) {
+        bool ok = test(type, i);
+        if (!ok) {
+            TRcToken got = la(i);
+            error("SLF-PARSE-1", got->getLocation(), Lexer::asString(type),
+                  got->getText());
+        }
+        return ok;
+    }
+
+    void
+    Parser::slurpUntil(EType type) {
+        TRcToken tok;
+        while (true) {
+            tok = la(0);
+            accept();
+            if (tok->isEOF() || (tok->isType(type))) {
+                break;
+            }
+        }
+    }
+
+    TRcToken
+    Parser::expectAccept(EType type) throw (unsigned) {
+        if (expect(type)) {
+            return accept();
+        }
+        throw (++m_errCnt);
+    }
+
     void
     Parser::start(TRcLibrary &lib) {
         sourceText(lib);

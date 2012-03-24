@@ -49,7 +49,7 @@ namespace slf {
     public:
         typedef Token::EType EType;
 
-        explicit Parser(TRcLexer &lexer) : m_lexer(lexer) {}
+        explicit Parser(TRcLexer &lexer);
 
         void start(TRcLibrary &lib);
 

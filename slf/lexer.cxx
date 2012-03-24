@@ -70,6 +70,7 @@ namespace slf {
         //add messages
         vnl::Message &msg = vnl::Message::getTheOne();
         msg.addFmtByCode("SLF-FILE-1", "%s: processing ..");
+        msg.addFmtByCode("SLF-PARSE-1", "%s: expected '%s', found '%s'");
         msg.addFmtByCode("SLF-PARSE-2", "%s: '%s' unexpected");
         msg.addFmtByCode("SLF-PARSE-3", "%s: processed %s seconds");
         return initKeywords();
