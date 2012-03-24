@@ -38,6 +38,19 @@ namespace slf {
         COPY_CONSTRUCTOR_DECL(ValueType);
 
     };
+    
+    class ValueTypeList : public list<TRcValueType> {
+    public:
+        explicit ValueTypeList();
+        
+        virtual ~ValueTypeList();
+        
+    private:
+        //Not allowed
+        COPY_CONSTRUCTOR_DECL(ValueTypeList);
+
+    };
+
 }
 
 #endif

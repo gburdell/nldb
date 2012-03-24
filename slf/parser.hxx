@@ -43,16 +43,16 @@ namespace slf {
     using std::deque;
     using std::map;
     using std::vector;
-	using vnl::TRcLibrary;
+    using vnl::TRcLibrary;
 
     class Parser {
     public:
         typedef Token::EType EType;
 
-        explicit Parser(TRcLexer &lexer);
+        explicit Parser(TRcLexer &lexer) : m_lexer(lexer) {}
 
         void start(TRcLibrary &lib);
-        
+
         unsigned getErrorCnt() const {
             return m_errCnt;
         }
@@ -107,23 +107,29 @@ namespace slf {
         //Nonterminals
         //
         void sourceText(TRcLibrary &lib) throw (unsigned);
-        
+
         TRcLibraryEle libraryEle() throw (unsigned);
-        
+
         TRcLibCell cell() throw (unsigned);
-        
+
         TRcValueSet valueSet() throw (unsigned);
-        
+
         TRcKeyValue keyValue() throw (unsigned);
-        
+
         TRcValueType valueType() throw (unsigned);
-        
+
+        TRcValueTypeList valueTypeList() throw (unsigned);
+
         TRcExpr expr() throw (unsigned);
-        
+
         TRcExprVal exprVal() throw (unsigned);
-        
-        TRcExprOp exprOp() throw (unsigned);
-        
+
+        TRcExprOp exprOp();
+
+        TRcBus bus() throw (unsigned);
+
+        TRcNumber number();
+
         COPY_CONSTRUCTOR_DECL(Parser);
     };
 }

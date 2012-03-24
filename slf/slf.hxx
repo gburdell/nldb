@@ -63,16 +63,19 @@ namespace slf {
     DECL_CLASS_SIMPLE_RC(Token);
     DECL_CLASS_SIMPLE_RC(Parser);
 
-	//The following used to build up AST.
-	DECL_CLASS(LibraryEle);
-	DECL_CLASS(KeyValue);	//subclass of LibraryEle;
-	DECL_CLASS(LibCell);	//subclass of LibraryEle;
+    //The following used to build up AST.
+    DECL_CLASS(LibraryEle);
+    DECL_CLASS(KeyValue); //subclass of LibraryEle;
+    DECL_CLASS(LibCell); //subclass of LibraryEle;
 
-	DECL_CLASS_SIMPLE_RC(ValueSet);
-	DECL_CLASS_SIMPLE_RC(ValueType);
-	DECL_CLASS_SIMPLE_RC(Expr);
-	DECL_CLASS_SIMPLE_RC(ExprVal);
-	DECL_CLASS_SIMPLE_RC(ExprOp);
+    DECL_CLASS_SIMPLE_RC(Bus);
+    DECL_CLASS_SIMPLE_RC(ValueSet);
+    DECL_CLASS_SIMPLE_RC(ValueType);
+    DECL_CLASS_SIMPLE_RC(ValueTypeList);
+    DECL_CLASS_SIMPLE_RC(Expr);
+    DECL_CLASS_SIMPLE_RC(ExprVal);
+    DECL_CLASS_SIMPLE_RC(ExprOp);
+    DECL_CLASS_SIMPLE_RC(Number);
 }
 
 #endif

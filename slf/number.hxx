@@ -21,38 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-#if !defined(_slf_keyvalue_hxx_)
-#define  _slf_keyvalue_hxx_
+#if !defined(_slf_number_hxx_)
+#    define  _slf_number_hxx_
 
 #include "slf/slf.hxx"
-#include "slf/libraryele.hxx"
 
 namespace slf {
-
-    class KeyValue : virtual public TRcObj, public LibraryEle {
+    class Number {
     public:
-        explicit KeyValue();
-
-        EType getType() const {
-            return LibraryEle::eKeyValue;
-        }
-
-        virtual ~KeyValue();
-
+        explicit Number();
+        
+        virtual ~Number();
+        
     private:
         //Not allowed
-        COPY_CONSTRUCTOR_DECL(KeyValue);
+        COPY_CONSTRUCTOR_DECL(Number);
 
     };
-
-    inline const TRcLibraryEle toLibraryEle(const TRcKeyValue &p) {
-        return xyzzy::upcast<LibraryEle, KeyValue > (p);
-    }
-
-    inline TRcLibraryEle toLibraryEle(TRcKeyValue &p) {
-        return xyzzy::upcast<LibraryEle, KeyValue > (p);
-    }
-
 }
 
 #endif

@@ -26,20 +26,9 @@
 #include "vnl/message.hxx"
 
 namespace slf {
-	using vnl::TRcLocation;
-	using vnl::Message;
-
-	inline
-    void error(string code, const TRcLocation &loc, 
-	           string s1, string s2 = "", string s3 = "") {
-		vnl::error(code, loc, s1, s2, s3);
-	}
-
-	inline
-    void info(string code, 
-	          string s1, string s2 = "", string s3 = "", string s4 = "") {
-		vnl::info(code, s1, s2, s3, s4);
-  	}
+    using vnl::TRcLocation;
+    using vnl::error;
+    using vnl::info;
 }
 
 #endif
