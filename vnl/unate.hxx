@@ -59,12 +59,6 @@ namespace vnl {
         void addRelation(string in, string out, EUnate unate);
         
         /**
-         * Method to combine in->out w/ both ePositive and eNegative
-         * to eBoth.
-         */
-        void reduce();
-        
-        /**
          * Get affected outputs (and unate) by in.
          * @param in input.
          * @return list of affected outputs.

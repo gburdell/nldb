@@ -26,7 +26,6 @@
 #include "slf/keyvalue.hxx"
 #include "slf/message.hxx"
 #include "slf/libcell.hxx"
-#include "slf/valueset.hxx"
 #include "slf/bus.hxx"
 #include "slf/expr.hxx"
 #include "slf/exprop.hxx"
@@ -90,7 +89,7 @@ namespace slf {
         if (!ok) {
             TRcToken got = la(i);
             error("SLF-PARSE-1", got->getLocation(), Lexer::asString(type),
-                  got->getText());
+                    got->getText());
         }
         return ok;
     }
@@ -136,11 +135,23 @@ namespace slf {
                 }
                 accept();
                 expectAccept(Token::eRParen);
+                //initialize for library-scope busses
+                m_libBusTypes = new t_busTypes();
                 expectAccept(Token::eLCurly);
                 while (Token::eRCurly != la(0)->getType()) {
                     TRcLibraryEle lele = libraryEle();
-                    //NOTE: lele.isNull iff. la(1)=='}'
-                    //TODO: put cells in lib and otherstuff???
+                    if (lele.isValid()) {
+                        //TODO: put cells in lib and otherstuff???
+                        if (LibraryEle::eKeyValue == lele->getType()) {
+                            //Look for these keys
+                            if (lele->getKey() == "type") {
+                                TRcKeyValue asKv = KeyValue::downcast(lele);
+                                addTypeGroup(m_libBusTypes, asKv);
+                            }
+                        } else {
+                            ASSERT_TRUE(LibraryEle::eLibCell == lele->getType());
+                        }
+                    }
                 }
                 expectAccept(Token::eRCurly);
             }
@@ -156,10 +167,10 @@ namespace slf {
         Token::EType type = la(0)->getType();
         if (Token::eCell == type) {
             TRcLibCell libcell = cell();
-            ele = toLibraryEle(libcell);
+            ele = asLibraryEle(libcell);
         } else if (Token::eRCurly != type) {
             TRcKeyValue keyval = keyValue();
-            ele = toLibraryEle(keyval);
+            ele = asLibraryEle(keyval);
         } //else '}'
         return ele; //could be nil
     }
@@ -190,30 +201,32 @@ namespace slf {
     TRcKeyValue
     Parser::keyValue() throw (unsigned) {
         TRcKeyValue keyval;
-        TRcToken id = expectAccept(Token::eIdent);
+        TRcToken key = expectAccept(Token::eIdent);
         TRcToken tok = nextToken();
+        TRcValueType valtype;
         if (Token::eColon == tok->getType()) {
             // COLON _ value_type (SEMI)?
-            TRcValueType valtype = valueType();
-            //TODO: something w/ valtype
+            valtype = valueType();
             if (Token::eSemi == la(0)->getType()) {
                 accept();
             }
+            keyval = new KeyValue(key->getText(), valtype);
         } else if (Token::eLParen == tok->getType()) {
             // LPAREN _ (value_type_list)? RPAREN
+            TRcValueTypeList valList;
             if (Token::eRParen != la(0)->getType()) {
-                TRcValueTypeList valList = valueTypeList();
-                //TODO: something w/ valList;
+                valList = valueTypeList();
             }
             expectAccept(Token::eRParen);
             // _ (valueSet | SEMI | nil)
             Token::EType type = la(0)->getType();
+            TRcValueSet valset;
             if (Token::eLCurly == type) {
-                TRcValueSet valset = valueSet();
-                //TODO: something w/ valset
+                valset = valueSet();
             } else if (Token::eSemi == type) {
                 accept();
             } //else nil
+            keyval = new KeyValue(key->getText(), valList, valset);
         } else {
             error2(tok);
             throw (++m_errCnt);
@@ -227,7 +240,10 @@ namespace slf {
         expectAccept(Token::eLCurly);
         while (Token::eRCurly != la(0)->getType()) {
             TRcKeyValue kv = keyValue();
-            //TODO: add kv
+            if (valueSet.isNull()) {
+                valueSet = new ValueSet();
+            }
+            valueSet->push_back(kv);
         }
         expectAccept(Token::eRCurly);
         return valueSet;
@@ -235,7 +251,7 @@ namespace slf {
 
     TRcValueType
     Parser::valueType() throw (unsigned) {
-        TRcValueType valueType;
+        TRcValueType valt;
         Token::EType types[2] = {la(0)->getType(), la(1)->getType()};
 
         /*:   ((IDENT|number) expr_op)=> expr
@@ -247,7 +263,7 @@ namespace slf {
         if (((Token::eIdent == types[0]) || (Token::eFloat == types[0]) || (Token::eInteger == types[0]))
                 && (Token::eStar == types[1] || Token::ePlus == types[1])) {
             TRcExpr ex = expr();
-            //TODO: something w/ ex
+            valt = new ValueType(ex);
         } else {
             switch (types[0]) {
                 case Token::eIdent: case Token::eCell: case Token::eLibrary: //kident
@@ -256,14 +272,14 @@ namespace slf {
                     TRcBus bs;
                     if (Token::eLBracket == types[1]) {
                         bs = bus();
-                        //TODO: something w/ bus
                     }
+                    valt = new ValueType(kident->getText(), bs);
                 }
                     break;
                 case Token::eString:
                 {
                     TRcToken str = accept();
-                    //TODO: something w/ str
+                    valt = new ValueType(str->getText());
                 }
                     break;
                 case Token::eInteger: case Token::eFloat:
@@ -273,12 +289,14 @@ namespace slf {
                     if (Token::eIdent == types[1]) {
                         unit = accept();
                     }
+                    string us = (unit.isNull()) ? "" : unit->getText();
+                    valt = new ValueType(num, us);
                 }
                     break;
                 case Token::eTrue: case Token::eFalse:
                 {
                     TRcToken boolVal = accept();
-                    //TODO: something w/ boolVal
+                    valt = new ValueType(boolVal->getText()=="true");
                 }
                     break;
                 default:
@@ -289,8 +307,7 @@ namespace slf {
                 }
             }
         }
-        //TODO
-        return valueType;
+        return valt;
     }
 
     TRcBus
@@ -374,6 +391,11 @@ namespace slf {
         TRcToken n = accept(); // FLOAT | INTEGER
         //TODO: something w/ n
         return num;
+    }
+
+    void
+    Parser::addTypeGroup(trc_busTypes &busses, const TRcKeyValue &kv) {
+
     }
 
     Parser::~Parser() {

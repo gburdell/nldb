@@ -31,9 +31,15 @@ namespace slf {
     public:
         enum EType {eLibCell, eKeyValue};  //cheap rtti
         
-        explicit LibraryEle();
+        explicit LibraryEle() {}
         
         virtual EType getType() const = 0;
+        
+        /**
+         * Get key name of KeyValue (else "").
+         * @return key name (of KeyValue).
+         */
+        virtual const string &getKey() const;
         
         virtual ~LibraryEle();
         

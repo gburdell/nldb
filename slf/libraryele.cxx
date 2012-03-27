@@ -24,5 +24,13 @@
 #include "slf/libraryele.hxx"
 
 namespace slf {
-    LibraryEle::~LibraryEle() {}
+    static const string stNull = "";
+
+    const string &
+    LibraryEle::getKey() const {
+        return stNull;
+    }
+
+    LibraryEle::~LibraryEle() {
+    }
 }

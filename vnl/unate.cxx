@@ -31,49 +31,33 @@ namespace vnl {
         if (m_outsByIn.isNull()) {
             m_outsByIn = new t_outsByIn();
         }
-        t_unate rel = make_pair(out, unate);
         trc_unateList outs;
+        bool addIt = true;
         if (m_outsByIn->find(in) == m_outsByIn->end()) {
+            //No out by this name
             outs = new t_unateList();
             m_outsByIn.asT()[in] = outs;
         } else {
+            //Check for consistent unate
             outs = m_outsByIn.asT()[in];
-        }
-        outs->push_back(rel);
-    }
-
-    void
-    Unate::reduce() {
-        Unate reduced;
-        t_outsByIn::const_iterator byKey;
-        for (byKey = m_outsByIn->begin(); byKey != m_outsByIn->end(); ++byKey) {
-            string in = byKey->first;
-            const t_unateList& outs = byKey->second.asT();
-            //For "in", iterate over all affected outputs and
-            //track singular unateness
-            typedef map<string, EUnate> t_reduced;
-            t_reduced reducedForIn;
-            t_unateList::const_iterator byOut;
-            for (byOut = outs.begin(); byOut != outs.end(); ++byOut) {
-                string out = byOut->first;
-                if (reducedForIn.find(out) == reducedForIn.end()) {
-                    reducedForIn[out] = byOut->second;
-                } else if (reducedForIn[out] != byOut->second) {
-                    reducedForIn[out] = eBoth;
+            t_unateList::iterator byOut = outs->begin();
+            for (; byOut != outs->end(); ++byOut) {
+                if (out == byOut->first) {
+                    if (unate != byOut->second) {
+                        //switch to both
+                        byOut->second = eBoth;
+                    }
+                    addIt = false;
+                    break; //for
                 }
             }
-            //Update reduced
-            t_reduced::const_iterator redByOut;
-            for (redByOut = reducedForIn.begin(); redByOut != reducedForIn.end();
-                    ++redByOut) {
-                string out = redByOut->first;
-                reduced.addRelation(in, out, redByOut->second);
-            }
         }
-        //Replace w/ reduced
-        m_outsByIn = reduced.m_outsByIn;
+        if (addIt) {
+            t_unate rel = make_pair(out, unate);
+            outs->push_back(rel);
+        }
     }
-    
+
     Unate::trc_unateList
     Unate::getAffectedOutputs(string in) {
         trc_unateList outs;

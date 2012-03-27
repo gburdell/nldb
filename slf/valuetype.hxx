@@ -25,18 +25,37 @@
 #    define  _slf_valuetype_hxx_
 
 #include "slf/slf.hxx"
+#include "slf/expr.hxx"
+#include "slf/bus.hxx"
+#include "slf/number.hxx"
 
 namespace slf {
     class ValueType {
     public:
-        explicit ValueType();
+        enum EType {
+            eExpr, eKident, eString, eNumber, eBool
+        };
+        
+        //Value type constructors jive w/ above types.
+        explicit ValueType(const TRcExpr &expr);
+        
+        explicit ValueType(const string &kident, const TRcBus &bus);
+        
+        explicit ValueType(const string &str);
+        
+        explicit ValueType(const TRcNumber &num, const string &unit);
+        
+        explicit ValueType(bool b);
         
         virtual ~ValueType();
         
     private:
+        //The implementation is a big secret.
+        class Impl;
+        const Impl  *mp_impl;
+        
         //Not allowed
         COPY_CONSTRUCTOR_DECL(ValueType);
-
     };
     
     class ValueTypeList : public list<TRcValueType> {

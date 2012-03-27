@@ -29,14 +29,19 @@
 namespace slf {
     class Bus {
     public:
-        explicit Bus();
+        explicit Bus(unsigned msb, unsigned lsb)
+        : m_msb(msb), m_lsb(lsb) {}
+        
+        unsigned getMsb() const {return m_msb;}
+        
+        unsigned getLsb() const {return m_lsb;}
+
+        //Allow default constructors
         
         virtual ~Bus();
         
     private:
-        //Not allowed
-        COPY_CONSTRUCTOR_DECL(Bus);
-
+        unsigned    m_msb, m_lsb;
     };
 }
 

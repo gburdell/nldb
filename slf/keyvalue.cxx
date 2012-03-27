@@ -24,5 +24,22 @@
 #include "slf/keyvalue.hxx"
 
 namespace slf {
-    KeyValue::~KeyValue() {}
+
+    KeyValue::KeyValue(string key, TRcValueType &val) : m_key(key) {
+        if (val.isValid()) {
+            m_vals = new PTArray<TRcValueType > (1);
+            m_vals[0] = val;
+        }
+    }
+
+    KeyValue::KeyValue(string key, const TRcValueTypeList &valList,
+            TRcValueSet &valSet) : m_key(key) {
+        if (valList.isValid()) {
+            m_vals = new PTArray<TRcValueType > (valList.asT());
+            m_valSet = valSet;
+        }
+    }
+
+    KeyValue::~KeyValue() {
+    }
 }

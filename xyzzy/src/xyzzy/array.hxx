@@ -25,6 +25,7 @@
 #define  _xyzzy_array_hxx_
 
 #include <vector>
+#include <list>
 #include "xyzzy/exception.hxx"
 #include "xyzzy/refcnt.hxx"
 #include "xyzzy/slist.hxx"
@@ -96,6 +97,15 @@ namespace xyzzy {
             resize(r.size());
             for (len_t i = 0; i < length(); i++) {
                 (*this)[i] = r[i];
+            }
+        }
+
+        explicit PTArray(const std::list<T> &r) 
+        : mp_ar(0) {
+            resize(r.size());
+            typename std::list<T>::const_iterator iter(r.begin());
+            for (unsigned i = 0; iter != r.end(); ++iter) {
+                (*this)[i++] = (*iter);
             }
         }
 

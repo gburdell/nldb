@@ -34,6 +34,7 @@
 #include "vnl/vnl.hxx"
 #include "slf/slf.hxx"
 #include "slf/lexer.hxx"
+#include "slf/bus.hxx"
 //#include "slf/library.hxx"
 //#include "slf/module.hxx"
 //#include "slf/bus.hxx"
@@ -62,6 +63,11 @@ namespace slf {
     private:
         unsigned m_errCnt;
         TRcLexer m_lexer;
+        
+        typedef map<string, TRcBus>     t_busTypes;
+        typedef PTRcPtr<t_busTypes>     trc_busTypes;
+        
+        trc_busTypes    m_libBusTypes;
 
         typedef deque<TRcToken> t_tokStack;
         t_tokStack m_toks;
@@ -136,6 +142,13 @@ namespace slf {
 
         TRcNumber number();
 
+        /**
+         * Add type(){} to busses.
+         * @param busses add type to this collection.
+         * @param kv type group. 
+         */
+        static void addTypeGroup(trc_busTypes &busses, const TRcKeyValue &kv);
+        
         COPY_CONSTRUCTOR_DECL(Parser);
     };
 }

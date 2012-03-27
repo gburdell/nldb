@@ -40,6 +40,14 @@ namespace slf {
             return LibraryEle::eLibCell;
         }
 
+        static const TRcLibCell downcast(const TRcLibraryEle &r) {
+            return xyzzy::downcast<LibraryEle, LibCell > (r);
+        }
+
+        static TRcLibCell downcast(TRcLibraryEle &r) {
+            return xyzzy::downcast<LibraryEle, LibCell > (r);
+        }
+
         virtual ~LibCell();
 
     private:
@@ -48,11 +56,11 @@ namespace slf {
 
     };
 
-    inline const TRcLibraryEle toLibraryEle(const TRcLibCell &p) {
+    inline const TRcLibraryEle asLibraryEle(const TRcLibCell &p) {
         return xyzzy::upcast<LibraryEle, LibCell > (p);
     }
 
-    inline TRcLibraryEle toLibraryEle(TRcLibCell &p) {
+    inline TRcLibraryEle asLibraryEle(TRcLibCell &p) {
         return xyzzy::upcast<LibraryEle, LibCell > (p);
     }
 }
