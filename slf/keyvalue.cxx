@@ -21,9 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+#include <iostream>
 #include "slf/keyvalue.hxx"
+#include "xyzzy/assert.hxx"
 
 namespace slf {
+    using namespace std;
 
     KeyValue::KeyValue(string key, TRcValueType &val) : m_key(key) {
         if (val.isValid()) {
@@ -42,4 +45,44 @@ namespace slf {
 
     KeyValue::~KeyValue() {
     }
+
+    ValueSet::trc_kvByKey ValueSet::asMap() const {
+        trc_kvByKey kvmap;
+        if (0 < length()) {
+            kvmap = new t_kvByKey();
+            for (unsigned i = 0; i < length(); ++i) {
+                const TRcKeyValue &kv = (*this)[i];
+                const string &key = kv->getKey();
+                ASSERT_TRUE(kvmap->find(key) == kvmap->end());
+                kvmap.asT()[key] = kv;
+            }
+        }
+        return kvmap;
+    }
+
+#ifdef DEBUG
+
+    DebugOstream&
+    operator<<(DebugOstream &dos, const TRcKeyValue &kv) {
+        dos << "DBG: KeyValue {" << endl
+                << "m_key=" << kv->getKey() << endl
+                << "m_vals=";
+        if (kv->hasVals()) {
+            const KeyValue::t_vals &vals = kv->getVals();
+            for (unsigned i = 0; i < vals.length(); ++i) {
+                dos << vals[i] << endl;
+            }
+        }
+        dos << endl << "m_valSet={";
+        if (kv->hasValSet()) {
+            const ValueSet &vset = (kv->getValSet()).asT();
+            for (unsigned i = 0; i < vset.length(); ++i) {
+                dos << vset[i] << endl;
+            }
+        }
+        dos << endl << "}}" << endl;
+        return dos;
+    }
+#endif
+
 }

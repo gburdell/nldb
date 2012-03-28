@@ -26,6 +26,7 @@
 #include <string>
 #include <list>
 #include <map>
+#include <iostream>
 #include "xyzzy/refcnt.hxx"
 #include "xyzzy/array.hxx"
 #include "xyzzy/slist.hxx"
@@ -52,6 +53,7 @@ namespace slf {
     using std::string;
     using std::list;
     using std::map;
+    using std::ostream;
     using xyzzy::TRcObj;
     using xyzzy::PTRcObjPtr;
     using xyzzy::PTRcPtr;
@@ -76,6 +78,14 @@ namespace slf {
     DECL_CLASS_SIMPLE_RC(ExprVal);
     DECL_CLASS_SIMPLE_RC(ExprOp);
     DECL_CLASS_SIMPLE_RC(Number);
+    
+    class DebugOstream : public ostream {
+    public:
+        explicit DebugOstream(ostream &os) : ostream(os.rdbuf())
+        {}
+    };
+    
+    extern DebugOstream &dbgOs;
 }
 
 #endif

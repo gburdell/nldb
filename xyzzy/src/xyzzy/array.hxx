@@ -92,7 +92,7 @@ namespace xyzzy {
                 this->operator[](n) = p[n];
         }
 
-        PTArray(const std::vector<T> &r)
+        explicit PTArray(const std::vector<T> &r)
         : mp_ar(0) {
             resize(r.size());
             for (len_t i = 0; i < length(); i++) {

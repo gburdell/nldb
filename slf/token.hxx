@@ -63,7 +63,7 @@ namespace slf {
         : m_text(text), m_loc(loc), m_type(type) {
         }
 
-        string getText() const {
+        const string& getText() const {
             return m_text;
         }
 

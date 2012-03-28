@@ -42,6 +42,12 @@ namespace slf {
         error("SLF-PARSE-2", tok->getLocation(), tok->getText());
     }
 
+    inline
+    string
+    rmEnclQuotes(const string &s) {
+        return s.substr(1, s.size() - 2); //lose ""    
+    }
+
     Parser::Parser(TRcLexer &lexer)
     : m_lexer(lexer), m_errCnt(0) {
     }
@@ -186,8 +192,7 @@ namespace slf {
         if (Token::eIdent == tok->getType()) {
             cellNm = tok->getText();
         } else if (Token::eString == tok->getType()) {
-            string s = tok->getText();
-            cellNm = s.substr(1, s.size() - 2); //lose ""
+            cellNm = rmEnclQuotes(tok->getText());
         } else {
             error2(tok);
             throw (++m_errCnt);
@@ -237,15 +242,18 @@ namespace slf {
     TRcValueSet
     Parser::valueSet() throw (unsigned) {
         TRcValueSet valueSet;
+        ValueSet::t_keyValues vals;
         expectAccept(Token::eLCurly);
         while (Token::eRCurly != la(0)->getType()) {
             TRcKeyValue kv = keyValue();
-            if (valueSet.isNull()) {
-                valueSet = new ValueSet();
+            if (kv.isValid()) {
+                vals.push_back(kv);
             }
-            valueSet->push_back(kv);
         }
         expectAccept(Token::eRCurly);
+        if (0 < vals.size()) {
+            valueSet = new ValueSet(vals);
+        }
         return valueSet;
     }
 
@@ -279,7 +287,7 @@ namespace slf {
                 case Token::eString:
                 {
                     TRcToken str = accept();
-                    valt = new ValueType(str->getText());
+                    valt = new ValueType(rmEnclQuotes(str->getText()));
                 }
                     break;
                 case Token::eInteger: case Token::eFloat:
@@ -296,7 +304,7 @@ namespace slf {
                 case Token::eTrue: case Token::eFalse:
                 {
                     TRcToken boolVal = accept();
-                    valt = new ValueType(boolVal->getText()=="true");
+                    valt = new ValueType(boolVal->getText() == "true");
                 }
                     break;
                 default:
@@ -327,10 +335,10 @@ namespace slf {
 
     TRcValueTypeList
     Parser::valueTypeList() throw (unsigned) {
-        TRcValueTypeList valList;
+        TRcValueTypeList valList = new ValueTypeList();
         while (true) {
             TRcValueType valType = valueType();
-            //TODO: something w/ valType
+            valList->push_back(valType);
             if (Token::eComma == la(0)->getType()) {
                 accept();
             } else {
@@ -387,15 +395,16 @@ namespace slf {
     TRcNumber
     Parser::number() {
         //already validated  first-set
-        TRcNumber num;
         TRcToken n = accept(); // FLOAT | INTEGER
-        //TODO: something w/ n
+        const string s = n->getText();
+        TRcNumber num = new Number(s, 
+                (n->getType()==Token::eFloat) ? Number::eFloat : Number::eInteger);
         return num;
     }
 
     void
     Parser::addTypeGroup(trc_busTypes &busses, const TRcKeyValue &kv) {
-
+        dbgOs << kv;
     }
 
     Parser::~Parser() {

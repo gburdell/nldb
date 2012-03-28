@@ -22,22 +22,48 @@
  * THE SOFTWARE.
  */
 #if !defined(_slf_number_hxx_)
-#    define  _slf_number_hxx_
+#define  _slf_number_hxx_
 
 #include "slf/slf.hxx"
 
 namespace slf {
+
     class Number {
     public:
-        explicit Number();
-        
+
+        enum EType {
+            eInteger, eFloat
+        };
+
+        explicit Number(const string &txt, EType type);
+
+        EType getType() const {
+            return m_type;
+        }
+
+        double asDouble() const {
+            return m_val.m_asDbl;
+        }
+
+        long int asInt() const {
+            return m_val.m_asLong;
+        }
+
         virtual ~Number();
-        
+
     private:
+        const EType m_type;
+
+        union {
+            double m_asDbl;
+            long int m_asLong;
+        } m_val;
         //Not allowed
         COPY_CONSTRUCTOR_DECL(Number);
-
     };
+
+    DebugOstream& operator<<(DebugOstream &dos, const TRcNumber &num);
+
 }
 
 #endif

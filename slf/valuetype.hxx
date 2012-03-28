@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 #if !defined(_slf_valuetype_hxx_)
-#    define  _slf_valuetype_hxx_
+#define  _slf_valuetype_hxx_
 
 #include "slf/slf.hxx"
 #include "slf/expr.hxx"
@@ -30,46 +30,64 @@
 #include "slf/number.hxx"
 
 namespace slf {
+
     class ValueType {
     public:
+
         enum EType {
             eExpr, eKident, eString, eNumber, eBool
         };
-        
+
         //Value type constructors jive w/ above types.
         explicit ValueType(const TRcExpr &expr);
-        
+
         explicit ValueType(const string &kident, const TRcBus &bus);
-        
+
         explicit ValueType(const string &str);
-        
+
         explicit ValueType(const TRcNumber &num, const string &unit);
-        
+
         explicit ValueType(bool b);
-        
+
+        EType getType() const;
+
+        /**
+         * Get eKident or eString.
+         */
+        const string& asIdent() const;
+
+        bool asBool() const;
+
+        const TRcNumber& asNumber() const;
+
+        const TRcExpr& asExpr() const;
+
         virtual ~ValueType();
-        
+
     private:
         //The implementation is a big secret.
         class Impl;
-        const Impl  *mp_impl;
-        
+        const Impl *mp_impl;
+
         //Not allowed
         COPY_CONSTRUCTOR_DECL(ValueType);
     };
-    
+
+    DebugOstream& operator<<(DebugOstream &dos, const TRcValueType &vt);
+
     class ValueTypeList : public list<TRcValueType> {
     public:
-        explicit ValueTypeList();
-        
-        virtual ~ValueTypeList();
-        
+
+        explicit ValueTypeList() {
+        }
+
+        virtual ~ValueTypeList() {
+        }
+
     private:
         //Not allowed
         COPY_CONSTRUCTOR_DECL(ValueTypeList);
-
     };
-
 }
 
 #endif

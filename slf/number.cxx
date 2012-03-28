@@ -21,8 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+#include <sstream>
 #include "slf/number.hxx"
+#include "xyzzy/assert.hxx"
 
 namespace slf {
-    Number::~Number() {}
+    using std::istringstream;
+
+    Number::Number(const string &txt, EType type) : m_type(type) {
+        istringstream iss(txt);
+        if (eFloat == m_type) {
+            iss >> m_val.m_asDbl;
+        } else {
+            iss >> m_val.m_asLong;
+        }
+        ASSERT_TRUE(!iss.fail());
+    }
+
+    Number::~Number() {
+    }
+
+#ifdef DEBUG
+    DebugOstream&
+    operator<<(DebugOstream &dos, const TRcNumber &num) {
+        if (Number::eFloat == num->getType()) {
+            dos << num->asDouble();
+        } else {
+            dos << num->asInt();
+        }
+        return dos;
+    }
+#endif
 }
