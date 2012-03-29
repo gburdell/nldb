@@ -31,6 +31,7 @@
 #include <queue>
 #include <map>
 #include <vector>
+#include <utility>
 #include "vnl/vnl.hxx"
 #include "slf/slf.hxx"
 #include "slf/lexer.hxx"
@@ -44,6 +45,7 @@ namespace slf {
     using std::deque;
     using std::map;
     using std::vector;
+    using std::pair;
     using vnl::TRcLibrary;
 
     class Parser {
@@ -120,9 +122,9 @@ namespace slf {
         //
         void sourceText(TRcLibrary &lib) throw (unsigned);
 
-        TRcLibraryEle libraryEle() throw (unsigned);
+        pair<TRcLibraryEle,TRcValueSet> libraryEle(TRcLibrary &lib) throw (unsigned);
 
-        TRcLibCell cell() throw (unsigned);
+        pair<TRcLibCell,TRcValueSet> cell(TRcLibrary &lib) throw (unsigned);
 
         TRcValueSet valueSet() throw (unsigned);
 
@@ -148,6 +150,14 @@ namespace slf {
          * @param kv type group. 
          */
         static void addTypeGroup(trc_busTypes &busses, const TRcKeyValue &kv);
+        
+        /**
+         * Create libcell.
+         * @param lib library to update.
+         * @param cellNm library cell to add.
+         * @param vset valueSet attributes.
+         */
+        static void createLibCell(TRcLibrary &lib, TRcLibCell &lcell, TRcValueSet &vset);
         
         COPY_CONSTRUCTOR_DECL(Parser);
     };

@@ -31,8 +31,8 @@ namespace vnl {
     static string stTypeName = "libcell";
     const unsigned LibCell::stTypeId = Object::getNextTypeId(stTypeName);
 
-    LibCell::LibCell(string name)
-    : m_name(name), m_area(0.0) {
+    LibCell::LibCell(const string &name)
+    : Module(name), m_area(0.0), m_isSequential(false) {
     }
 
     LibCell::~LibCell() {

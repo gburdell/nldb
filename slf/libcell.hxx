@@ -30,7 +30,7 @@
 
 namespace slf {
 
-    class LibCell : public vnl::LibCell, public LibraryEle {
+    class LibCell : virtual public vnl::Object, public vnl::LibCell, public LibraryEle {
     public:
 
         explicit LibCell(string name) : vnl::LibCell(name) {
@@ -63,6 +63,15 @@ namespace slf {
     inline TRcLibraryEle asLibraryEle(TRcLibCell &p) {
         return xyzzy::upcast<LibraryEle, LibCell > (p);
     }
+
+    inline const vnl::TRcModule asModule(const TRcLibCell &p) {
+        return xyzzy::upcast<vnl::Module, LibCell > (p);
+    }
+
+    inline vnl::TRcModule asModule(TRcLibCell &p) {
+        return xyzzy::upcast<vnl::Module, LibCell > (p);
+    }
+
 }
 
 #endif

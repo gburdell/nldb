@@ -46,14 +46,21 @@ namespace slf {
     KeyValue::~KeyValue() {
     }
 
-    ValueSet::trc_kvByKey ValueSet::asMap() const {
+    const TRcValueType&
+    KeyValue::getVal(unsigned ix, unsigned expectN) const {
+        ASSERT_TRUE(hasVals() && (expectN == getVals().length()));
+        return getVals()[ix];
+    }
+
+    ValueSet::trc_kvByKey 
+    ValueSet::asMap(bool allowDups) const {
         trc_kvByKey kvmap;
         if (0 < length()) {
             kvmap = new t_kvByKey();
             for (unsigned i = 0; i < length(); ++i) {
                 const TRcKeyValue &kv = (*this)[i];
                 const string &key = kv->getKey();
-                ASSERT_TRUE(kvmap->find(key) == kvmap->end());
+                ASSERT_TRUE(allowDups || !mapHasKey(kvmap.asT(), key));
                 kvmap.asT()[key] = kv;
             }
         }
@@ -61,6 +68,15 @@ namespace slf {
     }
 
 #ifdef DEBUG
+    DebugOstream&
+    operator<<(DebugOstream &dos, const TRcValueSet &rcvset) {
+        dos << "ValueSet {";
+        const ValueSet &vset = rcvset.asT();
+        for (unsigned i = 0; i < vset.length(); ++i) {
+            dos << vset[i] << endl;
+        }
+        dos << "}" << endl;
+    }
 
     DebugOstream&
     operator<<(DebugOstream &dos, const TRcKeyValue &kv) {
@@ -72,15 +88,16 @@ namespace slf {
             for (unsigned i = 0; i < vals.length(); ++i) {
                 dos << vals[i] << endl;
             }
+        } else {
+            dos << endl;
         }
-        dos << endl << "m_valSet={";
+        dos << "m_valSet=";
         if (kv->hasValSet()) {
-            const ValueSet &vset = (kv->getValSet()).asT();
-            for (unsigned i = 0; i < vset.length(); ++i) {
-                dos << vset[i] << endl;
-            }
+            dos << kv->getValSet();
+        } else {
+            dos << endl;
         }
-        dos << endl << "}}" << endl;
+        dos << "}" << endl;
         return dos;
     }
 #endif

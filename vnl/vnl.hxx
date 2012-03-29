@@ -93,8 +93,8 @@ namespace vnl {
 	_cls& operator=(const _cls &)
 
     unsigned length(unsigned lb, unsigned rb);
-
-    class Object : public TRcObj {
+    
+    class Object : public virtual TRcObj {
     public:
         /**
          * Check for class/type equivalence.

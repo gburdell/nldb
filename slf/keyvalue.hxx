@@ -68,6 +68,15 @@ namespace slf {
             return m_valSet;
         }
 
+        /**
+         * Get single value for getVals().
+         * This method is most useful (by default) for 0th/only value.
+         * @param ix index of value.
+         * @param expectN expect this number of values.
+         * @return getVals()[ix].
+         */
+        const TRcValueType& getVal(unsigned ix = 0, unsigned expectN = 1) const;
+
         static const TRcKeyValue downcast(const TRcLibraryEle &r) {
             return xyzzy::downcast<LibraryEle, KeyValue > (r);
         }
@@ -102,9 +111,11 @@ namespace slf {
 
         /**
          * Get ValueSet as a map of KeyValue by key.
+         * @param allowDups set true to allow key to be redefined.
+         * Else, assertion error if key redefined.
          * @return map of key values by key.
          */
-        trc_kvByKey asMap() const;
+        trc_kvByKey asMap(bool allowDups = false) const;
 
         virtual ~ValueSet() {
         }
@@ -114,6 +125,8 @@ namespace slf {
         COPY_CONSTRUCTOR_DECL(ValueSet);
 
     };
+
+    DebugOstream& operator<<(DebugOstream &dos, const TRcValueSet &kv);
 
     inline const TRcLibraryEle asLibraryEle(const TRcKeyValue &p) {
         return xyzzy::upcast<LibraryEle, KeyValue > (p);

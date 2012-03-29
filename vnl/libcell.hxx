@@ -24,33 +24,49 @@
 #if !defined(_vnl_libcell_hxx_)
 #define  _vnl_libcell_hxx_
 
+#include <list>
+#include <map>
 #include "vnl/vnl.hxx"
 #include "vnl/unate.hxx"
+#include "vnl/module.hxx"
 
 namespace vnl {
 
-    class LibCell : virtual public Object {
+    class LibCell : virtual public Object, public Module {
     public:
-        explicit LibCell(string name);
+        explicit LibCell(const string &name);
 
-        string getName() const {
-            return m_name;
+        double getArea() const {
+            return m_area;
+        }
+
+        const string& getFunction() const {
+            return m_func;
+        }
+
+        bool isSequential() const {
+            return m_isSequential;
         }
 
         void setArea(double ar) {
             m_area = ar;
         }
 
-        double getArea() const {
-            return m_area;
+        void setFunction(const string &f) {
+            m_func = f;
+        }
+
+        void setIsSequential(bool s) {
+            m_isSequential = s;
         }
 
         virtual ~LibCell();
 
-    protected:
-        const string m_name;
+    private:
         double m_area;
         Unate m_unate;
+        string m_func;
+        bool m_isSequential;
 
     private:
         //Not allowed
@@ -71,6 +87,15 @@ namespace vnl {
     inline TRcObject upcast(TRcLibCell &p) {
         return xyzzy::upcast<Object, LibCell > (p);
     }
+
+    inline const TRcModule asModule(const TRcLibCell &p) {
+        return xyzzy::upcast<Module, LibCell > (p);
+    }
+
+    inline TRcModule asModule(TRcLibCell &p) {
+        return xyzzy::upcast<Module, LibCell > (p);
+    }
+
 }
 
 #endif

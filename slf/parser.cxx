@@ -22,6 +22,7 @@
 //THE SOFTWARE.
 
 #include "xyzzy/assert.hxx"
+#include "vnl/library.hxx"
 #include "slf/parser.hxx"
 #include "slf/keyvalue.hxx"
 #include "slf/message.hxx"
@@ -145,7 +146,8 @@ namespace slf {
                 m_libBusTypes = new t_busTypes();
                 expectAccept(Token::eLCurly);
                 while (Token::eRCurly != la(0)->getType()) {
-                    TRcLibraryEle lele = libraryEle();
+                    pair<TRcLibraryEle,TRcValueSet> lset = libraryEle(lib);
+                    TRcLibraryEle &lele = lset.first;
                     if (lele.isValid()) {
                         //TODO: put cells in lib and otherstuff???
                         if (LibraryEle::eKeyValue == lele->getType()) {
@@ -156,6 +158,8 @@ namespace slf {
                             }
                         } else {
                             ASSERT_TRUE(LibraryEle::eLibCell == lele->getType());
+                            TRcLibCell lc = LibCell::downcast(lele);
+                            createLibCell(lib, lc, lset.second);
                         }
                     }
                 }
@@ -167,22 +171,24 @@ namespace slf {
         expect(Token::eEOF);
     }
 
-    TRcLibraryEle
-    Parser::libraryEle() throw (unsigned) {
+    pair<TRcLibraryEle,TRcValueSet>
+    Parser::libraryEle(TRcLibrary &lib) throw (unsigned) {
         TRcLibraryEle ele;
+        TRcValueSet vset;
         Token::EType type = la(0)->getType();
         if (Token::eCell == type) {
-            TRcLibCell libcell = cell();
-            ele = asLibraryEle(libcell);
+            pair<TRcLibCell,TRcValueSet> libcell = cell(lib);
+            ele = asLibraryEle(libcell.first);
+            vset = libcell.second;
         } else if (Token::eRCurly != type) {
             TRcKeyValue keyval = keyValue();
             ele = asLibraryEle(keyval);
         } //else '}'
-        return ele; //could be nil
+        return std::make_pair(ele, vset); //could be nil
     }
 
-    TRcLibCell
-    Parser::cell() throw (unsigned) {
+    pair<TRcLibCell,TRcValueSet>
+    Parser::cell(TRcLibrary &lib) throw (unsigned) {
         // _ cell
         TRcLibCell libcell;
         expectAccept(Token::eCell);
@@ -197,10 +203,15 @@ namespace slf {
             error2(tok);
             throw (++m_errCnt);
         }
+        libcell = new LibCell(cellNm);
         expectAccept(Token::eRParen);
         TRcValueSet valset = valueSet();
-        //TODO: add valset to libcell
-        return libcell;
+#ifdef DEBUG   //enable to get dump of cell attributes
+        dbgOs << "DBG: cell=" << cellNm << "{ ";
+        dbgOs << valset;
+        dbgOs << " }" << std::endl;
+#endif
+        return std::make_pair(libcell, valset);
     }
 
     TRcKeyValue
@@ -397,15 +408,53 @@ namespace slf {
         //already validated  first-set
         TRcToken n = accept(); // FLOAT | INTEGER
         const string s = n->getText();
-        TRcNumber num = new Number(s, 
-                (n->getType()==Token::eFloat) ? Number::eFloat : Number::eInteger);
+        TRcNumber num = new Number(s,
+                (n->getType() == Token::eFloat) ? Number::eFloat : Number::eInteger);
         return num;
     }
 
     void
     Parser::addTypeGroup(trc_busTypes &busses, const TRcKeyValue &kv) {
+#ifdef DEBUG
         dbgOs << kv;
+#endif
+        if (!kv->hasValSet()) return;
+        ValueSet::trc_kvByKey rkvByKey = kv->getValSet()->asMap();
+        ValueSet::t_kvByKey &kvByKey = rkvByKey.asT();
+        ASSERT_TRUE("array" == kvByKey["base_type"]->getVal()->asIdent());
+        ASSERT_TRUE("bit" == kvByKey["data_type"]->getVal()->asIdent());
+        long int msb = kvByKey["bit_from"]->getVal()->asNumber()->asInt();
+        long int lsb = kvByKey["bit_to"]->getVal()->asNumber()->asInt();
+        long int n = kvByKey["bit_width"]->getVal()->asNumber()->asInt();
+        ASSERT_TRUE(n == (1 + ((msb > lsb) ? (msb - lsb) : (lsb - msb))));
+        string typeNm = kv->getVal()->asIdent();
+        TRcBus bus = new Bus(msb, lsb);
+        busses.asT()[typeNm] = bus;
     }
+    
+    void 
+    Parser::createLibCell(TRcLibrary &lib, TRcLibCell &lcel, TRcValueSet &rcvset) {
+        if (rcvset.isNull()) return;
+#ifdef DEBUG
+        dbgOs << "DBG: createLibCell" << std::endl;
+        dbgOs << rcvset;
+#endif
+        ASSERT_TRUE(! lib->hasModule(lcel->getName()));
+        {   
+            vnl::TRcModule mod = asModule(lcel);
+            lib->add(mod);
+        }
+        //Need to walk linearly, since can get multiple "bus"
+        //i.e., cant use map here.
+        const ValueSet &vset = rcvset.asT();
+        for (unsigned i = 0; i < vset.length(); i++) {
+           const TRcKeyValue &kv = vset[i];
+           if (kv->getKey() == "area") {
+               lcel->setArea(kv->getVal()->asNumber()->asDouble());
+           }
+        }
+    }
+
 
     Parser::~Parser() {
     }

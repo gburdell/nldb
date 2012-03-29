@@ -78,13 +78,21 @@ namespace slf {
     DECL_CLASS_SIMPLE_RC(ExprVal);
     DECL_CLASS_SIMPLE_RC(ExprOp);
     DECL_CLASS_SIMPLE_RC(Number);
-    
+
+    template<typename K, typename T>
+    inline
+    bool
+    mapHasKey(const map<K, T> &m, const K &key) {
+        return (m.find(key) != m.end());
+    }
+
     class DebugOstream : public ostream {
     public:
-        explicit DebugOstream(ostream &os) : ostream(os.rdbuf())
-        {}
+
+        explicit DebugOstream(ostream &os) : ostream(os.rdbuf()) {
+        }
     };
-    
+
     extern DebugOstream &dbgOs;
 }
 
