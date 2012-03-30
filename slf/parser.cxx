@@ -36,6 +36,8 @@
 #include "slf/number.hxx"
 
 namespace slf {
+    using std::endl;
+
     static const string cArea = "area";
     static const string cArray = "array";
     static const string cBaseType = "base_type";
@@ -51,6 +53,7 @@ namespace slf {
     static const string cFunction = "function";
     static const string cLatch = "latch";
     static const string cPin = "pin";
+    static const string cTiming = "timing";
     static const string cTrue = "true";
     static const string cType = "type";
 
@@ -225,7 +228,7 @@ namespace slf {
         TRcValueSet valset = valueSet();
 #ifdef DEBUG   //enable to get dump of cell attributes
         dbgOs << "DBG: cell=" << cellNm << "{ ";
-        dbgOs << valset << " }" << std::endl;
+        dbgOs << valset << " }" << endl;
 #endif
         return std::make_pair(libcell, valset);
     }
@@ -259,6 +262,10 @@ namespace slf {
                 accept();
             } //else nil
             keyval = new KeyValue(key->getText(), valList, valset);
+#ifdef xDEBUG
+            dbgOs << "DBG2: " << key->getText() << "{" << endl;
+            dbgOs << keyval << " }" << endl;
+#endif
         } else {
             error2(tok);
             throw (++m_errCnt);
@@ -452,8 +459,8 @@ namespace slf {
     Parser::createLibCell(TRcLibrary &lib, TRcLibCell &lcel, TRcValueSet &rcvset) {
         if (rcvset.isNull()) return;
 #ifdef DEBUG
-        dbgOs << "DBG: createLibCell (" << lcel->getName() << ") {" << std::endl;
-        dbgOs << rcvset << " }" << std::endl;
+        dbgOs << "DBG: createLibCell (" << lcel->getName() << ") {" << endl;
+        dbgOs << rcvset << " }" << endl;
 #endif
         ASSERT_TRUE(!lib->hasModule(lcel->getName()));
         {
@@ -468,42 +475,47 @@ namespace slf {
             const string &key = kv->getKey();
             if (key == cArea) {
                 lcel->setArea(kv->getVal()->asNumber()->asDouble());
-            } else if (key == cBus) {
+            } else if ((key == cBus) || (key == cPin)) {
                 const string &portNm = kv->getVal()->asIdent();
                 ASSERT_TRUE(kv->hasValSet());
                 //get as map, allow dups, since bus expanded into pin(s)
+                ValueSet::trc_kvByKey rcvbk = kv->getValSet()->asMap(true);
+                ValueSet::t_kvByKey &vbk = rcvbk.asT();
 #ifdef xDEBUG
-                dbgOs << "DBG: port(" << portNm << ") {" << std::endl;
-                dbgOs << kv->getValSet() << " }" << std::endl;
+                dbgOs << "DBG: pin(" << portNm << ") {" << endl;
+                dbgOs << kv->getVal() << endl;
+                dbgOs << kv->getValSet() << " }" << endl;
 #endif
-                ValueSet::trc_kvByKey rcvbk = kv->getValSet()->asMap(true);
-                ValueSet::t_kvByKey &vbk = rcvbk.asT();
-                ASSERT_TRUE(m_libBusTypes.isValid());
-                const string &busType = vbk[cBusType]->getVal()->asIdent();
-                ASSERT_TRUE(mapHasKey(m_libBusTypes.asT(), busType));
-                TRcBus bus = m_libBusTypes.asT()[busType];
                 const string &direction = vbk[cDirection]->getVal()->asIdent();
-                lcel->addPort(portNm, bus, direction);
-            } else if (key == cPin) {
-                const string &portNm = kv->getVal()->asIdent();
+                if (cBus == key) {
+                    ASSERT_TRUE(m_libBusTypes.isValid());
+                    const string &busType = vbk[cBusType]->getVal()->asIdent();
+                    ASSERT_TRUE(mapHasKey(m_libBusTypes.asT(), busType));
+                    TRcBus bus = m_libBusTypes.asT()[busType];
+                    lcel->addPort(portNm, bus, direction);
+                        //TODO: bussed pin (bit-blasted) funcs and timing
+                } else { //is scalar pin
+                    lcel->addPort(portNm, direction);
+                    if (mapHasKey(vbk, cFunction)) {
+                        //TODO: multiple out pins have multiple funcs
+                        const string &func = vbk[cFunction]->getVal()->asString();
+                        ASSERT_TRUE(lcel->getFunction().empty());
+                        lcel->setFunction(func);
+                    }  
+                    if (mapHasKey(vbk, cTiming) && vbk[cTiming]->hasValSet()) {
+                        TRcValueSet tset = vbk[cTiming]->getValSet();
 #ifdef DEBUG
-                dbgOs << "DBG: pin(" << portNm << ") {" << std::endl;
-                dbgOs << kv->getVal() << std::endl;
-                dbgOs << kv->getValSet() << " }" << std::endl;
+                        dbgOs << "DBG: timing {" << endl;
+                        dbgOs << tset << " }" << endl;
 #endif
-                ASSERT_TRUE(kv->hasValSet());
-                //allow dups for timing keys
-                ValueSet::trc_kvByKey rcvbk = kv->getValSet()->asMap(true);
-                ValueSet::t_kvByKey &vbk = rcvbk.asT();
-                const string &direction = vbk[cDirection]/*rcvbk->find(cDirection)->second*/->getVal()->asIdent();
-                lcel->addPort(portNm, direction);
-                //TODO: pin unateness
+                        ValueSet::trc_byOneKey timinfo = kv->getValSet()->byOneKey(cTiming);
+                        lcel->addTiming(portNm, timinfo);
+                    }
+                }
             } else if (key == cFF) {
                 lcel->setCellType(LibCell::eFF);
             } else if (key == cLatch) {
                 lcel->setCellType(LibCell::eLatch);
-            } else if (key == cFunction) {
-                lcel->setFunction(kv->getVal()->asString());
             }
         }
     }

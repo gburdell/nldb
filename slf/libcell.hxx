@@ -37,7 +37,7 @@ namespace slf {
 
         enum ECellType {eCombo, eFF, eLatch, eMemory};
         
-        typedef ValueSet::trc_kvByKey trc_kvByKey;
+        typedef ValueSet::trc_byOneKey trc_byOneKey;
         
         explicit LibCell(string name) : vnl::LibCell(name), m_cellType(eCombo) {
         }
@@ -72,6 +72,13 @@ namespace slf {
         bool isSequential() const {
             return (eCombo != getCellType());
         }
+        
+        /**
+         * Add timing info (currently unateness).
+         * @param opin output pin
+         * @param timinfo all timing{} associated with pin.
+         */
+        void addTiming(const string &opin, const trc_byOneKey &timinfo);
         
         static const TRcLibCell downcast(const TRcLibraryEle &r) {
             return xyzzy::downcast<LibraryEle, LibCell > (r);

@@ -36,10 +36,9 @@ namespace slf {
     }
 
     KeyValue::KeyValue(string key, const TRcValueTypeList &valList,
-            TRcValueSet &valSet) : m_key(key) {
+            TRcValueSet &valSet) : m_key(key), m_valSet(valSet) {
         if (valList.isValid()) {
             m_vals = new PTArray<TRcValueType > (valList.asT());
-            m_valSet = valSet;
         }
     }
 
@@ -52,7 +51,7 @@ namespace slf {
         return getVals()[ix];
     }
 
-    ValueSet::trc_kvByKey 
+    ValueSet::trc_kvByKey
     ValueSet::asMap(bool allowDups) const {
         trc_kvByKey kvmap;
         if (0 < length()) {
@@ -67,7 +66,23 @@ namespace slf {
         return kvmap;
     }
 
+    ValueSet::trc_byOneKey
+    ValueSet::byOneKey(const string &key) const {
+        trc_byOneKey vals;
+        if (0 < length()) {
+            vals = new t_byOneKey();
+            for (unsigned i = 0; i < length(); ++i) {
+                const TRcKeyValue &kv = (*this)[i];
+                if (kv->getKey() == key) {
+                    vals->push_back(kv);
+                }
+            }
+        }
+        return vals;
+    }
+
 #ifdef DEBUG
+
     DebugOstream&
     operator<<(DebugOstream &dos, const TRcValueSet &rcvset) {
         dos << "ValueSet {";

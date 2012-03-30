@@ -26,6 +26,7 @@
 
 #include <list>
 #include <map>
+#include <vector>
 #include "xyzzy/array.hxx"
 #include "slf/slf.hxx"
 #include "slf/libraryele.hxx"
@@ -35,6 +36,7 @@ namespace slf {
     using xyzzy::PTRcArray;
     using std::list;
     using std::map;
+    using std::vector;
 
     class KeyValue : virtual public TRcObj, public LibraryEle {
     public:
@@ -104,6 +106,8 @@ namespace slf {
         typedef list<TRcKeyValue> t_keyValues;
         typedef map<string, TRcKeyValue> t_kvByKey;
         typedef PTRcPtr<t_kvByKey> trc_kvByKey;
+        typedef vector<TRcKeyValue> t_byOneKey;
+        typedef PTRcPtr<t_byOneKey> trc_byOneKey;
 
         explicit ValueSet(const t_keyValues &vals)
         : PTArray<TRcKeyValue>(vals) {
@@ -116,6 +120,13 @@ namespace slf {
          * @return map of key values by key.
          */
         trc_kvByKey asMap(bool allowDups = false) const;
+        
+        /**
+         * Get all values associated with (single) key.
+         * @param key single key.
+         * @return values of key.
+         */
+        trc_byOneKey byOneKey(const string &key) const;
 
         virtual ~ValueSet() {
         }

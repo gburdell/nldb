@@ -30,7 +30,7 @@ namespace slf {
     using vnl::PortBus;
     using vnl::TRcPort;
     using vnl::TRcPortBus;
-    
+
     static
     Port::EDirection
     getDirection(const string &dir) {
@@ -58,6 +58,11 @@ namespace slf {
         Port::EDirection dir = getDirection(direction);
         TRcPort port = new Port(nm, dir);
         appendPortDecl(port);
+    }
+
+    void
+    LibCell::addTiming(const string &opin, const trc_byOneKey &timinfo) {
+        //TODO: unateness
     }
 
     LibCell::~LibCell() {
