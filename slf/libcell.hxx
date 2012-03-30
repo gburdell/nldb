@@ -27,19 +27,52 @@
 #include "vnl/libcell.hxx"
 #include "slf/slf.hxx"
 #include "slf/libraryele.hxx"
+#include "slf/bus.hxx"
+#include "slf/keyvalue.hxx"
 
 namespace slf {
 
     class LibCell : virtual public vnl::Object, public vnl::LibCell, public LibraryEle {
     public:
 
-        explicit LibCell(string name) : vnl::LibCell(name) {
+        enum ECellType {eCombo, eFF, eLatch, eMemory};
+        
+        typedef ValueSet::trc_kvByKey trc_kvByKey;
+        
+        explicit LibCell(string name) : vnl::LibCell(name), m_cellType(eCombo) {
         }
 
+        void setCellType(ECellType ctype) {
+            m_cellType = ctype;
+        }
+        
+        ECellType getCellType() const {
+            return m_cellType;
+        }
+        
         EType getType() const {
             return LibraryEle::eLibCell;
         }
 
+        /**
+         * Add scalar port.
+         * @param nm name of port.
+         * @param direction port direction.
+         */
+        void addPort(const string &nm, const string &direction);
+        
+        /**
+         * Added bus port.
+         * @param nm name of port.
+         * @param bus bus spec.
+         * @param direction port direction.
+         */
+        void addPort(const string &nm, const TRcBus &bus, const string &direction);
+        
+        bool isSequential() const {
+            return (eCombo != getCellType());
+        }
+        
         static const TRcLibCell downcast(const TRcLibraryEle &r) {
             return xyzzy::downcast<LibraryEle, LibCell > (r);
         }
@@ -51,6 +84,8 @@ namespace slf {
         virtual ~LibCell();
 
     private:
+        ECellType   m_cellType;
+        
         //Not allowed
         COPY_CONSTRUCTOR_DECL(LibCell);
 

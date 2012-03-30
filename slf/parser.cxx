@@ -36,6 +36,23 @@
 #include "slf/number.hxx"
 
 namespace slf {
+    static const string cArea = "area";
+    static const string cArray = "array";
+    static const string cBaseType = "base_type";
+    static const string cBit = "bit";
+    static const string cBitFrom = "bit_from";
+    static const string cBitTo = "bit_to";
+    static const string cBitWidth = "bit_width";
+    static const string cBus = "bus";
+    static const string cBusType = "bus_type";
+    static const string cDataType = "data_type";
+    static const string cDirection = "direction";
+    static const string cFF = "ff";
+    static const string cFunction = "function";
+    static const string cLatch = "latch";
+    static const string cPin = "pin";
+    static const string cTrue = "true";
+    static const string cType = "type";
 
     static
     void
@@ -146,13 +163,13 @@ namespace slf {
                 m_libBusTypes = new t_busTypes();
                 expectAccept(Token::eLCurly);
                 while (Token::eRCurly != la(0)->getType()) {
-                    pair<TRcLibraryEle,TRcValueSet> lset = libraryEle(lib);
+                    pair<TRcLibraryEle, TRcValueSet> lset = libraryEle(lib);
                     TRcLibraryEle &lele = lset.first;
                     if (lele.isValid()) {
                         //TODO: put cells in lib and otherstuff???
                         if (LibraryEle::eKeyValue == lele->getType()) {
                             //Look for these keys
-                            if (lele->getKey() == "type") {
+                            if (lele->getKey() == cType) {
                                 TRcKeyValue asKv = KeyValue::downcast(lele);
                                 addTypeGroup(m_libBusTypes, asKv);
                             }
@@ -171,13 +188,13 @@ namespace slf {
         expect(Token::eEOF);
     }
 
-    pair<TRcLibraryEle,TRcValueSet>
+    pair<TRcLibraryEle, TRcValueSet>
     Parser::libraryEle(TRcLibrary &lib) throw (unsigned) {
         TRcLibraryEle ele;
         TRcValueSet vset;
         Token::EType type = la(0)->getType();
         if (Token::eCell == type) {
-            pair<TRcLibCell,TRcValueSet> libcell = cell(lib);
+            pair<TRcLibCell, TRcValueSet> libcell = cell(lib);
             ele = asLibraryEle(libcell.first);
             vset = libcell.second;
         } else if (Token::eRCurly != type) {
@@ -187,7 +204,7 @@ namespace slf {
         return std::make_pair(ele, vset); //could be nil
     }
 
-    pair<TRcLibCell,TRcValueSet>
+    pair<TRcLibCell, TRcValueSet>
     Parser::cell(TRcLibrary &lib) throw (unsigned) {
         // _ cell
         TRcLibCell libcell;
@@ -208,8 +225,7 @@ namespace slf {
         TRcValueSet valset = valueSet();
 #ifdef DEBUG   //enable to get dump of cell attributes
         dbgOs << "DBG: cell=" << cellNm << "{ ";
-        dbgOs << valset;
-        dbgOs << " }" << std::endl;
+        dbgOs << valset << " }" << std::endl;
 #endif
         return std::make_pair(libcell, valset);
     }
@@ -315,7 +331,7 @@ namespace slf {
                 case Token::eTrue: case Token::eFalse:
                 {
                     TRcToken boolVal = accept();
-                    valt = new ValueType(boolVal->getText() == "true");
+                    valt = new ValueType(boolVal->getText() == cTrue);
                 }
                     break;
                 default:
@@ -421,40 +437,76 @@ namespace slf {
         if (!kv->hasValSet()) return;
         ValueSet::trc_kvByKey rkvByKey = kv->getValSet()->asMap();
         ValueSet::t_kvByKey &kvByKey = rkvByKey.asT();
-        ASSERT_TRUE("array" == kvByKey["base_type"]->getVal()->asIdent());
-        ASSERT_TRUE("bit" == kvByKey["data_type"]->getVal()->asIdent());
-        long int msb = kvByKey["bit_from"]->getVal()->asNumber()->asInt();
-        long int lsb = kvByKey["bit_to"]->getVal()->asNumber()->asInt();
-        long int n = kvByKey["bit_width"]->getVal()->asNumber()->asInt();
+        ASSERT_TRUE(cArray == kvByKey[cBaseType]->getVal()->asIdent());
+        ASSERT_TRUE(cBit == kvByKey[cDataType]->getVal()->asIdent());
+        long int msb = kvByKey[cBitFrom]->getVal()->asNumber()->asInt();
+        long int lsb = kvByKey[cBitTo]->getVal()->asNumber()->asInt();
+        long int n = kvByKey[cBitWidth]->getVal()->asNumber()->asInt();
         ASSERT_TRUE(n == (1 + ((msb > lsb) ? (msb - lsb) : (lsb - msb))));
         string typeNm = kv->getVal()->asIdent();
         TRcBus bus = new Bus(msb, lsb);
         busses.asT()[typeNm] = bus;
     }
-    
-    void 
+
+    void
     Parser::createLibCell(TRcLibrary &lib, TRcLibCell &lcel, TRcValueSet &rcvset) {
         if (rcvset.isNull()) return;
 #ifdef DEBUG
-        dbgOs << "DBG: createLibCell" << std::endl;
-        dbgOs << rcvset;
+        dbgOs << "DBG: createLibCell (" << lcel->getName() << ") {" << std::endl;
+        dbgOs << rcvset << " }" << std::endl;
 #endif
-        ASSERT_TRUE(! lib->hasModule(lcel->getName()));
-        {   
+        ASSERT_TRUE(!lib->hasModule(lcel->getName()));
+        {
             vnl::TRcModule mod = asModule(lcel);
             lib->add(mod);
         }
-        //Need to walk linearly, since can get multiple "bus"
-        //i.e., cant use map here.
+        //Need to walk linearly, since need to retain port order
+        //and can get repeat keys, like bus,...
         const ValueSet &vset = rcvset.asT();
         for (unsigned i = 0; i < vset.length(); i++) {
-           const TRcKeyValue &kv = vset[i];
-           if (kv->getKey() == "area") {
-               lcel->setArea(kv->getVal()->asNumber()->asDouble());
-           }
+            const TRcKeyValue &kv = vset[i];
+            const string &key = kv->getKey();
+            if (key == cArea) {
+                lcel->setArea(kv->getVal()->asNumber()->asDouble());
+            } else if (key == cBus) {
+                const string &portNm = kv->getVal()->asIdent();
+                ASSERT_TRUE(kv->hasValSet());
+                //get as map, allow dups, since bus expanded into pin(s)
+#ifdef xDEBUG
+                dbgOs << "DBG: port(" << portNm << ") {" << std::endl;
+                dbgOs << kv->getValSet() << " }" << std::endl;
+#endif
+                ValueSet::trc_kvByKey rcvbk = kv->getValSet()->asMap(true);
+                ValueSet::t_kvByKey &vbk = rcvbk.asT();
+                ASSERT_TRUE(m_libBusTypes.isValid());
+                const string &busType = vbk[cBusType]->getVal()->asIdent();
+                ASSERT_TRUE(mapHasKey(m_libBusTypes.asT(), busType));
+                TRcBus bus = m_libBusTypes.asT()[busType];
+                const string &direction = vbk[cDirection]->getVal()->asIdent();
+                lcel->addPort(portNm, bus, direction);
+            } else if (key == cPin) {
+                const string &portNm = kv->getVal()->asIdent();
+#ifdef DEBUG
+                dbgOs << "DBG: pin(" << portNm << ") {" << std::endl;
+                dbgOs << kv->getVal() << std::endl;
+                dbgOs << kv->getValSet() << " }" << std::endl;
+#endif
+                ASSERT_TRUE(kv->hasValSet());
+                //allow dups for timing keys
+                ValueSet::trc_kvByKey rcvbk = kv->getValSet()->asMap(true);
+                ValueSet::t_kvByKey &vbk = rcvbk.asT();
+                const string &direction = vbk[cDirection]/*rcvbk->find(cDirection)->second*/->getVal()->asIdent();
+                lcel->addPort(portNm, direction);
+                //TODO: pin unateness
+            } else if (key == cFF) {
+                lcel->setCellType(LibCell::eFF);
+            } else if (key == cLatch) {
+                lcel->setCellType(LibCell::eLatch);
+            } else if (key == cFunction) {
+                lcel->setFunction(kv->getVal()->asString());
+            }
         }
     }
-
 
     Parser::~Parser() {
     }

@@ -28,7 +28,7 @@
 #include <map>
 #include <list>
 #include "vnl/vnl.hxx"
-#include "vnl/port.hxx"
+#include "vnl/portbus.hxx"
 #include "vnl/cell.hxx"
 
 namespace vnl {
@@ -53,6 +53,18 @@ namespace vnl {
          * @param nm name of port.
          */
         void appendPortDecl(string nm);
+        
+        /**
+         * Add port as bus (in declaration order).
+         * @param bus port as bus.
+         */
+        void appendPortDecl(TRcPortBus &bus);
+        
+        /**
+         * Add port (in declaration order).
+         * @param bus port as scalar.
+         */
+        void appendPortDecl(TRcPort &port);
         
         void addWire(TRcWire &wire);
         

@@ -157,7 +157,7 @@ namespace slf {
          * @param cellNm library cell to add.
          * @param vset valueSet attributes.
          */
-        static void createLibCell(TRcLibrary &lib, TRcLibCell &lcell, TRcValueSet &vset);
+        void createLibCell(TRcLibrary &lib, TRcLibCell &lcell, TRcValueSet &vset);
         
         COPY_CONSTRUCTOR_DECL(Parser);
     };

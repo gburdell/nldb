@@ -136,6 +136,22 @@ namespace vnl {
     }
 
     void
+    Module::appendPortDecl(TRcPortBus &bus) {
+        const string &nm = bus->getName();
+        appendPortDecl(nm); //keep order
+        TRcWire asWire = toWire(bus);
+        addWire(asWire);
+    }
+
+    void
+    Module::appendPortDecl(TRcPort &port) {
+        const string &nm = port->getName();
+        appendPortDecl(nm); //keep order
+        TRcWire asWire = toWire(port);
+        addWire(asWire);
+    }
+
+    void
     Module::addWire(TRcWire &wire) {
         string nm = wire->getName();
         ASSERT_TRUE(!hasWire(nm));

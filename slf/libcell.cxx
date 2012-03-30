@@ -21,8 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+#include "vnl/port.hxx"
+#include "vnl/portbus.hxx"
 #include "slf/libcell.hxx"
 
 namespace slf {
-    LibCell::~LibCell() {}
+    using vnl::Port;
+    using vnl::PortBus;
+    using vnl::TRcPort;
+    using vnl::TRcPortBus;
+    
+    static
+    Port::EDirection
+    getDirection(const string &dir) {
+        Port::EDirection pdir = Port::eUnknown;
+        if (dir == "input") {
+            pdir = Port::eIn;
+        } else if (dir == "output") {
+            pdir = Port::eOut;
+        } else {
+            pdir = Port::eInout;
+        }
+        return pdir;
+    }
+
+    void
+    LibCell::addPort(const string &nm, const TRcBus &bus, const string &direction) {
+        Port::EDirection dir = getDirection(direction);
+        vnl::TRcBus vbus = new vnl::Bus(bus->getMsb(), bus->getLsb());
+        TRcPortBus pbus = new PortBus(nm, dir, vbus);
+        appendPortDecl(pbus);
+    }
+
+    void
+    LibCell::addPort(const string &nm, const string &direction) {
+        Port::EDirection dir = getDirection(direction);
+        TRcPort port = new Port(nm, dir);
+        appendPortDecl(port);
+    }
+
+    LibCell::~LibCell() {
+    }
 }

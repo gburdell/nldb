@@ -55,6 +55,10 @@ namespace slf {
          * Get eKident or eString.
          */
         const string& asIdent() const;
+        
+        const string& asString() const {
+            return asIdent();
+        }
 
         bool asBool() const;
 

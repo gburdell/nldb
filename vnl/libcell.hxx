@@ -44,8 +44,10 @@ namespace vnl {
             return m_func;
         }
 
-        bool isSequential() const {
-            return m_isSequential;
+        virtual bool isSequential() const = 0;
+        
+        virtual bool isBlackBox() const {
+            return m_func.empty();
         }
 
         void setArea(double ar) {
@@ -56,17 +58,12 @@ namespace vnl {
             m_func = f;
         }
 
-        void setIsSequential(bool s) {
-            m_isSequential = s;
-        }
-
         virtual ~LibCell();
 
     private:
         double m_area;
         Unate m_unate;
         string m_func;
-        bool m_isSequential;
 
     private:
         //Not allowed
