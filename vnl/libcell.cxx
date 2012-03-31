@@ -35,6 +35,48 @@ namespace vnl {
     : Module(name), m_area(0.0) {
     }
 
+    void LibCell::setOpinFunction(const string &opin, const string &func) {
+        bool noDups = true;
+        for (t_opinFuncs::const_iterator i = m_funcs.begin();
+                i != m_funcs.end(); ++i) {
+            noDups &= (opin != i->first);
+        }
+        ASSERT_TRUE(noDups);
+        m_funcs.push_back(make_pair(opin, func));
+    }
+
+    string
+    LibCell::getSingleFunc() const {
+        ASSERT_TRUE(hasSingleFunc());
+        return m_funcs.front().second;
+    }
+
+    string
+    LibCell::getOpinFunction(const string &opin) const {
+        string func;
+        trc_funcByOpin fmap = getOpinFunctions();
+        if (fmap.isNull()) {
+            t_funcByOpin::const_iterator i = fmap->find(opin);
+            if (i != fmap->end()) {
+                func = i->second;
+            }
+        }
+        return func;
+    }
+
+    LibCell::trc_funcByOpin
+    LibCell::getOpinFunctions() const {
+        trc_funcByOpin fmap;
+        if (0 < getFuncCnt()) {
+            fmap = new t_funcByOpin();
+            for (t_opinFuncs::const_iterator i = m_funcs.begin();
+                    i != m_funcs.end(); ++i) {
+                fmap.asT()[i->first] = i->second;
+            }
+        }
+        return fmap;
+    }
+
     LibCell::~LibCell() {
     }
 

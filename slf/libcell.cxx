@@ -30,6 +30,9 @@ namespace slf {
     using vnl::PortBus;
     using vnl::TRcPort;
     using vnl::TRcPortBus;
+    
+    static const string cRelatedPin = "related_pin";
+    static const string cTimingSense = "timing_sense";
 
     static
     Port::EDirection
@@ -62,7 +65,23 @@ namespace slf {
 
     void
     LibCell::addTiming(const string &opin, const trc_byOneKey &timinfo) {
-        //TODO: unateness
+        if (timinfo.isNull()) return;
+        TRcKeyValue inKv, unateKv;
+        for (unsigned i = 0; i < timinfo->size(); i++) {
+            const TRcKeyValue &kv = timinfo->at(i);
+            if (! kv->hasValSet()) continue;
+#ifdef xDEBUG
+            dbgOs << "DBG: addTiming {" << std::endl;
+            dbgOs << kv->getValSet() << " }" << std::endl;
+#endif
+            ValueSet::trc_kvByKey rcvbk = kv->getValSet()->asMap();
+            if (mapGetVal(rcvbk, cRelatedPin, inKv) && 
+                    mapGetVal(rcvbk, cTimingSense, unateKv)) {
+                string in = inKv->getVal()->asIdent();
+                string unate = unateKv->getVal()->asIdent();
+                m_unate.addRelation(in, opin, unate);
+            }
+        }
     }
 
     LibCell::~LibCell() {

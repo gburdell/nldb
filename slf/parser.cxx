@@ -497,10 +497,8 @@ namespace slf {
                 } else { //is scalar pin
                     lcel->addPort(portNm, direction);
                     if (mapHasKey(vbk, cFunction)) {
-                        //TODO: multiple out pins have multiple funcs
                         const string &func = vbk[cFunction]->getVal()->asString();
-                        ASSERT_TRUE(lcel->getFunction().empty());
-                        lcel->setFunction(func);
+                        lcel->setOpinFunction(portNm, func);
                     }  
                     if (mapHasKey(vbk, cTiming) && vbk[cTiming]->hasValSet()) {
                         TRcValueSet tset = vbk[cTiming]->getValSet();

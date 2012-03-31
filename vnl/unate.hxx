@@ -56,14 +56,16 @@ namespace vnl {
          * @param out affected output (by in).
          * @param unate relation of in->out.
          */
-        void addRelation(string in, string out, EUnate unate);
+        void addRelation(const string &in, const string &out, EUnate unate);
+        
+        void addRelation(const string &in, const string &out, const string &unate);
         
         /**
          * Get affected outputs (and unate) by in.
          * @param in input.
          * @return list of affected outputs.
          */
-        trc_unateList getAffectedOutputs(string in);
+        trc_unateList getAffectedOutputs(const string &in);
            
         virtual ~Unate();
 

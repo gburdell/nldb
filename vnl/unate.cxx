@@ -27,7 +27,7 @@
 namespace vnl {
 
     void
-    Unate::addRelation(string in, string out, EUnate unate) {
+    Unate::addRelation(const string &in, const string &out, EUnate unate) {
         if (m_outsByIn.isNull()) {
             m_outsByIn = new t_outsByIn();
         }
@@ -58,8 +58,21 @@ namespace vnl {
         }
     }
 
+    void
+    Unate::addRelation(const string &in, const string &out, const string &unate) {
+        EUnate eun;
+        if ("positive_unate" == unate) {
+            eun = ePositive;
+        } else if ("negative_unate" == unate) {
+            eun = eNegative;
+        } else {
+            eun = eBoth;
+        }
+        addRelation(in, out, eun);
+    }
+
     Unate::trc_unateList
-    Unate::getAffectedOutputs(string in) {
+    Unate::getAffectedOutputs(const string &in) {
         trc_unateList outs;
         if (m_outsByIn->find(in) != m_outsByIn->end()) {
             outs = m_outsByIn.asT()[in];

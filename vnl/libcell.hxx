@@ -25,45 +25,82 @@
 #define  _vnl_libcell_hxx_
 
 #include <list>
+#include <utility>
 #include <map>
+#include "xyzzy/assert.hxx"
 #include "vnl/vnl.hxx"
 #include "vnl/unate.hxx"
 #include "vnl/module.hxx"
 
 namespace vnl {
+    using std::list;
+    using std::pair;
+    using xyzzy::PTRcArray;
 
     class LibCell : virtual public Object, public Module {
     public:
+        /* Few cells have multiple outs, and function associated w/ out.
+         * ideally, need map of function by out; but a map starts
+         * at 3x size of list.  So, we'll tradeoff speed for mem and just
+         * use list.
+         */
+        typedef pair<string, string>    t_opinFunc;
+        typedef list<t_opinFunc>        t_opinFuncs;
+        typedef map<string,string>      t_funcByOpin;
+        typedef PTRcPtr<t_funcByOpin>   trc_funcByOpin;
+
         explicit LibCell(const string &name);
 
         double getArea() const {
             return m_area;
         }
 
-        const string& getFunction() const {
-            return m_func;
-        }
+        /**
+         * Set output pin function.
+         * @param opin output pin to set function for.
+         * @param func function to set.
+         */
+        void setOpinFunction(const string &opin, const string &func);
 
-        virtual bool isSequential() const = 0;
+        unsigned getFuncCnt() const {
+            return m_funcs.size();
+        }
         
+        bool hasSingleFunc() const {
+            return (1 == getFuncCnt());
+        }
+        
+        string getSingleFunc() const;
+        
+        /**
+         * Get output pin's function.
+         * @param opin output pin to get function for.
+         * @return function of output pin.
+         */
+        string getOpinFunction(const string &opin) const;
+        
+        /**
+         * Get all output pin functions as map by opin name.
+         * @return map of function by opin name.
+         */
+        trc_funcByOpin getOpinFunctions() const;
+        
+        virtual bool isSequential() const = 0;
+
         virtual bool isBlackBox() const {
-            return m_func.empty();
+            return m_funcs.empty();
         }
 
         void setArea(double ar) {
             m_area = ar;
         }
 
-        void setFunction(const string &f) {
-            m_func = f;
-        }
-
         virtual ~LibCell();
 
-    private:
+    protected:
+        t_opinFuncs m_funcs;
         double m_area;
         Unate m_unate;
-        string m_func;
 
     private:
         //Not allowed

@@ -86,6 +86,25 @@ namespace slf {
         return (m.find(key) != m.end());
     }
 
+    /**
+     * Get map value of key.
+     * @param rcm (reference counted) map.
+     * @param key key value.
+     * @param val return value (if key found).
+     * @return true if key found; else false.
+     */
+    template<typename K, typename T>
+    inline
+    bool
+    mapGetVal(const PTRcPtr<map<K, T> > &rcm, const K &key, T &val) {
+        typename map<K,T>::const_iterator i = rcm->find(key);
+        bool ok = (i != rcm->end());
+        if (ok) {
+            val = i->second;
+        }
+        return ok;
+    }
+
     class DebugOstream : public ostream {
     public:
 
