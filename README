@@ -1,6 +1,10 @@
+02-apr-2012
+===========
++ Project webpage (and docs): http://gburdell.github.com/nldb
++ (moved master:/docs to webiste gh-pages:/docs for online viewing)
+
 01-apr-2012
 ===========
-+ Added doxygen output under: ./doc/html/index.html
 + ./runDoxygen and doxygen.cfg are used.
 
 22-mar-2012
