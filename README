@@ -1,6 +1,6 @@
 01-apr-2012
 ===========
-+ Added doxygen output under: ./html/index.html
++ Added doxygen output under: ./doc/html/index.html
 + ./runDoxygen and doxygen.cfg are used.
 
 22-mar-2012
