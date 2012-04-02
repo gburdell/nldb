@@ -1,3 +1,8 @@
+01-apr-2012
+===========
++ Added doxygen output under: ./html/index.html
++ ./runDoxygen and doxygen.cfg are used.
+
 22-mar-2012
 ===========
 + JNI+nldb proved too slow and memory hog on some huge designs worked
