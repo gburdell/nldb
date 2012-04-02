@@ -48,12 +48,14 @@ namespace vnl {
     class Token;
     class Parser;
     class ConstRef;
+    class Writer;
 
     typedef PTRcPtr<Token> TRcToken;
     typedef PTRcPtr<Location> TRcLocation;
     typedef PTRcPtr<Lexer> TRcLexer;
     typedef PTRcPtr<Parser> TRcParser;
     typedef PTRcPtr<ConstRef> TRcConstRef;
+    typedef PTRcPtr<Writer> TRcWriter;
 
 #define DECL_CLASS(_cls)                \
     class _cls ;                        \
@@ -93,7 +95,7 @@ namespace vnl {
 	_cls& operator=(const _cls &)
 
     unsigned length(unsigned lb, unsigned rb);
-    
+
     class Object : public virtual TRcObj {
     public:
         /**
@@ -141,6 +143,14 @@ namespace vnl {
 
         static unsigned stTypeId;
     };
+
+    template<typename K, typename T>
+    inline
+    bool
+    mapHasKey(const map<K, T> &m, const K &key) {
+        return (m.find(key) != m.end());
+    }
+
 }
 
 #endif

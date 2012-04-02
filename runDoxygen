@@ -1,0 +1,3 @@
+#!/bin/csh -f
+
+doxygen doxygen.cfg >& doxygen.log

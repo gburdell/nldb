@@ -148,16 +148,17 @@ namespace slf {
 
     void
     Parser::sourceText(TRcLibrary &lib) throw (unsigned) {
-        TRcToken tok;
+        TRcToken libnmTok;
         try {
             while (la(0)->getType() == Token::eLibrary) {
                 accept();
                 expectAccept(Token::eLParen);
-                switch (la(0)->getType()) {
+                libnmTok = la(0);
+                switch (libnmTok->getType()) {
                     case Token::eIdent: case Token::eString:
                         break;
                     default:
-                        error2(tok);
+                        error2(libnmTok);
                         throw (++m_errCnt);
                 }
                 accept();
@@ -223,10 +224,14 @@ namespace slf {
             error2(tok);
             throw (++m_errCnt);
         }
+        if (lib->hasModule(cellNm)) {
+            error("SLF-DEFN-1", tok->getLocation(), cellNm);
+            throw (++m_errCnt);
+        }
         libcell = new LibCell(cellNm);
         expectAccept(Token::eRParen);
         TRcValueSet valset = valueSet();
-#ifdef DEBUG   //enable to get dump of cell attributes
+#ifdef xDEBUG   //enable to get dump of cell attributes
         dbgOs << "DBG: cell=" << cellNm << "{ ";
         dbgOs << valset << " }" << endl;
 #endif
@@ -438,7 +443,7 @@ namespace slf {
 
     void
     Parser::addTypeGroup(trc_busTypes &busses, const TRcKeyValue &kv) {
-#ifdef DEBUG
+#ifdef xDEBUG
         dbgOs << kv;
 #endif
         if (!kv->hasValSet()) return;
@@ -458,7 +463,7 @@ namespace slf {
     void
     Parser::createLibCell(TRcLibrary &lib, TRcLibCell &lcel, TRcValueSet &rcvset) {
         if (rcvset.isNull()) return;
-#ifdef DEBUG
+#ifdef xDEBUG
         dbgOs << "DBG: createLibCell (" << lcel->getName() << ") {" << endl;
         dbgOs << rcvset << " }" << endl;
 #endif
@@ -486,23 +491,30 @@ namespace slf {
                 dbgOs << kv->getVal() << endl;
                 dbgOs << kv->getValSet() << " }" << endl;
 #endif
-                const string &direction = vbk[cDirection]->getVal()->asIdent();
+                string direction;
+                TRcKeyValue dirkv;
+                if (!mapGetVal(rcvbk, cDirection, dirkv)) {
+                    //get direction from bus(xxx) { pin(yyy) { direction : ..}}
+                    ASSERT_TRUE((cBus == key) && mapGetVal(rcvbk, cPin, dirkv));
+                    ASSERT_TRUE(mapGetVal(dirkv->getValSet()->asMap(true), cDirection, dirkv));
+                }
+                direction = dirkv->getVal()->asIdent();
                 if (cBus == key) {
                     ASSERT_TRUE(m_libBusTypes.isValid());
                     const string &busType = vbk[cBusType]->getVal()->asIdent();
                     ASSERT_TRUE(mapHasKey(m_libBusTypes.asT(), busType));
                     TRcBus bus = m_libBusTypes.asT()[busType];
                     lcel->addPort(portNm, bus, direction);
-                        //TODO: bussed pin (bit-blasted) funcs and timing
+                    //TODO: bussed pin (bit-blasted) funcs and timing
                 } else { //is scalar pin
                     lcel->addPort(portNm, direction);
                     if (mapHasKey(vbk, cFunction)) {
                         const string &func = vbk[cFunction]->getVal()->asString();
                         lcel->setOpinFunction(portNm, func);
-                    }  
+                    }
                     if (mapHasKey(vbk, cTiming) && vbk[cTiming]->hasValSet()) {
                         TRcValueSet tset = vbk[cTiming]->getValSet();
-#ifdef DEBUG
+#ifdef xDEBUG
                         dbgOs << "DBG: timing {" << endl;
                         dbgOs << tset << " }" << endl;
 #endif

@@ -151,6 +151,10 @@ namespace vnl {
             return xyzzy::downcast<Object, Module > (r);
         }
 
+        virtual bool isLibCell() const {
+            return false;
+        }
+        
         virtual ~Module();
 
     private:

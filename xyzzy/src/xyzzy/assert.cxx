@@ -24,36 +24,66 @@
 #include <cstdlib>
 #include <cerrno>
 #include <iostream>
+#include <execinfo.h>
 #include "xyzzy/assert.hxx"
 
-namespace xyzzy
-{
-	using namespace std;
+#ifndef NO_EXIT_ON_ASSERT
+#define EXIT exit(EXIT_FAILURE)
+#else
+#define EXIT if(0)
+#endif
 
-	bool assertTrue(const bool cond)
-	{
-		if (false == cond)
-		{
-			cerr << "Assertion failed." << endl;
-		}
-		return cond;
-	}
+namespace xyzzy {
+    using namespace std;
 
-	bool assertTrue(const bool cond, const char* cexpr,
-				    const char* fname, unsigned lnum)
-	{
-		if (false == cond)
-		{
-			cerr << "Assertion failed: "
-				 << fname << ":" << lnum
-				 << ": \"" << cexpr << "\"" << endl;
-		}
-		return cond;
-	}
+    static
+    void
+    dumpBacktrace(ostream &os = cerr) {
+#ifdef DEBUG
+        os << "Stack dump:" << endl 
+                << "Use 'addr2line' to convert to actual source-code locations"
+                << endl;
+        int j, nptrs;
+        static unsigned SIZE = 16;
+        void *buffer[SIZE];
+        char **strings;
+        nptrs = backtrace(buffer, SIZE);
+        strings = backtrace_symbols(buffer, nptrs);
+        if (strings == NULL) {
+            perror("backtrace_symbols");
+            exit(EXIT_FAILURE);
+        }
+        for (j = 0; j < nptrs; j++)
+            os << strings[j] << " ";
+        os << endl;
+        free(strings);
+#endif
+    }
+    
+    bool assertTrue(const bool cond) {
+        if (false == cond) {
+            cerr << "Assertion failed." << endl;
+            dumpBacktrace();
+            EXIT;
+        }
+        return cond;
+    }
 
-	void die(const char *pfx)
-	{
-		perror(pfx);
-		exit(EXIT_FAILURE);
-	}
-};	
+    bool assertTrue(const bool cond, const char* cexpr,
+            const char* fname, unsigned lnum) {
+        if (false == cond) {
+            cerr << "Assertion failed: "
+                    << fname << ":" << lnum
+                    << ": \"" << cexpr << "\"" << endl;
+            dumpBacktrace();
+            EXIT;
+        }
+        return cond;
+    }
+
+    void die(const char *pfx) {
+        perror(pfx);
+        exit(EXIT_FAILURE);
+    }
+
+};

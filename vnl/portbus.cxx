@@ -28,6 +28,12 @@ namespace vnl {
     static string stTypeName = "portbus";
     const unsigned PortBus::stTypeId = Object::getNextTypeId(stTypeName);
 
+    ostream&
+    PortBus::operator<<(ostream &os) const {
+        writeDirection(os) << " " << Bus::toString() << " " << getName();
+        return os;
+    }
+
     PortBus::PortBus(string name, EDirection dir, const TRcBus &bus)
     : Wire(name), WireBus(name, bus), Port(name, dir) {
     }

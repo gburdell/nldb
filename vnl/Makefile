@@ -24,19 +24,21 @@ LIBNM    = vnl
 SRC_DIR  = .
 TEST     =
 
-#CFLAGS := -DM32 -m32 -Isrc
 CFLAGS := -I.. -I../xyzzy/src
+LDFLAGS ?= -static
 ifeq ("debug","${VARIANT}")
-	CFLAGS += -DDEBUG -g
+	CFLAGS  += -DDEBUG -g
+	LDFLAGS += -rdynamic
 endif
 ifeq ("release","${VARIANT}")
-	CFLAGS += -O3
+	CFLAGS  += -O3
+	LDFLAGS += -s
 endif
 ifeq ("profile","${VARIANT}")
 	#CFLAGS += -DDEBUG -pg
-	CFLAGS += -pg
+	CFLAGS  += -pg
+	LDFLAGS += -rdynamic
 endif
-
 ifneq ("","${TEST}")
 	CFLAGS += -D${TEST}
 endif
@@ -78,7 +80,7 @@ endif
 ${DIST_DIR}/${VARIANT}/${OS}/test: \
 		${DIST_DIR}/${VARIANT}/${OS}/${LIBNM}.a \
 		../xyzzy/dist/${VARIANT}/${OS}/xyzzy.a
-	g++ ${CFLAGS} -o ${@} ${<} ../xyzzy/dist/${VARIANT}/${OS}/xyzzy.a
+	g++ ${CFLAGS} ${LDFLAGS} -o ${@} ${<} ../xyzzy/dist/${VARIANT}/${OS}/xyzzy.a
 
 .PHONY: %.objdir
 %.objdir: ${OBJ_DIR} ;

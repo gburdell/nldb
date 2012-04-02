@@ -25,19 +25,21 @@ LIBNM    = slf
 SRC_DIR  = .
 TEST     =
 
-#CFLAGS := -DM32 -m32 -Isrc
 CFLAGS := -I.. -I../xyzzy/src
+LDFLAGS ?= -static
 ifeq ("debug","${VARIANT}")
-	CFLAGS += -DDEBUG -g
+	CFLAGS  += -DDEBUG -g
+	LDFLAGS += -rdynamic
 endif
 ifeq ("release","${VARIANT}")
-	CFLAGS += -O3
+	CFLAGS  += -O3
+	LDFLAGS += -s
 endif
 ifeq ("profile","${VARIANT}")
 	#CFLAGS += -DDEBUG -pg
-	CFLAGS += -pg
+	CFLAGS  += -pg
+	LDFLAGS += -rdynamic
 endif
-
 ifneq ("","${TEST}")
 	CFLAGS += -D${TEST}
 endif
@@ -82,7 +84,7 @@ OTHER_DOTA := ../vnl/dist/${VARIANT}/${OS}/vnl.a \
 ${DIST_DIR}/${VARIANT}/${OS}/test: ${DIST_DIR}/${VARIANT}/${OS}/${LIBNM}.a
 	${MAKE} -C ../xyzzy ${VARIANT}
 	${MAKE} -C ../vnl ${VARIANT}
-	g++ ${CFLAGS} -o ${@} ${<} ${OTHER_DOTA}
+	g++ ${CFLAGS} ${LDFLAGS} -o ${@} ${<} ${OTHER_DOTA}
 
 .PHONY: %.objdir
 %.objdir: ${OBJ_DIR} ;

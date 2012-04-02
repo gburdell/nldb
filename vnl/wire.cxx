@@ -31,6 +31,12 @@ namespace vnl {
 
     const string Wire::stConstNm[2] = {"**logic0**", "**logic1**"};
 
+    ostream&
+    Wire::operator<<(ostream &os) const {
+        os << "wire " << getName();
+        return os;
+    }
+
     void
     Wire::add(TRcObject conn) {
         if (m_conns.isNull()) {

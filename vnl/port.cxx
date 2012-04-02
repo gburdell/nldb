@@ -28,5 +28,20 @@ namespace vnl {
     static string stTypeName = "port";
     const unsigned Port::stTypeId = Object::getNextTypeId(stTypeName);
 
-    Port::~Port() {}
+    ostream&
+    Port::operator<<(ostream &os) const {
+        writeDirection(os) << " " << getName();
+        return os;
+    }
+
+    ostream&
+    Port::writeDirection(ostream &os) const {
+        if (eIn == getDirection()) os << "input";
+        else if (eOut == getDirection()) os << "output";
+        else os << "inout";
+        return os;
+    }
+
+    Port::~Port() {
+    }
 };

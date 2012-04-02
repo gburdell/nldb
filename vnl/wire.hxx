@@ -25,11 +25,13 @@
 #if !defined(_vnl_wire_hxx_)
 #define  _vnl_wire_hxx_
 
+#include <ostream>
 #include "vnl/vnl.hxx"
 #include "vnl/pinref.hxx"
 
 namespace vnl {
-
+    using std::ostream;
+    
     class Wire : virtual public Object {
     public:
         static const string stConstNm[2]; //names for logic[01]
@@ -61,6 +63,13 @@ namespace vnl {
             return false;
         }
 
+        /**
+         * Write declaration to stream
+         * @param os output stream.
+         * @return output stream.
+         */
+        virtual ostream& operator<<(ostream &os) const;
+        
         bool isScalar() const {
             return !isBus();
         }
@@ -99,6 +108,11 @@ namespace vnl {
         }
     };
 
+    inline
+    ostream& operator<<(ostream &os, const TRcWire &wire) {
+        return wire->operator <<(os);
+    }
+    
     inline const TRcObject upcast(const TRcWire &p) {
         return xyzzy::upcast<Object, Wire > (p);
     }

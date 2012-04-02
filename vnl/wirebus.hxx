@@ -39,6 +39,13 @@ namespace vnl {
             return true;
         }
 
+        /**
+         * Write declaration to stream
+         * @param os output stream.
+         * @return output stream.
+         */
+        virtual ostream& operator<<(ostream &os) const;
+        
         static const TRcWireBus downcast(const TRcObject &r) {
             return xyzzy::downcast<Object, WireBus > (r);
         }
@@ -78,6 +85,11 @@ namespace vnl {
         static const unsigned stTypeId;
 
     };
+
+    inline
+    ostream& operator<<(ostream &os, const TRcWireBus &wire) {
+        return wire->operator <<(os);
+    }
 
     inline const TRcObject upcast(const TRcWireBus &p) {
         return xyzzy::upcast<Object, WireBus > (p);

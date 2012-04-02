@@ -105,7 +105,7 @@ namespace vnl {
         }
         return tok;
     }
-    
+
     bool
     Parser::expect(EType type, unsigned i) {
         bool ok = test(type, i);
@@ -354,7 +354,6 @@ namespace vnl {
                 } else {
                     createEntry(connsByPortName, pnm, conns);
                 }
-
             }
         }
         string inm = instNm->getText();
@@ -382,7 +381,6 @@ namespace vnl {
                     items->splice(items->end(), nitems.asT());
                 }
                 if (la(0)->isType(Token::eComma)) {
-
                     accept();
                 }
             }
@@ -405,7 +403,6 @@ namespace vnl {
                 break;
             case Token::eLCurly:
                 nitems = concatentation(mod);
-
                 break;
             default:
                 error("VNL-PARSE-2", tok->getLocation(), tok->getText());
@@ -439,8 +436,11 @@ namespace vnl {
             TRcWire w = mod->getWire(tok->getText());
             //TODO: implicit wires: add if not declared
             if (w.isNull()) {
-                error("VNL-DECL-2", tok->getLocation(), tok->getText());
-            } else if (w->isBus()) {
+                //error("VNL-DECL-2", tok->getLocation(), tok->getText());
+                w = new Wire(tok->getText());
+                mod->addWire(w);
+            } 
+            if (w->isBus()) {
                 TRcWireBus asBus = toWireBus(w);
                 if (rng.isValid() && !asBus->inRange(rng)) {
                     error("VNL-BUS-1", tok->getLocation(), rng->toString(w->getName()));
@@ -449,7 +449,6 @@ namespace vnl {
                 }
             } else {
                 //scalar wire
-
                 item = new TConnList();
                 item->push_back(upcast(w));
             }
@@ -511,7 +510,6 @@ namespace vnl {
             TRcPort port = Port::downcast(lhs);
             port->add(rhs);
         } else {
-
             ASSERT_TRUE(lhs->isType(WireBitRef::stTypeId));
             TRcWireBitRef wireBitRef = WireBitRef::downcast(lhs);
             wireBitRef->add(rhs);
@@ -521,7 +519,7 @@ namespace vnl {
     /**
      * Expand assign statement by updating lhs.conns with entry from rhs.
      * @param lhs entries to update.
-     * @param rhs update lsh w/ corresponding entry.
+     * @param rhs update lhs w/ corresponding entry.
      */
     static void
     expand(TRcConnList &lhs, TRcConnList &rhs) {
@@ -529,7 +527,6 @@ namespace vnl {
         TRcObject obj[2];
         TConnList::iterator iter[2] = {lhs->begin(), rhs->begin()};
         for (; iter[0] != lhs->end(); ++iter[0], ++iter[1]) {
-
             obj[0] = *(iter[0]);
             obj[1] = *(iter[1]);
             addTo(obj[0], obj[1]);
@@ -542,7 +539,6 @@ namespace vnl {
     toString(unsigned i) {
         ostringstream oss;
         oss << i;
-
         return oss.str();
     }
 
@@ -618,11 +614,12 @@ namespace vnl {
 
 }
 
-//#define T_PARSER
+#define T_PARSER
 #if defined(T_PARSER)
 
 #include <iostream>
 #include "vnl/parser.hxx"
+#include "writer.hxx"
 
 using namespace std;
 using namespace vnl;
@@ -638,6 +635,9 @@ int main(int argc, char *argv[]) {
         cout << "Info: " << lexer->getFname() << ": processing ..." << endl;
         Parser parser(lexer);
         parser.start(work);
+        TRcWriter writer = new Writer(string("writer.out.v"));
+        const TRcModule &mod = work->getModule(string("m2"));
+        writer->write(mod);
     }
     return 0;
 }

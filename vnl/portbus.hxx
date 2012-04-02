@@ -35,6 +35,8 @@ namespace vnl {
     public:
         explicit PortBus(string name, EDirection dir, const TRcBus &bus);
 
+        virtual ostream& operator<<(ostream &os) const;
+
         static const TRcPortBus downcast(const TRcObject &r) {
             return xyzzy::downcast<Object, PortBus > (r);
         }
@@ -64,6 +66,11 @@ namespace vnl {
         static const unsigned stTypeId;
 
     };
+
+    inline
+    ostream& operator<<(ostream &os, const TRcPortBus &port) {
+        return port->operator <<(os);
+    }
 
     inline const TRcObject upcast(const TRcPortBus &p) {
         return xyzzy::upcast<Object, PortBus > (p);

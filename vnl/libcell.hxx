@@ -91,6 +91,10 @@ namespace vnl {
             return m_funcs.empty();
         }
 
+        bool isLibCell() const {
+            return true;
+        }
+        
         void setArea(double ar) {
             m_area = ar;
         }

@@ -25,11 +25,13 @@
 #if !defined(_vnl_port_hxx_)
 #define  _vnl_port_hxx_
 
+#include <ostream>
 #include "vnl/vnl.hxx"
 #include "vnl/wire.hxx"
 
 namespace vnl {
-
+    using std::ostream;
+    
     class Port : virtual public Object, virtual public Wire {
     public:
 
@@ -61,10 +63,25 @@ namespace vnl {
             return true;
         }
 
+        /**
+         * Write declaration to stream
+         * @param os output stream.
+         * @return output stream.
+         */
+        virtual ostream& operator<<(ostream &os) const;
+        
         virtual ~Port();
 
         static const unsigned stTypeId;
-
+        
+    protected:
+        /**
+         * Write port direction to stream.
+         * @param os output stream.
+         * @return output stream.
+         */
+        ostream& writeDirection(ostream &os) const;
+        
     private:
         EDirection m_dir;
 
@@ -76,6 +93,11 @@ namespace vnl {
         }
     };
 
+    inline
+    ostream& operator<<(ostream &os, const TRcPort &port) {
+        return port->operator <<(os);
+    }
+    
     inline const TRcObject upcast(const TRcPort &p) {
         return xyzzy::upcast<Object, Port > (p);
     }

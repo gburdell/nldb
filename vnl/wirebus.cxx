@@ -59,6 +59,12 @@ namespace vnl {
         return UNCONST->getConnList(i);
     }
 
+    ostream&
+    WireBus::operator<<(ostream &os) const {
+        os << "wire " << Bus::toString() << " " << getName();
+        return os;
+    }
+
     WireBus::~WireBus() {
     }
     

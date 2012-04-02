@@ -48,6 +48,7 @@ namespace vnl {
         m_fmtByCode["VNL-DECL-1"] = "%s: %s '%s' already defined";
         m_fmtByCode["VNL-DECL-2"] = "%s: '%s' undefined";
         m_fmtByCode["VNL-FILE-1"] = "%s: processing ..";
+        m_fmtByCode["VNL-FILE-2"] = "%s: cannot %s file";
         m_fmtByCode["VNL-MOD-1"] = "%s: module '%s' already defined in library '%s'";
         m_fmtByCode["VNL-NUM-1"] = "%s: '%s' malformed number";
         m_fmtByCode["VNL-NUM-2"] = "%s: based number '%s' missing size";
@@ -56,6 +57,7 @@ namespace vnl {
         m_fmtByCode["VNL-PARSE-3"] = "%s: processed %s seconds";
         m_fmtByCode["VNL-PORT-1"] = "%s: port '%s' defined, but not declared in port list";
         m_fmtByCode["VNL-PORT-2"] = "%s: port '%s' redefined";
+        m_fmtByCode["VNL-REF-1"] = "in module '%s', cell '%s': reference '%s' undefined";
         m_fmtByCode["VNL-WIRE-2"] = "%s: wire '%s' redefined";
     }
 
@@ -96,9 +98,17 @@ namespace vnl {
         Message::getTheOne().message(Message::eError, code, loc, s1, s2, s3);
     }
 
+    static
+    void
+    message(Message::EType type, string code, string s1="", string s2="", string s3="", string s4="") {
+        string msg = Message::getTheOne().fmessage(type, code, s1, s2, s3, s4);
+        Message::getTheOne().message(type, msg);        
+    }
     void info(string code, string s1, string s2, string s3, string s4) {
-        string msg = Message::getTheOne().fmessage(Message::eInfo, code, s1, s2, s3, s4);
-        Message::getTheOne().message(Message::eInfo, msg);
+        message(Message::eInfo, code, s1, s2, s3, s4);
     }
 
+    void error(string code, string s1, string s2, string s3, string s4) {
+        message(Message::eError, code, s1, s2, s3, s4);
+    }
 }

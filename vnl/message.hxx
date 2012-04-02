@@ -83,6 +83,8 @@ namespace vnl {
             const TRcLocation &loc, string s1, string s2 = "", string s3 = "");
 
     void info(string code, string s1, string s2 = "", string s3 = "", string s4 = "");
+    
+    void error(string code, string s1, string s2 = "", string s3 = "", string s4 = "");
 }
 
 #endif

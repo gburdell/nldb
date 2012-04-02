@@ -69,6 +69,7 @@ namespace slf {
     static bool initialize() {
         //add messages
         vnl::Message &msg = vnl::Message::getTheOne();
+        msg.addFmtByCode("SLF-DEFN-1", "%s: cell '%s' already defined");
         msg.addFmtByCode("SLF-FILE-1", "%s: processing ..");
         msg.addFmtByCode("SLF-PARSE-1", "%s: expected '%s', found '%s'");
         msg.addFmtByCode("SLF-PARSE-2", "%s: '%s' unexpected");
