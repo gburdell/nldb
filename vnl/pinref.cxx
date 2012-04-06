@@ -43,9 +43,8 @@ namespace vnl {
 
     TRcPort
     PinRef::getPort() {
-        TRcObject obj = m_cell->getRef();
-        ASSERT_TRUE(obj.isValid());
-        TRcModule ref = Module::downcast(obj);
+        TRcModule ref = m_cell->getRef();
+        ASSERT_TRUE(ref.isValid());
         TRcPort port = ref->getPort(getPortNm());
         return port;
     }

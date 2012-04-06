@@ -32,6 +32,7 @@
 #include "xyzzy/slist.hxx"
 #include "xyzzy/exception.hxx"
 
+///All things related to verilog netlist
 namespace vnl {
     using std::string;
     using std::list;
@@ -76,8 +77,8 @@ namespace vnl {
     //#undef DECL_CLASS
 
     /**
-     * List of connection items to a pin:  Wire | WireBitRef
-     *                          to a wire: Wire | WireBitRef | PinRef
+     * List of connection items to a pin:  Wire/Port | WireBitRef
+     *                          to a wire: Wire/Port | WireBitRef | PinRef
      */
     typedef list<TRcObject> TConnList;
     typedef PTRcPtr<TConnList> TRcConnList;
@@ -91,7 +92,7 @@ namespace vnl {
     typedef PTRcPtr<TConnsByPortName> TRcConnsByPortName;
 
 #define COPY_CONSTRUCTOR_DECL(_cls)   \
-	_cls(const _cls &);           \
+	_cls(const _cls &);               \
 	_cls& operator=(const _cls &)
 
     unsigned length(unsigned lb, unsigned rb);
@@ -115,6 +116,12 @@ namespace vnl {
             return (typeId == getTypeId());
         }
 
+        /**
+         * (Almost) every object (instance) should have a name.
+         * @return name of (instance) object.
+         */
+        virtual string getName() const;
+        
         /**
          * Get typeId for this class.
          * @return typeId for this class.
@@ -143,13 +150,6 @@ namespace vnl {
 
         static unsigned stTypeId;
     };
-
-    template<typename K, typename T>
-    inline
-    bool
-    mapHasKey(const map<K, T> &m, const K &key) {
-        return (m.find(key) != m.end());
-    }
 
 }
 

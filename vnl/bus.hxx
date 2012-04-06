@@ -60,8 +60,16 @@ namespace vnl {
             return m_lb;
         }
 
+        unsigned getMsb() const {
+            return getLb();
+        }
+        
         unsigned getRb() const {
             return hasRb() ? m_rb : m_lb;
+        }
+        
+        unsigned getLsb() const {
+            return getRb();
         }
 
         unsigned getLength() const {

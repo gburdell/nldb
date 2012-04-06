@@ -28,9 +28,12 @@
 #include <vector>
 #include <algorithm>
 #include <sstream>
+#include <deque>
+#include "xyzzy/util.hxx"
 #include "vnl/writer.hxx"
 #include "vnl/message.hxx"
 #include "vnl/module.hxx"
+#include "vnl/wirebitref.hxx"
 //#include "xyzzy/array.hxx"
 //#include "writer.hxx"
 //#include "port.hxx"
@@ -38,20 +41,16 @@
 //#include "pin.hxx"
 //#include "message.hxx"
 
-//Similar to algorithm::for_each
-#define FOREACH(_t, _trc, _func)                                                      \
-{       for (_t::const_iterator i = _trc->begin(); i != _trc->end(); ++i) \
-                _func(*i);                                                        \
-}
-
-//Similar to algorithm::for_each
-#define FOREACH_VAL_OF_MAP(_t, _trc, _func)                               \
-{       for (_t::const_iterator i = _trc->begin(); i != _trc->end(); ++i) \
-                _func(i->second);                                                        \
+///Similar to algorithm::for_each.
+#define FOREACH(_titer, _begin, _end, _func)     \
+{       for (_titer i = _begin; i != _end; ++i)  \
+                _func(*i);                       \
 }
 
 namespace vnl {
     using namespace std;
+    using xyzzy::mapHasKey;
+    using xyzzy::mapGetVal;
 
     static
     unsigned
@@ -139,7 +138,7 @@ namespace vnl {
         }
 
         Impl& println(const string &s) {
-            print(s).flush();//nl();
+            print(s).flush(); //nl();
             return *this;
         }
 
@@ -189,17 +188,376 @@ namespace vnl {
             m_os << endl;
             m_lcnt++;
             m_oss.str(cNull);
-            return *this;            
+            return *this;
         }
 
         typedef map<string, TRcModule> t_modsByName;
         typedef vector<TRcModule> t_mods;
         typedef PTRcPtr<t_mods> trc_mods;
+        typedef Module::t_wiresByName t_wiresByName;
+        typedef Module::t_cellsByName t_cellsByName;
+
+        ///Build up assign as lhs,rhs vector
+        typedef vector<TRcObject> t_asgnEle;
+        typedef pair<t_asgnEle, t_asgnEle> t_lhsRhs;
+        typedef PTRcPtr<t_lhsRhs> trc_lhsRhs;
+        typedef map<string, trc_lhsRhs> t_asgnByLhsName;
 
         static
         bool
         compare(const TRcModule &i, const TRcModule &j) {
             return (i->getName() < j->getName()); //(i<j); 
+        }
+
+        /**
+         * Replace series of tail (1'b[01])+ to n'bxxx.
+         * @param vals ...(1'b[01])+
+         */
+        static
+        void
+        replBitVal(deque<string> &vals) {
+            //roll-em off into n'bxxx
+            string peek;
+            string nTicVal;
+            while (!vals.empty()) {
+                peek = vals.back(); //peek last
+                if ((4 == peek.length()) && (peek.substr(0, 3) == "1'b")) {
+                    nTicVal = peek.at(3) + nTicVal; //prepend
+                    vals.pop_back();
+                } else {
+                    break; //while
+                }
+            }
+            unsigned n = nTicVal.size();
+            ASSERT_TRUE(0 < n);
+            ostringstream os;
+            os << n << "'b" << nTicVal;
+            vals.push_back(os.str());
+        }
+
+        /**
+         * Examine currEle (a WireBitRef).
+         * If is next bit in subrange, return false.
+         * Else, reduce existing elements and return true.
+         * @param expr vector of elements, where expr[startI...currI]
+         * contain WireBitRef.
+         * @param rval push reduced element here, if necessary.
+         * @param startI index into expr of 1st element of subrange.
+         * @param currI index into expr of current element of subrange.
+         * @pram force force reduction.
+         * @return true if expr[currI] not in subrange, and reduce subrange and
+         * push result onto rval.
+         */
+        static
+        bool
+        reduceBitVec(const t_asgnEle &expr, deque<string> &rval,
+                const unsigned startI, const unsigned currI, bool force = false) {
+            ASSERT_TRUE(startI <= currI);
+            bool reduce = force || (startI == currI);
+            unsigned endI = currI;
+            if (!reduce) {
+                //consecutive bits?
+                const TRcWireBitRef &prev = WireBitRef::downcast(expr[currI - 1]);
+                const TRcWireBitRef &curr = WireBitRef::downcast(expr[currI]);
+                reduce = (prev->getBusName() != curr->getBusName());
+                int delta = curr->getBitIx() - prev->getBitIx();
+                reduce |= (delta != curr->getBusIncr());
+                if (reduce) {
+                    endI--; //dont include curr bit
+                }
+            }
+            if (reduce) {
+                const TRcWireBitRef &start = WireBitRef::downcast(expr[startI]);
+                const TRcWireBitRef &end = WireBitRef::downcast(expr[endI]);
+                const unsigned ixs[2] = {start->getBitIx(), end->getBitIx()};
+                ostringstream os;
+                os << start->getBusName();
+                if ((ixs[0] != start->getBus()->getLb()) ||
+                        (ixs[1] != start->getBus()->getRb())) {
+                    os << "[" << ixs[0];
+                    if (ixs[1] != ixs[0]) {
+                        os << ":" << ixs[1];
+                    }
+                    os << "]";
+                }
+                string s = os.str();
+                rval.push_back(s);
+            }
+            return reduce;
+        }
+
+        /*
+         * Compress {...} expression.
+         * 4 cases:
+         * ========
+         * 1) 1'b[01] ...
+         * 2) foo,foo,... => {n{foo}}  (iff compression setting >1)
+         * 3) bar[n],bar[n-1],bar[n-2],... => bar[n:n-m] (iff bit order ok)
+         * 4) a,b,c,... => a,b,c,...
+         */
+        Impl&
+        compress(const t_asgnEle &expr, vector<string> &rval) {
+            if (expr.empty()) return *this;
+            static const TRcWire nilw = new Wire("");
+            static const TRcObject nilo = upcast(nilw);
+            /* push the bogus entry on so we can iterate w/o worrying about
+             * the end condition.
+             */
+            const_cast<t_asgnEle&> (expr).push_back(nilo);
+
+            enum CompressState {
+                eWait, eTic01, eBit
+            };
+            CompressState state = eWait;
+            deque<string> tmpRval;
+            string curr;
+            unsigned spanStartI = 0;
+            unsigned typeId;
+            TRcWire wire;
+            for (unsigned i = 0; i < expr.size(); ++i) {
+                const TRcObject &ele = expr[i];
+                curr = ele->getName();
+                if (0 == m_config->m_compressBusConnExpr) {
+                    //keep bit blasted
+                    tmpRval.push_back(curr);
+                    continue;
+                }
+                typeId = ele->getTypeId(); //Wire, Port, WireBitRef
+                if (WireBitRef::stTypeId != typeId) {
+                    wire = Wire::downcast(ele);
+                }
+                switch (state) {
+                    case eWait:
+                        if (WireBitRef::stTypeId == typeId) {
+                            state = eBit;
+                            spanStartI = i; //mark start in expr[]
+                        } else {
+                            tmpRval.push_back(curr);
+                            if (wire->isConst()) {
+                                state = eTic01;
+                            }
+                            //else state=eWait;
+                        }
+                        break;
+                    case eTic01:
+                        //at least 1 1'b[01] is on tail
+                        if ((WireBitRef::stTypeId == typeId) || !wire->isConst()) {
+                            //not a bit, so crunch existing n'bxxx
+                            replBitVal(tmpRval);
+                            if (WireBitRef::stTypeId == typeId) {
+                                state = eBit;
+                                spanStartI = i;
+                            } else {
+                                tmpRval.push_back(curr);
+                                state = eWait;
+                            }
+                        } else {
+                            ASSERT_TRUE(wire->isConst());
+                            tmpRval.push_back(curr);
+                            //state=eTic01;
+                        }
+                        break;
+                    case eBit:
+                        if (WireBitRef::stTypeId == typeId) {
+                            if (reduceBitVec(expr, tmpRval, spanStartI, i)) {
+                                spanStartI = i; //reset to this bit
+                            }
+                            // else state=eBit
+                        } else {
+                            //not a bit, so reduce [spanStarI,i-1]
+                            ASSERT_TRUE(reduceBitVec(expr, tmpRval, spanStartI, i - 1, true));
+                            tmpRval.push_back(curr);
+                            state = (wire->isConst()) ? eTic01 : eWait;
+                        }
+                        break;
+                    default:
+                        ASSERT_NEVER;
+                }
+            }
+            //Remove bogus entries: remove nilo
+            ASSERT_TRUE(tmpRval.back().empty()); //nilo is ""
+            tmpRval.pop_back();
+            const_cast<t_asgnEle&> (expr).pop_back();
+            //
+            rval.clear();
+            if (1 < m_config->m_compressBusConnExpr) {
+                //push bogus to simplify end condition handling
+                static const string nil = "";
+                tmpRval.push_back(nil);
+                //handle repeated
+                unsigned n = 1;
+                string last;
+                for (unsigned i = 0; i < tmpRval.size(); ++i) {
+                    string vi = tmpRval[i];
+                    if (0 == i) {
+                        last = vi;
+                    } else {
+                        const bool match = (last == vi);
+                        if (match) {
+                            n++;
+                        } else {
+                            ostringstream os;
+                            if (1 < n) {
+                                os << '{' << n << '{' << last << "}}";
+                            } else {
+                                os << last;
+                            }
+                            string s = os.str();
+                            rval.push_back(s);
+                            if (!match) {
+                                last = vi;
+                                n = 1;
+                            }
+                        }
+                    }
+                }
+                ASSERT_TRUE(!rval.back().empty()); //make sure nil didnt slip by
+            } else {
+                FOREACH(deque<string>::const_iterator, tmpRval.begin(), tmpRval.end(), rval.push_back);
+            }
+            return *this;
+        }
+
+#ifdef NOPE
+
+        static void writeBusPinConn(ostream &os, TRcBus bus, CollectionIter &iter) {
+            //make sure dont ++iter on last, since caller does.
+            map<int, TRcBit> eles;
+            TRcNet net;
+            TRcPin pin;
+            TRcPort port;
+            TRcBit portBit;
+            const unsigned n = bus->size();
+            unsigned validCnt = 0;
+            for (unsigned i = n; 0 < i; i--) {
+                pin = toPin(*iter);
+                port = pin->getPort();
+                { //check:
+                    portBit = port->getBit();
+                    ASSERT_TRUE(bus->inRange(portBit->m_bit));
+                    ASSERT_TRUE(bus->m_name == portBit->m_name);
+                }
+                net = pin->getNet();
+                TRcBit bit; //allow null entries
+                if (net.isValid() && net->isAlive()) {
+                    bit = net->asBit();
+                    validCnt++;
+                }
+                eles[portBit->m_bit] = bit;
+                if (1 < i) {
+                    ++iter; //dont incr at last, since ++iter upon return
+                }
+            }
+            if (1 > validCnt) return;
+            if (0 < Writer::stConfig.m_compressBusConnExpr) {
+                vector<string> conns;
+                compress(eles, bus, conns);
+                vector<string>::const_iterator iter = conns.begin();
+                if (1 == conns.size()) {
+                    os << *iter;
+                } else {
+                    os << '{';
+                    nl(os);
+                    for (; iter != conns.end(); ++iter) {
+                        os << stInstDeclBusConnIndent << ((iter != conns.begin()) ? ',' : ' ')
+                                << *iter;
+                        nl(os);
+                    }
+                    os << stInstDeclPfx << '}';
+                }
+
+            } else {
+                os << '{';
+                nl(os);
+                TRcBit bit;
+                //left->right sweep
+                for (unsigned cnt = 0, i = bus->m_range.first; n > cnt;
+                        cnt++, i += bus->incr()) {
+                    os << stInstDeclBusConnIndent << ((0 < cnt) ? ',' : ' ');
+                    bit = eles[i];
+                    if (bit.isValid()) {
+                        os << bit;
+                    }
+                    nl(os);
+                }
+                os << stInstDeclPfx << '}';
+            }
+        }
+
+        static void writeInst(ostream &os, TRcCell inst) {
+            TRcDesign ref = inst->getRef();
+            os << stInstDeclPfx << ref->getName() << " "
+                    << inst->getName() << " (";
+            nl(os);
+            TRcCollection pins = sortByName(inst->getPins(inst));
+            PortDone portsDone;
+            TRcPin pin;
+            TRcPort port;
+            TRcNet net;
+            TRcBit bit;
+            bool isFirst = true;
+            string nm;
+            for (CollectionIter iter(*pins); iter.hasMore(); ++iter) {
+                TRcBus asBus;
+                pin = toPin(*iter);
+                port = pin->getPort();
+#ifdef VRFC_BUG_7012
+                std::cout << "\nDBG: pin: " << inst->getName() << "." << port->getName() << std::endl;
+#endif
+                if (port->isBus()) {
+                    asBus = port->getRange();
+                    nm = asBus->m_name;
+                } else {
+                    nm = port->getName();
+                }
+                if (portsDone.find(nm) == portsDone.end()) {
+                    os << stInstDeclPfx << (isFirst ? ' ' : ',')
+                            << '.' << nm + "(";
+                    if (asBus.isValid()) {
+                        writeBusPinConn(os, asBus, iter);
+                    } else {
+                        net = pin->getNet();
+                        //TODO: where do the null nets come from, requiring isAlive()
+                        if (net.isValid() && net->isAlive()) {
+                            bit = net->asBit();
+                            os << bit;
+                        }
+                    }
+                    os << ')';
+                    nl(os);
+                    isFirst = false;
+                    portsDone[nm] = true;
+                }
+            }
+            os << stInstDeclPfx << ");";
+            nl(os);
+        }
+#endif
+
+        Impl&
+        writeInst(const TRcCell &cell) {
+            print(cell->getRefName()).print(" ").print(cell->getInstName())
+                    .print("(");
+            //TODO
+            println(");");
+        }
+
+        Impl&
+        writeInsts(const TRcModule &mod) {
+            const t_cellsByName &cells = mod->getCellsByName();
+            if (cells.empty()) return *this;
+            setPrefix(m_config->m_instDeclIndent);
+            for (int i = 0; i < 2; i++) { //0=leaf; 1=hier
+                //iterate in instance name (sorted) order?
+                for (t_cellsByName::const_iterator iter = cells.begin();
+                        iter != cells.end(); ++iter) {
+                    const TRcCell &inst = iter->second;
+                    if ((0 == i && inst->isLibCell()) || !inst->isLibCell()) {
+                        writeInst(inst);
+                    }
+                }
+            }
+            return *this;
         }
 
         trc_mods
@@ -237,8 +595,7 @@ namespace vnl {
                     throw (true);
                 }
                 if (inst->isResolved() && !mapHasKey(done, refnm)) {
-                    const TRcObject &ref = inst->getRef();
-                    const TRcModule asMod = Module::downcast(ref);
+                    const TRcModule asMod = inst->getRef();
                     if (m_config->m_libCellStub || !asMod->isLibCell()) {
                         done[refnm] = asMod;
                         if (doHier && !asMod->isLibCell()) {
@@ -249,7 +606,7 @@ namespace vnl {
             }
         }
 
-        Impl&
+        Impl &
         writePorts(const TRcModule &mod, bool defn = false) {
             if (defn && m_config->m_ansiPortDecl) return *this;
             typedef Module::t_ports t_ports;
@@ -261,11 +618,11 @@ namespace vnl {
             for (t_ports::const_iterator i = portsInDeclOrder.begin();
                     i != portsInDeclOrder.end(); ++i, isFirst = false) {
                 const TRcPort &port = *i;
-                if (!defn) os << (isFirst ? " " : ",");
+                if (!defn) os << (isFirst ? "" : ",");
                 if (defn || m_config->m_ansiPortDecl) {
-                    os << port << " ";
+                    os << port; //<< " ";
                 } else {
-                    os << port->getName() << " ";
+                    os << port->getName(); //<< " ";
                 }
                 if (defn) {
                     os << ';';
@@ -277,149 +634,136 @@ namespace vnl {
             return *this;
         }
 
+        static
+        void
+        updateAssigns(t_asgnByLhsName &lhsByNm, const string &lhsNm,
+                const TRcObject &lhs, const TRcConnList & conns) {
+            if (conns.isNull()) return;
+            /* 
+             * TODO: in theory, could have:
+             *  assign {w1,w1} = {w2,w3}
+             * which models both w2,w3 drivers to w1.
+             * Will need to handle this case (by having map of list<t_lhsRhs>)
+             */
+            ASSERT_TRUE(2 > conns->size());
+            trc_lhsRhs entry;
+            for (TConnList::const_iterator i = conns->begin(); i != conns->end(); ++i) {
+                const TRcObject &rhs = *i;
+                //we're only interested in Port/Wire, WireBitRef
+                if (!rhs->isType(PinRef::stTypeId)) {
+                    if (!mapGetVal(lhsByNm, lhsNm, entry)) {
+
+                        entry = new t_lhsRhs();
+                        lhsByNm[lhsNm] = entry;
+                    }
+                    entry->first.push_back(lhs);
+                    entry->second.push_back(rhs);
+                }
+            }
+        }
+
+        static
+        void
+        updateAssigns(t_asgnByLhsName &lhsByNm, const TRcWire & lhs) { //lhs scalar
+            const TRcObject lhso = upcast(lhs);
+            updateAssigns(lhsByNm, lhs->getName(), lhso, lhs->getConns());
+        }
+
+        static
+        void
+        updateAssigns(t_asgnByLhsName &lhsByNm, const TRcWireBus & lhs) { //lhs bus
+            //ok to cast away const, since we're not gonna modify anyway
+            TRcConnList lhsBits = WireBitRef::bitBlast(const_cast<TRcWireBus&> (lhs));
+            //iterate lhs[msb->lsb]
+            for (TConnList::const_iterator iter(lhsBits->begin()); iter != lhsBits->end(); ++iter) {
+                const TRcWireBitRef lhsBit = WireBitRef::downcast(*iter);
+                const TRcObject lhso = upcast(lhsBit);
+                updateAssigns(lhsByNm, lhs->getName(), lhso, lhsBit->getConns());
+            }
+        }
+
+        /**
+         * Write concatenation.
+         * @param vals values.
+         * @return this.
+         */
         Impl&
-        writeDecl(const TRcModule &mod) {
+        write(const vector<string> &vals) {
+            if (1 < vals.size()) print("{");
+            for (unsigned i = 0; i < vals.size(); i++) {
+                string s = (0 < i) ? "," : "";
+                s += vals[i];
+                print(s);
+            }
+            if (1 < vals.size()) print("}");
+            return *this;
+        }
+
+        Impl &
+        writeAssigns(const t_asgnByLhsName::value_type & stmt) {
+            const trc_lhsRhs &asgn = stmt.second;
+            //compress lhs/rhs and write
+            vector<string> toWrite;
+            print("assign ");
+            compress(asgn->first, toWrite).write(toWrite);
+            print(" = ");
+            compress(asgn->second, toWrite).write(toWrite);
+            println(";");
+            return *this;
+        }
+
+        Impl &
+        writeAssigns(const t_wiresByName & wires) {
+            /* Step 1: build up map of lhs=rhs by basename of lhs.
+             * lhs,rhs can be a Wire | WireBitRef.
+             * pair.first=lhs, pair.second=rhs.
+             */
+            t_asgnByLhsName mapOfLhsByName;
+            for (t_wiresByName::const_iterator i = wires.begin();
+                    i != wires.end(); ++i) {
+                const TRcWire &wire = i->second;
+                if (wire->isBus()) {
+                    const TRcWireBus asBus = toWireBus(wire);
+                    updateAssigns(mapOfLhsByName, asBus);
+                } else if (!wire->isConst()) { //no const on lhs
+                    updateAssigns(mapOfLhsByName, wire);
+                }
+            }
+            FOREACH(t_asgnByLhsName::const_iterator,
+                    mapOfLhsByName.begin(), mapOfLhsByName.end(), writeAssigns);
+            return *this;
+        }
+
+        Impl &
+        writeDecl(const TRcModule & mod) {
             ostringstream oss;
             oss << "module " << mod->getName() << " (";
             print(oss);
             setPrefix(m_config->m_portDeclIndent);
             writePorts(mod).setPrefix(0).println(");");
             setPrefix(m_config->m_wireDefnIndent);
-            if (! m_config->m_ansiPortDecl) {
+            if (!m_config->m_ansiPortDecl) {
                 writePorts(mod, true);
             }
-            typedef Module::t_wiresByName t_wiresByName;
-            //TODO: assign stmts
             const t_wiresByName &wires = mod->getWiresByName();
             for (t_wiresByName::const_iterator i = wires.begin();
                     i != wires.end(); ++i) {
                 const TRcWire &w = i->second;
                 if (w->isPort() || w->isConst()) continue;
-                oss << w << " ;";
+                oss << w << ";";
                 println(oss);
             }
+            return *this;
+        }
+
+        Impl &
+        write(const TRcModule & mod) {
+            writeDecl(mod);
+            writeAssigns(mod->getWiresByName());
+            writeInsts(mod);
             setPrefix(0).println("endmodule");
             return *this;
         }
-
-        Impl&
-        write(const TRcModule &mod) {
-            writeDecl(mod);
-            //TODO
-            return *this;
-        }
-
-#ifdef NOPE
-
-        static void writePorts(ostream &os, TRcCollection ports, bool defn = false) {
-            if (defn && Writer::stConfig.m_ansiPortDecl) return;
-            PortDone portsDone;
-            TRcPort port;
-            bool isFirst = true;
-            string nm;
-            for (CollectionIter iter(*ports); iter.hasMore(); ++iter) {
-                TRcBus asBus;
-                port = toPort(*iter);
-                if (port->isBus()) {
-                    asBus = port->getRange();
-                    nm = asBus->m_name;
-                } else {
-                    nm = port->getName();
-                }
-                if (portsDone.find(nm) == portsDone.end()) {
-                    if (defn) {
-                        os << stWireDefnPfx;
-                    } else {
-                        os << stPortDeclPfx << (isFirst ? ' ' : ',');
-                    }
-                    write(os, nm, port->getDirection(), asBus, defn || Writer::stConfig.m_ansiPortDecl);
-                    if (defn) {
-                        os << " ;";
-                    }
-                    nl(os);
-                    isFirst = false;
-                    portsDone[nm] = true;
-                }
-            }
-        }
-
-        static void writeWires(ostream &os, TRcCollection wires) {
-            typedef map<string, bool> WireDone;
-            WireDone wiresDone;
-            TRcNet net;
-            string nm;
-            for (CollectionIter iter(*wires); iter.hasMore(); ++iter) {
-                TRcBus asBus;
-                net = toNet(*iter);
-                if (net->isBus()) {
-                    asBus = net->getRange();
-                    nm = asBus->m_name;
-                } else {
-                    nm = net->getName();
-                }
-                if (wiresDone.find(nm) == wiresDone.end()) {
-                    os << stWireDefnPfx << "wire ";
-                    write(os, nm, Port::eInvalid, asBus, true);
-                    os << " ;";
-                    nl(os);
-                    wiresDone[nm] = true;
-                }
-            }
-        }
-
-        static void writeWires(ostream &os, TRcDesign mod) {
-            //Collect wires which are not ports
-            TRcCollection justWires = new Collection();
-            TRcCollection allWires = mod->getNets();
-            TRcNet net;
-            for (CollectionIter iter(*allWires); iter.hasMore(); ++iter) {
-                net = toNet(*iter);
-                if (!net->isLogic01() && !mod->hasPort(net->getName())) {
-                    justWires->add(upcast(net));
-                }
-            }
-            writeWires(os, justWires);
-        }
-
-        static void writeAssigns(ostream &os, TRcDesign mod) {
-            TRcCollection ports = mod->getPorts(); //in decl order
-            TRcCollection portsOnNet;
-            TRcPort port, port2;
-            TRcNet asNet;
-            for (CollectionIter iter(*ports); iter.hasMore(); ++iter) {
-                port = toPort(*iter);
-                portsOnNet = port->getNet()->getOnNet(ana::Net::ePorts, false, false);
-                for (CollectionIter iter2(*portsOnNet); iter2.hasMore(); ++iter2) {
-                    port2 = toPort(*iter2);
-                    if ((port2->getDirection() != ana::Port::eIn)
-                            && (port2->getName() != port->getName())) {
-                        os << stInstDeclPfx << "assign " << port2->getName() << " = "
-                                << port->getName() << " ;";
-                        nl(os);
-                    }
-                }
-            }
-        }
-
-        static void writeDecl(ostream &os, TRcDesign mod) {
-            TRcCollection ports = mod->getPorts(); //in decl order
-            os << "module " << mod->getName() << " (";
-            nl(os);
-            writePorts(os, ports);
-            os << ");";
-            nl(os);
-            writePorts(os, ports, true); //port definitions
-        }
-
-        static void writeMod(ostream &os, TRcDesign mod) {
-            writeDecl(os, mod);
-            writeWires(os, mod);
-            writeAssigns(os, mod);
-            writeInsts(os, mod);
-            os << "endmodule";
-            nl(os, 2);
-        }
-#endif //NOPE
     };
 
     //static 
@@ -435,10 +779,13 @@ namespace vnl {
     Writer::t_lineCnt
     Writer::write(const TRcModule &top, bool doHier) throw (bool) {
         mp_impl->println("// Created: " + currentTime());
+        ASSERT_TRUE(top.isValid());
         Impl::trc_mods modOrder = mp_impl->getModuleDeclOrder(top, doHier);
-        FOREACH(Impl::t_mods, modOrder, mp_impl->write);
+        FOREACH(Impl::t_mods::const_iterator, modOrder->begin(), modOrder->end(),
+                mp_impl->write);
         //TODO: print module
         mp_impl->flush();
+
         return mp_impl->m_lcnt;
     }
 

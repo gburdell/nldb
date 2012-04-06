@@ -24,9 +24,9 @@
 #include "vnl/wirebus.hxx"
 
 namespace vnl {
-    
+
 #define UNCONST const_cast<WireBus*>(this)
-    
+
     static string stTypeName = "wirebus";
     const unsigned WireBus::stTypeId = Object::getNextTypeId(stTypeName);
 
@@ -34,21 +34,21 @@ namespace vnl {
     : Wire(name), Bus(bus), m_pinConns(bus->getLength() - 1) {
     }
 
-    TRcConnList 
+    TRcConnList
     WireBus::getConnList(unsigned i, bool create) {
         unsigned lbo = Bus::getLbOffset(i);
-        TRcConnList clist = (0 == lbo) ? Wire::m_conns : m_pinConns[lbo-1];
+        TRcConnList clist = (0 == lbo) ? Wire::m_conns : m_pinConns[lbo - 1];
         if (create && clist.isNull()) {
             clist = new TConnList();
             if (0 == lbo) {
                 Wire::m_conns = clist;
             } else {
-                m_pinConns[lbo-1] = clist;
+                m_pinConns[lbo - 1] = clist;
             }
         }
         return clist;
     }
-    
+
     TRcConnList
     WireBus::operator [](unsigned i) {
         return getConnList(i, true);
@@ -67,6 +67,6 @@ namespace vnl {
 
     WireBus::~WireBus() {
     }
-    
+
 #undef UNCONST
 }

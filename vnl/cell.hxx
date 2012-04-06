@@ -48,14 +48,23 @@ namespace vnl {
             return m_instNm;
         }
 
-        const TRcObject& getRef() const {
-            return m_ref;
-        }
-        TRcObject& getRef() {
-            return m_ref;
-        }
+        /**
+         * Get cell reference (can be isNull() if unresolved).
+         * @return cell reference.
+         */
+        TRcModule getRef() const;
         
+        /**
+         * Check if cell (reference) is hierarchical.
+         * @return true iff cell isResolved() and reference is hierarchical. 
+         */
         bool isHierarchical() const;
+        
+        /**
+         * Check if cell (reference) is a library cell instance.
+         * @return true iff cell isResolved() and reference is a libcell. 
+         */
+        bool isLibCell() const;
         
         bool isResolved() const {
             return m_ref.isValid();

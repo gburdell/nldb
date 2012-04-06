@@ -55,6 +55,8 @@ DIST_DIR = dist
 
 ifeq ("Darwin","$(shell uname)")
 	OS :=  MacOSX
+	#linux flags dont work for ld
+	LDFLAGS :=
 else
 	OS :=  linux
 endif

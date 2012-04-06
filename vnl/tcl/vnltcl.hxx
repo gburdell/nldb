@@ -36,6 +36,7 @@
 	_cls& operator=(const _cls &)
 #endif
 
+///All things related to tclsh UI for verilog netlist
 namespace vnltcl {
     using std::string;
     using xyzzy::PTRcObjPtr;

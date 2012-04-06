@@ -44,7 +44,14 @@ namespace vnl {
          * @param range (sub-range) to expand top bits.
          * @return list of TRcWireBitRef (begin() is MSB).
          */
-        static TRcConnList bitBlast(TRcWireBus &bus, TRcBus &range);
+        static TRcConnList bitBlast(TRcWireBus &bus, const TRcBus &range);
+
+        /**
+         * Bit blast entire list to list.
+         * @param bus wirebus reference.
+         * @return list of TRcWireBitRef (begin() is MSB).
+         */
+        static TRcConnList bitBlast(TRcWireBus &bus);
 
         void add(TRcPinRef &conn) {
             add(upcast(conn));
@@ -86,8 +93,24 @@ namespace vnl {
             return m_wireBus->getIncr();
         }
 
+        /**
+         * Get bit name.
+         * @return bit name.
+         */
         string toString() const;
+        
+        /**
+         * Get bit name.
+         * @return bit name.
+         */
+        string getName() const {
+            return toString();
+        }
 
+        const TRcWireBus& getBus() const {
+            return m_wireBus;
+        }
+        
         static const TRcWireBitRef downcast(const TRcObject &r) {
             return xyzzy::downcast<Object, WireBitRef > (r);
         }
@@ -97,6 +120,10 @@ namespace vnl {
         }
 
         virtual ~WireBitRef();
+
+        virtual unsigned getTypeId() const {
+            return stTypeId;
+        }
 
         static const unsigned stTypeId;
 
@@ -108,9 +135,6 @@ namespace vnl {
         //Not allowed
         COPY_CONSTRUCTOR_DECL(WireBitRef);
 
-        virtual unsigned getTypeId() const {
-            return stTypeId;
-        }
     };
 
     inline const TRcObject upcast(const TRcWireBitRef &p) {

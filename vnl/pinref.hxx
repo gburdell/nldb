@@ -95,6 +95,8 @@ namespace vnl {
 
         virtual ~PinRef();
 
+        static const unsigned stTypeId;
+
     private:
         TRcCell m_cell;
         const string m_portNm;
@@ -106,8 +108,6 @@ namespace vnl {
         virtual unsigned getTypeId() const {
             return stTypeId;
         }
-
-        static const unsigned stTypeId;
     };
 
     inline const TRcObject upcast(const TRcPinRef &p) {

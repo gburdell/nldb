@@ -22,15 +22,16 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //THE SOFTWARE.
 
+#include <iostream>
 #include <cstdarg>
 #include <cstdio>
 #include "xyzzy/assert.hxx"
 #include "vnl/message.hxx"
 #include "vnl/location.hxx"
 
-using namespace std;
-
 namespace vnl {
+    using namespace std;
+
     Message Message::stTheOne;
 
     const string Message::stPfxs[] = {"Info", "Warn", "Error", "Fatal"};
@@ -100,10 +101,11 @@ namespace vnl {
 
     static
     void
-    message(Message::EType type, string code, string s1="", string s2="", string s3="", string s4="") {
+    message(Message::EType type, string code, string s1 = "", string s2 = "", string s3 = "", string s4 = "") {
         string msg = Message::getTheOne().fmessage(type, code, s1, s2, s3, s4);
-        Message::getTheOne().message(type, msg);        
+        Message::getTheOne().message(type, msg);
     }
+
     void info(string code, string s1, string s2, string s3, string s4) {
         message(Message::eInfo, code, s1, s2, s3, s4);
     }

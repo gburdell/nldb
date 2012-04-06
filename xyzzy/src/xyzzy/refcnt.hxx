@@ -24,7 +24,6 @@
 #if	!defined(_xyzzy_refcnt_hxx_)
 #define  _xyzzy_refcnt_hxx_
 
-#include "xyzzy/util.hxx"
 #include "xyzzy/exception.hxx"
 
 namespace xyzzy {
@@ -133,9 +132,9 @@ namespace xyzzy {
         friend _TRcPtr* getBasePtr<T>(const PTRcObjPtr<T> &r);
 
 #if defined(DEBUG)
-        const T *p_t;
+        const T *pDBG_t;
 
-#define SET_T p_t = dynamic_cast<const T*>(m_p->mp_dat)
+#define SET_T pDBG_t = dynamic_cast<const T*>(m_p->mp_dat)
 #else
 #define SET_T
 #endif

@@ -29,7 +29,7 @@ namespace vnl {
     static string stTypeName = "wire";
     const unsigned Wire::stTypeId = Object::getNextTypeId(stTypeName);
 
-    const string Wire::stConstNm[2] = {"**logic0**", "**logic1**"};
+    const string Wire::stConstNm[2] = {"1'b0", "1'b1"};
 
     ostream&
     Wire::operator<<(ostream &os) const {

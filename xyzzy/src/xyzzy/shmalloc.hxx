@@ -80,6 +80,7 @@ private:
 	void init(const char *key, size_t size, bool create);
 };
 
+///All things related to shared memory in portable library
 namespace shm
 {
 	inline

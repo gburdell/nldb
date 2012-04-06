@@ -81,6 +81,20 @@ namespace vnl {
         virtual bool isPort() const {
             return false;
         }
+        
+        /**
+         * Return connections to this wire.
+         * A connection element is Wire, WireBitRef, PinRef.
+         * If wire, then assign statement.
+         * @return connections to this wire.
+         */
+        TRcConnList& getConns() {
+            return m_conns;
+        }
+
+        const TRcConnList& getConns() const {
+            return m_conns;
+        }
 
         static const TRcWire downcast(const TRcObject &r) {
             return xyzzy::downcast<Object, Wire > (r);
@@ -92,6 +106,11 @@ namespace vnl {
 
         virtual ~Wire();
 
+
+        virtual unsigned getTypeId() const {
+            return stTypeId;
+        }
+
         static const unsigned stTypeId;
 
     protected:
@@ -102,10 +121,6 @@ namespace vnl {
     private:
         //Not allowed
         COPY_CONSTRUCTOR_DECL(Wire);
-
-        virtual unsigned getTypeId() const {
-            return stTypeId;
-        }
     };
 
     inline

@@ -22,41 +22,81 @@
 //THE SOFTWARE.
 
 #if	!defined(_xyzzy_util_hxx_)
-#	 define  _xyzzy_util_hxx_
+#define  _xyzzy_util_hxx_
 
 #include <iostream>
+#include <map>
+#include "xyzzy/refcnt.hxx"
 
-namespace xyzzy
-{
-	unsigned int toUnsignedInt(const char* s);
+namespace xyzzy {
+    unsigned int toUnsignedInt(const char* s);
 
-	int toInt(const char* s);
+    int toInt(const char* s);
 
-	unsigned long int toUnsignedLongInt(const char* s);
+    unsigned long int toUnsignedLongInt(const char* s);
 
-	long int toLongInt(const char* s);
+    long int toLongInt(const char* s);
 
-	/// Convert double to little endian hex.
-	/// Return number of chars used in buf.
-	/// buf should be sized to accomodate terminating nul.
-	int toLittleEndianHex(double d, char *buf);
+    /// Convert double to little endian hex.
+    /// Return number of chars used in buf.
+    /// buf should be sized to accomodate terminating nul.
+    int toLittleEndianHex(double d, char *buf);
 
-	class TTicker
-	{
-	public:
-		explicit TTicker(unsigned tickIncr, 
-					     unsigned tickPcnt,
-						 std::ostream &os = std::cout);
+    class TTicker {
+    public:
+        explicit TTicker(unsigned tickIncr,
+                unsigned tickPcnt,
+                std::ostream &os = std::cout);
 
-		void tick();
+        void tick();
 
-	private:
-		const unsigned 	m_tickIncr;
-		const unsigned	m_tickPcnt;
-		std::ostream	&m_os;
-		      unsigned  m_pcnt;
-			  unsigned	m_tick;
-	};
+    private:
+        const unsigned m_tickIncr;
+        const unsigned m_tickPcnt;
+        std::ostream &m_os;
+        unsigned m_pcnt;
+        unsigned m_tick;
+    };
+
+    template<typename K, typename T>
+    inline
+    bool
+    mapHasKey(const std::map<K, T> &m, const K &key) {
+        return (m.find(key) != m.end());
+    }
+
+    /**
+     * Get map value of key.
+     * @param m map.
+     * @param key key value.
+     * @param val return value (if key found).
+     * @return true if key found; else false.
+     */
+    template<typename K, typename T>
+    inline
+    bool
+    mapGetVal(const std::map<K, T> &m, const K &key, T &val) {
+        typename std::map<K, T>::const_iterator i = m.find(key);
+        bool ok = (i != m.end());
+        if (ok) {
+            val = i->second;
+        }
+        return ok;
+    }
+
+    /**
+     * Get map value of key.
+     * @param rcm (reference counted) map.
+     * @param key key value.
+     * @param val return value (if key found).
+     * @return true if key found; else false.
+     */
+    template<typename K, typename T>
+    inline
+    bool
+    mapGetVal(const PTRcPtr<std::map<K, T> > &rcm, const K &key, T &val) {
+        return mpGetVal(rcm.asT(), key, val);
+    }
 };
 
 #endif	//_xyzzy_util_hxx_

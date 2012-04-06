@@ -44,7 +44,8 @@ namespace vnl {
     }
 
     TRcConnList
-    WireBitRef::bitBlast(TRcWireBus &bus, TRcBus &range) {
+    WireBitRef::bitBlast(TRcWireBus &bus, const TRcBus &rng) {
+        TRcBus range = rng;
         TRcConnList bits = new TConnList();
         TRcWireBitRef wref;
         TRcObject asObj;
@@ -58,6 +59,12 @@ namespace vnl {
             bits->push_back(asObj);
         }
         return bits;
+    }
+
+    TRcConnList
+    WireBitRef::bitBlast(TRcWireBus &bus) {
+        TRcBus rng;     //pass in null range
+        return bitBlast(bus, rng);
     }
 
     WireBitRef::~WireBitRef() {

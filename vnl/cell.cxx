@@ -38,18 +38,36 @@ namespace vnl {
 
     Cell::~Cell() {
     }
-    
-    bool 
+
+    TRcModule
+    Cell::getRef() const {
+        TRcModule mod;
+        if (m_ref.isValid()) {
+            mod = Module::downcast(m_ref);
+        }
+        return mod;
+    }
+
+    bool
     Cell::isHierarchical() const {
         bool hier = false;
-        TRcObject obj = getRef();
-        if (obj.isValid()) {
-            TRcModule mod = Module::downcast(obj);
+        TRcModule mod = getRef();
+        if (mod.isValid()) {
             hier = mod->isHierarchical();
         }
         return hier;
     }
-    
+
+    bool
+    Cell::isLibCell() const {
+        bool lib = false;
+        TRcModule mod = getRef();
+        if (mod.isValid()) {
+            lib = mod->isLibCell();
+        }
+        return lib;
+    }
+
     /**
      * Add PinRef entries to wires.
      */

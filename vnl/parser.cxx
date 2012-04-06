@@ -614,7 +614,7 @@ namespace vnl {
 
 }
 
-#define T_PARSER
+//#define T_PARSER
 #if defined(T_PARSER)
 
 #include <iostream>
@@ -625,19 +625,22 @@ using namespace std;
 using namespace vnl;
 
 int main(int argc, char *argv[]) {
-    ASSERT_TRUE(2 <= argc);
+    ASSERT_TRUE(3 <= argc);
+    string topNm = argv[1];
     TRcToken tok;
     TRcLocation loc;
     TRcLexer lexer;
     TRcLibrary work = new Library();
-    for (int i = 1; i < argc; i++) {
+    for (int i = 2; i < argc; i++) {
         lexer = new Lexer(argv[i]);
         cout << "Info: " << lexer->getFname() << ": processing ..." << endl;
         Parser parser(lexer);
         parser.start(work);
+#ifdef DEBUG
         TRcWriter writer = new Writer(string("writer.out.v"));
-        const TRcModule &mod = work->getModule(string("m2"));
+        const TRcModule &mod = work->getModule(topNm);
         writer->write(mod);
+#endif
     }
     return 0;
 }

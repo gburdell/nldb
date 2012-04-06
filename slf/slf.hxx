@@ -31,6 +31,7 @@
 #include "xyzzy/array.hxx"
 #include "xyzzy/slist.hxx"
 #include "xyzzy/exception.hxx"
+#include "xyzzy/util.hxx"
 
 #if !defined(DECL_CLASS)
 #define DECL_CLASS(_cls)                \
@@ -49,6 +50,7 @@
 	_cls& operator=(const _cls &)
 #endif
 
+///All things related to synopsys liberty file
 namespace slf {
     using std::string;
     using std::list;
@@ -60,6 +62,8 @@ namespace slf {
     using xyzzy::PTArray;
     using xyzzy::TException;
     using xyzzy::PTSlist;
+    using xyzzy::mapHasKey;
+    using xyzzy::mapGetVal;
 
     DECL_CLASS_SIMPLE_RC(Lexer);
     DECL_CLASS_SIMPLE_RC(Token);
@@ -78,32 +82,6 @@ namespace slf {
     DECL_CLASS_SIMPLE_RC(ExprVal);
     DECL_CLASS_SIMPLE_RC(ExprOp);
     DECL_CLASS_SIMPLE_RC(Number);
-
-    template<typename K, typename T>
-    inline
-    bool
-    mapHasKey(const map<K, T> &m, const K &key) {
-        return (m.find(key) != m.end());
-    }
-
-    /**
-     * Get map value of key.
-     * @param rcm (reference counted) map.
-     * @param key key value.
-     * @param val return value (if key found).
-     * @return true if key found; else false.
-     */
-    template<typename K, typename T>
-    inline
-    bool
-    mapGetVal(const PTRcPtr<map<K, T> > &rcm, const K &key, T &val) {
-        typename map<K,T>::const_iterator i = rcm->find(key);
-        bool ok = (i != rcm->end());
-        if (ok) {
-            val = i->second;
-        }
-        return ok;
-    }
 
     class DebugOstream : public ostream {
     public:

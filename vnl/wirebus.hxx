@@ -25,11 +25,14 @@
 #if !defined(_vnl_wirebus_hxx_)
 #define  _vnl_wirebus_hxx_
 
+#include <utility>
 #include "vnl/vnl.hxx"
 #include "vnl/wire.hxx"
 #include "vnl/bus.hxx"
 
 namespace vnl {
+    using std::pair;
+    using std::make_pair;
 
     class WireBus : virtual public Object, virtual public Wire, public Bus {
     public:
@@ -45,7 +48,7 @@ namespace vnl {
          * @return output stream.
          */
         virtual ostream& operator<<(ostream &os) const;
-        
+
         static const TRcWireBus downcast(const TRcObject &r) {
             return xyzzy::downcast<Object, WireBus > (r);
         }

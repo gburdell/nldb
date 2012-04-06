@@ -47,7 +47,7 @@ namespace vnl {
                     unsigned wireDefnIndent = 2,
                     unsigned compressBusConnExpr = 2,
                     bool libCellStub = true,
-                    unsigned maxCharsPerLine = 0,
+                    unsigned maxCharsPerLine = 80,
                     bool allowUnresolved = true
                     );
 

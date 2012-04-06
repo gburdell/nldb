@@ -71,4 +71,10 @@ namespace vnl {
     Object::getTypeName() const {
         return getRttiMap()[getTypeId()];
     }
+
+    string
+    Object::getName() const {
+        return "*Object::default_name*";
+    }
+
 }

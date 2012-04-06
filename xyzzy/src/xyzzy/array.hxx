@@ -30,6 +30,7 @@
 #include "xyzzy/refcnt.hxx"
 #include "xyzzy/slist.hxx"
 
+///All things related to portable library.
 namespace xyzzy {
 
     /** Base class for PTArray template.
