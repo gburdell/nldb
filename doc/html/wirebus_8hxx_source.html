@@ -121,89 +121,92 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00025"></a>00025 <span class="preprocessor">#if !defined(_vnl_wirebus_hxx_)</span>
 <a name="l00026"></a>00026 <span class="preprocessor"></span><span class="preprocessor">#define  _vnl_wirebus_hxx_</span>
 <a name="l00027"></a>00027 <span class="preprocessor"></span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include &quot;<a class="code" href="vnl_8hxx.html">vnl/vnl.hxx</a>&quot;</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include &quot;<a class="code" href="wire_8hxx.html">vnl/wire.hxx</a>&quot;</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;<a class="code" href="vnl_2bus_8hxx.html">vnl/bus.hxx</a>&quot;</span>
-<a name="l00031"></a>00031 
-<a name="l00032"></a>00032 <span class="keyword">namespace </span>vnl {
-<a name="l00033"></a>00033 
-<a name="l00034"></a><a class="code" href="classvnl_1_1WireBus.html">00034</a>     <span class="keyword">class </span><a class="code" href="classvnl_1_1WireBus.html">WireBus</a> : <span class="keyword">virtual</span> <span class="keyword">public</span> <a class="code" href="classvnl_1_1Object.html">Object</a>, <span class="keyword">virtual</span> <span class="keyword">public</span> <a class="code" href="classvnl_1_1Wire.html">Wire</a>, <span class="keyword">public</span> <a class="code" href="classvnl_1_1Bus.html">Bus</a> {
-<a name="l00035"></a>00035     <span class="keyword">public</span>:
-<a name="l00036"></a>00036         <span class="keyword">explicit</span> <a class="code" href="classvnl_1_1WireBus.html#a24bc8dece981ca8cdb32cca81d95f591">WireBus</a>(<span class="keywordtype">string</span> name, <span class="keyword">const</span> TRcBus &amp;bus);
-<a name="l00037"></a>00037 
-<a name="l00038"></a><a class="code" href="classvnl_1_1WireBus.html#a400a4e445d20929e1e07a69d519d6fbe">00038</a>         <span class="keywordtype">bool</span> <a class="code" href="classvnl_1_1WireBus.html#a400a4e445d20929e1e07a69d519d6fbe">isBus</a>()<span class="keyword"> const </span>{
-<a name="l00039"></a>00039             <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00040"></a>00040         }
-<a name="l00041"></a>00041 
-<a name="l00047"></a>00047         <span class="keyword">virtual</span> ostream&amp; <a class="code" href="classvnl_1_1WireBus.html#a42545c4568952040cb0e63dea7f771a2">operator&lt;&lt;</a>(ostream &amp;os) <span class="keyword">const</span>;
-<a name="l00048"></a>00048         
-<a name="l00049"></a><a class="code" href="classvnl_1_1WireBus.html#a57938d5db7688ce5e61c216466f93604">00049</a>         <span class="keyword">static</span> <span class="keyword">const</span> TRcWireBus <a class="code" href="classvnl_1_1WireBus.html#a57938d5db7688ce5e61c216466f93604">downcast</a>(<span class="keyword">const</span> TRcObject &amp;r) {
-<a name="l00050"></a>00050             <span class="keywordflow">return</span> xyzzy::downcast&lt;Object, WireBus &gt; (r);
-<a name="l00051"></a>00051         }
-<a name="l00052"></a>00052 
-<a name="l00053"></a><a class="code" href="classvnl_1_1WireBus.html#a72d92d8f85d9b7ad651edce33880be97">00053</a>         <span class="keyword">static</span> TRcWireBus <a class="code" href="classvnl_1_1WireBus.html#a72d92d8f85d9b7ad651edce33880be97">downcast</a>(TRcObject &amp;r) {
-<a name="l00054"></a>00054             <span class="keywordflow">return</span> xyzzy::downcast&lt;Object, WireBus &gt; (r);
-<a name="l00055"></a>00055         }
-<a name="l00056"></a>00056 
-<a name="l00057"></a>00057         <span class="keyword">virtual</span> <a class="code" href="classvnl_1_1WireBus.html#a1c04d08ded79b62a28fbcbb8e3b15076">~WireBus</a>();
-<a name="l00058"></a>00058 
-<a name="l00064"></a>00064         <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcConnList</a> <a class="code" href="classvnl_1_1WireBus.html#a89e8393527d4b8026ba3ae10c89eb996">operator []</a>(<span class="keywordtype">unsigned</span> i);
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066         <span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcConnList</a> <a class="code" href="classvnl_1_1WireBus.html#a89e8393527d4b8026ba3ae10c89eb996">operator []</a>(<span class="keywordtype">unsigned</span> i) <span class="keyword">const</span>;
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068     <span class="keyword">private</span>:
-<a name="l00069"></a><a class="code" href="classvnl_1_1WireBus.html#a3c912562c343ab77ee425908ff7832ed">00069</a>         <span class="keyword">typedef</span> <a class="code" href="classxyzzy_1_1PTArray.html" title="Type-specific array with bounds checking.">PTArray&lt;TRcConnList&gt;</a> <a class="code" href="classvnl_1_1WireBus.html#a3c912562c343ab77ee425908ff7832ed">t_pinConns</a>;
-<a name="l00074"></a><a class="code" href="classvnl_1_1WireBus.html#a714c580e836f66e706c2c7c3eb00a531">00074</a>         <a class="code" href="classxyzzy_1_1PTArray.html" title="Type-specific array with bounds checking.">t_pinConns</a> <a class="code" href="classvnl_1_1WireBus.html#a714c580e836f66e706c2c7c3eb00a531">m_pinConns</a>;
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076         <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcConnList</a> <a class="code" href="classvnl_1_1WireBus.html#af9e26c2b2634b46b5a4cd67508ad0806">getConnList</a>(<span class="keywordtype">unsigned</span> i, <span class="keywordtype">bool</span> create = <span class="keyword">false</span>);
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078         <span class="comment">//Not allowed</span>
-<a name="l00079"></a>00079         <a class="code" href="classvnl_1_1WireBus.html#ae830b76f968efdd8f84eb84f6c016265">COPY_CONSTRUCTOR_DECL</a>(<a class="code" href="classvnl_1_1WireBus.html">WireBus</a>);
+<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;utility&gt;</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include &quot;<a class="code" href="vnl_8hxx.html">vnl/vnl.hxx</a>&quot;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;<a class="code" href="wire_8hxx.html">vnl/wire.hxx</a>&quot;</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include &quot;<a class="code" href="vnl_2bus_8hxx.html">vnl/bus.hxx</a>&quot;</span>
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033 <span class="keyword">namespace </span>vnl {
+<a name="l00034"></a>00034     <span class="keyword">using</span> std::pair;
+<a name="l00035"></a>00035     <span class="keyword">using</span> std::make_pair;
+<a name="l00036"></a>00036 
+<a name="l00037"></a><a class="code" href="classvnl_1_1WireBus.html">00037</a>     <span class="keyword">class </span><a class="code" href="classvnl_1_1WireBus.html">WireBus</a> : <span class="keyword">virtual</span> <span class="keyword">public</span> <a class="code" href="classvnl_1_1Object.html">Object</a>, <span class="keyword">virtual</span> <span class="keyword">public</span> <a class="code" href="classvnl_1_1Wire.html">Wire</a>, <span class="keyword">public</span> <a class="code" href="classvnl_1_1Bus.html">Bus</a> {
+<a name="l00038"></a>00038     <span class="keyword">public</span>:
+<a name="l00039"></a>00039         <span class="keyword">explicit</span> <a class="code" href="classvnl_1_1WireBus.html#a24bc8dece981ca8cdb32cca81d95f591">WireBus</a>(<span class="keywordtype">string</span> name, <span class="keyword">const</span> TRcBus &amp;bus);
+<a name="l00040"></a>00040 
+<a name="l00041"></a><a class="code" href="classvnl_1_1WireBus.html#a400a4e445d20929e1e07a69d519d6fbe">00041</a>         <span class="keywordtype">bool</span> <a class="code" href="classvnl_1_1WireBus.html#a400a4e445d20929e1e07a69d519d6fbe">isBus</a>()<span class="keyword"> const </span>{
+<a name="l00042"></a>00042             <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00043"></a>00043         }
+<a name="l00044"></a>00044 
+<a name="l00050"></a>00050         <span class="keyword">virtual</span> ostream&amp; <a class="code" href="classvnl_1_1WireBus.html#a42545c4568952040cb0e63dea7f771a2">operator&lt;&lt;</a>(ostream &amp;os) <span class="keyword">const</span>;
+<a name="l00051"></a>00051 
+<a name="l00052"></a><a class="code" href="classvnl_1_1WireBus.html#a57938d5db7688ce5e61c216466f93604">00052</a>         <span class="keyword">static</span> <span class="keyword">const</span> TRcWireBus <a class="code" href="classvnl_1_1WireBus.html#a57938d5db7688ce5e61c216466f93604">downcast</a>(<span class="keyword">const</span> TRcObject &amp;r) {
+<a name="l00053"></a>00053             <span class="keywordflow">return</span> xyzzy::downcast&lt;Object, WireBus &gt; (r);
+<a name="l00054"></a>00054         }
+<a name="l00055"></a>00055 
+<a name="l00056"></a><a class="code" href="classvnl_1_1WireBus.html#a72d92d8f85d9b7ad651edce33880be97">00056</a>         <span class="keyword">static</span> TRcWireBus <a class="code" href="classvnl_1_1WireBus.html#a72d92d8f85d9b7ad651edce33880be97">downcast</a>(TRcObject &amp;r) {
+<a name="l00057"></a>00057             <span class="keywordflow">return</span> xyzzy::downcast&lt;Object, WireBus &gt; (r);
+<a name="l00058"></a>00058         }
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060         <span class="keyword">virtual</span> <a class="code" href="classvnl_1_1WireBus.html#a1c04d08ded79b62a28fbcbb8e3b15076">~WireBus</a>();
+<a name="l00061"></a>00061 
+<a name="l00067"></a>00067         <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcConnList</a> <a class="code" href="classvnl_1_1WireBus.html#a89e8393527d4b8026ba3ae10c89eb996">operator []</a>(<span class="keywordtype">unsigned</span> i);
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069         <span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcConnList</a> <a class="code" href="classvnl_1_1WireBus.html#a89e8393527d4b8026ba3ae10c89eb996">operator []</a>(<span class="keywordtype">unsigned</span> i) <span class="keyword">const</span>;
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071     <span class="keyword">private</span>:
+<a name="l00072"></a><a class="code" href="classvnl_1_1WireBus.html#a3c912562c343ab77ee425908ff7832ed">00072</a>         <span class="keyword">typedef</span> <a class="code" href="classxyzzy_1_1PTArray.html" title="Type-specific array with bounds checking.">PTArray&lt;TRcConnList&gt;</a> <a class="code" href="classvnl_1_1WireBus.html#a3c912562c343ab77ee425908ff7832ed">t_pinConns</a>;
+<a name="l00077"></a><a class="code" href="classvnl_1_1WireBus.html#a714c580e836f66e706c2c7c3eb00a531">00077</a>         <a class="code" href="classxyzzy_1_1PTArray.html" title="Type-specific array with bounds checking.">t_pinConns</a> <a class="code" href="classvnl_1_1WireBus.html#a714c580e836f66e706c2c7c3eb00a531">m_pinConns</a>;
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079         <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcConnList</a> <a class="code" href="classvnl_1_1WireBus.html#af9e26c2b2634b46b5a4cd67508ad0806">getConnList</a>(<span class="keywordtype">unsigned</span> i, <span class="keywordtype">bool</span> create = <span class="keyword">false</span>);
 <a name="l00080"></a>00080 
-<a name="l00081"></a><a class="code" href="classvnl_1_1WireBus.html#a8269093891a7d11f4e201bd86035ed47">00081</a>         <span class="keyword">virtual</span> <span class="keywordtype">unsigned</span> <a class="code" href="classvnl_1_1WireBus.html#a8269093891a7d11f4e201bd86035ed47">getTypeId</a>()<span class="keyword"> const </span>{
-<a name="l00082"></a>00082             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1WireBus.html#a6e33077494f9e1fd72c8a85f37d721c9">stTypeId</a>;
-<a name="l00083"></a>00083         }
-<a name="l00084"></a>00084 
-<a name="l00085"></a><a class="code" href="classvnl_1_1WireBus.html#a6e33077494f9e1fd72c8a85f37d721c9">00085</a>         <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="classvnl_1_1WireBus.html#a6e33077494f9e1fd72c8a85f37d721c9">stTypeId</a>;
-<a name="l00086"></a>00086 
-<a name="l00087"></a>00087     };
-<a name="l00088"></a>00088 
-<a name="l00089"></a>00089     <span class="keyword">inline</span>
-<a name="l00090"></a><a class="code" href="namespacevnl.html#aa3d5cb461d10228eb21e27cc8ee2c9d8">00090</a>     ostream&amp; <a class="code" href="namespacevnl.html#a1525976ff16e518805e4d3e4adc355f1">operator&lt;&lt;</a>(ostream &amp;os, <span class="keyword">const</span> TRcWireBus &amp;wire) {
-<a name="l00091"></a>00091         <span class="keywordflow">return</span> wire-&gt;operator &lt;&lt;(os);
-<a name="l00092"></a>00092     }
-<a name="l00093"></a>00093 
-<a name="l00094"></a><a class="code" href="namespacevnl.html#a3a9cdb30d92725191c7b8620ed211b58">00094</a>     <span class="keyword">inline</span> <span class="keyword">const</span> TRcObject <a class="code" href="namespacevnl.html#af48abc6924af16bd80dfee45b314c6d9">upcast</a>(<span class="keyword">const</span> TRcWireBus &amp;p) {
-<a name="l00095"></a>00095         <span class="keywordflow">return</span> xyzzy::upcast&lt;Object, WireBus &gt; (p);
-<a name="l00096"></a>00096     }
-<a name="l00097"></a>00097 
-<a name="l00098"></a><a class="code" href="namespacevnl.html#ab0cf50a80c7314fa67a1c7c9a643d377">00098</a>     <span class="keyword">inline</span> TRcObject <a class="code" href="namespacevnl.html#af48abc6924af16bd80dfee45b314c6d9">upcast</a>(TRcWireBus &amp;p) {
-<a name="l00099"></a>00099         <span class="keywordflow">return</span> xyzzy::upcast&lt;Object, WireBus &gt; (p);
-<a name="l00100"></a>00100     }
-<a name="l00101"></a>00101 
-<a name="l00102"></a><a class="code" href="namespacevnl.html#a615b0919b764d862e6378fa7e354c9f0">00102</a>     <span class="keyword">inline</span> <span class="keyword">const</span> TRcWire <a class="code" href="namespacevnl.html#a29b8c5cb16d4aec6c800f9f317a8f1af">toWire</a>(<span class="keyword">const</span> TRcWireBus &amp;p) {
-<a name="l00103"></a>00103         <span class="keywordflow">return</span> xyzzy::upcast&lt;Wire, WireBus &gt; (p);
-<a name="l00104"></a>00104     }
-<a name="l00105"></a>00105 
-<a name="l00106"></a><a class="code" href="namespacevnl.html#a51938e249edc8773288c93e7356eacac">00106</a>     <span class="keyword">inline</span> TRcWire <a class="code" href="namespacevnl.html#a29b8c5cb16d4aec6c800f9f317a8f1af">toWire</a>(TRcWireBus &amp;p) {
-<a name="l00107"></a>00107         <span class="keywordflow">return</span> xyzzy::upcast&lt;Wire, WireBus &gt; (p);
-<a name="l00108"></a>00108     }
-<a name="l00109"></a>00109 
-<a name="l00110"></a><a class="code" href="namespacevnl.html#aef92e7d8ccf5f3917448dc88509d74ff">00110</a>     <span class="keyword">inline</span> <span class="keyword">const</span> TRcWireBus <a class="code" href="namespacevnl.html#aef92e7d8ccf5f3917448dc88509d74ff">toWireBus</a>(<span class="keyword">const</span> TRcWire &amp;p) {
-<a name="l00111"></a>00111         <span class="keywordflow">return</span> xyzzy::downcast&lt;Wire, WireBus &gt; (p);
-<a name="l00112"></a>00112     }
-<a name="l00113"></a>00113 
-<a name="l00114"></a><a class="code" href="namespacevnl.html#a8ab2af795e7a0d32b684c723c059346b">00114</a>     <span class="keyword">inline</span> TRcWireBus <a class="code" href="namespacevnl.html#aef92e7d8ccf5f3917448dc88509d74ff">toWireBus</a>(TRcWire &amp;p) {
-<a name="l00115"></a>00115         <span class="keywordflow">return</span> xyzzy::downcast&lt;Wire, WireBus &gt; (p);
-<a name="l00116"></a>00116     }
-<a name="l00117"></a>00117 }
-<a name="l00118"></a>00118 
-<a name="l00119"></a>00119 <span class="preprocessor">#endif</span>
+<a name="l00081"></a>00081         <span class="comment">//Not allowed</span>
+<a name="l00082"></a>00082         <a class="code" href="classvnl_1_1WireBus.html#ae830b76f968efdd8f84eb84f6c016265">COPY_CONSTRUCTOR_DECL</a>(<a class="code" href="classvnl_1_1WireBus.html">WireBus</a>);
+<a name="l00083"></a>00083 
+<a name="l00084"></a><a class="code" href="classvnl_1_1WireBus.html#a8269093891a7d11f4e201bd86035ed47">00084</a>         <span class="keyword">virtual</span> <span class="keywordtype">unsigned</span> <a class="code" href="classvnl_1_1WireBus.html#a8269093891a7d11f4e201bd86035ed47">getTypeId</a>()<span class="keyword"> const </span>{
+<a name="l00085"></a>00085             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1WireBus.html#a6e33077494f9e1fd72c8a85f37d721c9">stTypeId</a>;
+<a name="l00086"></a>00086         }
+<a name="l00087"></a>00087 
+<a name="l00088"></a><a class="code" href="classvnl_1_1WireBus.html#a6e33077494f9e1fd72c8a85f37d721c9">00088</a>         <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="classvnl_1_1WireBus.html#a6e33077494f9e1fd72c8a85f37d721c9">stTypeId</a>;
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090     };
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092     <span class="keyword">inline</span>
+<a name="l00093"></a><a class="code" href="namespacevnl.html#aa3d5cb461d10228eb21e27cc8ee2c9d8">00093</a>     ostream&amp; <a class="code" href="namespacevnl.html#a1525976ff16e518805e4d3e4adc355f1">operator&lt;&lt;</a>(ostream &amp;os, <span class="keyword">const</span> TRcWireBus &amp;wire) {
+<a name="l00094"></a>00094         <span class="keywordflow">return</span> wire-&gt;operator &lt;&lt;(os);
+<a name="l00095"></a>00095     }
+<a name="l00096"></a>00096 
+<a name="l00097"></a><a class="code" href="namespacevnl.html#a3a9cdb30d92725191c7b8620ed211b58">00097</a>     <span class="keyword">inline</span> <span class="keyword">const</span> TRcObject <a class="code" href="namespacevnl.html#aee0af4ad98952d4946146fb8fe2ffec4">upcast</a>(<span class="keyword">const</span> TRcWireBus &amp;p) {
+<a name="l00098"></a>00098         <span class="keywordflow">return</span> xyzzy::upcast&lt;Object, WireBus &gt; (p);
+<a name="l00099"></a>00099     }
+<a name="l00100"></a>00100 
+<a name="l00101"></a><a class="code" href="namespacevnl.html#ab0cf50a80c7314fa67a1c7c9a643d377">00101</a>     <span class="keyword">inline</span> TRcObject <a class="code" href="namespacevnl.html#aee0af4ad98952d4946146fb8fe2ffec4">upcast</a>(TRcWireBus &amp;p) {
+<a name="l00102"></a>00102         <span class="keywordflow">return</span> xyzzy::upcast&lt;Object, WireBus &gt; (p);
+<a name="l00103"></a>00103     }
+<a name="l00104"></a>00104 
+<a name="l00105"></a><a class="code" href="namespacevnl.html#a615b0919b764d862e6378fa7e354c9f0">00105</a>     <span class="keyword">inline</span> <span class="keyword">const</span> TRcWire <a class="code" href="namespacevnl.html#a29b8c5cb16d4aec6c800f9f317a8f1af">toWire</a>(<span class="keyword">const</span> TRcWireBus &amp;p) {
+<a name="l00106"></a>00106         <span class="keywordflow">return</span> xyzzy::upcast&lt;Wire, WireBus &gt; (p);
+<a name="l00107"></a>00107     }
+<a name="l00108"></a>00108 
+<a name="l00109"></a><a class="code" href="namespacevnl.html#a51938e249edc8773288c93e7356eacac">00109</a>     <span class="keyword">inline</span> TRcWire <a class="code" href="namespacevnl.html#a29b8c5cb16d4aec6c800f9f317a8f1af">toWire</a>(TRcWireBus &amp;p) {
+<a name="l00110"></a>00110         <span class="keywordflow">return</span> xyzzy::upcast&lt;Wire, WireBus &gt; (p);
+<a name="l00111"></a>00111     }
+<a name="l00112"></a>00112 
+<a name="l00113"></a><a class="code" href="namespacevnl.html#aef92e7d8ccf5f3917448dc88509d74ff">00113</a>     <span class="keyword">inline</span> <span class="keyword">const</span> TRcWireBus <a class="code" href="namespacevnl.html#aef92e7d8ccf5f3917448dc88509d74ff">toWireBus</a>(<span class="keyword">const</span> TRcWire &amp;p) {
+<a name="l00114"></a>00114         <span class="keywordflow">return</span> xyzzy::downcast&lt;Wire, WireBus &gt; (p);
+<a name="l00115"></a>00115     }
+<a name="l00116"></a>00116 
+<a name="l00117"></a><a class="code" href="namespacevnl.html#a8ab2af795e7a0d32b684c723c059346b">00117</a>     <span class="keyword">inline</span> TRcWireBus <a class="code" href="namespacevnl.html#aef92e7d8ccf5f3917448dc88509d74ff">toWireBus</a>(TRcWire &amp;p) {
+<a name="l00118"></a>00118         <span class="keywordflow">return</span> xyzzy::downcast&lt;Wire, WireBus &gt; (p);
+<a name="l00119"></a>00119     }
+<a name="l00120"></a>00120 }
+<a name="l00121"></a>00121 
+<a name="l00122"></a>00122 <span class="preprocessor">#endif</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Apr 1 2012 16:45:17 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Apr 6 2012 17:15:09 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

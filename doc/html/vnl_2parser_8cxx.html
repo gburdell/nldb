@@ -92,7 +92,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Defines</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">vnl/parser.cxx File Reference</div>  </div>
@@ -111,17 +110,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &quot;<a class="el" href="wirebus_8hxx_source.html">vnl/wirebus.hxx</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="constref_8hxx_source.html">vnl/constref.hxx</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="wirebitref_8hxx_source.html">vnl/wirebitref.hxx</a>&quot;</code><br/>
-<code>#include &lt;iostream&gt;</code><br/>
-<code>#include &quot;<a class="el" href="writer_8hxx_source.html">writer.hxx</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="asgnrhs_8hxx_source.html">vnl/asgnrhs.hxx</a>&quot;</code><br/>
 </div>
 <p><a href="vnl_2parser_8cxx_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacevnl"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html">vnl</a></td></tr>
-<tr><td colspan="2"><h2><a name="define-members"></a>
-Defines</h2></td></tr>
-<tr class="memitem:a2df15254473b2facc3b2e06f78f32cb7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vnl_2parser_8cxx.html#a2df15254473b2facc3b2e06f78f32cb7">T_PARSER</a></td></tr>
+<tr class="memdesc:namespacevnl"><td class="mdescLeft">&#160;</td><td class="mdescRight">All things related to verilog netlist. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ad9c74aa3c12c38523bdf550038d9c0d3"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classvnl_1_1Port.html#aa83de896aeeec435365cb106468cc7ce">Port::EDirection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#ad9c74aa3c12c38523bdf550038d9c0d3">vnl::getDirection</a> (<a class="el" href="classvnl_1_1Token.html#a5901ede3a31e4cb480e43ac8ca2c29e0">Token::EType</a> type)</td></tr>
@@ -129,59 +125,13 @@ Functions</h2></td></tr>
 <tr class="memitem:a316060e3e3ce89ecfa638814e0e49da8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a316060e3e3ce89ecfa638814e0e49da8">vnl::addTo</a> (TRcObject &amp;lhs, TRcObject &amp;rhs)</td></tr>
 <tr class="memitem:ae47c451d6c3fcbca2ac0d140e8abe339"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#ae47c451d6c3fcbca2ac0d140e8abe339">vnl::expand</a> (<a class="el" href="namespacevnl.html#afe1ad294f2541a4078e9f7f4e6a9f317">TRcConnList</a> &amp;lhs, <a class="el" href="namespacevnl.html#afe1ad294f2541a4078e9f7f4e6a9f317">TRcConnList</a> &amp;rhs)</td></tr>
 <tr class="memitem:aa37d383c09c0ae4a3eae17303aae3bf9"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#aa37d383c09c0ae4a3eae17303aae3bf9">vnl::toString</a> (unsigned i)</td></tr>
-<tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vnl_2parser_8cxx.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
+<tr class="memitem:a11032f0e381804acdfaab649b71ff19e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespacevnl.html#afe1ad294f2541a4078e9f7f4e6a9f317">TRcConnList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a11032f0e381804acdfaab649b71ff19e">vnl::toAsgnRhs</a> (const <a class="el" href="namespacevnl.html#afe1ad294f2541a4078e9f7f4e6a9f317">TRcConnList</a> &amp;eles)</td></tr>
 </table>
-<hr/><h2>Define Documentation</h2>
-<a class="anchor" id="a2df15254473b2facc3b2e06f78f32cb7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define <a class="el" href="vnl_2parser_8cxx.html#a2df15254473b2facc3b2e06f78f32cb7">T_PARSER</a></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Definition at line <a class="el" href="vnl_2parser_8cxx_source.html#l00614">614</a> of file <a class="el" href="vnl_2parser_8cxx_source.html">parser.cxx</a>.</p>
-
-</div>
-</div>
-<hr/><h2>Function Documentation</h2>
-<a class="anchor" id="a0ddf1224851353fc92bfbff6f499fa97"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int <a class="el" href="vnl_2parser_8cxx.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>argc</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>argv</em>[]&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Definition at line <a class="el" href="vnl_2parser_8cxx_source.html#l00624">624</a> of file <a class="el" href="vnl_2parser_8cxx_source.html">parser.cxx</a>.</p>
-
-</div>
-</div>
 </div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Apr 1 2012 16:45:17 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Apr 6 2012 17:15:09 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

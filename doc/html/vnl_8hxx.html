@@ -116,8 +116,11 @@ Classes</h2></td></tr>
 <tr><td colspan="2"><h2><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacevnl"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html">vnl</a></td></tr>
+<tr class="memdesc:namespacevnl"><td class="mdescLeft">&#160;</td><td class="mdescRight">All things related to verilog netlist. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="define-members"></a>
 Defines</h2></td></tr>
+<tr class="memitem:a0e0d14f144c9683eecdcdc5df4a7a130"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vnl_8hxx.html#a0e0d14f144c9683eecdcdc5df4a7a130">FOREACH</a>(_titer, _begin, _end, _func)</td></tr>
+<tr class="memdesc:a0e0d14f144c9683eecdcdc5df4a7a130"><td class="mdescLeft">&#160;</td><td class="mdescRight">Similar to algorithm::for_each.  <a href="#a0e0d14f144c9683eecdcdc5df4a7a130"></a><br/></td></tr>
 <tr class="memitem:a271ac3cedb76c6b228bbf13a2c15e827"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vnl_8hxx.html#a271ac3cedb76c6b228bbf13a2c15e827">DECL_CLASS</a>(_cls)</td></tr>
 <tr class="memitem:abbb07c48d04abb0af5ff939b7a4f65ea"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vnl_8hxx.html#abbb07c48d04abb0af5ff939b7a4f65ea">COPY_CONSTRUCTOR_DECL</a>(_cls)</td></tr>
 <tr><td colspan="2"><h2><a name="typedef-members"></a>
@@ -148,9 +151,8 @@ Functions</h2></td></tr>
 <tr class="memitem:a0fe151db9dd513be02a818e2d926b216"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a0fe151db9dd513be02a818e2d926b216">vnl::DECL_CLASS</a> (Bus)</td></tr>
 <tr class="memitem:a9a22031fac80409c327cde25c95a54be"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a9a22031fac80409c327cde25c95a54be">vnl::DECL_CLASS</a> (PortBus)</td></tr>
 <tr class="memitem:a2582eb9c085498fa94652846734c801e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a2582eb9c085498fa94652846734c801e">vnl::DECL_CLASS</a> (WireBus)</td></tr>
+<tr class="memitem:acca80281a3ebf7f2fa2f882093cfb47b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#acca80281a3ebf7f2fa2f882093cfb47b">vnl::DECL_CLASS</a> (AsgnRhs)</td></tr>
 <tr class="memitem:adcaa36560946db85539d30ee2bdb4943"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#adcaa36560946db85539d30ee2bdb4943">vnl::length</a> (unsigned lb, unsigned rb)</td></tr>
-<tr class="memitem:aa2711c46f9da9fe688373c3a1001cf11"><td class="memTemplParams" colspan="2">template&lt;typename K , typename T &gt; </td></tr>
-<tr class="memitem:aa2711c46f9da9fe688373c3a1001cf11"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevnl.html#aa2711c46f9da9fe688373c3a1001cf11">vnl::mapHasKey</a> (const map&lt; K, T &gt; &amp;m, const K &amp;key)</td></tr>
 </table>
 <hr/><h2>Define Documentation</h2>
 <a class="anchor" id="abbb07c48d04abb0af5ff939b7a4f65ea"></a>
@@ -167,10 +169,10 @@ Functions</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<b>Value:</b><div class="fragment"><pre class="fragment">_cls(<span class="keyword">const</span> _cls &amp;);           \
+<b>Value:</b><div class="fragment"><pre class="fragment">_cls(<span class="keyword">const</span> _cls &amp;);               \
         _cls&amp; operator=(<span class="keyword">const</span> _cls &amp;)
 </pre></div>
-<p>Definition at line <a class="el" href="vnl_8hxx_source.html#l00093">93</a> of file <a class="el" href="vnl_8hxx_source.html">vnl.hxx</a>.</p>
+<p>Definition at line <a class="el" href="vnl_8hxx_source.html#l00101">101</a> of file <a class="el" href="vnl_8hxx_source.html">vnl.hxx</a>.</p>
 
 </div>
 </div>
@@ -191,7 +193,53 @@ Functions</h2></td></tr>
 <b>Value:</b><div class="fragment"><pre class="fragment"><span class="keyword">class </span>_cls ;                        \
     typedef PTRcObjPtr&lt;_cls&gt; TRc##_cls
 </pre></div>
-<p>Definition at line <a class="el" href="vnl_8hxx_source.html#l00060">60</a> of file <a class="el" href="vnl_8hxx_source.html">vnl.hxx</a>.</p>
+<p>Definition at line <a class="el" href="vnl_8hxx_source.html#l00067">67</a> of file <a class="el" href="vnl_8hxx_source.html">vnl.hxx</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0e0d14f144c9683eecdcdc5df4a7a130"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define <a class="el" href="vnl_8hxx.html#a0e0d14f144c9683eecdcdc5df4a7a130">FOREACH</a></td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">_titer, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">_begin, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">_end, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">_func&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<b>Value:</b><div class="fragment"><pre class="fragment">{       <span class="keywordflow">for</span> (_titer i = _begin; i != _end; ++i)  \
+                _func(*i);                       \
+}
+</pre></div>
+<p>Similar to algorithm::for_each. </p>
+
+<p>Definition at line <a class="el" href="vnl_8hxx_source.html#l00036">36</a> of file <a class="el" href="vnl_8hxx_source.html">vnl.hxx</a>.</p>
 
 </div>
 </div>
@@ -199,7 +247,7 @@ Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Apr 1 2012 16:45:17 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Apr 6 2012 17:15:09 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

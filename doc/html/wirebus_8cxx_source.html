@@ -120,9 +120,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00024"></a>00024 <span class="preprocessor">#include &quot;<a class="code" href="wirebus_8hxx.html">vnl/wirebus.hxx</a>&quot;</span>
 <a name="l00025"></a>00025 
 <a name="l00026"></a>00026 <span class="keyword">namespace </span>vnl {
-<a name="l00027"></a>00027     
+<a name="l00027"></a>00027 
 <a name="l00028"></a><a class="code" href="wirebus_8cxx.html#a3ee9aeb548293d00ea8f2acae49966d2">00028</a> <span class="preprocessor">#define UNCONST const_cast&lt;WireBus*&gt;(this)</span>
-<a name="l00029"></a>00029 <span class="preprocessor"></span>    
+<a name="l00029"></a>00029 <span class="preprocessor"></span>
 <a name="l00030"></a>00030     <span class="keyword">static</span> <span class="keywordtype">string</span> <a class="code" href="namespacevnl.html#acf79541a0cd338b315bbf08ed9b6b42f">stTypeName</a> = <span class="stringliteral">&quot;wirebus&quot;</span>;
 <a name="l00031"></a>00031     <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="classvnl_1_1WireBus.html#a6e33077494f9e1fd72c8a85f37d721c9">WireBus::stTypeId</a> = <a class="code" href="classvnl_1_1Object.html#a280fd33b2298cb2ba0d8195b883b4709">Object::getNextTypeId</a>(<a class="code" href="namespacevnl.html#acf79541a0cd338b315bbf08ed9b6b42f">stTypeName</a>);
 <a name="l00032"></a>00032 
@@ -130,21 +130,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00034"></a>00034     : <a class="code" href="classvnl_1_1Wire.html">Wire</a>(name), <a class="code" href="classvnl_1_1Bus.html">Bus</a>(bus), m_pinConns(bus-&gt;getLength() - 1) {
 <a name="l00035"></a>00035     }
 <a name="l00036"></a>00036 
-<a name="l00037"></a>00037     <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcConnList</a> 
+<a name="l00037"></a>00037     <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcConnList</a>
 <a name="l00038"></a><a class="code" href="classvnl_1_1WireBus.html#af9e26c2b2634b46b5a4cd67508ad0806">00038</a>     <a class="code" href="classvnl_1_1WireBus.html#af9e26c2b2634b46b5a4cd67508ad0806">WireBus::getConnList</a>(<span class="keywordtype">unsigned</span> i, <span class="keywordtype">bool</span> create) {
 <a name="l00039"></a>00039         <span class="keywordtype">unsigned</span> lbo = <a class="code" href="classvnl_1_1Bus.html#a086b8bc134d8f3029491b71d4e0d7590">Bus::getLbOffset</a>(i);
-<a name="l00040"></a>00040         <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcConnList</a> clist = (0 == lbo) ? <a class="code" href="classvnl_1_1Wire.html#a7e34ad7b20b4e4599997690d96bd6640" title="List of PinRef or Wire.">Wire::m_conns</a> : <a class="code" href="classvnl_1_1WireBus.html#a714c580e836f66e706c2c7c3eb00a531">m_pinConns</a>[lbo-1];
+<a name="l00040"></a>00040         <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcConnList</a> clist = (0 == lbo) ? <a class="code" href="classvnl_1_1Wire.html#a7e34ad7b20b4e4599997690d96bd6640" title="List of PinRef or Wire.">Wire::m_conns</a> : <a class="code" href="classvnl_1_1WireBus.html#a714c580e836f66e706c2c7c3eb00a531">m_pinConns</a>[lbo - 1];
 <a name="l00041"></a>00041         <span class="keywordflow">if</span> (create &amp;&amp; clist.<a class="code" href="classxyzzy_1_1PTRcPtr.html#a572574159b8bd74554fe7bcd8d15b35d">isNull</a>()) {
 <a name="l00042"></a>00042             clist = <span class="keyword">new</span> <a class="code" href="namespacevnl.html#add4dda0ffc567ad27cb0a8a030aa9b05">TConnList</a>();
 <a name="l00043"></a>00043             <span class="keywordflow">if</span> (0 == lbo) {
 <a name="l00044"></a>00044                 <a class="code" href="classvnl_1_1Wire.html#a7e34ad7b20b4e4599997690d96bd6640" title="List of PinRef or Wire.">Wire::m_conns</a> = clist;
 <a name="l00045"></a>00045             } <span class="keywordflow">else</span> {
-<a name="l00046"></a>00046                 <a class="code" href="classvnl_1_1WireBus.html#a714c580e836f66e706c2c7c3eb00a531">m_pinConns</a>[lbo-1] = clist;
+<a name="l00046"></a>00046                 <a class="code" href="classvnl_1_1WireBus.html#a714c580e836f66e706c2c7c3eb00a531">m_pinConns</a>[lbo - 1] = clist;
 <a name="l00047"></a>00047             }
 <a name="l00048"></a>00048         }
 <a name="l00049"></a>00049         <span class="keywordflow">return</span> clist;
 <a name="l00050"></a>00050     }
-<a name="l00051"></a>00051     
+<a name="l00051"></a>00051 
 <a name="l00052"></a>00052     <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcConnList</a>
 <a name="l00053"></a><a class="code" href="classvnl_1_1WireBus.html#a89e8393527d4b8026ba3ae10c89eb996">00053</a>     <a class="code" href="classvnl_1_1WireBus.html#a89e8393527d4b8026ba3ae10c89eb996">WireBus::operator []</a>(<span class="keywordtype">unsigned</span> i) {
 <a name="l00054"></a>00054         <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1WireBus.html#af9e26c2b2634b46b5a4cd67508ad0806">getConnList</a>(i, <span class="keyword">true</span>);
@@ -157,20 +157,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00061"></a>00061 
 <a name="l00062"></a>00062     ostream&amp;
 <a name="l00063"></a><a class="code" href="classvnl_1_1WireBus.html#a42545c4568952040cb0e63dea7f771a2">00063</a>     <a class="code" href="classvnl_1_1WireBus.html#a42545c4568952040cb0e63dea7f771a2">WireBus::operator&lt;&lt;</a>(ostream &amp;os)<span class="keyword"> const </span>{
-<a name="l00064"></a>00064         os &lt;&lt; <span class="stringliteral">&quot;wire &quot;</span> &lt;&lt; <a class="code" href="classvnl_1_1Bus.html#a8fd65d1bdb126591b22a95c8c805b5d2">Bus::toString</a>() &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; <a class="code" href="classvnl_1_1Wire.html#a2d148eeb44ee3dc4b4e8670aaa28fb1a">getName</a>();
+<a name="l00064"></a>00064         os &lt;&lt; <span class="stringliteral">&quot;wire &quot;</span> &lt;&lt; <a class="code" href="classvnl_1_1Bus.html#a8fd65d1bdb126591b22a95c8c805b5d2">Bus::toString</a>() &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; <a class="code" href="classvnl_1_1Object.html#a6051bd03d341c78d5d07d89fd0428eb8">getName</a>();
 <a name="l00065"></a>00065         <span class="keywordflow">return</span> os;
 <a name="l00066"></a>00066     }
 <a name="l00067"></a>00067 
 <a name="l00068"></a><a class="code" href="classvnl_1_1WireBus.html#a1c04d08ded79b62a28fbcbb8e3b15076">00068</a>     <a class="code" href="classvnl_1_1WireBus.html#a1c04d08ded79b62a28fbcbb8e3b15076">WireBus::~WireBus</a>() {
 <a name="l00069"></a>00069     }
-<a name="l00070"></a>00070     
+<a name="l00070"></a>00070 
 <a name="l00071"></a>00071 <span class="preprocessor">#undef UNCONST</span>
 <a name="l00072"></a>00072 <span class="preprocessor"></span>}
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Apr 1 2012 16:45:17 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Apr 6 2012 17:15:09 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

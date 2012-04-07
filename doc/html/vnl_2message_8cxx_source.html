@@ -118,101 +118,103 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00022"></a>00022 <span class="comment">//OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN</span>
 <a name="l00023"></a>00023 <span class="comment">//THE SOFTWARE.</span>
 <a name="l00024"></a>00024 
-<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;cstdarg&gt;</span>
-<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;cstdio&gt;</span>
-<a name="l00027"></a>00027 <span class="preprocessor">#include &quot;<a class="code" href="assert_8hxx.html">xyzzy/assert.hxx</a>&quot;</span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include &quot;<a class="code" href="vnl_2message_8hxx.html">vnl/message.hxx</a>&quot;</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include &quot;<a class="code" href="location_8hxx.html">vnl/location.hxx</a>&quot;</span>
-<a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="keyword">using namespace </span>std;
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="keyword">namespace </span>vnl {
-<a name="l00034"></a>00034     Message Message::stTheOne;
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036     <span class="keyword">const</span> <span class="keywordtype">string</span> Message::stPfxs[] = {<span class="stringliteral">&quot;Info&quot;</span>, <span class="stringliteral">&quot;Warn&quot;</span>, <span class="stringliteral">&quot;Error&quot;</span>, <span class="stringliteral">&quot;Fatal&quot;</span>};
-<a name="l00037"></a><a class="code" href="namespacevnl.html#a131b664e57f99adb8ce6bc13ee3785b5">00037</a>     ostream* <a class="code" href="namespacevnl.html#a131b664e57f99adb8ce6bc13ee3785b5">stpOS</a>[] = {&amp;cout, &amp;cout, &amp;cerr, &amp;cerr};
-<a name="l00038"></a>00038 
-<a name="l00039"></a><a class="code" href="classvnl_1_1Message.html#ac72c59a7860a06169d7eb8d0701e7891">00039</a>     Message::Message() {
-<a name="l00040"></a>00040         <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> i = 0; i &lt; eLast;) {
-<a name="l00041"></a>00041             m_msgCnts[i++] = 0;
-<a name="l00042"></a>00042         }
-<a name="l00043"></a>00043         <span class="comment">//alphabetical order</span>
-<a name="l00044"></a>00044         m_fmtByCode[<span class="stringliteral">&quot;VNL-ASSN-1&quot;</span>] = <span class="stringliteral">&quot;%s: lhs.length %s != rhs.length %s&quot;</span>;
-<a name="l00045"></a>00045         m_fmtByCode[<span class="stringliteral">&quot;VNL-BUS-1&quot;</span>] = <span class="stringliteral">&quot;%s: &#39;%s&#39; invalid bus range&quot;</span>;
-<a name="l00046"></a>00046         m_fmtByCode[<span class="stringliteral">&quot;VNL-CELL-1&quot;</span>] = <span class="stringliteral">&quot;%s: connection for pin &#39;%s&#39; already specified&quot;</span>;
-<a name="l00047"></a>00047         m_fmtByCode[<span class="stringliteral">&quot;VNL-CELL-2&quot;</span>] = <span class="stringliteral">&quot;%s: instance name &#39;%s&#39; already specified&quot;</span>;
-<a name="l00048"></a>00048         m_fmtByCode[<span class="stringliteral">&quot;VNL-DECL-1&quot;</span>] = <span class="stringliteral">&quot;%s: %s &#39;%s&#39; already defined&quot;</span>;
-<a name="l00049"></a>00049         m_fmtByCode[<span class="stringliteral">&quot;VNL-DECL-2&quot;</span>] = <span class="stringliteral">&quot;%s: &#39;%s&#39; undefined&quot;</span>;
-<a name="l00050"></a>00050         m_fmtByCode[<span class="stringliteral">&quot;VNL-FILE-1&quot;</span>] = <span class="stringliteral">&quot;%s: processing ..&quot;</span>;
-<a name="l00051"></a>00051         m_fmtByCode[<span class="stringliteral">&quot;VNL-FILE-2&quot;</span>] = <span class="stringliteral">&quot;%s: cannot %s file&quot;</span>;
-<a name="l00052"></a>00052         m_fmtByCode[<span class="stringliteral">&quot;VNL-MOD-1&quot;</span>] = <span class="stringliteral">&quot;%s: module &#39;%s&#39; already defined in library &#39;%s&#39;&quot;</span>;
-<a name="l00053"></a>00053         m_fmtByCode[<span class="stringliteral">&quot;VNL-NUM-1&quot;</span>] = <span class="stringliteral">&quot;%s: &#39;%s&#39; malformed number&quot;</span>;
-<a name="l00054"></a>00054         m_fmtByCode[<span class="stringliteral">&quot;VNL-NUM-2&quot;</span>] = <span class="stringliteral">&quot;%s: based number &#39;%s&#39; missing size&quot;</span>;
-<a name="l00055"></a>00055         m_fmtByCode[<span class="stringliteral">&quot;VNL-PARSE-1&quot;</span>] = <span class="stringliteral">&quot;%s: expected &#39;%s&#39;, found &#39;%s&#39;&quot;</span>;
-<a name="l00056"></a>00056         m_fmtByCode[<span class="stringliteral">&quot;VNL-PARSE-2&quot;</span>] = <span class="stringliteral">&quot;%s: &#39;%s&#39; unexpected&quot;</span>;
-<a name="l00057"></a>00057         m_fmtByCode[<span class="stringliteral">&quot;VNL-PARSE-3&quot;</span>] = <span class="stringliteral">&quot;%s: processed %s seconds&quot;</span>;
-<a name="l00058"></a>00058         m_fmtByCode[<span class="stringliteral">&quot;VNL-PORT-1&quot;</span>] = <span class="stringliteral">&quot;%s: port &#39;%s&#39; defined, but not declared in port list&quot;</span>;
-<a name="l00059"></a>00059         m_fmtByCode[<span class="stringliteral">&quot;VNL-PORT-2&quot;</span>] = <span class="stringliteral">&quot;%s: port &#39;%s&#39; redefined&quot;</span>;
-<a name="l00060"></a>00060         m_fmtByCode[<span class="stringliteral">&quot;VNL-REF-1&quot;</span>] = <span class="stringliteral">&quot;in module &#39;%s&#39;, cell &#39;%s&#39;: reference &#39;%s&#39; undefined&quot;</span>;
-<a name="l00061"></a>00061         m_fmtByCode[<span class="stringliteral">&quot;VNL-WIRE-2&quot;</span>] = <span class="stringliteral">&quot;%s: wire &#39;%s&#39; redefined&quot;</span>;
-<a name="l00062"></a>00062     }
-<a name="l00063"></a>00063 
-<a name="l00064"></a><a class="code" href="classvnl_1_1Message.html#a887c9c2fbaa0d19fc82b8eca0aae6026">00064</a>     <span class="keywordtype">void</span> Message::addFmtByCode(<span class="keywordtype">string</span> code, <span class="keywordtype">string</span> fmt) {
-<a name="l00065"></a>00065         m_fmtByCode[code] = fmt;
-<a name="l00066"></a>00066     }
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068     <span class="keywordtype">void</span>
-<a name="l00069"></a><a class="code" href="classvnl_1_1Message.html#a870cb2846eb7f3dcb1ac1d98b67b2d9b">00069</a>     <a class="code" href="namespacevnl.html#adf8c9395472d2de3150089729641c964">Message::message</a>(<a class="code" href="classvnl_1_1Message.html#a442e7774663d8f0b4dd8a1458ba1ad0f">EType</a> type, <span class="keywordtype">string</span> code,
-<a name="l00070"></a>00070             <span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcLocation</a> &amp;loc, <span class="keywordtype">string</span> s1, <span class="keywordtype">string</span> s2, <span class="keywordtype">string</span> s3) {
-<a name="l00071"></a>00071         <span class="keywordtype">string</span> xloc = loc-&gt;toString();
-<a name="l00072"></a>00072         <span class="keywordtype">string</span> msg = fmessage(type, code, xloc, s1, s2, s3);
-<a name="l00073"></a>00073         <a class="code" href="namespacevnl.html#adf8c9395472d2de3150089729641c964">message</a>(type, msg);
-<a name="l00074"></a>00074     }
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076     <span class="keywordtype">string</span>
-<a name="l00077"></a><a class="code" href="classvnl_1_1Message.html#a891e218b2f5ba7ae5af2490423974f59">00077</a>     Message::fmessage(<a class="code" href="classvnl_1_1Message.html#a442e7774663d8f0b4dd8a1458ba1ad0f">EType</a> type, <span class="keywordtype">string</span> code,
-<a name="l00078"></a>00078             <span class="keywordtype">string</span> s1, <span class="keywordtype">string</span> s2, <span class="keywordtype">string</span> s3, <span class="keywordtype">string</span> s4) {
-<a name="l00079"></a>00079         <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> N = 1024;
-<a name="l00080"></a>00080         <span class="keyword">static</span> <span class="keywordtype">char</span> pbuf[N];
-<a name="l00081"></a>00081         t_fmtByCode::const_iterator fmt = m_fmtByCode.find(code);
-<a name="l00082"></a>00082         <a class="code" href="assert_8hxx.html#a989940570b13fb111ef307bc7c660c07">ASSERT_TRUE</a>(m_fmtByCode.end() != fmt);
-<a name="l00083"></a>00083         <span class="keyword">const</span> <span class="keywordtype">char</span> *pfmt = fmt-&gt;second.c_str();
-<a name="l00084"></a>00084         <a class="code" href="assert_8hxx.html#a989940570b13fb111ef307bc7c660c07">ASSERT_TRUE</a>(0 &lt;= snprintf(pbuf, N, pfmt,
-<a name="l00085"></a>00085                 s1.c_str(), s2.c_str(), s3.c_str(), s4.c_str()));
-<a name="l00086"></a>00086         <span class="keywordtype">string</span> msg = stPfxs[type] + <span class="stringliteral">&quot;: &quot;</span> + pbuf + <span class="stringliteral">&quot;.  (&quot;</span> + code + <span class="stringliteral">&quot;)&quot;</span>;
-<a name="l00087"></a>00087         <span class="keywordflow">return</span> msg;
-<a name="l00088"></a>00088     }
-<a name="l00089"></a>00089 
-<a name="l00090"></a>00090     <span class="keywordtype">void</span>
-<a name="l00091"></a><a class="code" href="classvnl_1_1Message.html#ae96db1b8129ac494ca489d098212f9e2">00091</a>     <a class="code" href="namespacevnl.html#adf8c9395472d2de3150089729641c964">Message::message</a>(<a class="code" href="classvnl_1_1Message.html#a442e7774663d8f0b4dd8a1458ba1ad0f">EType</a> type, <span class="keywordtype">string</span> msg) {
-<a name="l00092"></a>00092         m_msgCnts[type]++;
-<a name="l00093"></a>00093         *<a class="code" href="namespacevnl.html#a131b664e57f99adb8ce6bc13ee3785b5">stpOS</a>[type] &lt;&lt; msg &lt;&lt; endl;
-<a name="l00094"></a>00094     }
-<a name="l00095"></a>00095 
-<a name="l00096"></a><a class="code" href="namespacevnl.html#a83d0cce58659caa6f13647787cf8a2fb">00096</a>     <span class="keywordtype">void</span> <a class="code" href="namespacevnl.html#a83d0cce58659caa6f13647787cf8a2fb">error</a>(<span class="keywordtype">string</span> code,
-<a name="l00097"></a>00097             <span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcLocation</a> &amp;loc, <span class="keywordtype">string</span> s1, <span class="keywordtype">string</span> s2, <span class="keywordtype">string</span> s3) {
-<a name="l00098"></a>00098         Message::getTheOne().message(Message::eError, code, loc, s1, s2, s3);
-<a name="l00099"></a>00099     }
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101     <span class="keyword">static</span>
-<a name="l00102"></a>00102     <span class="keywordtype">void</span>
-<a name="l00103"></a><a class="code" href="namespacevnl.html#adf8c9395472d2de3150089729641c964">00103</a>     <a class="code" href="namespacevnl.html#adf8c9395472d2de3150089729641c964">message</a>(<a class="code" href="classvnl_1_1Message.html#a442e7774663d8f0b4dd8a1458ba1ad0f">Message::EType</a> type, <span class="keywordtype">string</span> code, <span class="keywordtype">string</span> s1=<span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">string</span> s2=<span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">string</span> s3=<span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">string</span> s4=<span class="stringliteral">&quot;&quot;</span>) {
-<a name="l00104"></a>00104         <span class="keywordtype">string</span> msg = Message::getTheOne().fmessage(type, code, s1, s2, s3, s4);
-<a name="l00105"></a>00105         Message::getTheOne().message(type, msg);        
-<a name="l00106"></a>00106     }
-<a name="l00107"></a><a class="code" href="namespacevnl.html#abcf03a3e680fc0e01bf07cc39bbcd76c">00107</a>     <span class="keywordtype">void</span> <a class="code" href="namespacevnl.html#abcf03a3e680fc0e01bf07cc39bbcd76c">info</a>(<span class="keywordtype">string</span> code, <span class="keywordtype">string</span> s1, <span class="keywordtype">string</span> s2, <span class="keywordtype">string</span> s3, <span class="keywordtype">string</span> s4) {
-<a name="l00108"></a>00108         <a class="code" href="namespacevnl.html#adf8c9395472d2de3150089729641c964">message</a>(Message::eInfo, code, s1, s2, s3, s4);
-<a name="l00109"></a>00109     }
-<a name="l00110"></a>00110 
-<a name="l00111"></a><a class="code" href="namespacevnl.html#aec4719bb899441316f7d824499faba2c">00111</a>     <span class="keywordtype">void</span> <a class="code" href="namespacevnl.html#a83d0cce58659caa6f13647787cf8a2fb">error</a>(<span class="keywordtype">string</span> code, <span class="keywordtype">string</span> s1, <span class="keywordtype">string</span> s2, <span class="keywordtype">string</span> s3, <span class="keywordtype">string</span> s4) {
-<a name="l00112"></a>00112         <a class="code" href="namespacevnl.html#adf8c9395472d2de3150089729641c964">message</a>(Message::eError, code, s1, s2, s3, s4);
-<a name="l00113"></a>00113     }
-<a name="l00114"></a>00114 }
+<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;iostream&gt;</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;cstdarg&gt;</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;cstdio&gt;</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include &quot;<a class="code" href="assert_8hxx.html">xyzzy/assert.hxx</a>&quot;</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include &quot;<a class="code" href="vnl_2message_8hxx.html">vnl/message.hxx</a>&quot;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;<a class="code" href="location_8hxx.html">vnl/location.hxx</a>&quot;</span>
+<a name="l00031"></a>00031 
+<a name="l00032"></a>00032 <span class="keyword">namespace </span>vnl {
+<a name="l00033"></a>00033     <span class="keyword">using namespace </span>std;
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035     Message <a class="code" href="classvnl_1_1Message.html#a0700854d261197829549e9aaf5b9b1fe">Message::stTheOne</a>;
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037     <span class="keyword">const</span> <span class="keywordtype">string</span> <a class="code" href="classvnl_1_1Message.html#aad479c6930b7155b40ad7b2c6609cfc2">Message::stPfxs</a>[] = {<span class="stringliteral">&quot;Info&quot;</span>, <span class="stringliteral">&quot;Warn&quot;</span>, <span class="stringliteral">&quot;Error&quot;</span>, <span class="stringliteral">&quot;Fatal&quot;</span>};
+<a name="l00038"></a><a class="code" href="namespacevnl.html#a131b664e57f99adb8ce6bc13ee3785b5">00038</a>     ostream* <a class="code" href="namespacevnl.html#a131b664e57f99adb8ce6bc13ee3785b5">stpOS</a>[] = {&amp;cout, &amp;cout, &amp;cerr, &amp;cerr};
+<a name="l00039"></a>00039 
+<a name="l00040"></a><a class="code" href="classvnl_1_1Message.html#ac72c59a7860a06169d7eb8d0701e7891">00040</a>     <a class="code" href="classvnl_1_1Message.html#ac72c59a7860a06169d7eb8d0701e7891">Message::Message</a>() {
+<a name="l00041"></a>00041         <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> i = 0; i &lt; eLast;) {
+<a name="l00042"></a>00042             m_msgCnts[i++] = 0;
+<a name="l00043"></a>00043         }
+<a name="l00044"></a>00044         <span class="comment">//alphabetical order</span>
+<a name="l00045"></a>00045         m_fmtByCode[<span class="stringliteral">&quot;VNL-ASSN-1&quot;</span>] = <span class="stringliteral">&quot;%s: lhs.length %s != rhs.length %s&quot;</span>;
+<a name="l00046"></a>00046         m_fmtByCode[<span class="stringliteral">&quot;VNL-BUS-1&quot;</span>] = <span class="stringliteral">&quot;%s: &#39;%s&#39; invalid bus range&quot;</span>;
+<a name="l00047"></a>00047         m_fmtByCode[<span class="stringliteral">&quot;VNL-CELL-1&quot;</span>] = <span class="stringliteral">&quot;%s: connection for pin &#39;%s&#39; already specified&quot;</span>;
+<a name="l00048"></a>00048         m_fmtByCode[<span class="stringliteral">&quot;VNL-CELL-2&quot;</span>] = <span class="stringliteral">&quot;%s: instance name &#39;%s&#39; already specified&quot;</span>;
+<a name="l00049"></a>00049         m_fmtByCode[<span class="stringliteral">&quot;VNL-DECL-1&quot;</span>] = <span class="stringliteral">&quot;%s: %s &#39;%s&#39; already defined&quot;</span>;
+<a name="l00050"></a>00050         m_fmtByCode[<span class="stringliteral">&quot;VNL-DECL-2&quot;</span>] = <span class="stringliteral">&quot;%s: &#39;%s&#39; undefined&quot;</span>;
+<a name="l00051"></a>00051         m_fmtByCode[<span class="stringliteral">&quot;VNL-FILE-1&quot;</span>] = <span class="stringliteral">&quot;%s: processing ..&quot;</span>;
+<a name="l00052"></a>00052         m_fmtByCode[<span class="stringliteral">&quot;VNL-FILE-2&quot;</span>] = <span class="stringliteral">&quot;%s: cannot %s file&quot;</span>;
+<a name="l00053"></a>00053         m_fmtByCode[<span class="stringliteral">&quot;VNL-MOD-1&quot;</span>] = <span class="stringliteral">&quot;%s: module &#39;%s&#39; already defined in library &#39;%s&#39;&quot;</span>;
+<a name="l00054"></a>00054         m_fmtByCode[<span class="stringliteral">&quot;VNL-NUM-1&quot;</span>] = <span class="stringliteral">&quot;%s: &#39;%s&#39; malformed number&quot;</span>;
+<a name="l00055"></a>00055         m_fmtByCode[<span class="stringliteral">&quot;VNL-NUM-2&quot;</span>] = <span class="stringliteral">&quot;%s: based number &#39;%s&#39; missing size&quot;</span>;
+<a name="l00056"></a>00056         m_fmtByCode[<span class="stringliteral">&quot;VNL-PARSE-1&quot;</span>] = <span class="stringliteral">&quot;%s: expected &#39;%s&#39;, found &#39;%s&#39;&quot;</span>;
+<a name="l00057"></a>00057         m_fmtByCode[<span class="stringliteral">&quot;VNL-PARSE-2&quot;</span>] = <span class="stringliteral">&quot;%s: &#39;%s&#39; unexpected&quot;</span>;
+<a name="l00058"></a>00058         m_fmtByCode[<span class="stringliteral">&quot;VNL-PARSE-3&quot;</span>] = <span class="stringliteral">&quot;%s: processed %s seconds&quot;</span>;
+<a name="l00059"></a>00059         m_fmtByCode[<span class="stringliteral">&quot;VNL-PORT-1&quot;</span>] = <span class="stringliteral">&quot;%s: port &#39;%s&#39; defined, but not declared in port list&quot;</span>;
+<a name="l00060"></a>00060         m_fmtByCode[<span class="stringliteral">&quot;VNL-PORT-2&quot;</span>] = <span class="stringliteral">&quot;%s: port &#39;%s&#39; redefined&quot;</span>;
+<a name="l00061"></a>00061         m_fmtByCode[<span class="stringliteral">&quot;VNL-REF-1&quot;</span>] = <span class="stringliteral">&quot;in module &#39;%s&#39;, cell &#39;%s&#39;: reference &#39;%s&#39; undefined&quot;</span>;
+<a name="l00062"></a>00062         m_fmtByCode[<span class="stringliteral">&quot;VNL-WIRE-2&quot;</span>] = <span class="stringliteral">&quot;%s: wire &#39;%s&#39; redefined&quot;</span>;
+<a name="l00063"></a>00063     }
+<a name="l00064"></a>00064 
+<a name="l00065"></a><a class="code" href="classvnl_1_1Message.html#a887c9c2fbaa0d19fc82b8eca0aae6026">00065</a>     <span class="keywordtype">void</span> <a class="code" href="classvnl_1_1Message.html#a887c9c2fbaa0d19fc82b8eca0aae6026">Message::addFmtByCode</a>(<span class="keywordtype">string</span> code, <span class="keywordtype">string</span> fmt) {
+<a name="l00066"></a>00066         m_fmtByCode[code] = fmt;
+<a name="l00067"></a>00067     }
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069     <span class="keywordtype">void</span>
+<a name="l00070"></a><a class="code" href="classvnl_1_1Message.html#a870cb2846eb7f3dcb1ac1d98b67b2d9b">00070</a>     <a class="code" href="namespacevnl.html#adf8c9395472d2de3150089729641c964">Message::message</a>(<a class="code" href="classvnl_1_1Message.html#a442e7774663d8f0b4dd8a1458ba1ad0f">EType</a> type, <span class="keywordtype">string</span> code,
+<a name="l00071"></a>00071             <span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcLocation</a> &amp;loc, <span class="keywordtype">string</span> s1, <span class="keywordtype">string</span> s2, <span class="keywordtype">string</span> s3) {
+<a name="l00072"></a>00072         <span class="keywordtype">string</span> xloc = loc-&gt;toString();
+<a name="l00073"></a>00073         <span class="keywordtype">string</span> msg = fmessage(type, code, xloc, s1, s2, s3);
+<a name="l00074"></a>00074         <a class="code" href="namespacevnl.html#adf8c9395472d2de3150089729641c964">message</a>(type, msg);
+<a name="l00075"></a>00075     }
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077     <span class="keywordtype">string</span>
+<a name="l00078"></a><a class="code" href="classvnl_1_1Message.html#a891e218b2f5ba7ae5af2490423974f59">00078</a>     <a class="code" href="classvnl_1_1Message.html#a891e218b2f5ba7ae5af2490423974f59">Message::fmessage</a>(<a class="code" href="classvnl_1_1Message.html#a442e7774663d8f0b4dd8a1458ba1ad0f">EType</a> type, <span class="keywordtype">string</span> code,
+<a name="l00079"></a>00079             <span class="keywordtype">string</span> s1, <span class="keywordtype">string</span> s2, <span class="keywordtype">string</span> s3, <span class="keywordtype">string</span> s4) {
+<a name="l00080"></a>00080         <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> N = 1024;
+<a name="l00081"></a>00081         <span class="keyword">static</span> <span class="keywordtype">char</span> pbuf[N];
+<a name="l00082"></a>00082         t_fmtByCode::const_iterator fmt = m_fmtByCode.find(code);
+<a name="l00083"></a>00083         <a class="code" href="assert_8hxx.html#a989940570b13fb111ef307bc7c660c07">ASSERT_TRUE</a>(m_fmtByCode.end() != fmt);
+<a name="l00084"></a>00084         <span class="keyword">const</span> <span class="keywordtype">char</span> *pfmt = fmt-&gt;second.c_str();
+<a name="l00085"></a>00085         <a class="code" href="assert_8hxx.html#a989940570b13fb111ef307bc7c660c07">ASSERT_TRUE</a>(0 &lt;= snprintf(pbuf, N, pfmt,
+<a name="l00086"></a>00086                 s1.c_str(), s2.c_str(), s3.c_str(), s4.c_str()));
+<a name="l00087"></a>00087         <span class="keywordtype">string</span> msg = stPfxs[type] + <span class="stringliteral">&quot;: &quot;</span> + pbuf + <span class="stringliteral">&quot;.  (&quot;</span> + code + <span class="stringliteral">&quot;)&quot;</span>;
+<a name="l00088"></a>00088         <span class="keywordflow">return</span> msg;
+<a name="l00089"></a>00089     }
+<a name="l00090"></a>00090 
+<a name="l00091"></a>00091     <span class="keywordtype">void</span>
+<a name="l00092"></a><a class="code" href="classvnl_1_1Message.html#ae96db1b8129ac494ca489d098212f9e2">00092</a>     <a class="code" href="namespacevnl.html#adf8c9395472d2de3150089729641c964">Message::message</a>(<a class="code" href="classvnl_1_1Message.html#a442e7774663d8f0b4dd8a1458ba1ad0f">EType</a> type, <span class="keywordtype">string</span> msg) {
+<a name="l00093"></a>00093         m_msgCnts[type]++;
+<a name="l00094"></a>00094         *<a class="code" href="namespacevnl.html#a131b664e57f99adb8ce6bc13ee3785b5">stpOS</a>[type] &lt;&lt; msg &lt;&lt; endl;
+<a name="l00095"></a>00095     }
+<a name="l00096"></a>00096 
+<a name="l00097"></a><a class="code" href="namespacevnl.html#a83d0cce58659caa6f13647787cf8a2fb">00097</a>     <span class="keywordtype">void</span> <a class="code" href="namespacevnl.html#a83d0cce58659caa6f13647787cf8a2fb">error</a>(<span class="keywordtype">string</span> code,
+<a name="l00098"></a>00098             <span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcLocation</a> &amp;loc, <span class="keywordtype">string</span> s1, <span class="keywordtype">string</span> s2, <span class="keywordtype">string</span> s3) {
+<a name="l00099"></a>00099         <a class="code" href="classvnl_1_1Message.html#a6dfc77a6531075f3f62fa4f18f5e329f">Message::getTheOne</a>().<a class="code" href="classvnl_1_1Message.html#a870cb2846eb7f3dcb1ac1d98b67b2d9b">message</a>(<a class="code" href="classvnl_1_1Message.html#a442e7774663d8f0b4dd8a1458ba1ad0fa48f85f3ab9eb39ba5e0e3002f9c8d738">Message::eError</a>, code, loc, s1, s2, s3);
+<a name="l00100"></a>00100     }
+<a name="l00101"></a>00101 
+<a name="l00102"></a>00102     <span class="keyword">static</span>
+<a name="l00103"></a>00103     <span class="keywordtype">void</span>
+<a name="l00104"></a><a class="code" href="namespacevnl.html#adf8c9395472d2de3150089729641c964">00104</a>     <a class="code" href="namespacevnl.html#adf8c9395472d2de3150089729641c964">message</a>(<a class="code" href="classvnl_1_1Message.html#a442e7774663d8f0b4dd8a1458ba1ad0f">Message::EType</a> type, <span class="keywordtype">string</span> code, <span class="keywordtype">string</span> s1 = <span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">string</span> s2 = <span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">string</span> s3 = <span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">string</span> s4 = <span class="stringliteral">&quot;&quot;</span>) {
+<a name="l00105"></a>00105         <span class="keywordtype">string</span> msg = <a class="code" href="classvnl_1_1Message.html#a6dfc77a6531075f3f62fa4f18f5e329f">Message::getTheOne</a>().<a class="code" href="classvnl_1_1Message.html#a891e218b2f5ba7ae5af2490423974f59">fmessage</a>(type, code, s1, s2, s3, s4);
+<a name="l00106"></a>00106         <a class="code" href="classvnl_1_1Message.html#a6dfc77a6531075f3f62fa4f18f5e329f">Message::getTheOne</a>().<a class="code" href="classvnl_1_1Message.html#a870cb2846eb7f3dcb1ac1d98b67b2d9b">message</a>(type, msg);
+<a name="l00107"></a>00107     }
+<a name="l00108"></a>00108 
+<a name="l00109"></a><a class="code" href="namespacevnl.html#abcf03a3e680fc0e01bf07cc39bbcd76c">00109</a>     <span class="keywordtype">void</span> <a class="code" href="namespacevnl.html#abcf03a3e680fc0e01bf07cc39bbcd76c">info</a>(<span class="keywordtype">string</span> code, <span class="keywordtype">string</span> s1, <span class="keywordtype">string</span> s2, <span class="keywordtype">string</span> s3, <span class="keywordtype">string</span> s4) {
+<a name="l00110"></a>00110         <a class="code" href="namespacevnl.html#adf8c9395472d2de3150089729641c964">message</a>(<a class="code" href="classvnl_1_1Message.html#a442e7774663d8f0b4dd8a1458ba1ad0fa4d2750bcf21011271c7bf0317236e3c4">Message::eInfo</a>, code, s1, s2, s3, s4);
+<a name="l00111"></a>00111     }
+<a name="l00112"></a>00112 
+<a name="l00113"></a><a class="code" href="namespacevnl.html#aec4719bb899441316f7d824499faba2c">00113</a>     <span class="keywordtype">void</span> <a class="code" href="namespacevnl.html#a83d0cce58659caa6f13647787cf8a2fb">error</a>(<span class="keywordtype">string</span> code, <span class="keywordtype">string</span> s1, <span class="keywordtype">string</span> s2, <span class="keywordtype">string</span> s3, <span class="keywordtype">string</span> s4) {
+<a name="l00114"></a>00114         <a class="code" href="namespacevnl.html#adf8c9395472d2de3150089729641c964">message</a>(<a class="code" href="classvnl_1_1Message.html#a442e7774663d8f0b4dd8a1458ba1ad0fa48f85f3ab9eb39ba5e0e3002f9c8d738">Message::eError</a>, code, s1, s2, s3, s4);
+<a name="l00115"></a>00115     }
+<a name="l00116"></a>00116 }
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Apr 1 2012 16:45:17 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Apr 6 2012 17:15:08 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

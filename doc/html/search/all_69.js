@@ -1,8 +1,8 @@
 var searchData=
 [
   ['ident',['ident',['../classvnl_1_1Lexer.html#a32e2fca636bda70060b4de7b02620f6e',1,'vnl::Lexer::ident()'],['../classslf_1_1Lexer.html#a1b6eba80ca32737c1977f6931551d694',1,'slf::Lexer::ident()']]],
-  ['impl',['Impl',['../classslf_1_1ValueType_1_1Impl.html',1,'slf::ValueType']]],
   ['impl',['Impl',['../classvnl_1_1Writer_1_1Impl.html',1,'vnl::Writer']]],
+  ['impl',['Impl',['../classslf_1_1ValueType_1_1Impl.html',1,'slf::ValueType']]],
   ['impl',['Impl',['../classvnl_1_1Writer.html#ae708b2c3f144ba0c31bb444c4efe8ccf',1,'vnl::Writer::Impl()'],['../classvnl_1_1Writer_1_1Impl.html#ad074b70067fd5c8a6e35af1d82201bed',1,'vnl::Writer::Impl::Impl()'],['../classslf_1_1ValueType_1_1Impl.html#a7dee0db461687864e7df758e545b969f',1,'slf::ValueType::Impl::Impl(const TRcExpr &amp;expr)'],['../classslf_1_1ValueType_1_1Impl.html#aaad90f8d31fa3404d66013e8a6cb62bf',1,'slf::ValueType::Impl::Impl(const string &amp;kident, const TRcBus &amp;bus)'],['../classslf_1_1ValueType_1_1Impl.html#a2da26111d5c0cb7a8e1349af147a09ce',1,'slf::ValueType::Impl::Impl(const string &amp;str)'],['../classslf_1_1ValueType_1_1Impl.html#ab0a38c64c4c8150fd217fda708a178be',1,'slf::ValueType::Impl::Impl(const TRcNumber &amp;num, const string &amp;unit)'],['../classslf_1_1ValueType_1_1Impl.html#a419916819f462d8de282f37e21218bed',1,'slf::ValueType::Impl::Impl(bool b)']]],
   ['inbounds',['inBounds',['../classvnl_1_1Bus.html#a2f595fee5d0dfd48929a23aae1e831c7',1,'vnl::Bus']]],
   ['incr',['incr',['../classxyzzy_1_1PTSlist_1_1Iterator.html#a82ad2461c2acf34f07132fcc2c53f8c8',1,'xyzzy::PTSlist::Iterator']]],
@@ -31,7 +31,7 @@ var searchData=
   ['iseq',['isEq',['../namespacevnltcl.html#a4f02857b69d956f4071887d003607376',1,'vnltcl']]],
   ['isfilereadable',['isFileReadable',['../namespacevnltcl.html#aaa06fcf3439223339a2fdee8133235d8',1,'vnltcl']]],
   ['ishierarchical',['isHierarchical',['../classvnl_1_1Cell.html#af2e79c4e8bfea94ed14d2e35eb467d65',1,'vnl::Cell::isHierarchical()'],['../classvnl_1_1Module.html#a6677dab50cbd1565aed9ff0814707602',1,'vnl::Module::isHierarchical()']]],
-  ['islibcell',['isLibCell',['../classvnl_1_1LibCell.html#aa30e4d53ce05b55cd69b763356256e56',1,'vnl::LibCell::isLibCell()'],['../classvnl_1_1Module.html#a26915eb618499f053fc404078f04f6fa',1,'vnl::Module::isLibCell()']]],
+  ['islibcell',['isLibCell',['../classvnl_1_1Cell.html#aa0e53e3dec461ba1eea863bed56ea2ed',1,'vnl::Cell::isLibCell()'],['../classvnl_1_1LibCell.html#aa30e4d53ce05b55cd69b763356256e56',1,'vnl::LibCell::isLibCell()'],['../classvnl_1_1Module.html#a26915eb618499f053fc404078f04f6fa',1,'vnl::Module::isLibCell()']]],
   ['islist',['isList',['../classxyzzy_1_1PTSlistArray.html#a9c4af9ff66a767942c3df98c43ad8090',1,'xyzzy::PTSlistArray']]],
   ['islittleendian',['isLittleEndian',['../namespacexyzzy.html#a07ec38f0a5ed1782ff7124f3f87cbfb2',1,'xyzzy']]],
   ['isnull',['isNull',['../classxyzzy_1_1PTRcArray.html#a558b6c984f57c7673420769136e2123d',1,'xyzzy::PTRcArray::isNull()'],['../classxyzzy_1_1PTRcObjPtr.html#a6e66d31f52fcad1beae8e4ff0f9c025a',1,'xyzzy::PTRcObjPtr::isNull()'],['../classxyzzy_1_1PTRcPtr.html#a572574159b8bd74554fe7bcd8d15b35d',1,'xyzzy::PTRcPtr::isNull()']]],

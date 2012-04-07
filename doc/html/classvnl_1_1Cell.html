@@ -128,9 +128,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9245c33c67fb488aaf2a119334d6050e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Cell.html#a9245c33c67fb488aaf2a119334d6050e">Cell</a> (string refNm, string instNm, <a class="el" href="namespacevnl.html#ab3d5f0f65811e794e0fb7d255b61b924">TRcConnsByPortName</a> &amp;conns)</td></tr>
 <tr class="memitem:a6b51970ef8724c838e062219454e8935"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Cell.html#a6b51970ef8724c838e062219454e8935">getRefName</a> () const </td></tr>
 <tr class="memitem:a10404b89dd33f1d7ce7b36f62451efaa"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Cell.html#a10404b89dd33f1d7ce7b36f62451efaa">getInstName</a> () const </td></tr>
-<tr class="memitem:aa150a5eb176210f1be4e1e6ca379431d"><td class="memItemLeft" align="right" valign="top">const TRcObject &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Cell.html#aa150a5eb176210f1be4e1e6ca379431d">getRef</a> () const </td></tr>
-<tr class="memitem:aa8c80fc79a19ce5b1b8c679fd99ae58f"><td class="memItemLeft" align="right" valign="top">TRcObject &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Cell.html#aa8c80fc79a19ce5b1b8c679fd99ae58f">getRef</a> ()</td></tr>
+<tr class="memitem:a703d35928a23a72314aa5543dd7d8f11"><td class="memItemLeft" align="right" valign="top">TRcModule&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Cell.html#a703d35928a23a72314aa5543dd7d8f11">getRef</a> () const </td></tr>
 <tr class="memitem:af2e79c4e8bfea94ed14d2e35eb467d65"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Cell.html#af2e79c4e8bfea94ed14d2e35eb467d65">isHierarchical</a> () const </td></tr>
+<tr class="memitem:aa0e53e3dec461ba1eea863bed56ea2ed"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Cell.html#aa0e53e3dec461ba1eea863bed56ea2ed">isLibCell</a> () const </td></tr>
 <tr class="memitem:a4966e95f656341f504d80b0abad6997c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Cell.html#a4966e95f656341f504d80b0abad6997c">isResolved</a> () const </td></tr>
 <tr class="memitem:a5a7cd1f5ef2fa6c734f2026f30a66ca2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Cell.html#a5a7cd1f5ef2fa6c734f2026f30a66ca2">setRef</a> (TRcObject &amp;ref)</td></tr>
 <tr class="memitem:ae2bbd00a81ec1faee5f1d84bc01f40b4"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Cell.html#ae2bbd00a81ec1faee5f1d84bc01f40b4">~Cell</a> ()</td></tr>
@@ -244,7 +244,7 @@ Static Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00068">68</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00077">77</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
 
 </div>
 </div>
@@ -263,7 +263,7 @@ Static Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00071">71</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00080">80</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
 
 </div>
 </div>
@@ -285,39 +285,23 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa150a5eb176210f1be4e1e6ca379431d"></a>
+<a class="anchor" id="a703d35928a23a72314aa5543dd7d8f11"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const TRcObject&amp; <a class="el" href="classvnl_1_1Cell.html#aa150a5eb176210f1be4e1e6ca379431d">vnl::Cell::getRef</a> </td>
+          <td class="memname">TRcModule <a class="el" href="classvnl_1_1Cell.html#a703d35928a23a72314aa5543dd7d8f11">vnl::Cell::getRef</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const<code> [inline]</code></td>
+          <td> const</td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
+<p>Get cell reference (can be isNull() if unresolved). </p>
+<dl class="section return"><dt>Returns:</dt><dd>cell reference. </dd></dl>
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00051">51</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aa8c80fc79a19ce5b1b8c679fd99ae58f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TRcObject&amp; <a class="el" href="classvnl_1_1Cell.html#aa150a5eb176210f1be4e1e6ca379431d">vnl::Cell::getRef</a> </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td><code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00054">54</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8cxx_source.html#l00043">43</a> of file <a class="el" href="cell_8cxx_source.html">cell.cxx</a>.</p>
 
 </div>
 </div>
@@ -357,7 +341,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classvnl_1_1Object.html#a33bba15e3a5ed8c0ccb93a08ac5bbb9c">vnl::Object</a>.</p>
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00098">98</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00107">107</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
 
 </div>
 </div>
@@ -390,8 +374,30 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+<p>Check if cell (reference) is hierarchical. </p>
+<dl class="section return"><dt>Returns:</dt><dd>true iff cell <a class="el" href="classvnl_1_1Cell.html#a4966e95f656341f504d80b0abad6997c">isResolved()</a> and reference is hierarchical. </dd></dl>
 
-<p>Definition at line <a class="el" href="cell_8cxx_source.html#l00043">43</a> of file <a class="el" href="cell_8cxx_source.html">cell.cxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8cxx_source.html#l00052">52</a> of file <a class="el" href="cell_8cxx_source.html">cell.cxx</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa0e53e3dec461ba1eea863bed56ea2ed"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classvnl_1_1Cell.html#aa0e53e3dec461ba1eea863bed56ea2ed">vnl::Cell::isLibCell</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Check if cell (reference) is a library cell instance. </p>
+<dl class="section return"><dt>Returns:</dt><dd>true iff cell <a class="el" href="classvnl_1_1Cell.html#a4966e95f656341f504d80b0abad6997c">isResolved()</a> and reference is a libcell. </dd></dl>
+
+<p>Definition at line <a class="el" href="cell_8cxx_source.html#l00062">62</a> of file <a class="el" href="cell_8cxx_source.html">cell.cxx</a>.</p>
 
 </div>
 </div>
@@ -409,7 +415,7 @@ Static Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00060">60</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00069">69</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
 
 </div>
 </div>
@@ -428,7 +434,7 @@ Static Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00064">64</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00073">73</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
 
 </div>
 </div>
@@ -455,7 +461,7 @@ Static Private Attributes</h2></td></tr>
 </dl>
 <p>Add <a class="el" href="classvnl_1_1PinRef.html">PinRef</a> entries to wires. </p>
 
-<p>Definition at line <a class="el" href="cell_8cxx_source.html#l00057">57</a> of file <a class="el" href="cell_8cxx_source.html">cell.cxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8cxx_source.html#l00075">75</a> of file <a class="el" href="cell_8cxx_source.html">cell.cxx</a>.</p>
 
 </div>
 </div>
@@ -472,7 +478,7 @@ Static Private Attributes</h2></td></tr>
 <div class="memdoc">
 <p>Map of pin connections by pin/port name. Each entry is an array, where [0] is connection to left-most bit of pin. NOTE: If no connections, as in ".p()", the array has length==0. </p>
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00091">91</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00100">100</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
 
 </div>
 </div>
@@ -487,7 +493,7 @@ Static Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00078">78</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00087">87</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
 
 </div>
 </div>
@@ -503,7 +509,7 @@ Static Private Attributes</h2></td></tr>
 <div class="memdoc">
 <p>Can't use TRcModule since <a class="el" href="classvnl_1_1Cell.html">Cell</a> includes/need <a class="el" href="classvnl_1_1Module.html">Module</a>, and <a class="el" href="classvnl_1_1Module.html">Module</a> includes/needs <a class="el" href="classvnl_1_1Cell.html">Cell</a>. </p>
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00083">83</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00092">92</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
 
 </div>
 </div>
@@ -518,7 +524,7 @@ Static Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00078">78</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00087">87</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
 
 </div>
 </div>
@@ -535,7 +541,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classvnl_1_1Object.html#a4d775f7f57d28a98e65fc9f465780408">vnl::Object</a>.</p>
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00102">102</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00111">111</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
 
 </div>
 </div>
@@ -547,7 +553,7 @@ Static Private Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Apr 1 2012 16:45:17 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Apr 6 2012 17:15:09 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

@@ -139,47 +139,46 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00043"></a>00043 
 <a name="l00044"></a>00044     TRcPort
 <a name="l00045"></a><a class="code" href="classvnl_1_1PinRef.html#aff663e4ea3867f2ba7daa1ef90e13098">00045</a>     <a class="code" href="classvnl_1_1PinRef.html#a8833b7b2a69723c2ae31c0cbaebcd31e">PinRef::getPort</a>() {
-<a name="l00046"></a>00046         TRcObject obj = <a class="code" href="classvnl_1_1PinRef.html#a5efada4de2a5992d390748434357fd07">m_cell</a>-&gt;getRef();
-<a name="l00047"></a>00047         <a class="code" href="assert_8hxx.html#a989940570b13fb111ef307bc7c660c07">ASSERT_TRUE</a>(obj.isValid());
-<a name="l00048"></a>00048         TRcModule ref = <a class="code" href="classvnl_1_1PinRef.html#a36f9b18324346b569d641424a0c4c0ed">Module::downcast</a>(obj);
-<a name="l00049"></a>00049         TRcPort port = ref-&gt;getPort(<a class="code" href="classvnl_1_1PinRef.html#a7a86924bbb91307188928b6d31b0d87b">getPortNm</a>());
-<a name="l00050"></a>00050         <span class="keywordflow">return</span> port;
-<a name="l00051"></a>00051     }
-<a name="l00052"></a>00052 
-<a name="l00053"></a>00053     <span class="keyword">const</span> TRcPort
-<a name="l00054"></a><a class="code" href="classvnl_1_1PinRef.html#a8833b7b2a69723c2ae31c0cbaebcd31e">00054</a>     <a class="code" href="classvnl_1_1PinRef.html#a8833b7b2a69723c2ae31c0cbaebcd31e">PinRef::getPort</a>()<span class="keyword"> const </span>{
-<a name="l00055"></a>00055         <span class="keywordflow">return</span> <a class="code" href="pinref_8cxx.html#a3ee9aeb548293d00ea8f2acae49966d2">UNCONST</a>-&gt;getPort();
-<a name="l00056"></a>00056     }
-<a name="l00057"></a>00057 
-<a name="l00058"></a>00058     <span class="keywordtype">string</span>
-<a name="l00059"></a><a class="code" href="classvnl_1_1PinRef.html#a323747dc8e09f617facd6e66536db203">00059</a>     <a class="code" href="classvnl_1_1PinRef.html#a323747dc8e09f617facd6e66536db203">PinRef::getBitNm</a>()<span class="keyword"> const </span>{
-<a name="l00060"></a>00060         ostringstream oss;
-<a name="l00061"></a>00061         oss &lt;&lt; <a class="code" href="classvnl_1_1PinRef.html#a7a86924bbb91307188928b6d31b0d87b">getPortNm</a>();
-<a name="l00062"></a>00062         TRcPort port = <a class="code" href="classvnl_1_1PinRef.html#a8833b7b2a69723c2ae31c0cbaebcd31e">getPort</a>();
-<a name="l00063"></a>00063         <span class="keywordflow">if</span> (port-&gt;isBus()) {
-<a name="l00064"></a>00064             TRcPortBus bus = <a class="code" href="classvnl_1_1PinRef.html#a36f9b18324346b569d641424a0c4c0ed">PortBus::downcast</a>(port);
-<a name="l00065"></a>00065             <span class="keywordtype">unsigned</span> actualBit = bus-&gt;getActualBit(<a class="code" href="classvnl_1_1PinRef.html#a752eb248a57ff29a0136eebd9bb798da">m_lbOffset</a>);
-<a name="l00066"></a>00066             oss &lt;&lt; <span class="charliteral">&#39;[&#39;</span> &lt;&lt; actualBit &lt;&lt; <span class="charliteral">&#39;]&#39;</span>;
-<a name="l00067"></a>00067         }
-<a name="l00068"></a>00068         <span class="keywordflow">return</span> oss.str();
-<a name="l00069"></a>00069     }
-<a name="l00070"></a>00070 
-<a name="l00071"></a>00071     <span class="keywordtype">string</span>
-<a name="l00072"></a><a class="code" href="classvnl_1_1PinRef.html#a689703e594fcf20a3e06d9a951b0cb0b">00072</a>     <a class="code" href="classvnl_1_1PinRef.html#a689703e594fcf20a3e06d9a951b0cb0b">PinRef::getFullName</a>(<span class="keywordtype">string</span> sep)<span class="keyword"> const </span>{
-<a name="l00073"></a>00073         <span class="keywordtype">string</span> s = <a class="code" href="classvnl_1_1PinRef.html#a8ce03c243041e01c6141e5d6e6d62e57">getCellNm</a>() + sep + <a class="code" href="classvnl_1_1PinRef.html#a323747dc8e09f617facd6e66536db203">getBitNm</a>();
-<a name="l00074"></a>00074         <span class="keywordflow">return</span> s;
-<a name="l00075"></a>00075     }
-<a name="l00076"></a>00076 
-<a name="l00077"></a><a class="code" href="classvnl_1_1PinRef.html#a340501431a0c700443f4bce319cfbc71">00077</a>     <a class="code" href="classvnl_1_1PinRef.html#a340501431a0c700443f4bce319cfbc71">PinRef::~PinRef</a>() {
-<a name="l00078"></a>00078     }
-<a name="l00079"></a>00079 
-<a name="l00080"></a>00080 <span class="preprocessor">#undef UNCONST</span>
-<a name="l00081"></a>00081 <span class="preprocessor"></span>}
+<a name="l00046"></a>00046         TRcModule ref = <a class="code" href="classvnl_1_1PinRef.html#a5efada4de2a5992d390748434357fd07">m_cell</a>-&gt;getRef();
+<a name="l00047"></a>00047         <a class="code" href="assert_8hxx.html#a989940570b13fb111ef307bc7c660c07">ASSERT_TRUE</a>(ref.isValid());
+<a name="l00048"></a>00048         TRcPort port = ref-&gt;getPort(<a class="code" href="classvnl_1_1PinRef.html#a7a86924bbb91307188928b6d31b0d87b">getPortNm</a>());
+<a name="l00049"></a>00049         <span class="keywordflow">return</span> port;
+<a name="l00050"></a>00050     }
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052     <span class="keyword">const</span> TRcPort
+<a name="l00053"></a><a class="code" href="classvnl_1_1PinRef.html#a8833b7b2a69723c2ae31c0cbaebcd31e">00053</a>     <a class="code" href="classvnl_1_1PinRef.html#a8833b7b2a69723c2ae31c0cbaebcd31e">PinRef::getPort</a>()<span class="keyword"> const </span>{
+<a name="l00054"></a>00054         <span class="keywordflow">return</span> <a class="code" href="pinref_8cxx.html#a3ee9aeb548293d00ea8f2acae49966d2">UNCONST</a>-&gt;getPort();
+<a name="l00055"></a>00055     }
+<a name="l00056"></a>00056 
+<a name="l00057"></a>00057     <span class="keywordtype">string</span>
+<a name="l00058"></a><a class="code" href="classvnl_1_1PinRef.html#a323747dc8e09f617facd6e66536db203">00058</a>     <a class="code" href="classvnl_1_1PinRef.html#a323747dc8e09f617facd6e66536db203">PinRef::getBitNm</a>()<span class="keyword"> const </span>{
+<a name="l00059"></a>00059         ostringstream oss;
+<a name="l00060"></a>00060         oss &lt;&lt; <a class="code" href="classvnl_1_1PinRef.html#a7a86924bbb91307188928b6d31b0d87b">getPortNm</a>();
+<a name="l00061"></a>00061         TRcPort port = <a class="code" href="classvnl_1_1PinRef.html#a8833b7b2a69723c2ae31c0cbaebcd31e">getPort</a>();
+<a name="l00062"></a>00062         <span class="keywordflow">if</span> (port-&gt;isBus()) {
+<a name="l00063"></a>00063             TRcPortBus bus = <a class="code" href="classvnl_1_1PinRef.html#a36f9b18324346b569d641424a0c4c0ed">PortBus::downcast</a>(port);
+<a name="l00064"></a>00064             <span class="keywordtype">unsigned</span> actualBit = bus-&gt;getActualBit(<a class="code" href="classvnl_1_1PinRef.html#a752eb248a57ff29a0136eebd9bb798da">m_lbOffset</a>);
+<a name="l00065"></a>00065             oss &lt;&lt; <span class="charliteral">&#39;[&#39;</span> &lt;&lt; actualBit &lt;&lt; <span class="charliteral">&#39;]&#39;</span>;
+<a name="l00066"></a>00066         }
+<a name="l00067"></a>00067         <span class="keywordflow">return</span> oss.str();
+<a name="l00068"></a>00068     }
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070     <span class="keywordtype">string</span>
+<a name="l00071"></a><a class="code" href="classvnl_1_1PinRef.html#a689703e594fcf20a3e06d9a951b0cb0b">00071</a>     <a class="code" href="classvnl_1_1PinRef.html#a689703e594fcf20a3e06d9a951b0cb0b">PinRef::getFullName</a>(<span class="keywordtype">string</span> sep)<span class="keyword"> const </span>{
+<a name="l00072"></a>00072         <span class="keywordtype">string</span> s = <a class="code" href="classvnl_1_1PinRef.html#a8ce03c243041e01c6141e5d6e6d62e57">getCellNm</a>() + sep + <a class="code" href="classvnl_1_1PinRef.html#a323747dc8e09f617facd6e66536db203">getBitNm</a>();
+<a name="l00073"></a>00073         <span class="keywordflow">return</span> s;
+<a name="l00074"></a>00074     }
+<a name="l00075"></a>00075 
+<a name="l00076"></a><a class="code" href="classvnl_1_1PinRef.html#a340501431a0c700443f4bce319cfbc71">00076</a>     <a class="code" href="classvnl_1_1PinRef.html#a340501431a0c700443f4bce319cfbc71">PinRef::~PinRef</a>() {
+<a name="l00077"></a>00077     }
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079 <span class="preprocessor">#undef UNCONST</span>
+<a name="l00080"></a>00080 <span class="preprocessor"></span>}
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Apr 1 2012 16:45:17 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Apr 6 2012 17:15:08 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

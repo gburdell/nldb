@@ -155,7 +155,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00059"></a>00059             <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> i = 0; i &lt; <a class="code" href="classxyzzy_1_1TArray.html#ad7f65145a7215019758fc0290e02e84f">length</a>(); ++i) {
 <a name="l00060"></a>00060                 <span class="keyword">const</span> TRcKeyValue &amp;kv = (*this)[i];
 <a name="l00061"></a>00061                 <span class="keyword">const</span> <span class="keywordtype">string</span> &amp;key = kv-&gt;getKey();
-<a name="l00062"></a>00062                 <a class="code" href="assert_8hxx.html#a989940570b13fb111ef307bc7c660c07">ASSERT_TRUE</a>(allowDups || !<a class="code" href="namespaceslf.html#a87a5f5f3bc046e9a6a2b0b56de682229">mapHasKey</a>(kvmap.<a class="code" href="classxyzzy_1_1PTRcPtr.html#a8e5bb737a6616bb97a23f0410ccc93fb">asT</a>(), key));
+<a name="l00062"></a>00062                 <a class="code" href="assert_8hxx.html#a989940570b13fb111ef307bc7c660c07">ASSERT_TRUE</a>(allowDups || !<a class="code" href="namespacexyzzy.html#abaffa11c0124202ba621f99d4aa30cd4">mapHasKey</a>(kvmap.<a class="code" href="classxyzzy_1_1PTRcPtr.html#a8e5bb737a6616bb97a23f0410ccc93fb">asT</a>(), key));
 <a name="l00063"></a>00063                 kvmap.<a class="code" href="classxyzzy_1_1PTRcPtr.html#a8e5bb737a6616bb97a23f0410ccc93fb">asT</a>()[key] = kv;
 <a name="l00064"></a>00064             }
 <a name="l00065"></a>00065         }
@@ -218,7 +218,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Apr 1 2012 16:45:17 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Apr 6 2012 17:15:08 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

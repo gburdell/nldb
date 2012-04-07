@@ -589,26 +589,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00493"></a>00493 <span class="preprocessor">#endif</span>
 <a name="l00494"></a>00494 <span class="preprocessor"></span>                <span class="keywordtype">string</span> direction;
 <a name="l00495"></a>00495                 TRcKeyValue dirkv;
-<a name="l00496"></a>00496                 <span class="keywordflow">if</span> (!<a class="code" href="namespaceslf.html#a3dbb85ba47e86b9babc4c3dde0970abc">mapGetVal</a>(rcvbk, <a class="code" href="namespaceslf.html#af0293936722426cca6c92c2e63922b0b">cDirection</a>, dirkv)) {
+<a name="l00496"></a>00496                 <span class="keywordflow">if</span> (!<a class="code" href="namespacexyzzy.html#a0426cb5cc971b4eb1ac6a837f148ae2b">mapGetVal</a>(rcvbk, <a class="code" href="namespaceslf.html#af0293936722426cca6c92c2e63922b0b">cDirection</a>, dirkv)) {
 <a name="l00497"></a>00497                     <span class="comment">//get direction from bus(xxx) { pin(yyy) { direction : ..}}</span>
-<a name="l00498"></a>00498                     <a class="code" href="assert_8hxx.html#a989940570b13fb111ef307bc7c660c07">ASSERT_TRUE</a>((<a class="code" href="namespaceslf.html#ae4847a00577d8ecdfa665d7f8196a19f">cBus</a> == key) &amp;&amp; <a class="code" href="namespaceslf.html#a3dbb85ba47e86b9babc4c3dde0970abc">mapGetVal</a>(rcvbk, <a class="code" href="namespaceslf.html#a9b8a2f508a9f7fda5fd1354053f98126">cPin</a>, dirkv));
-<a name="l00499"></a>00499                     <a class="code" href="assert_8hxx.html#a989940570b13fb111ef307bc7c660c07">ASSERT_TRUE</a>(<a class="code" href="namespaceslf.html#a3dbb85ba47e86b9babc4c3dde0970abc">mapGetVal</a>(dirkv-&gt;getValSet()-&gt;asMap(<span class="keyword">true</span>), <a class="code" href="namespaceslf.html#af0293936722426cca6c92c2e63922b0b">cDirection</a>, dirkv));
+<a name="l00498"></a>00498                     <a class="code" href="assert_8hxx.html#a989940570b13fb111ef307bc7c660c07">ASSERT_TRUE</a>((<a class="code" href="namespaceslf.html#ae4847a00577d8ecdfa665d7f8196a19f">cBus</a> == key) &amp;&amp; <a class="code" href="namespacexyzzy.html#a0426cb5cc971b4eb1ac6a837f148ae2b">mapGetVal</a>(rcvbk, <a class="code" href="namespaceslf.html#a9b8a2f508a9f7fda5fd1354053f98126">cPin</a>, dirkv));
+<a name="l00499"></a>00499                     <a class="code" href="assert_8hxx.html#a989940570b13fb111ef307bc7c660c07">ASSERT_TRUE</a>(<a class="code" href="namespacexyzzy.html#a0426cb5cc971b4eb1ac6a837f148ae2b">mapGetVal</a>(dirkv-&gt;getValSet()-&gt;asMap(<span class="keyword">true</span>), <a class="code" href="namespaceslf.html#af0293936722426cca6c92c2e63922b0b">cDirection</a>, dirkv));
 <a name="l00500"></a>00500                 }
 <a name="l00501"></a>00501                 direction = dirkv-&gt;getVal()-&gt;asIdent();
 <a name="l00502"></a>00502                 <span class="keywordflow">if</span> (<a class="code" href="namespaceslf.html#ae4847a00577d8ecdfa665d7f8196a19f">cBus</a> == key) {
 <a name="l00503"></a>00503                     <a class="code" href="assert_8hxx.html#a989940570b13fb111ef307bc7c660c07">ASSERT_TRUE</a>(<a class="code" href="classslf_1_1Parser.html#a67bba3ac186040d89467cab9c3661725">m_libBusTypes</a>.<a class="code" href="classxyzzy_1_1PTRcPtr.html#a6bbec49de7353c2705680d8fd45155f5">isValid</a>());
 <a name="l00504"></a>00504                     <span class="keyword">const</span> <span class="keywordtype">string</span> &amp;busType = vbk[<a class="code" href="namespaceslf.html#a09ee1134e4001fde0870bb4ed17f932e">cBusType</a>]-&gt;getVal()-&gt;asIdent();
-<a name="l00505"></a>00505                     <a class="code" href="assert_8hxx.html#a989940570b13fb111ef307bc7c660c07">ASSERT_TRUE</a>(<a class="code" href="namespaceslf.html#a87a5f5f3bc046e9a6a2b0b56de682229">mapHasKey</a>(<a class="code" href="classslf_1_1Parser.html#a67bba3ac186040d89467cab9c3661725">m_libBusTypes</a>.<a class="code" href="classxyzzy_1_1PTRcPtr.html#a8e5bb737a6616bb97a23f0410ccc93fb">asT</a>(), busType));
+<a name="l00505"></a>00505                     <a class="code" href="assert_8hxx.html#a989940570b13fb111ef307bc7c660c07">ASSERT_TRUE</a>(<a class="code" href="namespacexyzzy.html#abaffa11c0124202ba621f99d4aa30cd4">mapHasKey</a>(<a class="code" href="classslf_1_1Parser.html#a67bba3ac186040d89467cab9c3661725">m_libBusTypes</a>.<a class="code" href="classxyzzy_1_1PTRcPtr.html#a8e5bb737a6616bb97a23f0410ccc93fb">asT</a>(), busType));
 <a name="l00506"></a>00506                     TRcBus <a class="code" href="classslf_1_1Parser.html#a4dd46d2f991fdc312dadb41e624e7f2c">bus</a> = <a class="code" href="classslf_1_1Parser.html#a67bba3ac186040d89467cab9c3661725">m_libBusTypes</a>.<a class="code" href="classxyzzy_1_1PTRcPtr.html#a8e5bb737a6616bb97a23f0410ccc93fb">asT</a>()[busType];
 <a name="l00507"></a>00507                     lcel-&gt;addPort(portNm, bus, direction);
 <a name="l00508"></a>00508                     <span class="comment">//TODO: bussed pin (bit-blasted) funcs and timing</span>
 <a name="l00509"></a>00509                 } <span class="keywordflow">else</span> { <span class="comment">//is scalar pin</span>
 <a name="l00510"></a>00510                     lcel-&gt;addPort(portNm, direction);
-<a name="l00511"></a>00511                     <span class="keywordflow">if</span> (<a class="code" href="namespaceslf.html#a87a5f5f3bc046e9a6a2b0b56de682229">mapHasKey</a>(vbk, <a class="code" href="namespaceslf.html#afc1e081991b1afcb469e78f77ab0e9c5">cFunction</a>)) {
+<a name="l00511"></a>00511                     <span class="keywordflow">if</span> (<a class="code" href="namespacexyzzy.html#abaffa11c0124202ba621f99d4aa30cd4">mapHasKey</a>(vbk, <a class="code" href="namespaceslf.html#afc1e081991b1afcb469e78f77ab0e9c5">cFunction</a>)) {
 <a name="l00512"></a>00512                         <span class="keyword">const</span> <span class="keywordtype">string</span> &amp;func = vbk[<a class="code" href="namespaceslf.html#afc1e081991b1afcb469e78f77ab0e9c5">cFunction</a>]-&gt;getVal()-&gt;asString();
 <a name="l00513"></a>00513                         lcel-&gt;setOpinFunction(portNm, func);
 <a name="l00514"></a>00514                     }
-<a name="l00515"></a>00515                     <span class="keywordflow">if</span> (<a class="code" href="namespaceslf.html#a87a5f5f3bc046e9a6a2b0b56de682229">mapHasKey</a>(vbk, <a class="code" href="namespaceslf.html#a6eb1c00107ec03a3f422194f42316cd3">cTiming</a>) &amp;&amp; vbk[<a class="code" href="namespaceslf.html#a6eb1c00107ec03a3f422194f42316cd3">cTiming</a>]-&gt;hasValSet()) {
+<a name="l00515"></a>00515                     <span class="keywordflow">if</span> (<a class="code" href="namespacexyzzy.html#abaffa11c0124202ba621f99d4aa30cd4">mapHasKey</a>(vbk, <a class="code" href="namespaceslf.html#a6eb1c00107ec03a3f422194f42316cd3">cTiming</a>) &amp;&amp; vbk[<a class="code" href="namespaceslf.html#a6eb1c00107ec03a3f422194f42316cd3">cTiming</a>]-&gt;hasValSet()) {
 <a name="l00516"></a>00516                         TRcValueSet tset = vbk[<a class="code" href="namespaceslf.html#a6eb1c00107ec03a3f422194f42316cd3">cTiming</a>]-&gt;getValSet();
 <a name="l00517"></a>00517 <span class="preprocessor">#ifdef xDEBUG</span>
 <a name="l00518"></a>00518 <span class="preprocessor"></span>                        <a class="code" href="namespaceslf.html#aadc91da0052dc4c7a296f5f4152e4d63">dbgOs</a> &lt;&lt; <span class="stringliteral">&quot;DBG: timing {&quot;</span> &lt;&lt; endl;
@@ -641,7 +641,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00545"></a>00545 <span class="keyword">using</span> <a class="code" href="classvnl_1_1Library.html">vnl::Library</a>;
 <a name="l00546"></a>00546 <span class="keyword">using</span> vnl::TRcLibrary;
 <a name="l00547"></a>00547 
-<a name="l00548"></a>00548 <span class="keywordtype">int</span> <a class="code" href="vnl_2parser_8cxx.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {
+<a name="l00548"></a>00548 <span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {
 <a name="l00549"></a>00549     <a class="code" href="assert_8hxx.html#a989940570b13fb111ef307bc7c660c07">ASSERT_TRUE</a>(2 &lt;= argc);
 <a name="l00550"></a>00550     <a class="code" href="namespacevnl.html#a3bb183ef88806ddd31ccec0258769afc">TRcToken</a> tok;
 <a name="l00551"></a>00551     <a class="code" href="namespacevnl.html#ac5a7d8b5171cf560dcb0c95176741f47">TRcLocation</a> loc;
@@ -661,7 +661,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Apr 1 2012 16:45:17 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Apr 6 2012 17:15:08 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

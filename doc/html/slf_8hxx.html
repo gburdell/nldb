@@ -108,6 +108,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &quot;<a class="el" href="array_8hxx_source.html">xyzzy/array.hxx</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="slist_8hxx_source.html">xyzzy/slist.hxx</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="exception_8hxx_source.html">xyzzy/exception.hxx</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="xyzzy_2src_2xyzzy_2util_8hxx_source.html">xyzzy/util.hxx</a>&quot;</code><br/>
 </div>
 <p><a href="slf_8hxx_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -117,6 +118,7 @@ Classes</h2></td></tr>
 <tr><td colspan="2"><h2><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespaceslf"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceslf.html">slf</a></td></tr>
+<tr class="memdesc:namespaceslf"><td class="mdescLeft">&#160;</td><td class="mdescRight">All things related to synopsys liberty file. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="define-members"></a>
 Defines</h2></td></tr>
 <tr class="memitem:a271ac3cedb76c6b228bbf13a2c15e827"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="slf_8hxx.html#a271ac3cedb76c6b228bbf13a2c15e827">DECL_CLASS</a>(_cls)</td></tr>
@@ -138,10 +140,6 @@ Functions</h2></td></tr>
 <tr class="memitem:ae26740c7eb0340c9fe835ab7e5565297"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceslf.html#ae26740c7eb0340c9fe835ab7e5565297">slf::DECL_CLASS_SIMPLE_RC</a> (ExprVal)</td></tr>
 <tr class="memitem:a57da79ec3a0401aef196052a01f6877e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceslf.html#a57da79ec3a0401aef196052a01f6877e">slf::DECL_CLASS_SIMPLE_RC</a> (ExprOp)</td></tr>
 <tr class="memitem:a3eac0e143d56dd00076347e70e2885d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceslf.html#a3eac0e143d56dd00076347e70e2885d1">slf::DECL_CLASS_SIMPLE_RC</a> (Number)</td></tr>
-<tr class="memitem:a87a5f5f3bc046e9a6a2b0b56de682229"><td class="memTemplParams" colspan="2">template&lt;typename K , typename T &gt; </td></tr>
-<tr class="memitem:a87a5f5f3bc046e9a6a2b0b56de682229"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceslf.html#a87a5f5f3bc046e9a6a2b0b56de682229">slf::mapHasKey</a> (const map&lt; K, T &gt; &amp;m, const K &amp;key)</td></tr>
-<tr class="memitem:a3dbb85ba47e86b9babc4c3dde0970abc"><td class="memTemplParams" colspan="2">template&lt;typename K , typename T &gt; </td></tr>
-<tr class="memitem:a3dbb85ba47e86b9babc4c3dde0970abc"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceslf.html#a3dbb85ba47e86b9babc4c3dde0970abc">slf::mapGetVal</a> (const PTRcPtr&lt; map&lt; K, T &gt; &gt; &amp;rcm, const K &amp;key, T &amp;val)</td></tr>
 <tr><td colspan="2"><h2><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:aadc91da0052dc4c7a296f5f4152e4d63"><td class="memItemLeft" align="right" valign="top">DebugOstream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceslf.html#aadc91da0052dc4c7a296f5f4152e4d63">slf::dbgOs</a></td></tr>
@@ -164,7 +162,7 @@ Variables</h2></td></tr>
 <b>Value:</b><div class="fragment"><pre class="fragment">_cls(<span class="keyword">const</span> _cls &amp;);               \
         _cls&amp; operator=(<span class="keyword">const</span> _cls &amp;)
 </pre></div>
-<p>Definition at line <a class="el" href="slf_8hxx_source.html#l00047">47</a> of file <a class="el" href="slf_8hxx_source.html">slf.hxx</a>.</p>
+<p>Definition at line <a class="el" href="slf_8hxx_source.html#l00048">48</a> of file <a class="el" href="slf_8hxx_source.html">slf.hxx</a>.</p>
 
 </div>
 </div>
@@ -185,7 +183,7 @@ Variables</h2></td></tr>
 <b>Value:</b><div class="fragment"><pre class="fragment"><span class="keyword">class </span>_cls ;                        \
     typedef PTRcObjPtr&lt;_cls&gt; TRc##_cls
 </pre></div>
-<p>Definition at line <a class="el" href="slf_8hxx_source.html#l00036">36</a> of file <a class="el" href="slf_8hxx_source.html">slf.hxx</a>.</p>
+<p>Definition at line <a class="el" href="slf_8hxx_source.html#l00037">37</a> of file <a class="el" href="slf_8hxx_source.html">slf.hxx</a>.</p>
 
 </div>
 </div>
@@ -206,7 +204,7 @@ Variables</h2></td></tr>
 <b>Value:</b><div class="fragment"><pre class="fragment"><span class="keyword">class </span>_cls ;                        \
     typedef PTRcPtr&lt;_cls&gt; TRc##_cls
 </pre></div>
-<p>Definition at line <a class="el" href="slf_8hxx_source.html#l00042">42</a> of file <a class="el" href="slf_8hxx_source.html">slf.hxx</a>.</p>
+<p>Definition at line <a class="el" href="slf_8hxx_source.html#l00043">43</a> of file <a class="el" href="slf_8hxx_source.html">slf.hxx</a>.</p>
 
 </div>
 </div>
@@ -214,7 +212,7 @@ Variables</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Apr 1 2012 16:45:17 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Apr 6 2012 17:15:09 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

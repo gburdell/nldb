@@ -13,7 +13,7 @@ var searchData=
   ['nlshtclobjtype',['NlshTclObjType',['../tclbridge_8cxx.html#af1c5f28306a4fa947a9e196a65f6a6f5',1,'tclbridge.cxx']]],
   ['nlshupdatestringproc',['NlshUpdateStringProc',['../tclbridge_8cxx.html#a10e7f42e6c526b3dc7afb28ca542a3bd',1,'NlshUpdateStringProc():&#160;tclbridge.cxx'],['../tclbridge_8cxx.html#a4161eb59967f9c19a7bbe8ce0d191b3a',1,'NlshUpdateStringProc(Tcl_Obj *objPtr):&#160;tclbridge.cxx']]],
   ['number',['Number',['../classslf_1_1Number.html',1,'slf']]],
-  ['number',['number',['../classslf_1_1Lexer.html#a0f5a8bf2f331d1d7561569f827311acc',1,'slf::Lexer::number()'],['../classslf_1_1Parser.html#a0f7af0b7cd9dadd6652f06e8f4f86454',1,'slf::Parser::number()'],['../classslf_1_1Number.html#a80be4676593cbe1d82616e7242d27efe',1,'slf::Number::Number()']]],
+  ['number',['Number',['../classslf_1_1Number.html#a80be4676593cbe1d82616e7242d27efe',1,'slf::Number::Number()'],['../classslf_1_1Lexer.html#a0f5a8bf2f331d1d7561569f827311acc',1,'slf::Lexer::number()'],['../classslf_1_1Parser.html#a0f7af0b7cd9dadd6652f06e8f4f86454',1,'slf::Parser::number()']]],
   ['number_2ecxx',['number.cxx',['../number_8cxx.html',1,'']]],
   ['number_2ehxx',['number.hxx',['../number_8hxx.html',1,'']]]
 ];

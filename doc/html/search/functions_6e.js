@@ -10,5 +10,5 @@ var searchData=
   ['nlshobjcmd',['NlshObjCmd',['../tclbridge_8cxx.html#ac57716752b0111718d365434167ad096',1,'tclbridge.cxx']]],
   ['nlshsetfromanyproc',['NlshSetFromAnyProc',['../tclbridge_8cxx.html#aad405eca6234ae900a73bf1b90cd7f67',1,'tclbridge.cxx']]],
   ['nlshupdatestringproc',['NlshUpdateStringProc',['../tclbridge_8cxx.html#a4161eb59967f9c19a7bbe8ce0d191b3a',1,'tclbridge.cxx']]],
-  ['number',['number',['../classslf_1_1Lexer.html#a0f5a8bf2f331d1d7561569f827311acc',1,'slf::Lexer::number()'],['../classslf_1_1Parser.html#a0f7af0b7cd9dadd6652f06e8f4f86454',1,'slf::Parser::number()'],['../classslf_1_1Number.html#a80be4676593cbe1d82616e7242d27efe',1,'slf::Number::Number()']]]
+  ['number',['Number',['../classslf_1_1Number.html#a80be4676593cbe1d82616e7242d27efe',1,'slf::Number::Number()'],['../classslf_1_1Lexer.html#a0f5a8bf2f331d1d7561569f827311acc',1,'slf::Lexer::number()'],['../classslf_1_1Parser.html#a0f7af0b7cd9dadd6652f06e8f4f86454',1,'slf::Parser::number()']]]
 ];

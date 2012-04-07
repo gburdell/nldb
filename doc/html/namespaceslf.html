@@ -99,6 +99,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">slf Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>All things related to synopsys liberty file.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -151,10 +154,6 @@ Functions</h2></td></tr>
 <tr class="memitem:ae26740c7eb0340c9fe835ab7e5565297"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceslf.html#ae26740c7eb0340c9fe835ab7e5565297">DECL_CLASS_SIMPLE_RC</a> (<a class="el" href="classslf_1_1ExprVal.html">ExprVal</a>)</td></tr>
 <tr class="memitem:a57da79ec3a0401aef196052a01f6877e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceslf.html#a57da79ec3a0401aef196052a01f6877e">DECL_CLASS_SIMPLE_RC</a> (<a class="el" href="classslf_1_1ExprOp.html">ExprOp</a>)</td></tr>
 <tr class="memitem:a3eac0e143d56dd00076347e70e2885d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceslf.html#a3eac0e143d56dd00076347e70e2885d1">DECL_CLASS_SIMPLE_RC</a> (<a class="el" href="classslf_1_1Number.html">Number</a>)</td></tr>
-<tr class="memitem:a87a5f5f3bc046e9a6a2b0b56de682229"><td class="memTemplParams" colspan="2">template&lt;typename K , typename T &gt; </td></tr>
-<tr class="memitem:a87a5f5f3bc046e9a6a2b0b56de682229"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceslf.html#a87a5f5f3bc046e9a6a2b0b56de682229">mapHasKey</a> (const map&lt; K, T &gt; &amp;m, const K &amp;key)</td></tr>
-<tr class="memitem:a3dbb85ba47e86b9babc4c3dde0970abc"><td class="memTemplParams" colspan="2">template&lt;typename K , typename T &gt; </td></tr>
-<tr class="memitem:a3dbb85ba47e86b9babc4c3dde0970abc"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceslf.html#a3dbb85ba47e86b9babc4c3dde0970abc">mapGetVal</a> (const <a class="el" href="classxyzzy_1_1PTRcPtr.html">PTRcPtr</a>&lt; map&lt; K, T &gt; &gt; &amp;rcm, const K &amp;key, T &amp;val)</td></tr>
 <tr class="memitem:a7f991abba0bad3724e3a42f02028bf19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classslf_1_1DebugOstream.html">DebugOstream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceslf.html#a7f991abba0bad3724e3a42f02028bf19">operator&lt;&lt;</a> (<a class="el" href="classslf_1_1DebugOstream.html">DebugOstream</a> &amp;dos, const TRcValueType &amp;vt)</td></tr>
 <tr><td colspan="2"><h2><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -184,7 +183,8 @@ Variables</h2></td></tr>
 <tr class="memitem:aadc91da0052dc4c7a296f5f4152e4d63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classslf_1_1DebugOstream.html">DebugOstream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceslf.html#aadc91da0052dc4c7a296f5f4152e4d63">dbgOs</a></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="classslf_1_1Parser.html">Parser</a> is same architecture as vnl/{lexer,parser}.* TODO: refactor to common base code and ... Use slf.g as spec. </p>
+<div class="textblock"><p>All things related to synopsys liberty file. </p>
+<p><a class="el" href="classslf_1_1Parser.html">Parser</a> is same architecture as vnl/{lexer,parser}.* TODO: refactor to common base code and ... Use slf.g as spec. </p>
 </div><hr/><h2>Typedef Documentation</h2>
 <a class="anchor" id="a5852ea13b88ae0a6116117f120720cff"></a>
 <div class="memitem">
@@ -640,84 +640,6 @@ Variables</h2></td></tr>
 <div class="memdoc">
 
 <p>Definition at line <a class="el" href="slf_2lexer_8cxx_source.html#l00039">39</a> of file <a class="el" href="slf_2lexer_8cxx_source.html">lexer.cxx</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a3dbb85ba47e86b9babc4c3dde0970abc"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename K , typename T &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="namespaceslf.html#a3dbb85ba47e86b9babc4c3dde0970abc">slf::mapGetVal</a> </td>
-          <td>(</td>
-          <td class="paramtype">const PTRcPtr&lt; map&lt; K, T &gt; &gt; &amp;&#160;</td>
-          <td class="paramname"><em>rcm</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const K &amp;&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">T &amp;&#160;</td>
-          <td class="paramname"><em>val</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td><code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-<p>Get map value of key. </p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">rcm</td><td>(reference counted) map. </td></tr>
-    <tr><td class="paramname">key</td><td>key value. </td></tr>
-    <tr><td class="paramname">val</td><td>return value (if key found). </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns:</dt><dd>true if key found; else false. </dd></dl>
-
-<p>Definition at line <a class="el" href="slf_8hxx_source.html#l00099">99</a> of file <a class="el" href="slf_8hxx_source.html">slf.hxx</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a87a5f5f3bc046e9a6a2b0b56de682229"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename K , typename T &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="namespaceslf.html#a87a5f5f3bc046e9a6a2b0b56de682229">slf::mapHasKey</a> </td>
-          <td>(</td>
-          <td class="paramtype">const map&lt; K, T &gt; &amp;&#160;</td>
-          <td class="paramname"><em>m</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const K &amp;&#160;</td>
-          <td class="paramname"><em>key</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td><code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Definition at line <a class="el" href="slf_8hxx_source.html#l00085">85</a> of file <a class="el" href="slf_8hxx_source.html">slf.hxx</a>.</p>
 
 </div>
 </div>
@@ -1211,7 +1133,7 @@ template&lt;typename K , typename T &gt; </div>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Apr 1 2012 16:45:17 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Apr 6 2012 17:15:09 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

@@ -173,151 +173,151 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00080"></a>00080         <span class="keywordtype">void</span> init(<span class="keyword">const</span> <span class="keywordtype">char</span> *key, <span class="keywordtype">size_t</span> size, <span class="keywordtype">bool</span> create);
 <a name="l00081"></a>00081 };
 <a name="l00082"></a>00082 
-<a name="l00083"></a><a class="code" href="namespacexyzzy_1_1shm.html">00083</a> <span class="keyword">namespace </span>shm
-<a name="l00084"></a>00084 {
-<a name="l00085"></a>00085         <span class="keyword">inline</span>
-<a name="l00086"></a><a class="code" href="namespacexyzzy_1_1shm.html#aca6804273f509c863d5afef5eb14de27">00086</a>         ptrdiff_t <a class="code" href="namespacexyzzy_1_1shm.html#aca6804273f509c863d5afef5eb14de27">alloc</a>(<span class="keywordtype">size_t</span> sz)
-<a name="l00087"></a>00087         {
-<a name="l00088"></a>00088                 <span class="keywordflow">return</span> TShmAlloc::theOne()-&gt;alloc(sz);
-<a name="l00089"></a>00089         }
-<a name="l00090"></a>00090 
-<a name="l00091"></a>00091         <span class="keyword">inline</span>
-<a name="l00092"></a><a class="code" href="namespacexyzzy_1_1shm.html#a728b05b2f7b7d16e2489eaee462e41a5">00092</a>         <span class="keywordtype">void</span>* <a class="code" href="namespacexyzzy_1_1shm.html#a728b05b2f7b7d16e2489eaee462e41a5">allocp</a>(<span class="keywordtype">size_t</span> sz)
-<a name="l00093"></a>00093         {
-<a name="l00094"></a>00094                 <span class="keywordflow">return</span> TShmAlloc::theOne()-&gt;ptr(<a class="code" href="namespacexyzzy_1_1shm.html#aca6804273f509c863d5afef5eb14de27">alloc</a>(sz));
-<a name="l00095"></a>00095         }
-<a name="l00096"></a>00096 
-<a name="l00097"></a>00097         <span class="keyword">inline</span>
-<a name="l00098"></a><a class="code" href="namespacexyzzy_1_1shm.html#ad6c399b14a861d69f61be8f36f668f7b">00098</a>         ptrdiff_t <a class="code" href="namespacexyzzy_1_1shm.html#ad6c399b14a861d69f61be8f36f668f7b">offset</a>(<span class="keywordtype">void</span>* p)
-<a name="l00099"></a>00099         {
-<a name="l00100"></a>00100                 <span class="keywordflow">return</span> <span class="keyword">reinterpret_cast&lt;</span><a class="code" href="namespacexyzzy.html#acbba3849e98db7f9f40532f398890632">TUint8</a>*<span class="keyword">&gt;</span>(p) -
-<a name="l00101"></a>00101                        reinterpret_cast&lt;TUint8*&gt;(TShmAlloc::theOne()-&gt;base());
-<a name="l00102"></a>00102         }
-<a name="l00103"></a>00103 
-<a name="l00104"></a>00104         <span class="keyword">inline</span>
-<a name="l00105"></a><a class="code" href="namespacexyzzy_1_1shm.html#acb86b9a8d555cbe97809f8779056bde4">00105</a>         <span class="keywordtype">void</span> <a class="code" href="namespacexyzzy_1_1shm.html#acb86b9a8d555cbe97809f8779056bde4">destroy</a>()
-<a name="l00106"></a>00106         {
-<a name="l00107"></a>00107                 TShmAlloc::theOne()-&gt;destroy();
-<a name="l00108"></a>00108         }
-<a name="l00109"></a>00109 
-<a name="l00110"></a>00110         <span class="keyword">inline</span>
-<a name="l00111"></a><a class="code" href="namespacexyzzy_1_1shm.html#a119cf79afe0d09d37167be1ec68e74b1">00111</a>         <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="namespacexyzzy_1_1shm.html#a119cf79afe0d09d37167be1ec68e74b1">getKey</a>()
-<a name="l00112"></a>00112         {
-<a name="l00113"></a>00113                 <span class="keywordflow">return</span> TShmAlloc::theOne()-&gt;getKey();
-<a name="l00114"></a>00114         }
-<a name="l00115"></a>00115 
-<a name="l00116"></a>00116         <span class="keyword">inline</span>
-<a name="l00117"></a><a class="code" href="namespacexyzzy_1_1shm.html#a15d11d0edbd8848243c6b415814e3d4f">00117</a>         <span class="keywordtype">size_t</span> <a class="code" href="namespacexyzzy_1_1shm.html#a15d11d0edbd8848243c6b415814e3d4f">getMaxSize</a>()
-<a name="l00118"></a>00118         {
-<a name="l00119"></a>00119                 <span class="keywordflow">return</span> TShmAlloc::theOne()-&gt;getMaxSize();
-<a name="l00120"></a>00120         }
-<a name="l00121"></a>00121 
-<a name="l00122"></a>00122 };
-<a name="l00123"></a>00123 
-<a name="l00124"></a>00124 <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Alloc&gt;
-<a name="l00125"></a>00125 T
-<a name="l00126"></a><a class="code" href="namespacexyzzy.html#abe22579032c602b14a6445c6786e2a77">00126</a> <a class="code" href="namespacexyzzy.html#abe22579032c602b14a6445c6786e2a77">castTo</a>(ptrdiff_t <a class="code" href="namespacexyzzy_1_1shm.html#ad6c399b14a861d69f61be8f36f668f7b">offset</a>)
-<a name="l00127"></a>00127 {
-<a name="l00128"></a>00128         <span class="keywordflow">return</span> <span class="keyword">reinterpret_cast&lt;</span>T<span class="keyword">&gt;</span>(Alloc::theOne()-&gt;ptr(offset));
-<a name="l00129"></a>00129 }
-<a name="l00130"></a>00130 
-<a name="l00131"></a>00131 <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Alloc = TShmAlloc&gt;
-<a name="l00132"></a><a class="code" href="classxyzzy_1_1PTShmObj.html">00132</a> <span class="keyword">class </span><a class="code" href="classxyzzy_1_1PTShmObj.html">PTShmObj</a>
-<a name="l00133"></a>00133 {
-<a name="l00134"></a>00134 <span class="keyword">public</span>:
-<a name="l00135"></a><a class="code" href="classxyzzy_1_1PTShmObj.html#a005220bc7bdf7491864936814d27a81a">00135</a>         <span class="keyword">explicit</span> <a class="code" href="classxyzzy_1_1PTShmObj.html">PTShmObj</a>()
-<a name="l00136"></a>00136         :       m_offset(0)
-<a name="l00137"></a>00137         {}
-<a name="l00138"></a>00138 
-<a name="l00139"></a><a class="code" href="classxyzzy_1_1PTShmObj.html#acf2e17b7396bd445e2c9964c57f52cb0">00139</a>         <a class="code" href="classxyzzy_1_1PTShmObj.html">PTShmObj</a>(T p)
-<a name="l00140"></a>00140         :       m_offset(shm::<a class="code" href="namespacexyzzy_1_1shm.html#ad6c399b14a861d69f61be8f36f668f7b">offset</a>(p))
-<a name="l00141"></a>00141         {}
-<a name="l00142"></a>00142 
-<a name="l00143"></a><a class="code" href="classxyzzy_1_1PTShmObj.html#a3c7e664a935881b5c7d6aac461e7de68">00143</a>         <a class="code" href="classxyzzy_1_1PTShmObj.html">PTShmObj</a>(ptrdiff_t <a class="code" href="namespacexyzzy_1_1shm.html#ad6c399b14a861d69f61be8f36f668f7b">offset</a>)
-<a name="l00144"></a>00144         :       m_offset(offset)
-<a name="l00145"></a>00145         {}
-<a name="l00146"></a>00146 
-<a name="l00147"></a><a class="code" href="classxyzzy_1_1PTShmObj.html#aee93a7476419f8cd0d2193cc36b44404">00147</a>         <span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTShmObj.html">PTShmObj</a>&amp; operator=(ptrdiff_t <a class="code" href="namespacexyzzy_1_1shm.html#ad6c399b14a861d69f61be8f36f668f7b">offset</a>)
-<a name="l00148"></a>00148         {
-<a name="l00149"></a>00149                 <span class="keyword">const_cast&lt;</span>ptrdiff_t&amp;<span class="keyword">&gt;</span>(m_offset) = offset;
-<a name="l00150"></a>00150                 <span class="keywordflow">return</span> *<span class="keyword">this</span>;
-<a name="l00151"></a>00151         }
-<a name="l00152"></a>00152 
-<a name="l00153"></a><a class="code" href="classxyzzy_1_1PTShmObj.html#acf4b9eb28472bdd9c69d7e06d8c4f791">00153</a>         <span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTShmObj.html">PTShmObj</a>&amp; operator=(<span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTShmObj.html">PTShmObj</a> &amp;r)
-<a name="l00154"></a>00154         {
-<a name="l00155"></a>00155                 <span class="keyword">const_cast&lt;</span>ptrdiff_t&amp;<span class="keyword">&gt;</span>(m_offset) = r.<a class="code" href="classxyzzy_1_1PTShmObj.html#a18e6b163814855b0d09a70e3ed00187f">m_offset</a>;
-<a name="l00156"></a>00156                 <span class="keywordflow">return</span> *<span class="keyword">this</span>;
-<a name="l00157"></a>00157         }
-<a name="l00158"></a>00158 
-<a name="l00159"></a><a class="code" href="classxyzzy_1_1PTShmObj.html#abe2d03fca9c531db33b190ed15e6bd38">00159</a>         T operator()()
-<a name="l00160"></a>00160         {
-<a name="l00161"></a>00161                 <span class="keywordflow">return</span> castTo&lt;T, Alloc&gt;(m_offset);
-<a name="l00162"></a>00162         }
-<a name="l00163"></a>00163 
-<a name="l00164"></a><a class="code" href="classxyzzy_1_1PTShmObj.html#a26b54d7249edf5f18728889ebd1bb3ab">00164</a>         <span class="keyword">const</span> T operator()()<span class="keyword"> const</span>
-<a name="l00165"></a>00165 <span class="keyword">        </span>{
-<a name="l00166"></a>00166                 <span class="keywordflow">return</span> castTo&lt;T, Alloc&gt;(m_offset);
-<a name="l00167"></a>00167         }
-<a name="l00168"></a>00168 
-<a name="l00169"></a><a class="code" href="classxyzzy_1_1PTShmObj.html#a51b2358f5daead822d49ef8c8c2e797c">00169</a>         operator T()    { <span class="keywordflow">return</span> operator()(); }
-<a name="l00170"></a>00170 
-<a name="l00171"></a><a class="code" href="classxyzzy_1_1PTShmObj.html#abea769bb4fb3d21e5be09b1fcb209a56">00171</a>         operator const T()<span class="keyword"> const        </span>{ <span class="keywordflow">return</span> operator()(); }
-<a name="l00172"></a>00172 
-<a name="l00173"></a>00173 <span class="keyword">private</span>:
-<a name="l00174"></a><a class="code" href="classxyzzy_1_1PTShmObj.html#a18e6b163814855b0d09a70e3ed00187f">00174</a>         <span class="keyword">const</span> ptrdiff_t <a class="code" href="classxyzzy_1_1PTShmObj.html#a18e6b163814855b0d09a70e3ed00187f">m_offset</a>;
-<a name="l00175"></a>00175 };
-<a name="l00176"></a>00176 
-<a name="l00177"></a>00177 <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Alloc = TShmAlloc&gt;
-<a name="l00178"></a><a class="code" href="classxyzzy_1_1PTShmObjAr.html">00178</a> <span class="keyword">class </span><a class="code" href="classxyzzy_1_1PTShmObjAr.html">PTShmObjAr</a>
-<a name="l00179"></a>00179 {
-<a name="l00180"></a>00180 <span class="keyword">public</span>:
-<a name="l00181"></a><a class="code" href="classxyzzy_1_1PTShmObjAr.html#a365f21d305a33aba58260b276f2d5b47">00181</a>         <span class="keyword">explicit</span> <a class="code" href="classxyzzy_1_1PTShmObjAr.html">PTShmObjAr</a>(<a class="code" href="namespacexyzzy.html#a36019c675c62f40d171ff9fe0e49b355">TUint32</a> num = 0)
-<a name="l00182"></a>00182         :       m_numObjs(0)
-<a name="l00183"></a>00183         {
-<a name="l00184"></a>00184                 init(num);
-<a name="l00185"></a>00185         }
-<a name="l00186"></a>00186 
-<a name="l00187"></a><a class="code" href="classxyzzy_1_1PTShmObjAr.html#aa4f118803ca037276ad0f3340a33a2f4">00187</a>         <span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTShmObjAr.html">PTShmObjAr</a>&amp; operator=(<a class="code" href="namespacexyzzy.html#a36019c675c62f40d171ff9fe0e49b355">TUint32</a> num)
-<a name="l00188"></a>00188         {
-<a name="l00189"></a>00189                 init(num);
-<a name="l00190"></a>00190                 <span class="keywordflow">return</span> *<span class="keyword">this</span>;
-<a name="l00191"></a>00191         }
-<a name="l00192"></a>00192 
-<a name="l00193"></a><a class="code" href="classxyzzy_1_1PTShmObjAr.html#a2bc4410bee29321b1ee0e15626f8c037">00193</a>         <a class="code" href="namespacexyzzy.html#a36019c675c62f40d171ff9fe0e49b355">TUint32</a> <a class="code" href="classxyzzy_1_1PTShmObjAr.html#a2bc4410bee29321b1ee0e15626f8c037">length</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> m_numObjs;}
-<a name="l00194"></a>00194 
-<a name="l00195"></a><a class="code" href="classxyzzy_1_1PTShmObjAr.html#a82c71048f355ae3d1e930e4b1828e874">00195</a>         T&amp; <a class="code" href="classxyzzy_1_1PTShmObjAr.html#a82c71048f355ae3d1e930e4b1828e874">operator[]</a>(<a class="code" href="namespacexyzzy.html#a36019c675c62f40d171ff9fe0e49b355">TUint32</a> ix) {<span class="keywordflow">return</span> at(ix);}
-<a name="l00196"></a>00196 
-<a name="l00197"></a>00197         <span class="comment">//const T&amp; operator[](TUint32 ix) const {return at(ix);}</span>
-<a name="l00198"></a>00198 
-<a name="l00199"></a>00199 <span class="keyword">private</span>:
-<a name="l00200"></a><a class="code" href="classxyzzy_1_1PTShmObjAr.html#afd78647a4db906aaeea35f9094ea88f5">00200</a>         <a class="code" href="namespacexyzzy.html#a36019c675c62f40d171ff9fe0e49b355">TUint32</a>                 <a class="code" href="classxyzzy_1_1PTShmObjAr.html#afd78647a4db906aaeea35f9094ea88f5">m_numObjs</a>;
-<a name="l00201"></a><a class="code" href="classxyzzy_1_1PTShmObjAr.html#aac182dae067b406d44b2fcfda185b07c">00201</a>         <a class="code" href="classxyzzy_1_1PTShmObj.html">PTShmObj&lt;T*&gt;</a>    <a class="code" href="classxyzzy_1_1PTShmObjAr.html#aac182dae067b406d44b2fcfda185b07c">m_pobjsAr</a>;
-<a name="l00202"></a>00202 
-<a name="l00203"></a><a class="code" href="classxyzzy_1_1PTShmObjAr.html#a36a5f115f95b38c388e399f7622647e5">00203</a>         <span class="keywordtype">void</span> init(<a class="code" href="namespacexyzzy.html#a36019c675c62f40d171ff9fe0e49b355">TUint32</a> num)
-<a name="l00204"></a>00204         {
-<a name="l00205"></a>00205                 <a class="code" href="assert_8hxx.html#a989940570b13fb111ef307bc7c660c07">ASSERT_TRUE</a>(0 == m_numObjs);    <span class="comment">//can&#39;t reallocate</span>
-<a name="l00206"></a>00206                 <span class="keywordflow">if</span> (0 == num) 
-<a name="l00207"></a>00207                         <span class="keywordflow">return</span>;
-<a name="l00208"></a>00208                 m_numObjs = num;
-<a name="l00209"></a>00209                 m_pobjsAr = <a class="code" href="namespacexyzzy_1_1shm.html#aca6804273f509c863d5afef5eb14de27">shm::alloc</a>(<span class="keyword">sizeof</span>(T) * m_numObjs);
-<a name="l00210"></a>00210         }
-<a name="l00211"></a>00211 
-<a name="l00212"></a><a class="code" href="classxyzzy_1_1PTShmObjAr.html#aa23413391fb06b4614ef270d2364ee5f">00212</a>         T&amp; at(<a class="code" href="namespacexyzzy.html#a36019c675c62f40d171ff9fe0e49b355">TUint32</a> ix)
-<a name="l00213"></a>00213         {
-<a name="l00214"></a>00214                 <a class="code" href="assert_8hxx.html#a989940570b13fb111ef307bc7c660c07">ASSERT_TRUE</a>(m_numObjs &gt; ix);
-<a name="l00215"></a>00215                 T *arv = m_pobjsAr();
-<a name="l00216"></a>00216                 <span class="keywordflow">return</span> arv[ix];
-<a name="l00217"></a>00217         }
-<a name="l00218"></a>00218 };
-<a name="l00219"></a>00219 
-<a name="l00220"></a>00220 };
-<a name="l00221"></a>00221 
-<a name="l00222"></a>00222 <span class="preprocessor">#endif  //_xyzzy_shmalloc_hxx_</span>
+<a name="l00084"></a><a class="code" href="namespacexyzzy_1_1shm.html">00084</a> <span class="keyword">namespace </span>shm
+<a name="l00085"></a>00085 {
+<a name="l00086"></a>00086         <span class="keyword">inline</span>
+<a name="l00087"></a><a class="code" href="namespacexyzzy_1_1shm.html#aca6804273f509c863d5afef5eb14de27">00087</a>         ptrdiff_t <a class="code" href="namespacexyzzy_1_1shm.html#aca6804273f509c863d5afef5eb14de27">alloc</a>(<span class="keywordtype">size_t</span> sz)
+<a name="l00088"></a>00088         {
+<a name="l00089"></a>00089                 <span class="keywordflow">return</span> TShmAlloc::theOne()-&gt;alloc(sz);
+<a name="l00090"></a>00090         }
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092         <span class="keyword">inline</span>
+<a name="l00093"></a><a class="code" href="namespacexyzzy_1_1shm.html#a728b05b2f7b7d16e2489eaee462e41a5">00093</a>         <span class="keywordtype">void</span>* <a class="code" href="namespacexyzzy_1_1shm.html#a728b05b2f7b7d16e2489eaee462e41a5">allocp</a>(<span class="keywordtype">size_t</span> sz)
+<a name="l00094"></a>00094         {
+<a name="l00095"></a>00095                 <span class="keywordflow">return</span> TShmAlloc::theOne()-&gt;ptr(<a class="code" href="namespacexyzzy_1_1shm.html#aca6804273f509c863d5afef5eb14de27">alloc</a>(sz));
+<a name="l00096"></a>00096         }
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098         <span class="keyword">inline</span>
+<a name="l00099"></a><a class="code" href="namespacexyzzy_1_1shm.html#ad6c399b14a861d69f61be8f36f668f7b">00099</a>         ptrdiff_t <a class="code" href="namespacexyzzy_1_1shm.html#ad6c399b14a861d69f61be8f36f668f7b">offset</a>(<span class="keywordtype">void</span>* p)
+<a name="l00100"></a>00100         {
+<a name="l00101"></a>00101                 <span class="keywordflow">return</span> <span class="keyword">reinterpret_cast&lt;</span><a class="code" href="namespacexyzzy.html#acbba3849e98db7f9f40532f398890632">TUint8</a>*<span class="keyword">&gt;</span>(p) -
+<a name="l00102"></a>00102                        reinterpret_cast&lt;TUint8*&gt;(TShmAlloc::theOne()-&gt;base());
+<a name="l00103"></a>00103         }
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105         <span class="keyword">inline</span>
+<a name="l00106"></a><a class="code" href="namespacexyzzy_1_1shm.html#acb86b9a8d555cbe97809f8779056bde4">00106</a>         <span class="keywordtype">void</span> <a class="code" href="namespacexyzzy_1_1shm.html#acb86b9a8d555cbe97809f8779056bde4">destroy</a>()
+<a name="l00107"></a>00107         {
+<a name="l00108"></a>00108                 TShmAlloc::theOne()-&gt;destroy();
+<a name="l00109"></a>00109         }
+<a name="l00110"></a>00110 
+<a name="l00111"></a>00111         <span class="keyword">inline</span>
+<a name="l00112"></a><a class="code" href="namespacexyzzy_1_1shm.html#a119cf79afe0d09d37167be1ec68e74b1">00112</a>         <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="namespacexyzzy_1_1shm.html#a119cf79afe0d09d37167be1ec68e74b1">getKey</a>()
+<a name="l00113"></a>00113         {
+<a name="l00114"></a>00114                 <span class="keywordflow">return</span> TShmAlloc::theOne()-&gt;getKey();
+<a name="l00115"></a>00115         }
+<a name="l00116"></a>00116 
+<a name="l00117"></a>00117         <span class="keyword">inline</span>
+<a name="l00118"></a><a class="code" href="namespacexyzzy_1_1shm.html#a15d11d0edbd8848243c6b415814e3d4f">00118</a>         <span class="keywordtype">size_t</span> <a class="code" href="namespacexyzzy_1_1shm.html#a15d11d0edbd8848243c6b415814e3d4f">getMaxSize</a>()
+<a name="l00119"></a>00119         {
+<a name="l00120"></a>00120                 <span class="keywordflow">return</span> TShmAlloc::theOne()-&gt;getMaxSize();
+<a name="l00121"></a>00121         }
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123 };
+<a name="l00124"></a>00124 
+<a name="l00125"></a>00125 <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Alloc&gt;
+<a name="l00126"></a>00126 T
+<a name="l00127"></a><a class="code" href="namespacexyzzy.html#abe22579032c602b14a6445c6786e2a77">00127</a> <a class="code" href="namespacexyzzy.html#abe22579032c602b14a6445c6786e2a77">castTo</a>(ptrdiff_t <a class="code" href="namespacexyzzy_1_1shm.html#ad6c399b14a861d69f61be8f36f668f7b">offset</a>)
+<a name="l00128"></a>00128 {
+<a name="l00129"></a>00129         <span class="keywordflow">return</span> <span class="keyword">reinterpret_cast&lt;</span>T<span class="keyword">&gt;</span>(Alloc::theOne()-&gt;ptr(offset));
+<a name="l00130"></a>00130 }
+<a name="l00131"></a>00131 
+<a name="l00132"></a>00132 <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Alloc = TShmAlloc&gt;
+<a name="l00133"></a><a class="code" href="classxyzzy_1_1PTShmObj.html">00133</a> <span class="keyword">class </span><a class="code" href="classxyzzy_1_1PTShmObj.html">PTShmObj</a>
+<a name="l00134"></a>00134 {
+<a name="l00135"></a>00135 <span class="keyword">public</span>:
+<a name="l00136"></a><a class="code" href="classxyzzy_1_1PTShmObj.html#a005220bc7bdf7491864936814d27a81a">00136</a>         <span class="keyword">explicit</span> <a class="code" href="classxyzzy_1_1PTShmObj.html">PTShmObj</a>()
+<a name="l00137"></a>00137         :       m_offset(0)
+<a name="l00138"></a>00138         {}
+<a name="l00139"></a>00139 
+<a name="l00140"></a><a class="code" href="classxyzzy_1_1PTShmObj.html#acf2e17b7396bd445e2c9964c57f52cb0">00140</a>         <a class="code" href="classxyzzy_1_1PTShmObj.html">PTShmObj</a>(T p)
+<a name="l00141"></a>00141         :       m_offset(shm::<a class="code" href="namespacexyzzy_1_1shm.html#ad6c399b14a861d69f61be8f36f668f7b">offset</a>(p))
+<a name="l00142"></a>00142         {}
+<a name="l00143"></a>00143 
+<a name="l00144"></a><a class="code" href="classxyzzy_1_1PTShmObj.html#a3c7e664a935881b5c7d6aac461e7de68">00144</a>         <a class="code" href="classxyzzy_1_1PTShmObj.html">PTShmObj</a>(ptrdiff_t <a class="code" href="namespacexyzzy_1_1shm.html#ad6c399b14a861d69f61be8f36f668f7b">offset</a>)
+<a name="l00145"></a>00145         :       m_offset(offset)
+<a name="l00146"></a>00146         {}
+<a name="l00147"></a>00147 
+<a name="l00148"></a><a class="code" href="classxyzzy_1_1PTShmObj.html#aee93a7476419f8cd0d2193cc36b44404">00148</a>         <span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTShmObj.html">PTShmObj</a>&amp; operator=(ptrdiff_t <a class="code" href="namespacexyzzy_1_1shm.html#ad6c399b14a861d69f61be8f36f668f7b">offset</a>)
+<a name="l00149"></a>00149         {
+<a name="l00150"></a>00150                 <span class="keyword">const_cast&lt;</span>ptrdiff_t&amp;<span class="keyword">&gt;</span>(m_offset) = offset;
+<a name="l00151"></a>00151                 <span class="keywordflow">return</span> *<span class="keyword">this</span>;
+<a name="l00152"></a>00152         }
+<a name="l00153"></a>00153 
+<a name="l00154"></a><a class="code" href="classxyzzy_1_1PTShmObj.html#acf4b9eb28472bdd9c69d7e06d8c4f791">00154</a>         <span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTShmObj.html">PTShmObj</a>&amp; operator=(<span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTShmObj.html">PTShmObj</a> &amp;r)
+<a name="l00155"></a>00155         {
+<a name="l00156"></a>00156                 <span class="keyword">const_cast&lt;</span>ptrdiff_t&amp;<span class="keyword">&gt;</span>(m_offset) = r.<a class="code" href="classxyzzy_1_1PTShmObj.html#a18e6b163814855b0d09a70e3ed00187f">m_offset</a>;
+<a name="l00157"></a>00157                 <span class="keywordflow">return</span> *<span class="keyword">this</span>;
+<a name="l00158"></a>00158         }
+<a name="l00159"></a>00159 
+<a name="l00160"></a><a class="code" href="classxyzzy_1_1PTShmObj.html#abe2d03fca9c531db33b190ed15e6bd38">00160</a>         T operator()()
+<a name="l00161"></a>00161         {
+<a name="l00162"></a>00162                 <span class="keywordflow">return</span> castTo&lt;T, Alloc&gt;(m_offset);
+<a name="l00163"></a>00163         }
+<a name="l00164"></a>00164 
+<a name="l00165"></a><a class="code" href="classxyzzy_1_1PTShmObj.html#a26b54d7249edf5f18728889ebd1bb3ab">00165</a>         <span class="keyword">const</span> T operator()()<span class="keyword"> const</span>
+<a name="l00166"></a>00166 <span class="keyword">        </span>{
+<a name="l00167"></a>00167                 <span class="keywordflow">return</span> castTo&lt;T, Alloc&gt;(m_offset);
+<a name="l00168"></a>00168         }
+<a name="l00169"></a>00169 
+<a name="l00170"></a><a class="code" href="classxyzzy_1_1PTShmObj.html#a51b2358f5daead822d49ef8c8c2e797c">00170</a>         operator T()    { <span class="keywordflow">return</span> operator()(); }
+<a name="l00171"></a>00171 
+<a name="l00172"></a><a class="code" href="classxyzzy_1_1PTShmObj.html#abea769bb4fb3d21e5be09b1fcb209a56">00172</a>         operator const T()<span class="keyword"> const        </span>{ <span class="keywordflow">return</span> operator()(); }
+<a name="l00173"></a>00173 
+<a name="l00174"></a>00174 <span class="keyword">private</span>:
+<a name="l00175"></a><a class="code" href="classxyzzy_1_1PTShmObj.html#a18e6b163814855b0d09a70e3ed00187f">00175</a>         <span class="keyword">const</span> ptrdiff_t <a class="code" href="classxyzzy_1_1PTShmObj.html#a18e6b163814855b0d09a70e3ed00187f">m_offset</a>;
+<a name="l00176"></a>00176 };
+<a name="l00177"></a>00177 
+<a name="l00178"></a>00178 <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Alloc = TShmAlloc&gt;
+<a name="l00179"></a><a class="code" href="classxyzzy_1_1PTShmObjAr.html">00179</a> <span class="keyword">class </span><a class="code" href="classxyzzy_1_1PTShmObjAr.html">PTShmObjAr</a>
+<a name="l00180"></a>00180 {
+<a name="l00181"></a>00181 <span class="keyword">public</span>:
+<a name="l00182"></a><a class="code" href="classxyzzy_1_1PTShmObjAr.html#a365f21d305a33aba58260b276f2d5b47">00182</a>         <span class="keyword">explicit</span> <a class="code" href="classxyzzy_1_1PTShmObjAr.html">PTShmObjAr</a>(<a class="code" href="namespacexyzzy.html#a36019c675c62f40d171ff9fe0e49b355">TUint32</a> num = 0)
+<a name="l00183"></a>00183         :       m_numObjs(0)
+<a name="l00184"></a>00184         {
+<a name="l00185"></a>00185                 init(num);
+<a name="l00186"></a>00186         }
+<a name="l00187"></a>00187 
+<a name="l00188"></a><a class="code" href="classxyzzy_1_1PTShmObjAr.html#aa4f118803ca037276ad0f3340a33a2f4">00188</a>         <span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTShmObjAr.html">PTShmObjAr</a>&amp; operator=(<a class="code" href="namespacexyzzy.html#a36019c675c62f40d171ff9fe0e49b355">TUint32</a> num)
+<a name="l00189"></a>00189         {
+<a name="l00190"></a>00190                 init(num);
+<a name="l00191"></a>00191                 <span class="keywordflow">return</span> *<span class="keyword">this</span>;
+<a name="l00192"></a>00192         }
+<a name="l00193"></a>00193 
+<a name="l00194"></a><a class="code" href="classxyzzy_1_1PTShmObjAr.html#a2bc4410bee29321b1ee0e15626f8c037">00194</a>         <a class="code" href="namespacexyzzy.html#a36019c675c62f40d171ff9fe0e49b355">TUint32</a> <a class="code" href="classxyzzy_1_1PTShmObjAr.html#a2bc4410bee29321b1ee0e15626f8c037">length</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> m_numObjs;}
+<a name="l00195"></a>00195 
+<a name="l00196"></a><a class="code" href="classxyzzy_1_1PTShmObjAr.html#a82c71048f355ae3d1e930e4b1828e874">00196</a>         T&amp; <a class="code" href="classxyzzy_1_1PTShmObjAr.html#a82c71048f355ae3d1e930e4b1828e874">operator[]</a>(<a class="code" href="namespacexyzzy.html#a36019c675c62f40d171ff9fe0e49b355">TUint32</a> ix) {<span class="keywordflow">return</span> at(ix);}
+<a name="l00197"></a>00197 
+<a name="l00198"></a>00198         <span class="comment">//const T&amp; operator[](TUint32 ix) const {return at(ix);}</span>
+<a name="l00199"></a>00199 
+<a name="l00200"></a>00200 <span class="keyword">private</span>:
+<a name="l00201"></a><a class="code" href="classxyzzy_1_1PTShmObjAr.html#afd78647a4db906aaeea35f9094ea88f5">00201</a>         <a class="code" href="namespacexyzzy.html#a36019c675c62f40d171ff9fe0e49b355">TUint32</a>                 <a class="code" href="classxyzzy_1_1PTShmObjAr.html#afd78647a4db906aaeea35f9094ea88f5">m_numObjs</a>;
+<a name="l00202"></a><a class="code" href="classxyzzy_1_1PTShmObjAr.html#aac182dae067b406d44b2fcfda185b07c">00202</a>         <a class="code" href="classxyzzy_1_1PTShmObj.html">PTShmObj&lt;T*&gt;</a>    <a class="code" href="classxyzzy_1_1PTShmObjAr.html#aac182dae067b406d44b2fcfda185b07c">m_pobjsAr</a>;
+<a name="l00203"></a>00203 
+<a name="l00204"></a><a class="code" href="classxyzzy_1_1PTShmObjAr.html#a36a5f115f95b38c388e399f7622647e5">00204</a>         <span class="keywordtype">void</span> init(<a class="code" href="namespacexyzzy.html#a36019c675c62f40d171ff9fe0e49b355">TUint32</a> num)
+<a name="l00205"></a>00205         {
+<a name="l00206"></a>00206                 <a class="code" href="assert_8hxx.html#a989940570b13fb111ef307bc7c660c07">ASSERT_TRUE</a>(0 == m_numObjs);    <span class="comment">//can&#39;t reallocate</span>
+<a name="l00207"></a>00207                 <span class="keywordflow">if</span> (0 == num) 
+<a name="l00208"></a>00208                         <span class="keywordflow">return</span>;
+<a name="l00209"></a>00209                 m_numObjs = num;
+<a name="l00210"></a>00210                 m_pobjsAr = <a class="code" href="namespacexyzzy_1_1shm.html#aca6804273f509c863d5afef5eb14de27">shm::alloc</a>(<span class="keyword">sizeof</span>(T) * m_numObjs);
+<a name="l00211"></a>00211         }
+<a name="l00212"></a>00212 
+<a name="l00213"></a><a class="code" href="classxyzzy_1_1PTShmObjAr.html#aa23413391fb06b4614ef270d2364ee5f">00213</a>         T&amp; at(<a class="code" href="namespacexyzzy.html#a36019c675c62f40d171ff9fe0e49b355">TUint32</a> ix)
+<a name="l00214"></a>00214         {
+<a name="l00215"></a>00215                 <a class="code" href="assert_8hxx.html#a989940570b13fb111ef307bc7c660c07">ASSERT_TRUE</a>(m_numObjs &gt; ix);
+<a name="l00216"></a>00216                 T *arv = m_pobjsAr();
+<a name="l00217"></a>00217                 <span class="keywordflow">return</span> arv[ix];
+<a name="l00218"></a>00218         }
+<a name="l00219"></a>00219 };
+<a name="l00220"></a>00220 
+<a name="l00221"></a>00221 };
+<a name="l00222"></a>00222 
+<a name="l00223"></a>00223 <span class="preprocessor">#endif  //_xyzzy_shmalloc_hxx_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Apr 1 2012 16:45:17 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Apr 6 2012 17:15:09 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

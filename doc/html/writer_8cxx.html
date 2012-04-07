@@ -93,7 +93,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Defines</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">vnl/writer.cxx File Reference</div>  </div>
@@ -105,9 +104,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &lt;vector&gt;</code><br/>
 <code>#include &lt;algorithm&gt;</code><br/>
 <code>#include &lt;sstream&gt;</code><br/>
+<code>#include &lt;deque&gt;</code><br/>
+<code>#include &quot;<a class="el" href="xyzzy_2src_2xyzzy_2util_8hxx_source.html">xyzzy/util.hxx</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="writer_8hxx_source.html">vnl/writer.hxx</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="vnl_2message_8hxx_source.html">vnl/message.hxx</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="module_8hxx_source.html">vnl/module.hxx</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="wirebitref_8hxx_source.html">vnl/wirebitref.hxx</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="asgnrhs_8hxx_source.html">vnl/asgnrhs.hxx</a>&quot;</code><br/>
 </div>
 <p><a href="writer_8cxx_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -117,98 +120,18 @@ Classes</h2></td></tr>
 <tr><td colspan="2"><h2><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacevnl"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html">vnl</a></td></tr>
-<tr><td colspan="2"><h2><a name="define-members"></a>
-Defines</h2></td></tr>
-<tr class="memitem:a0c3b63dc7ab284e05931f5d569722475"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="writer_8cxx.html#a0c3b63dc7ab284e05931f5d569722475">FOREACH</a>(_t, _trc, _func)</td></tr>
-<tr class="memitem:a8da94db3e61a93b6d3cd64bf5083b752"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="writer_8cxx.html#a8da94db3e61a93b6d3cd64bf5083b752">FOREACH_VAL_OF_MAP</a>(_t, _trc, _func)</td></tr>
+<tr class="memdesc:namespacevnl"><td class="mdescLeft">&#160;</td><td class="mdescRight">All things related to verilog netlist. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a9fbe4a08a1bd63fcaf376638e834eca8"><td class="memItemLeft" align="right" valign="top">static unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a9fbe4a08a1bd63fcaf376638e834eca8">vnl::abs</a> (int x)</td></tr>
 <tr class="memitem:a812e206ba13f04dffb724b277e591fab"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a812e206ba13f04dffb724b277e591fab">vnl::prefix</a> (unsigned n)</td></tr>
 <tr class="memitem:a8b0f7a5fb79ce818c5f827cc2eef7832"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a8b0f7a5fb79ce818c5f827cc2eef7832">vnl::currentTime</a> ()</td></tr>
 </table>
-<hr/><h2>Define Documentation</h2>
-<a class="anchor" id="a0c3b63dc7ab284e05931f5d569722475"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define <a class="el" href="writer_8cxx.html#a0c3b63dc7ab284e05931f5d569722475">FOREACH</a></td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">_t, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">_trc, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">_func&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-<b>Value:</b><div class="fragment"><pre class="fragment">{       <span class="keywordflow">for</span> (_t::const_iterator i = _trc-&gt;begin(); i != _trc-&gt;end(); ++i) \
-                _func(*i);                                                        \
-}
-</pre></div>
-<p>Definition at line <a class="el" href="writer_8cxx_source.html#l00042">42</a> of file <a class="el" href="writer_8cxx_source.html">writer.cxx</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a8da94db3e61a93b6d3cd64bf5083b752"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define <a class="el" href="writer_8cxx.html#a8da94db3e61a93b6d3cd64bf5083b752">FOREACH_VAL_OF_MAP</a></td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">_t, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">_trc, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">_func&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-<b>Value:</b><div class="fragment"><pre class="fragment">{       <span class="keywordflow">for</span> (_t::const_iterator i = _trc-&gt;begin(); i != _trc-&gt;end(); ++i) \
-                _func(i-&gt;second);                                                        \
-}
-</pre></div>
-<p>Definition at line <a class="el" href="writer_8cxx_source.html#l00048">48</a> of file <a class="el" href="writer_8cxx_source.html">writer.cxx</a>.</p>
-
-</div>
-</div>
 </div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Apr 1 2012 16:45:17 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Apr 6 2012 17:15:09 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>
