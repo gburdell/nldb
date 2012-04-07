@@ -34,18 +34,13 @@
 #include "vnl/message.hxx"
 #include "vnl/module.hxx"
 #include "vnl/wirebitref.hxx"
+#include "vnl/asgnrhs.hxx"
 //#include "xyzzy/array.hxx"
 //#include "writer.hxx"
 //#include "port.hxx"
 //#include "cell.hxx"
 //#include "pin.hxx"
 //#include "message.hxx"
-
-///Similar to algorithm::for_each.
-#define FOREACH(_titer, _begin, _end, _func)     \
-{       for (_titer i = _begin; i != _end; ++i)  \
-                _func(*i);                       \
-}
 
 namespace vnl {
     using namespace std;
@@ -547,16 +542,19 @@ namespace vnl {
             const t_cellsByName &cells = mod->getCellsByName();
             if (cells.empty()) return *this;
             setPrefix(m_config->m_instDeclIndent);
+            println("//BEGIN{{ instances (libcells, then rest)");
             for (int i = 0; i < 2; i++) { //0=leaf; 1=hier
                 //iterate in instance name (sorted) order?
                 for (t_cellsByName::const_iterator iter = cells.begin();
                         iter != cells.end(); ++iter) {
                     const TRcCell &inst = iter->second;
-                    if ((0 == i && inst->isLibCell()) || !inst->isLibCell()) {
+                    //libcells then not libcells
+                    if ((0 == i && inst->isLibCell()) || (1 == i && !inst->isLibCell())) {
                         writeInst(inst);
                     }
                 }
             }
+            println("//instances }}END");
             return *this;
         }
 
@@ -613,6 +611,7 @@ namespace vnl {
             t_ports portsInDeclOrder;
             mod->getPortsInDeclOrder(portsInDeclOrder);
             if (portsInDeclOrder.empty()) return *this;
+            if (defn) println("//BEGIN{{ port declarations");
             bool isFirst = true;
             ostringstream os;
             for (t_ports::const_iterator i = portsInDeclOrder.begin();
@@ -631,6 +630,7 @@ namespace vnl {
                     print(os);
                 }
             }
+            if (defn) println("//port declarations }}END");
             return *this;
         }
 
@@ -639,25 +639,26 @@ namespace vnl {
         updateAssigns(t_asgnByLhsName &lhsByNm, const string &lhsNm,
                 const TRcObject &lhs, const TRcConnList & conns) {
             if (conns.isNull()) return;
-            /* 
-             * TODO: in theory, could have:
-             *  assign {w1,w1} = {w2,w3}
-             * which models both w2,w3 drivers to w1.
-             * Will need to handle this case (by having map of list<t_lhsRhs>)
-             */
-            ASSERT_TRUE(2 > conns->size());
             trc_lhsRhs entry;
             for (TConnList::const_iterator i = conns->begin(); i != conns->end(); ++i) {
                 const TRcObject &rhs = *i;
-                //we're only interested in Port/Wire, WireBitRef
-                if (!rhs->isType(PinRef::stTypeId)) {
+                //we're only interested in rhs type AsgnRhs
+                if (rhs->isType(AsgnRhs::stTypeId)) {
                     if (!mapGetVal(lhsByNm, lhsNm, entry)) {
 
                         entry = new t_lhsRhs();
                         lhsByNm[lhsNm] = entry;
                     }
+                    const TRcAsgnRhs asgnRhs = AsgnRhs::downcast(rhs);
                     entry->first.push_back(lhs);
-                    entry->second.push_back(rhs);
+                    entry->second.push_back(asgnRhs->getEle());
+                    /* 
+                     * TODO: in theory, could have:
+                     *  assign {w1,w1} = {w2,w3}
+                     * which models both w2,w3 drivers to w1.
+                     * Will need to handle this case (by having map of list<t_lhsRhs>)
+                     */
+                    ASSERT_TRUE(2 > conns->size());
                 }
             }
         }
@@ -746,6 +747,8 @@ namespace vnl {
                 writePorts(mod, true);
             }
             const t_wiresByName &wires = mod->getWiresByName();
+            if (wires.empty()) return *this;
+            println("//BEGIN{{ wire declarations");
             for (t_wiresByName::const_iterator i = wires.begin();
                     i != wires.end(); ++i) {
                 const TRcWire &w = i->second;
@@ -753,6 +756,7 @@ namespace vnl {
                 oss << w << ";";
                 println(oss);
             }
+            println("//wire declarations }}END");
             return *this;
         }
 

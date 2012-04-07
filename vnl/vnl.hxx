@@ -32,6 +32,12 @@
 #include "xyzzy/slist.hxx"
 #include "xyzzy/exception.hxx"
 
+///Similar to algorithm::for_each.
+#define FOREACH(_titer, _begin, _end, _func)     \
+{       for (_titer i = _begin; i != _end; ++i)  \
+                _func(*i);                       \
+}
+
 ///All things related to verilog netlist
 namespace vnl {
     using std::string;
@@ -74,11 +80,12 @@ namespace vnl {
     DECL_CLASS(Bus);
     DECL_CLASS(PortBus);
     DECL_CLASS(WireBus);
+    DECL_CLASS(AsgnRhs);
     //#undef DECL_CLASS
 
     /**
      * List of connection items to a pin:  Wire/Port | WireBitRef
-     *                          to a wire: Wire/Port | WireBitRef | PinRef
+     *                          to a wire: AsgnRhs | PinRef
      */
     typedef list<TRcObject> TConnList;
     typedef PTRcPtr<TConnList> TRcConnList;

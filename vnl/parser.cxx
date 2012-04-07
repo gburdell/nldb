@@ -34,6 +34,7 @@
 #include "vnl/wirebus.hxx"
 #include "vnl/constref.hxx"
 #include "vnl/wirebitref.hxx"
+#include "vnl/asgnrhs.hxx"
 
 namespace vnl {
     using std::stringstream;
@@ -439,7 +440,7 @@ namespace vnl {
                 //error("VNL-DECL-2", tok->getLocation(), tok->getText());
                 w = new Wire(tok->getText());
                 mod->addWire(w);
-            } 
+            }
             if (w->isBus()) {
                 TRcWireBus asBus = toWireBus(w);
                 if (rng.isValid() && !asBus->inRange(rng)) {
@@ -542,6 +543,18 @@ namespace vnl {
         return oss.str();
     }
 
+    static TRcConnList
+    toAsgnRhs(const TRcConnList &eles) {
+        TRcConnList asgnEles = new TConnList();
+        for (TConnList::const_iterator iter = eles->begin(); iter != eles->end();
+                ++iter) {
+            TRcAsgnRhs rhs = new AsgnRhs(*iter);
+            TRcObject asObj = upcast(rhs);
+            asgnEles->push_back(asObj);
+        }
+        return asgnEles;
+    }
+
     void
     Parser::assignStatement(TRcModule &mod) throw (unsigned) {
         // _ assign
@@ -549,6 +562,7 @@ namespace vnl {
         TRcConnList lhs = expression(mod);
         expectAccept(Token::eEq);
         TRcConnList rhs = expression(mod);
+        rhs = toAsgnRhs(rhs);   //wrap rhs eles in AsgnRhs proxy
         expectAccept(Token::eSemi);
         unsigned n[2] = {lhs->size(), rhs->size()};
         if (n[0] != n[1]) {
@@ -619,7 +633,7 @@ namespace vnl {
 
 #include <iostream>
 #include "vnl/parser.hxx"
-#include "writer.hxx"
+#include "vnl/writer.hxx"
 
 using namespace std;
 using namespace vnl;
