@@ -163,6 +163,8 @@ This is the complete list of members for <a class="el" href="classslf_1_1LibCell
   <tr class="memlist"><td><a class="el" href="classslf_1_1LibCell.html#aa78264fa2a09f2a00709fdc1d44f8b52">LibCell</a>(string name)</td><td><a class="el" href="classslf_1_1LibCell.html">slf::LibCell</a></td><td><code> [inline, explicit]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classvnl_1_1LibCell.html#a7dfa8dbdb53d09ae32bea5c169eb2e40">vnl::LibCell::LibCell</a>(const string &amp;name)</td><td><a class="el" href="classvnl_1_1LibCell.html">vnl::LibCell</a></td><td><code> [explicit]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classslf_1_1LibraryEle.html#a7a29d43bb300cf0d97d9e66e07b8c390">LibraryEle</a>()</td><td><a class="el" href="classslf_1_1LibraryEle.html">slf::LibraryEle</a></td><td><code> [inline, explicit]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classvnl_1_1Module.html#a5a2616098250a823040b03ae48362a77">link</a>(const TRcObject &amp;lib, unsigned strength=1)</td><td><a class="el" href="classvnl_1_1Module.html">vnl::Module</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classvnl_1_1Module.html#a5c536c0c6b641dfdb58f2593116cd666">link</a>(const TRcObject &amp;lib1, const TRcObject &amp;lib2, unsigned strength=1)</td><td><a class="el" href="classvnl_1_1Module.html">vnl::Module</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classvnl_1_1LibCell.html#a51d73f172402664553261efe2d720f0a">m_area</a></td><td><a class="el" href="classvnl_1_1LibCell.html">vnl::LibCell</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classslf_1_1LibCell.html#ad7313e3b684b37daf0af87605fe1b398">m_cellType</a></td><td><a class="el" href="classslf_1_1LibCell.html">slf::LibCell</a></td><td><code> [private]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classvnl_1_1LibCell.html#aaddf28a25171bb8e4b648d3f77b556db">m_funcs</a></td><td><a class="el" href="classvnl_1_1LibCell.html">vnl::LibCell</a></td><td><code> [protected]</code></td></tr>
@@ -172,15 +174,17 @@ This is the complete list of members for <a class="el" href="classslf_1_1LibCell
   <tr class="memlist"><td><a class="el" href="classvnl_1_1LibCell.html#ac50daa1b1bd4f06fdb2fd0a6b89ac872">setArea</a>(double ar)</td><td><a class="el" href="classvnl_1_1LibCell.html">vnl::LibCell</a></td><td><code> [inline]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classslf_1_1LibCell.html#aaa1761bf5354ce7b1c41ab13d674f6fd">setCellType</a>(ECellType ctype)</td><td><a class="el" href="classslf_1_1LibCell.html">slf::LibCell</a></td><td><code> [inline]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classvnl_1_1LibCell.html#a5e7cc13aa82e6a99c62162957bee10b9">setOpinFunction</a>(const string &amp;opin, const string &amp;func)</td><td><a class="el" href="classvnl_1_1LibCell.html">vnl::LibCell</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classvnl_1_1Module.html#a182b68e1e9d6c4c2e962a938486a7ac3">t_cellsByName</a> typedef</td><td><a class="el" href="classvnl_1_1Module.html">vnl::Module</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classvnl_1_1Module.html#afa3dfeb7450ae9defdbee544387fbbaa">t_cellsByName</a> typedef</td><td><a class="el" href="classvnl_1_1Module.html">vnl::Module</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classvnl_1_1LibCell.html#ac619f9df3b970be99ca90dd269c89293">t_funcByOpin</a> typedef</td><td><a class="el" href="classvnl_1_1LibCell.html">vnl::LibCell</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classvnl_1_1LibCell.html#a071f796575e65cf0f5655674e613ceb6">t_opinFunc</a> typedef</td><td><a class="el" href="classvnl_1_1LibCell.html">vnl::LibCell</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classvnl_1_1LibCell.html#a4d46fd7f8452768b857b745490c44ada">t_opinFuncs</a> typedef</td><td><a class="el" href="classvnl_1_1LibCell.html">vnl::LibCell</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classvnl_1_1Module.html#a1d5249f2275fa4656b9bb5f8ac59aad4">t_portDeclOrder</a> typedef</td><td><a class="el" href="classvnl_1_1Module.html">vnl::Module</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classvnl_1_1Module.html#ac2144558bee9545bcee506a390cc36f9">t_ports</a> typedef</td><td><a class="el" href="classvnl_1_1Module.html">vnl::Module</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classvnl_1_1Module.html#ab8aa757e97c28aecb024d867c367f019">t_wiresByName</a> typedef</td><td><a class="el" href="classvnl_1_1Module.html">vnl::Module</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classvnl_1_1Module.html#a128b680475706ad360995cc265311bd9">t_unresolvedCntByName</a> typedef</td><td><a class="el" href="classvnl_1_1Module.html">vnl::Module</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classvnl_1_1Module.html#ab6483d74a9e90e82d21a96a00bce90ea">t_wiresByName</a> typedef</td><td><a class="el" href="classvnl_1_1Module.html">vnl::Module</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classslf_1_1LibCell.html#aa7165f552198ab0edb41446c879d7966">trc_byOneKey</a> typedef</td><td><a class="el" href="classslf_1_1LibCell.html">slf::LibCell</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classvnl_1_1LibCell.html#aba717a52bbd4e16a868c55da6e519d3e">trc_funcByOpin</a> typedef</td><td><a class="el" href="classvnl_1_1LibCell.html">vnl::LibCell</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classvnl_1_1Module.html#a131807df78b014ecd7fc1e4a7d957f4c">trc_unresolvedCntByName</a> typedef</td><td><a class="el" href="classvnl_1_1Module.html">vnl::Module</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classslf_1_1LibCell.html#abf40ab6f9fadfa14705b46df9b819a39">~LibCell</a>()</td><td><a class="el" href="classslf_1_1LibCell.html">slf::LibCell</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classslf_1_1LibraryEle.html#a40b421537cb0fb863f7c42092c24add1">~LibraryEle</a>()</td><td><a class="el" href="classslf_1_1LibraryEle.html">slf::LibraryEle</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classvnl_1_1Module.html#abf7194f834d9c94be5e64bc8a1798723">~Module</a>()</td><td><a class="el" href="classvnl_1_1Module.html">vnl::Module</a></td><td><code> [virtual]</code></td></tr>
@@ -190,7 +194,7 @@ This is the complete list of members for <a class="el" href="classslf_1_1LibCell
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Apr 6 2012 17:15:09 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 23 2012 08:14:07 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

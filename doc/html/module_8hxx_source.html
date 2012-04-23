@@ -130,121 +130,131 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00034"></a>00034 <span class="keyword">namespace </span>vnl {
 <a name="l00035"></a>00035     <span class="keyword">using</span> std::map;
 <a name="l00036"></a>00036     <span class="keyword">using</span> std::list;
-<a name="l00037"></a>00037     
+<a name="l00037"></a>00037 
 <a name="l00038"></a><a class="code" href="classvnl_1_1Module.html">00038</a>     <span class="keyword">class </span><a class="code" href="classvnl_1_1Module.html">Module</a> : <span class="keyword">virtual</span> <span class="keyword">public</span> <a class="code" href="classvnl_1_1Object.html">Object</a> {
 <a name="l00039"></a>00039     <span class="keyword">public</span>:
-<a name="l00040"></a><a class="code" href="classvnl_1_1Module.html#ab8aa757e97c28aecb024d867c367f019">00040</a>         <span class="keyword">typedef</span> map&lt;string,TRcWire&gt;     <a class="code" href="classvnl_1_1Module.html#ab8aa757e97c28aecb024d867c367f019">t_wiresByName</a>;
-<a name="l00041"></a><a class="code" href="classvnl_1_1Module.html#a1d5249f2275fa4656b9bb5f8ac59aad4">00041</a>         <span class="keyword">typedef</span> list&lt;string&gt;            <a class="code" href="classvnl_1_1Module.html#a1d5249f2275fa4656b9bb5f8ac59aad4">t_portDeclOrder</a>;
-<a name="l00042"></a><a class="code" href="classvnl_1_1Module.html#ac2144558bee9545bcee506a390cc36f9">00042</a>         <span class="keyword">typedef</span> list&lt;TRcPort&gt;           <a class="code" href="classvnl_1_1Module.html#ac2144558bee9545bcee506a390cc36f9">t_ports</a>;    <span class="comment">//in decl order</span>
-<a name="l00043"></a><a class="code" href="classvnl_1_1Module.html#a182b68e1e9d6c4c2e962a938486a7ac3">00043</a>         <span class="keyword">typedef</span> map&lt;string,TRcCell&gt;     <a class="code" href="classvnl_1_1Module.html#a182b68e1e9d6c4c2e962a938486a7ac3">t_cellsByName</a>;
-<a name="l00044"></a>00044         
-<a name="l00045"></a>00045         <span class="keyword">explicit</span> <a class="code" href="classvnl_1_1Module.html#a2ba79293bce1baec9893be62a8ab713e">Module</a>(<span class="keywordtype">string</span> nm);
+<a name="l00040"></a><a class="code" href="classvnl_1_1Module.html#ab6483d74a9e90e82d21a96a00bce90ea">00040</a>         <span class="keyword">typedef</span> map&lt;string, TRcWire&gt; <a class="code" href="classvnl_1_1Module.html#ab6483d74a9e90e82d21a96a00bce90ea">t_wiresByName</a>;
+<a name="l00041"></a><a class="code" href="classvnl_1_1Module.html#a1d5249f2275fa4656b9bb5f8ac59aad4">00041</a>         <span class="keyword">typedef</span> list&lt;string&gt; <a class="code" href="classvnl_1_1Module.html#a1d5249f2275fa4656b9bb5f8ac59aad4">t_portDeclOrder</a>;
+<a name="l00042"></a><a class="code" href="classvnl_1_1Module.html#ac2144558bee9545bcee506a390cc36f9">00042</a>         <span class="keyword">typedef</span> list&lt;TRcPort&gt; <a class="code" href="classvnl_1_1Module.html#ac2144558bee9545bcee506a390cc36f9">t_ports</a>; <span class="comment">//in decl order</span>
+<a name="l00043"></a><a class="code" href="classvnl_1_1Module.html#afa3dfeb7450ae9defdbee544387fbbaa">00043</a>         <span class="keyword">typedef</span> map&lt;string, TRcCell&gt; <a class="code" href="classvnl_1_1Module.html#afa3dfeb7450ae9defdbee544387fbbaa">t_cellsByName</a>;
+<a name="l00044"></a><a class="code" href="classvnl_1_1Module.html#a128b680475706ad360995cc265311bd9">00044</a>         <span class="keyword">typedef</span> map&lt;string, unsigned&gt; <a class="code" href="classvnl_1_1Module.html#a128b680475706ad360995cc265311bd9">t_unresolvedCntByName</a>;
+<a name="l00045"></a><a class="code" href="classvnl_1_1Module.html#a131807df78b014ecd7fc1e4a7d957f4c">00045</a>         <span class="keyword">typedef</span> <a class="code" href="classxyzzy_1_1PTRcPtr.html">PTRcPtr&lt;t_unresolvedCntByName&gt;</a> <a class="code" href="classvnl_1_1Module.html#a131807df78b014ecd7fc1e4a7d957f4c">trc_unresolvedCntByName</a>;
 <a name="l00046"></a>00046 
-<a name="l00047"></a><a class="code" href="classvnl_1_1Module.html#a617bbaec81ec6b2d79fbc242037c55d0">00047</a>         <span class="keywordtype">string</span> <a class="code" href="classvnl_1_1Module.html#a617bbaec81ec6b2d79fbc242037c55d0">getName</a>()<span class="keyword"> const </span>{
-<a name="l00048"></a>00048             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1Module.html#a4a3d869d44a2aba42ccccba725f967ed">m_name</a>;
-<a name="l00049"></a>00049         }
-<a name="l00050"></a>00050         
-<a name="l00055"></a>00055         <span class="keywordtype">void</span> <a class="code" href="classvnl_1_1Module.html#ae935401cfabc112b049ce4ef3e86a6a6">appendPortDecl</a>(<span class="keywordtype">string</span> nm);
-<a name="l00056"></a>00056         
-<a name="l00061"></a>00061         <span class="keywordtype">void</span> <a class="code" href="classvnl_1_1Module.html#ae935401cfabc112b049ce4ef3e86a6a6">appendPortDecl</a>(TRcPortBus &amp;bus);
-<a name="l00062"></a>00062         
-<a name="l00067"></a>00067         <span class="keywordtype">void</span> <a class="code" href="classvnl_1_1Module.html#ae935401cfabc112b049ce4ef3e86a6a6">appendPortDecl</a>(TRcPort &amp;port);
-<a name="l00068"></a>00068         
-<a name="l00069"></a>00069         <span class="keywordtype">void</span> <a class="code" href="classvnl_1_1Module.html#a78981b51ba6eb54e6c8f9ce4d6618acb">addWire</a>(TRcWire &amp;wire);
-<a name="l00070"></a>00070         
-<a name="l00077"></a>00077         <span class="keywordtype">bool</span> <a class="code" href="classvnl_1_1Module.html#a22fd7d5674801264440e81457435b322">hasPort</a>(<span class="keywordtype">string</span> nm, TRcPort *pport = 0);
-<a name="l00078"></a>00078         <span class="keywordtype">bool</span> <a class="code" href="classvnl_1_1Module.html#a22fd7d5674801264440e81457435b322">hasPort</a>(<span class="keywordtype">string</span> nm, <span class="keyword">const</span> TRcPort *pport = 0) <span class="keyword">const</span>;
-<a name="l00079"></a>00079         
-<a name="l00086"></a>00086         <span class="keywordtype">bool</span> <a class="code" href="classvnl_1_1Module.html#a533e98c1b12675bf6d520f0cb30cf08f">hasWire</a>(<span class="keywordtype">string</span> nm, <span class="keyword">const</span> TRcWire *pwire = 0) <span class="keyword">const</span> ;
-<a name="l00087"></a>00087         <span class="keywordtype">bool</span> <a class="code" href="classvnl_1_1Module.html#a533e98c1b12675bf6d520f0cb30cf08f">hasWire</a>(<span class="keywordtype">string</span> nm, TRcWire *pwire = 0) ;
-<a name="l00088"></a>00088         
-<a name="l00094"></a>00094         <span class="keywordtype">bool</span> <a class="code" href="classvnl_1_1Module.html#a2b8794b66588109488095f1641f77f3b">hasCell</a>(<span class="keywordtype">string</span> nm) <span class="keyword">const</span>;
-<a name="l00095"></a>00095         
-<a name="l00096"></a>00096         <span class="keywordtype">void</span> <a class="code" href="classvnl_1_1Module.html#a3875c30fc1c961d16c00fa9274e1eaac">addCell</a>(TRcCell &amp;cell);
-<a name="l00097"></a>00097         
-<a name="l00103"></a>00103         TRcWire <a class="code" href="classvnl_1_1Module.html#a18b59ca82972aa59be0e851803461892">getWire</a>(<span class="keywordtype">string</span> nm) ;
-<a name="l00104"></a>00104         <span class="keyword">const</span> TRcWire <a class="code" href="classvnl_1_1Module.html#a18b59ca82972aa59be0e851803461892">getWire</a>(<span class="keywordtype">string</span> nm) <span class="keyword">const</span> ;
-<a name="l00105"></a>00105         
-<a name="l00106"></a><a class="code" href="classvnl_1_1Module.html#a82af9cf8fad314fffd9ed98c480e9745">00106</a>         <span class="keyword">const</span> TRcWire <a class="code" href="classvnl_1_1Module.html#a82af9cf8fad314fffd9ed98c480e9745">getConstWire</a>(<span class="keywordtype">bool</span> v)<span class="keyword"> const </span>{
-<a name="l00107"></a>00107             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1Module.html#a18b59ca82972aa59be0e851803461892">getWire</a>(<a class="code" href="classvnl_1_1Wire.html#a88be997dc0c808410889c2c10bba89fb">Wire::stConstNm</a>[v?1:0]);
-<a name="l00108"></a>00108         }
-<a name="l00109"></a><a class="code" href="classvnl_1_1Module.html#a6d9aca131959bdd912214c177476a7c1">00109</a>         TRcWire <a class="code" href="classvnl_1_1Module.html#a6d9aca131959bdd912214c177476a7c1">getConstWire</a>(<span class="keywordtype">bool</span> v) {
-<a name="l00110"></a>00110             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1Module.html#a18b59ca82972aa59be0e851803461892">getWire</a>(<a class="code" href="classvnl_1_1Wire.html#a88be997dc0c808410889c2c10bba89fb">Wire::stConstNm</a>[v?1:0]);
-<a name="l00111"></a>00111         }
-<a name="l00112"></a>00112         
-<a name="l00113"></a><a class="code" href="classvnl_1_1Module.html#a6677dab50cbd1565aed9ff0814707602">00113</a>         <span class="keywordtype">bool</span> <a class="code" href="classvnl_1_1Module.html#a6677dab50cbd1565aed9ff0814707602">isHierarchical</a>()<span class="keyword"> const </span>{
-<a name="l00114"></a>00114             <span class="keywordflow">return</span> !<a class="code" href="classvnl_1_1Module.html#aeefa658d955b5e27601e717c15501b62">m_cellsByName</a>.empty();
-<a name="l00115"></a>00115         }
-<a name="l00116"></a>00116         
-<a name="l00122"></a>00122         <span class="keyword">const</span> TRcPort <a class="code" href="classvnl_1_1Module.html#a05991e4918499760c2f2e3583f343736">getPort</a>(<span class="keywordtype">string</span> nm) <span class="keyword">const</span>;
-<a name="l00123"></a>00123         TRcPort <a class="code" href="classvnl_1_1Module.html#a05991e4918499760c2f2e3583f343736">getPort</a>(<span class="keywordtype">string</span> nm) ;
-<a name="l00124"></a>00124         
-<a name="l00125"></a><a class="code" href="classvnl_1_1Module.html#a4db3d060cfaf99ce123d586f067a6f93">00125</a>         <a class="code" href="classvnl_1_1Module.html#a182b68e1e9d6c4c2e962a938486a7ac3">t_cellsByName</a>&amp; <a class="code" href="classvnl_1_1Module.html#a4db3d060cfaf99ce123d586f067a6f93">getCellsByName</a>() {
-<a name="l00126"></a>00126             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1Module.html#aeefa658d955b5e27601e717c15501b62">m_cellsByName</a>;
-<a name="l00127"></a>00127         }
-<a name="l00128"></a>00128         
-<a name="l00129"></a><a class="code" href="classvnl_1_1Module.html#a1d53a158376538c1f558b9c081a1cb93">00129</a>         <span class="keyword">const</span> <a class="code" href="classvnl_1_1Module.html#a182b68e1e9d6c4c2e962a938486a7ac3">t_cellsByName</a>&amp; <a class="code" href="classvnl_1_1Module.html#a1d53a158376538c1f558b9c081a1cb93">getCellsByName</a>()<span class="keyword"> const </span>{
-<a name="l00130"></a>00130             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1Module.html#aeefa658d955b5e27601e717c15501b62">m_cellsByName</a>;
-<a name="l00131"></a>00131         }
-<a name="l00132"></a>00132         
-<a name="l00133"></a><a class="code" href="classvnl_1_1Module.html#a3c4f9aa2a52a8e3172457889ecd5985f">00133</a>         <a class="code" href="classvnl_1_1Module.html#ab8aa757e97c28aecb024d867c367f019">t_wiresByName</a>&amp; <a class="code" href="classvnl_1_1Module.html#a3c4f9aa2a52a8e3172457889ecd5985f">getWiresByName</a>() {
-<a name="l00134"></a>00134             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1Module.html#a58bfb95f4092b7e38e44c45492f03cf1">m_wiresByName</a>;
-<a name="l00135"></a>00135         }
-<a name="l00136"></a>00136         
-<a name="l00137"></a><a class="code" href="classvnl_1_1Module.html#aa43ceb4281500559d3ff7ed4dd37d132">00137</a>         <span class="keyword">const</span> <a class="code" href="classvnl_1_1Module.html#ab8aa757e97c28aecb024d867c367f019">t_wiresByName</a>&amp; <a class="code" href="classvnl_1_1Module.html#aa43ceb4281500559d3ff7ed4dd37d132">getWiresByName</a>()<span class="keyword"> const </span>{
-<a name="l00138"></a>00138             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1Module.html#a58bfb95f4092b7e38e44c45492f03cf1">m_wiresByName</a>;
-<a name="l00139"></a>00139         }
-<a name="l00140"></a>00140         
-<a name="l00145"></a>00145         <span class="keywordtype">void</span> <a class="code" href="classvnl_1_1Module.html#a3905e48c9619ae36bb634a77f67b9743">getPortsInDeclOrder</a>(<a class="code" href="classvnl_1_1Module.html#ac2144558bee9545bcee506a390cc36f9">t_ports</a> &amp;ports) <span class="keyword">const</span>;
-<a name="l00146"></a>00146         
-<a name="l00147"></a><a class="code" href="classvnl_1_1Module.html#af3ae949af63d17ec945b0b09260d4973">00147</a>         <span class="keyword">static</span> <span class="keyword">const</span> TRcModule <a class="code" href="classvnl_1_1Module.html#af3ae949af63d17ec945b0b09260d4973">downcast</a>(<span class="keyword">const</span> TRcObject &amp;r) {
-<a name="l00148"></a>00148             <span class="keywordflow">return</span> xyzzy::downcast&lt;Object, Module &gt; (r);
-<a name="l00149"></a>00149         }
-<a name="l00150"></a><a class="code" href="classvnl_1_1Module.html#a3a023e6b2e40fcfc2c7603c47d354523">00150</a>         <span class="keyword">static</span> TRcModule <a class="code" href="classvnl_1_1Module.html#a3a023e6b2e40fcfc2c7603c47d354523">downcast</a>(TRcObject &amp;r) {
-<a name="l00151"></a>00151             <span class="keywordflow">return</span> xyzzy::downcast&lt;Object, Module &gt; (r);
-<a name="l00152"></a>00152         }
-<a name="l00153"></a>00153 
-<a name="l00154"></a><a class="code" href="classvnl_1_1Module.html#a26915eb618499f053fc404078f04f6fa">00154</a>         <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classvnl_1_1Module.html#a26915eb618499f053fc404078f04f6fa">isLibCell</a>()<span class="keyword"> const </span>{
-<a name="l00155"></a>00155             <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00156"></a>00156         }
-<a name="l00157"></a>00157         
-<a name="l00158"></a>00158         <span class="keyword">virtual</span> <a class="code" href="classvnl_1_1Module.html#abf7194f834d9c94be5e64bc8a1798723">~Module</a>();
+<a name="l00047"></a>00047         <span class="keyword">explicit</span> <a class="code" href="classvnl_1_1Module.html#a2ba79293bce1baec9893be62a8ab713e">Module</a>(<span class="keywordtype">string</span> nm);
+<a name="l00048"></a>00048 
+<a name="l00049"></a><a class="code" href="classvnl_1_1Module.html#a617bbaec81ec6b2d79fbc242037c55d0">00049</a>         <span class="keywordtype">string</span> <a class="code" href="classvnl_1_1Module.html#a617bbaec81ec6b2d79fbc242037c55d0">getName</a>()<span class="keyword"> const </span>{
+<a name="l00050"></a>00050             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1Module.html#a4a3d869d44a2aba42ccccba725f967ed">m_name</a>;
+<a name="l00051"></a>00051         }
+<a name="l00052"></a>00052 
+<a name="l00060"></a>00060         <a class="code" href="classvnl_1_1Module.html#a131807df78b014ecd7fc1e4a7d957f4c">trc_unresolvedCntByName</a> <a class="code" href="classvnl_1_1Module.html#a5a2616098250a823040b03ae48362a77">link</a>(<span class="keyword">const</span> TRcObject &amp;lib, <span class="keywordtype">unsigned</span> strength = 1) ;
+<a name="l00061"></a>00061 
+<a name="l00070"></a>00070         <a class="code" href="classvnl_1_1Module.html#a131807df78b014ecd7fc1e4a7d957f4c">trc_unresolvedCntByName</a> <a class="code" href="classvnl_1_1Module.html#a5a2616098250a823040b03ae48362a77">link</a>(<span class="keyword">const</span> TRcObject &amp;lib1, <span class="keyword">const</span> TRcObject &amp;lib2,
+<a name="l00071"></a>00071                 <span class="keywordtype">unsigned</span> strength = 1) ;
+<a name="l00072"></a>00072 
+<a name="l00077"></a>00077         <span class="keywordtype">void</span> <a class="code" href="classvnl_1_1Module.html#ae935401cfabc112b049ce4ef3e86a6a6">appendPortDecl</a>(<span class="keywordtype">string</span> nm);
+<a name="l00078"></a>00078 
+<a name="l00083"></a>00083         <span class="keywordtype">void</span> <a class="code" href="classvnl_1_1Module.html#ae935401cfabc112b049ce4ef3e86a6a6">appendPortDecl</a>(TRcPortBus &amp;bus);
+<a name="l00084"></a>00084 
+<a name="l00089"></a>00089         <span class="keywordtype">void</span> <a class="code" href="classvnl_1_1Module.html#ae935401cfabc112b049ce4ef3e86a6a6">appendPortDecl</a>(TRcPort &amp;port);
+<a name="l00090"></a>00090 
+<a name="l00091"></a>00091         <span class="keywordtype">void</span> <a class="code" href="classvnl_1_1Module.html#a78981b51ba6eb54e6c8f9ce4d6618acb">addWire</a>(TRcWire &amp;wire);
+<a name="l00092"></a>00092 
+<a name="l00099"></a>00099         <span class="keywordtype">bool</span> <a class="code" href="classvnl_1_1Module.html#a22fd7d5674801264440e81457435b322">hasPort</a>(<span class="keywordtype">string</span> nm, TRcPort *pport = 0);
+<a name="l00100"></a>00100         <span class="keywordtype">bool</span> <a class="code" href="classvnl_1_1Module.html#a22fd7d5674801264440e81457435b322">hasPort</a>(<span class="keywordtype">string</span> nm, <span class="keyword">const</span> TRcPort *pport = 0) <span class="keyword">const</span>;
+<a name="l00101"></a>00101 
+<a name="l00108"></a>00108         <span class="keywordtype">bool</span> <a class="code" href="classvnl_1_1Module.html#a533e98c1b12675bf6d520f0cb30cf08f">hasWire</a>(<span class="keywordtype">string</span> nm, <span class="keyword">const</span> TRcWire *pwire = 0) <span class="keyword">const</span>;
+<a name="l00109"></a>00109         <span class="keywordtype">bool</span> <a class="code" href="classvnl_1_1Module.html#a533e98c1b12675bf6d520f0cb30cf08f">hasWire</a>(<span class="keywordtype">string</span> nm, TRcWire *pwire = 0);
+<a name="l00110"></a>00110 
+<a name="l00116"></a>00116         <span class="keywordtype">bool</span> <a class="code" href="classvnl_1_1Module.html#a2b8794b66588109488095f1641f77f3b">hasCell</a>(<span class="keywordtype">string</span> nm) <span class="keyword">const</span>;
+<a name="l00117"></a>00117 
+<a name="l00118"></a>00118         <span class="keywordtype">void</span> <a class="code" href="classvnl_1_1Module.html#a3875c30fc1c961d16c00fa9274e1eaac">addCell</a>(TRcCell &amp;cell);
+<a name="l00119"></a>00119 
+<a name="l00125"></a>00125         TRcWire <a class="code" href="classvnl_1_1Module.html#a18b59ca82972aa59be0e851803461892">getWire</a>(<span class="keywordtype">string</span> nm);
+<a name="l00126"></a>00126         <span class="keyword">const</span> TRcWire <a class="code" href="classvnl_1_1Module.html#a18b59ca82972aa59be0e851803461892">getWire</a>(<span class="keywordtype">string</span> nm) <span class="keyword">const</span>;
+<a name="l00127"></a>00127 
+<a name="l00128"></a><a class="code" href="classvnl_1_1Module.html#a82af9cf8fad314fffd9ed98c480e9745">00128</a>         <span class="keyword">const</span> TRcWire <a class="code" href="classvnl_1_1Module.html#a82af9cf8fad314fffd9ed98c480e9745">getConstWire</a>(<span class="keywordtype">bool</span> v)<span class="keyword"> const </span>{
+<a name="l00129"></a>00129             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1Module.html#a18b59ca82972aa59be0e851803461892">getWire</a>(<a class="code" href="classvnl_1_1Wire.html#a88be997dc0c808410889c2c10bba89fb">Wire::stConstNm</a>[v ? 1 : 0]);
+<a name="l00130"></a>00130         }
+<a name="l00131"></a>00131 
+<a name="l00132"></a><a class="code" href="classvnl_1_1Module.html#a6d9aca131959bdd912214c177476a7c1">00132</a>         TRcWire <a class="code" href="classvnl_1_1Module.html#a6d9aca131959bdd912214c177476a7c1">getConstWire</a>(<span class="keywordtype">bool</span> v) {
+<a name="l00133"></a>00133             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1Module.html#a18b59ca82972aa59be0e851803461892">getWire</a>(<a class="code" href="classvnl_1_1Wire.html#a88be997dc0c808410889c2c10bba89fb">Wire::stConstNm</a>[v ? 1 : 0]);
+<a name="l00134"></a>00134         }
+<a name="l00135"></a>00135 
+<a name="l00136"></a><a class="code" href="classvnl_1_1Module.html#a6677dab50cbd1565aed9ff0814707602">00136</a>         <span class="keywordtype">bool</span> <a class="code" href="classvnl_1_1Module.html#a6677dab50cbd1565aed9ff0814707602">isHierarchical</a>()<span class="keyword"> const </span>{
+<a name="l00137"></a>00137             <span class="keywordflow">return</span> !<a class="code" href="classvnl_1_1Module.html#aeefa658d955b5e27601e717c15501b62">m_cellsByName</a>.empty();
+<a name="l00138"></a>00138         }
+<a name="l00139"></a>00139 
+<a name="l00145"></a>00145         <span class="keyword">const</span> TRcPort <a class="code" href="classvnl_1_1Module.html#a05991e4918499760c2f2e3583f343736">getPort</a>(<span class="keywordtype">string</span> nm) <span class="keyword">const</span>;
+<a name="l00146"></a>00146         TRcPort <a class="code" href="classvnl_1_1Module.html#a05991e4918499760c2f2e3583f343736">getPort</a>(<span class="keywordtype">string</span> nm);
+<a name="l00147"></a>00147 
+<a name="l00148"></a><a class="code" href="classvnl_1_1Module.html#a4db3d060cfaf99ce123d586f067a6f93">00148</a>         <a class="code" href="classvnl_1_1Module.html#afa3dfeb7450ae9defdbee544387fbbaa">t_cellsByName</a>&amp; <a class="code" href="classvnl_1_1Module.html#a4db3d060cfaf99ce123d586f067a6f93">getCellsByName</a>() {
+<a name="l00149"></a>00149             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1Module.html#aeefa658d955b5e27601e717c15501b62">m_cellsByName</a>;
+<a name="l00150"></a>00150         }
+<a name="l00151"></a>00151 
+<a name="l00152"></a><a class="code" href="classvnl_1_1Module.html#a1d53a158376538c1f558b9c081a1cb93">00152</a>         <span class="keyword">const</span> <a class="code" href="classvnl_1_1Module.html#afa3dfeb7450ae9defdbee544387fbbaa">t_cellsByName</a>&amp; <a class="code" href="classvnl_1_1Module.html#a1d53a158376538c1f558b9c081a1cb93">getCellsByName</a>()<span class="keyword"> const </span>{
+<a name="l00153"></a>00153             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1Module.html#aeefa658d955b5e27601e717c15501b62">m_cellsByName</a>;
+<a name="l00154"></a>00154         }
+<a name="l00155"></a>00155 
+<a name="l00156"></a><a class="code" href="classvnl_1_1Module.html#a3c4f9aa2a52a8e3172457889ecd5985f">00156</a>         <a class="code" href="classvnl_1_1Module.html#ab6483d74a9e90e82d21a96a00bce90ea">t_wiresByName</a>&amp; <a class="code" href="classvnl_1_1Module.html#a3c4f9aa2a52a8e3172457889ecd5985f">getWiresByName</a>() {
+<a name="l00157"></a>00157             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1Module.html#a58bfb95f4092b7e38e44c45492f03cf1">m_wiresByName</a>;
+<a name="l00158"></a>00158         }
 <a name="l00159"></a>00159 
-<a name="l00160"></a>00160     <span class="keyword">private</span>:
-<a name="l00161"></a><a class="code" href="classvnl_1_1Module.html#a58bfb95f4092b7e38e44c45492f03cf1">00161</a>         <a class="code" href="classvnl_1_1Module.html#ab8aa757e97c28aecb024d867c367f019">t_wiresByName</a>   <a class="code" href="classvnl_1_1Module.html#a58bfb95f4092b7e38e44c45492f03cf1">m_wiresByName</a>;
-<a name="l00162"></a><a class="code" href="classvnl_1_1Module.html#a6e3a25fd8e91a85f50c96680038ca741">00162</a>         <a class="code" href="classvnl_1_1Module.html#a1d5249f2275fa4656b9bb5f8ac59aad4">t_portDeclOrder</a> <a class="code" href="classvnl_1_1Module.html#a6e3a25fd8e91a85f50c96680038ca741">m_portDeclOrder</a>;
-<a name="l00163"></a><a class="code" href="classvnl_1_1Module.html#aeefa658d955b5e27601e717c15501b62">00163</a>         <a class="code" href="classvnl_1_1Module.html#a182b68e1e9d6c4c2e962a938486a7ac3">t_cellsByName</a>   <a class="code" href="classvnl_1_1Module.html#aeefa658d955b5e27601e717c15501b62">m_cellsByName</a>;
-<a name="l00164"></a>00164         
-<a name="l00165"></a><a class="code" href="classvnl_1_1Module.html#a4a3d869d44a2aba42ccccba725f967ed">00165</a>         <span class="keyword">const</span> <span class="keywordtype">string</span>    <a class="code" href="classvnl_1_1Module.html#a4a3d869d44a2aba42ccccba725f967ed">m_name</a>;
-<a name="l00166"></a>00166         
-<a name="l00167"></a>00167         <span class="comment">//Not allowed</span>
-<a name="l00168"></a>00168         <a class="code" href="classvnl_1_1Module.html#aeb34151867d7b7f8eaca24b339cf945d">COPY_CONSTRUCTOR_DECL</a>(<a class="code" href="classvnl_1_1Module.html">Module</a>);
+<a name="l00160"></a><a class="code" href="classvnl_1_1Module.html#aa43ceb4281500559d3ff7ed4dd37d132">00160</a>         <span class="keyword">const</span> <a class="code" href="classvnl_1_1Module.html#ab6483d74a9e90e82d21a96a00bce90ea">t_wiresByName</a>&amp; <a class="code" href="classvnl_1_1Module.html#aa43ceb4281500559d3ff7ed4dd37d132">getWiresByName</a>()<span class="keyword"> const </span>{
+<a name="l00161"></a>00161             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1Module.html#a58bfb95f4092b7e38e44c45492f03cf1">m_wiresByName</a>;
+<a name="l00162"></a>00162         }
+<a name="l00163"></a>00163 
+<a name="l00168"></a>00168         <span class="keywordtype">void</span> <a class="code" href="classvnl_1_1Module.html#a3905e48c9619ae36bb634a77f67b9743">getPortsInDeclOrder</a>(<a class="code" href="classvnl_1_1Module.html#ac2144558bee9545bcee506a390cc36f9">t_ports</a> &amp;ports) <span class="keyword">const</span>;
 <a name="l00169"></a>00169 
-<a name="l00170"></a><a class="code" href="classvnl_1_1Module.html#a7e569a3e7289d11a828202f22e69a195">00170</a>         <span class="keyword">virtual</span> <span class="keywordtype">unsigned</span> <a class="code" href="classvnl_1_1Module.html#a7e569a3e7289d11a828202f22e69a195">getTypeId</a>()<span class="keyword"> const </span>{
-<a name="l00171"></a>00171             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1Module.html#a89cf116077fcedd132a050f8b765fd0b">stTypeId</a>;
+<a name="l00170"></a><a class="code" href="classvnl_1_1Module.html#af3ae949af63d17ec945b0b09260d4973">00170</a>         <span class="keyword">static</span> <span class="keyword">const</span> TRcModule <a class="code" href="classvnl_1_1Module.html#af3ae949af63d17ec945b0b09260d4973">downcast</a>(<span class="keyword">const</span> TRcObject &amp;r) {
+<a name="l00171"></a>00171             <span class="keywordflow">return</span> xyzzy::downcast&lt;Object, Module &gt; (r);
 <a name="l00172"></a>00172         }
 <a name="l00173"></a>00173 
-<a name="l00179"></a>00179         <span class="keywordtype">void</span> <a class="code" href="classvnl_1_1Module.html#a13e9df18073234790e570d737fc85f3f">replace</a>(TRcPort &amp;from, TRcWire &amp;to);
-<a name="l00180"></a><a class="code" href="classvnl_1_1Module.html#ab80291af9c262f63b83fa9c16f12014d">00180</a>         <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classvnl_1_1Parser.html">Parser</a>;    <span class="comment">//allow Parser to replace</span>
-<a name="l00181"></a>00181         
-<a name="l00182"></a><a class="code" href="classvnl_1_1Module.html#a89cf116077fcedd132a050f8b765fd0b">00182</a>         <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="classvnl_1_1Module.html#a89cf116077fcedd132a050f8b765fd0b">stTypeId</a>;
+<a name="l00174"></a><a class="code" href="classvnl_1_1Module.html#a3a023e6b2e40fcfc2c7603c47d354523">00174</a>         <span class="keyword">static</span> TRcModule <a class="code" href="classvnl_1_1Module.html#a3a023e6b2e40fcfc2c7603c47d354523">downcast</a>(TRcObject &amp;r) {
+<a name="l00175"></a>00175             <span class="keywordflow">return</span> xyzzy::downcast&lt;Object, Module &gt; (r);
+<a name="l00176"></a>00176         }
+<a name="l00177"></a>00177 
+<a name="l00178"></a><a class="code" href="classvnl_1_1Module.html#a26915eb618499f053fc404078f04f6fa">00178</a>         <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classvnl_1_1Module.html#a26915eb618499f053fc404078f04f6fa">isLibCell</a>()<span class="keyword"> const </span>{
+<a name="l00179"></a>00179             <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00180"></a>00180         }
+<a name="l00181"></a>00181 
+<a name="l00182"></a>00182         <span class="keyword">virtual</span> <a class="code" href="classvnl_1_1Module.html#abf7194f834d9c94be5e64bc8a1798723">~Module</a>();
 <a name="l00183"></a>00183 
-<a name="l00184"></a>00184     };
-<a name="l00185"></a>00185 
-<a name="l00186"></a><a class="code" href="namespacevnl.html#a7b827be0b398510bc5c63ba9e6c84a64">00186</a>     <span class="keyword">inline</span> <span class="keyword">const</span> TRcObject <a class="code" href="namespacevnl.html#aee0af4ad98952d4946146fb8fe2ffec4">upcast</a>(<span class="keyword">const</span> TRcModule &amp;p) {
-<a name="l00187"></a>00187         <span class="keywordflow">return</span> xyzzy::upcast&lt;Object, Module &gt; (p);
-<a name="l00188"></a>00188     }
-<a name="l00189"></a><a class="code" href="namespacevnl.html#a0346b9c4e837fa0c4abbbf50ff5df7df">00189</a>     <span class="keyword">inline</span> TRcObject <a class="code" href="namespacevnl.html#aee0af4ad98952d4946146fb8fe2ffec4">upcast</a>(TRcModule &amp;p) {
-<a name="l00190"></a>00190         <span class="keywordflow">return</span> xyzzy::upcast&lt;Object, Module &gt; (p);
-<a name="l00191"></a>00191     }
-<a name="l00192"></a>00192 }
+<a name="l00184"></a>00184     <span class="keyword">private</span>:
+<a name="l00185"></a><a class="code" href="classvnl_1_1Module.html#a58bfb95f4092b7e38e44c45492f03cf1">00185</a>         <a class="code" href="classvnl_1_1Module.html#ab6483d74a9e90e82d21a96a00bce90ea">t_wiresByName</a> <a class="code" href="classvnl_1_1Module.html#a58bfb95f4092b7e38e44c45492f03cf1">m_wiresByName</a>;
+<a name="l00186"></a><a class="code" href="classvnl_1_1Module.html#a6e3a25fd8e91a85f50c96680038ca741">00186</a>         <a class="code" href="classvnl_1_1Module.html#a1d5249f2275fa4656b9bb5f8ac59aad4">t_portDeclOrder</a> <a class="code" href="classvnl_1_1Module.html#a6e3a25fd8e91a85f50c96680038ca741">m_portDeclOrder</a>;
+<a name="l00187"></a><a class="code" href="classvnl_1_1Module.html#aeefa658d955b5e27601e717c15501b62">00187</a>         <a class="code" href="classvnl_1_1Module.html#afa3dfeb7450ae9defdbee544387fbbaa">t_cellsByName</a> <a class="code" href="classvnl_1_1Module.html#aeefa658d955b5e27601e717c15501b62">m_cellsByName</a>;
+<a name="l00188"></a>00188 
+<a name="l00189"></a><a class="code" href="classvnl_1_1Module.html#a4a3d869d44a2aba42ccccba725f967ed">00189</a>         <span class="keyword">const</span> <span class="keywordtype">string</span> <a class="code" href="classvnl_1_1Module.html#a4a3d869d44a2aba42ccccba725f967ed">m_name</a>;
+<a name="l00190"></a>00190 
+<a name="l00191"></a>00191         <span class="comment">//Not allowed</span>
+<a name="l00192"></a>00192         <a class="code" href="classvnl_1_1Module.html#aeb34151867d7b7f8eaca24b339cf945d">COPY_CONSTRUCTOR_DECL</a>(<a class="code" href="classvnl_1_1Module.html">Module</a>);
 <a name="l00193"></a>00193 
-<a name="l00194"></a>00194 <span class="preprocessor">#endif</span>
+<a name="l00194"></a><a class="code" href="classvnl_1_1Module.html#a7e569a3e7289d11a828202f22e69a195">00194</a>         <span class="keyword">virtual</span> <span class="keywordtype">unsigned</span> <a class="code" href="classvnl_1_1Module.html#a7e569a3e7289d11a828202f22e69a195">getTypeId</a>()<span class="keyword"> const </span>{
+<a name="l00195"></a>00195             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1Module.html#a89cf116077fcedd132a050f8b765fd0b">stTypeId</a>;
+<a name="l00196"></a>00196         }
+<a name="l00197"></a>00197 
+<a name="l00203"></a>00203         <span class="keywordtype">void</span> <a class="code" href="classvnl_1_1Module.html#a13e9df18073234790e570d737fc85f3f">replace</a>(TRcPort &amp;from, TRcWire &amp;to);
+<a name="l00204"></a><a class="code" href="classvnl_1_1Module.html#ab80291af9c262f63b83fa9c16f12014d">00204</a>         <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classvnl_1_1Parser.html">Parser</a>; <span class="comment">//allow Parser to replace</span>
+<a name="l00205"></a>00205 
+<a name="l00206"></a><a class="code" href="classvnl_1_1Module.html#a89cf116077fcedd132a050f8b765fd0b">00206</a>         <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="classvnl_1_1Module.html#a89cf116077fcedd132a050f8b765fd0b">stTypeId</a>;
+<a name="l00207"></a>00207 
+<a name="l00208"></a>00208     };
+<a name="l00209"></a>00209 
+<a name="l00210"></a><a class="code" href="namespacevnl.html#a7b827be0b398510bc5c63ba9e6c84a64">00210</a>     <span class="keyword">inline</span> <span class="keyword">const</span> TRcObject <a class="code" href="namespacevnl.html#aee0af4ad98952d4946146fb8fe2ffec4">upcast</a>(<span class="keyword">const</span> TRcModule &amp;p) {
+<a name="l00211"></a>00211         <span class="keywordflow">return</span> xyzzy::upcast&lt;Object, Module &gt; (p);
+<a name="l00212"></a>00212     }
+<a name="l00213"></a>00213 
+<a name="l00214"></a><a class="code" href="namespacevnl.html#a0346b9c4e837fa0c4abbbf50ff5df7df">00214</a>     <span class="keyword">inline</span> TRcObject <a class="code" href="namespacevnl.html#aee0af4ad98952d4946146fb8fe2ffec4">upcast</a>(TRcModule &amp;p) {
+<a name="l00215"></a>00215         <span class="keywordflow">return</span> xyzzy::upcast&lt;Object, Module &gt; (p);
+<a name="l00216"></a>00216     }
+<a name="l00217"></a>00217 }
+<a name="l00218"></a>00218 
+<a name="l00219"></a>00219 <span class="preprocessor">#endif</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Apr 6 2012 17:15:08 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 23 2012 08:14:06 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

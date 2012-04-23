@@ -201,117 +201,128 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00110"></a>00110             }
 <a name="l00111"></a>00111         }
 <a name="l00112"></a>00112 
-<a name="l00113"></a><a class="code" href="classxyzzy_1_1PTArray.html#a88dcc715e9525597ea811e35605a9bb3">00113</a>         <span class="keywordtype">void</span> <a class="code" href="classxyzzy_1_1PTArray.html#a88dcc715e9525597ea811e35605a9bb3">reset</a>(<span class="keyword">const</span> T val) {
-<a name="l00114"></a>00114             <span class="keywordflow">for</span> (<a class="code" href="classxyzzy_1_1TArray.html#a1c9c1a9ac93d6bfab01de9ce69c69ed3">len_t</a> n = 0; n &lt; <a class="code" href="classxyzzy_1_1TArray.html#ad7f65145a7215019758fc0290e02e84f">length</a>(); n++)
-<a name="l00115"></a>00115                 this-&gt;<span class="keyword">operator</span>[](n) = val;
-<a name="l00116"></a>00116         }
-<a name="l00117"></a>00117 
-<a name="l00118"></a><a class="code" href="classxyzzy_1_1PTArray.html#a25f2c3d8a09a83eb8744e41229e37725">00118</a>         <a class="code" href="classxyzzy_1_1PTArray.html" title="Type-specific array with bounds checking.">PTArray</a>&amp; <a class="code" href="classxyzzy_1_1PTArray.html#a25f2c3d8a09a83eb8744e41229e37725">operator=</a>(<span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTArray.html" title="Type-specific array with bounds checking.">PTArray</a> &amp;r) {
-<a name="l00119"></a>00119             <a class="code" href="classxyzzy_1_1PTArray.html#ac0a9ea97d45919438800cb8f6ba8708f">resize</a>(r.<a class="code" href="classxyzzy_1_1TArray.html#ad7f65145a7215019758fc0290e02e84f">length</a>());
-<a name="l00120"></a>00120             <a class="code" href="classxyzzy_1_1PTArray.html#ac6e32f8d77fe7e77c4c7e94036cc7ce4">copy</a>(r);
-<a name="l00121"></a>00121             <span class="keywordflow">return</span> *<span class="keyword">this</span>;
+<a name="l00113"></a><a class="code" href="classxyzzy_1_1PTArray.html#abbc6decb4651b6a94f124f40d6c88c0b">00113</a>         <span class="keyword">typedef</span> <a class="code" href="classxyzzy_1_1PTRcPtr.html">PTRcPtr&lt;std::vector&lt;T&gt;</a> &gt; <a class="code" href="classxyzzy_1_1PTArray.html#abbc6decb4651b6a94f124f40d6c88c0b">TRcVector</a>;
+<a name="l00114"></a>00114         
+<a name="l00115"></a>00115         <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcVector</a>
+<a name="l00116"></a><a class="code" href="classxyzzy_1_1PTArray.html#a90679f01a9537eecdf71d8dc51368a8b">00116</a>         <a class="code" href="classxyzzy_1_1PTArray.html#a90679f01a9537eecdf71d8dc51368a8b">toVector</a>()<span class="keyword"> const </span>{
+<a name="l00117"></a>00117             <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcVector</a> vec = <span class="keyword">new</span> std::vector&lt;T&gt;(<a class="code" href="classxyzzy_1_1TArray.html#ad7f65145a7215019758fc0290e02e84f">length</a>());
+<a name="l00118"></a>00118             <span class="keywordflow">for</span> (<a class="code" href="classxyzzy_1_1TArray.html#a1c9c1a9ac93d6bfab01de9ce69c69ed3">len_t</a> i = 0; i &lt; <a class="code" href="classxyzzy_1_1TArray.html#ad7f65145a7215019758fc0290e02e84f">length</a>(); i++) {
+<a name="l00119"></a>00119                 vec.<a class="code" href="classxyzzy_1_1PTRcPtr.html#a8e5bb737a6616bb97a23f0410ccc93fb">asT</a>()[i] = (*this)[i];
+<a name="l00120"></a>00120             }
+<a name="l00121"></a>00121             <span class="keywordflow">return</span> vec;
 <a name="l00122"></a>00122         }
-<a name="l00123"></a>00123 
-<a name="l00124"></a><a class="code" href="classxyzzy_1_1PTArray.html#ac0a9ea97d45919438800cb8f6ba8708f">00124</a>         <span class="keywordtype">void</span> <a class="code" href="classxyzzy_1_1PTArray.html#ac0a9ea97d45919438800cb8f6ba8708f">resize</a>(<a class="code" href="classxyzzy_1_1TArray.html#a1c9c1a9ac93d6bfab01de9ce69c69ed3">len_t</a> len) {
-<a name="l00125"></a>00125             <span class="keyword">delete</span> [] <a class="code" href="classxyzzy_1_1PTArray.html#af04b09011d632994c73a25325c17687b">mp_ar</a>;
-<a name="l00126"></a>00126             <a class="code" href="classxyzzy_1_1TArray.html#a9f2410c1053b2f01adb800287e9c119b">m_len</a> = len;
-<a name="l00127"></a>00127             <a class="code" href="classxyzzy_1_1PTArray.html#af04b09011d632994c73a25325c17687b">mp_ar</a> = <span class="keyword">new</span> T[<a class="code" href="classxyzzy_1_1TArray.html#a9f2410c1053b2f01adb800287e9c119b">m_len</a>];
-<a name="l00128"></a>00128         }
-<a name="l00129"></a>00129 
-<a name="l00130"></a><a class="code" href="classxyzzy_1_1PTArray.html#a3754e1ae7d8d0a9c88ebdc8d89b48b46">00130</a>         T&amp; <a class="code" href="classxyzzy_1_1PTArray.html#a3754e1ae7d8d0a9c88ebdc8d89b48b46">operator[]</a>(<a class="code" href="classxyzzy_1_1TArray.html#a1c9c1a9ac93d6bfab01de9ce69c69ed3">len_t</a> ix) {
-<a name="l00131"></a>00131             <span class="keywordflow">return</span> <a class="code" href="classxyzzy_1_1PTArray.html#af04b09011d632994c73a25325c17687b">mp_ar</a>[<a class="code" href="classxyzzy_1_1TArray.html#a720c1f72d6218ee319d00d42b773bbe6">checkIx</a>(ix)];
-<a name="l00132"></a>00132         }
-<a name="l00133"></a>00133 
-<a name="l00134"></a><a class="code" href="classxyzzy_1_1PTArray.html#af1fc256b53984a325994e2da1030a6b9">00134</a>         <span class="keyword">const</span> T&amp; <a class="code" href="classxyzzy_1_1PTArray.html#af1fc256b53984a325994e2da1030a6b9">operator[]</a>(<a class="code" href="classxyzzy_1_1TArray.html#a1c9c1a9ac93d6bfab01de9ce69c69ed3">len_t</a> ix)<span class="keyword"> const </span>{
-<a name="l00135"></a>00135             <span class="keywordflow">return</span> <a class="code" href="classxyzzy_1_1PTArray.html#af04b09011d632994c73a25325c17687b">mp_ar</a>[<a class="code" href="classxyzzy_1_1TArray.html#a720c1f72d6218ee319d00d42b773bbe6">checkIx</a>(ix)];
-<a name="l00136"></a>00136         }
-<a name="l00137"></a>00137 
-<a name="l00138"></a><a class="code" href="classxyzzy_1_1PTArray.html#ad8217361888799c23a914a01d8e2fa38">00138</a>         <a class="code" href="classxyzzy_1_1PTArray.html#ad8217361888799c23a914a01d8e2fa38">~PTArray</a>() {
-<a name="l00139"></a>00139             <span class="keyword">delete</span> [] <a class="code" href="classxyzzy_1_1PTArray.html#af04b09011d632994c73a25325c17687b">mp_ar</a>;
-<a name="l00140"></a>00140         }
-<a name="l00141"></a>00141 
-<a name="l00142"></a><a class="code" href="classxyzzy_1_1PTArray.html#ac6e32f8d77fe7e77c4c7e94036cc7ce4">00142</a>         <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classxyzzy_1_1PTArray.html#ac6e32f8d77fe7e77c4c7e94036cc7ce4">copy</a>(<span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTArray.html" title="Type-specific array with bounds checking.">PTArray</a> &amp;from, <a class="code" href="classxyzzy_1_1PTArray.html" title="Type-specific array with bounds checking.">PTArray</a> &amp;to) {
-<a name="l00143"></a>00143             <a class="code" href="namespacexyzzy.html#a04be3028a8a80ed5a95366bd6baed49b">invariant</a>(from.<a class="code" href="classxyzzy_1_1TArray.html#ad7f65145a7215019758fc0290e02e84f">length</a>() &lt;= to.<a class="code" href="classxyzzy_1_1TArray.html#ad7f65145a7215019758fc0290e02e84f">length</a>());
-<a name="l00144"></a>00144             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; from.<a class="code" href="classxyzzy_1_1TArray.html#ad7f65145a7215019758fc0290e02e84f">length</a>(); i++) {
-<a name="l00145"></a>00145                 to[i] = from[i];
-<a name="l00146"></a>00146             }
+<a name="l00123"></a>00123         
+<a name="l00124"></a><a class="code" href="classxyzzy_1_1PTArray.html#a88dcc715e9525597ea811e35605a9bb3">00124</a>         <span class="keywordtype">void</span> <a class="code" href="classxyzzy_1_1PTArray.html#a88dcc715e9525597ea811e35605a9bb3">reset</a>(<span class="keyword">const</span> T val) {
+<a name="l00125"></a>00125             <span class="keywordflow">for</span> (<a class="code" href="classxyzzy_1_1TArray.html#a1c9c1a9ac93d6bfab01de9ce69c69ed3">len_t</a> n = 0; n &lt; <a class="code" href="classxyzzy_1_1TArray.html#ad7f65145a7215019758fc0290e02e84f">length</a>(); n++)
+<a name="l00126"></a>00126                 this-&gt;<span class="keyword">operator</span>[](n) = val;
+<a name="l00127"></a>00127         }
+<a name="l00128"></a>00128 
+<a name="l00129"></a><a class="code" href="classxyzzy_1_1PTArray.html#a25f2c3d8a09a83eb8744e41229e37725">00129</a>         <a class="code" href="classxyzzy_1_1PTArray.html" title="Type-specific array with bounds checking.">PTArray</a>&amp; <a class="code" href="classxyzzy_1_1PTArray.html#a25f2c3d8a09a83eb8744e41229e37725">operator=</a>(<span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTArray.html" title="Type-specific array with bounds checking.">PTArray</a> &amp;r) {
+<a name="l00130"></a>00130             <a class="code" href="classxyzzy_1_1PTArray.html#ac0a9ea97d45919438800cb8f6ba8708f">resize</a>(r.<a class="code" href="classxyzzy_1_1TArray.html#ad7f65145a7215019758fc0290e02e84f">length</a>());
+<a name="l00131"></a>00131             <a class="code" href="classxyzzy_1_1PTArray.html#ac6e32f8d77fe7e77c4c7e94036cc7ce4">copy</a>(r);
+<a name="l00132"></a>00132             <span class="keywordflow">return</span> *<span class="keyword">this</span>;
+<a name="l00133"></a>00133         }
+<a name="l00134"></a>00134 
+<a name="l00135"></a><a class="code" href="classxyzzy_1_1PTArray.html#ac0a9ea97d45919438800cb8f6ba8708f">00135</a>         <span class="keywordtype">void</span> <a class="code" href="classxyzzy_1_1PTArray.html#ac0a9ea97d45919438800cb8f6ba8708f">resize</a>(<a class="code" href="classxyzzy_1_1TArray.html#a1c9c1a9ac93d6bfab01de9ce69c69ed3">len_t</a> len) {
+<a name="l00136"></a>00136             <span class="keyword">delete</span> [] <a class="code" href="classxyzzy_1_1PTArray.html#af04b09011d632994c73a25325c17687b">mp_ar</a>;
+<a name="l00137"></a>00137             <a class="code" href="classxyzzy_1_1TArray.html#a9f2410c1053b2f01adb800287e9c119b">m_len</a> = len;
+<a name="l00138"></a>00138             <a class="code" href="classxyzzy_1_1PTArray.html#af04b09011d632994c73a25325c17687b">mp_ar</a> = <span class="keyword">new</span> T[<a class="code" href="classxyzzy_1_1TArray.html#a9f2410c1053b2f01adb800287e9c119b">m_len</a>];
+<a name="l00139"></a>00139         }
+<a name="l00140"></a>00140 
+<a name="l00141"></a><a class="code" href="classxyzzy_1_1PTArray.html#a3754e1ae7d8d0a9c88ebdc8d89b48b46">00141</a>         T&amp; <a class="code" href="classxyzzy_1_1PTArray.html#a3754e1ae7d8d0a9c88ebdc8d89b48b46">operator[]</a>(<a class="code" href="classxyzzy_1_1TArray.html#a1c9c1a9ac93d6bfab01de9ce69c69ed3">len_t</a> ix) {
+<a name="l00142"></a>00142             <span class="keywordflow">return</span> <a class="code" href="classxyzzy_1_1PTArray.html#af04b09011d632994c73a25325c17687b">mp_ar</a>[<a class="code" href="classxyzzy_1_1TArray.html#a720c1f72d6218ee319d00d42b773bbe6">checkIx</a>(ix)];
+<a name="l00143"></a>00143         }
+<a name="l00144"></a>00144 
+<a name="l00145"></a><a class="code" href="classxyzzy_1_1PTArray.html#af1fc256b53984a325994e2da1030a6b9">00145</a>         <span class="keyword">const</span> T&amp; <a class="code" href="classxyzzy_1_1PTArray.html#af1fc256b53984a325994e2da1030a6b9">operator[]</a>(<a class="code" href="classxyzzy_1_1TArray.html#a1c9c1a9ac93d6bfab01de9ce69c69ed3">len_t</a> ix)<span class="keyword"> const </span>{
+<a name="l00146"></a>00146             <span class="keywordflow">return</span> <a class="code" href="classxyzzy_1_1PTArray.html#af04b09011d632994c73a25325c17687b">mp_ar</a>[<a class="code" href="classxyzzy_1_1TArray.html#a720c1f72d6218ee319d00d42b773bbe6">checkIx</a>(ix)];
 <a name="l00147"></a>00147         }
 <a name="l00148"></a>00148 
-<a name="l00149"></a><a class="code" href="classxyzzy_1_1PTArray.html#add290fcfd52acff658765306a179a743">00149</a>         <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classxyzzy_1_1PTArray.html#add290fcfd52acff658765306a179a743">copy</a>(<a class="code" href="classxyzzy_1_1PTSlist.html">PTSlist&lt;T&gt;</a> &amp;from, <a class="code" href="classxyzzy_1_1PTArray.html" title="Type-specific array with bounds checking.">PTArray</a> &amp;to) {
-<a name="l00150"></a>00150             <a class="code" href="namespacexyzzy.html#a04be3028a8a80ed5a95366bd6baed49b">invariant</a>(from.<a class="code" href="classxyzzy_1_1TSlist.html#a8e98e22e02c4ff1696206f8ec2e51cc6">length</a>() &lt;= (unsigned) to.<a class="code" href="classxyzzy_1_1TArray.html#ad7f65145a7215019758fc0290e02e84f">length</a>());
-<a name="l00151"></a>00151             <span class="keyword">typename</span> <a class="code" href="classxyzzy_1_1PTSlist_1_1Iterator.html">PTSlist&lt;T&gt;::Iterator</a> iter(from);
-<a name="l00152"></a>00152             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; iter.hasMore(); ++iter) {
-<a name="l00153"></a>00153                 to[i++] = *iter;
-<a name="l00154"></a>00154             }
-<a name="l00155"></a>00155         }
-<a name="l00156"></a>00156 
-<a name="l00157"></a><a class="code" href="classxyzzy_1_1PTArray.html#aa87a99105e404085c8c052e47d022589">00157</a>         <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classxyzzy_1_1PTArray.html#aa87a99105e404085c8c052e47d022589">copy</a>(<a class="code" href="classxyzzy_1_1PTSlist.html">PTSlist&lt;T&gt;</a> *from, <a class="code" href="classxyzzy_1_1PTArray.html" title="Type-specific array with bounds checking.">PTArray</a> *to) {
-<a name="l00158"></a>00158             <a class="code" href="classxyzzy_1_1PTArray.html#ac6e32f8d77fe7e77c4c7e94036cc7ce4">copy</a>(*from, *to);
-<a name="l00159"></a>00159         }
-<a name="l00160"></a>00160 
-<a name="l00161"></a>00161     <span class="keyword">private</span>:
-<a name="l00162"></a><a class="code" href="classxyzzy_1_1PTArray.html#af04b09011d632994c73a25325c17687b">00162</a>         T *<a class="code" href="classxyzzy_1_1PTArray.html#af04b09011d632994c73a25325c17687b">mp_ar</a>;
-<a name="l00163"></a>00163 
-<a name="l00164"></a><a class="code" href="classxyzzy_1_1PTArray.html#adeda91a91cc680de91250c18f81ac63b">00164</a>         <span class="keywordtype">void</span> <a class="code" href="classxyzzy_1_1PTArray.html#adeda91a91cc680de91250c18f81ac63b">copy</a>(<span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTArray.html" title="Type-specific array with bounds checking.">PTArray</a> &amp;from) {
-<a name="l00165"></a>00165             <a class="code" href="classxyzzy_1_1PTArray.html#ac6e32f8d77fe7e77c4c7e94036cc7ce4">copy</a>(from, *<span class="keyword">this</span>);
+<a name="l00149"></a><a class="code" href="classxyzzy_1_1PTArray.html#ad8217361888799c23a914a01d8e2fa38">00149</a>         <a class="code" href="classxyzzy_1_1PTArray.html#ad8217361888799c23a914a01d8e2fa38">~PTArray</a>() {
+<a name="l00150"></a>00150             <span class="keyword">delete</span> [] <a class="code" href="classxyzzy_1_1PTArray.html#af04b09011d632994c73a25325c17687b">mp_ar</a>;
+<a name="l00151"></a>00151         }
+<a name="l00152"></a>00152 
+<a name="l00153"></a><a class="code" href="classxyzzy_1_1PTArray.html#ac6e32f8d77fe7e77c4c7e94036cc7ce4">00153</a>         <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classxyzzy_1_1PTArray.html#ac6e32f8d77fe7e77c4c7e94036cc7ce4">copy</a>(<span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTArray.html" title="Type-specific array with bounds checking.">PTArray</a> &amp;from, <a class="code" href="classxyzzy_1_1PTArray.html" title="Type-specific array with bounds checking.">PTArray</a> &amp;to) {
+<a name="l00154"></a>00154             <a class="code" href="namespacexyzzy.html#a04be3028a8a80ed5a95366bd6baed49b">invariant</a>(from.<a class="code" href="classxyzzy_1_1TArray.html#ad7f65145a7215019758fc0290e02e84f">length</a>() &lt;= to.<a class="code" href="classxyzzy_1_1TArray.html#ad7f65145a7215019758fc0290e02e84f">length</a>());
+<a name="l00155"></a>00155             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; from.<a class="code" href="classxyzzy_1_1TArray.html#ad7f65145a7215019758fc0290e02e84f">length</a>(); i++) {
+<a name="l00156"></a>00156                 to[i] = from[i];
+<a name="l00157"></a>00157             }
+<a name="l00158"></a>00158         }
+<a name="l00159"></a>00159 
+<a name="l00160"></a><a class="code" href="classxyzzy_1_1PTArray.html#add290fcfd52acff658765306a179a743">00160</a>         <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classxyzzy_1_1PTArray.html#add290fcfd52acff658765306a179a743">copy</a>(<a class="code" href="classxyzzy_1_1PTSlist.html">PTSlist&lt;T&gt;</a> &amp;from, <a class="code" href="classxyzzy_1_1PTArray.html" title="Type-specific array with bounds checking.">PTArray</a> &amp;to) {
+<a name="l00161"></a>00161             <a class="code" href="namespacexyzzy.html#a04be3028a8a80ed5a95366bd6baed49b">invariant</a>(from.<a class="code" href="classxyzzy_1_1TSlist.html#a8e98e22e02c4ff1696206f8ec2e51cc6">length</a>() &lt;= (unsigned) to.<a class="code" href="classxyzzy_1_1TArray.html#ad7f65145a7215019758fc0290e02e84f">length</a>());
+<a name="l00162"></a>00162             <span class="keyword">typename</span> <a class="code" href="classxyzzy_1_1PTSlist_1_1Iterator.html">PTSlist&lt;T&gt;::Iterator</a> iter(from);
+<a name="l00163"></a>00163             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; iter.hasMore(); ++iter) {
+<a name="l00164"></a>00164                 to[i++] = *iter;
+<a name="l00165"></a>00165             }
 <a name="l00166"></a>00166         }
-<a name="l00167"></a>00167     };
-<a name="l00168"></a>00168 
-<a name="l00169"></a>00169     <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;
-<a name="l00170"></a><a class="code" href="classxyzzy_1_1PTRcArray.html">00170</a>     <span class="keyword">class </span><a class="code" href="classxyzzy_1_1PTRcArray.html">PTRcArray</a> {
-<a name="l00171"></a>00171     <span class="keyword">public</span>:
-<a name="l00172"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#a70914b5f1f7bd1afe76f2535babdbc8e">00172</a>         <span class="keyword">typedef</span> <a class="code" href="classxyzzy_1_1TArray.html#a1c9c1a9ac93d6bfab01de9ce69c69ed3">TArray::len_t</a> <a class="code" href="classxyzzy_1_1PTRcArray.html#a70914b5f1f7bd1afe76f2535babdbc8e">len_t</a>;
-<a name="l00173"></a>00173 
-<a name="l00174"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#a4236896382719366f543d948191a90db">00174</a>         <span class="keyword">explicit</span> <a class="code" href="classxyzzy_1_1PTRcArray.html#a4236896382719366f543d948191a90db">PTRcArray</a>()
-<a name="l00175"></a>00175         : <a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>(0) {
-<a name="l00176"></a>00176         }
-<a name="l00177"></a>00177 
-<a name="l00178"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#a90e32d0f2198ae57da35ceb5d66bd791">00178</a>         <a class="code" href="classxyzzy_1_1PTRcArray.html#a4236896382719366f543d948191a90db">PTRcArray</a>(<a class="code" href="classxyzzy_1_1PTArray.html" title="Type-specific array with bounds checking.">PTArray&lt;T&gt;</a> *p)
-<a name="l00179"></a>00179         : <a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>(p) {
-<a name="l00180"></a>00180         }
-<a name="l00181"></a>00181 
-<a name="l00182"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#a53c7190a11ce8c932846984f4561f40e">00182</a>         <a class="code" href="classxyzzy_1_1PTRcArray.html#a4236896382719366f543d948191a90db">PTRcArray</a>(<span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTRcArray.html">PTRcArray</a> &amp;r)
-<a name="l00183"></a>00183         : <a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>(r.<a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>) {
-<a name="l00184"></a>00184         }
-<a name="l00185"></a>00185 
-<a name="l00186"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#a55aeb7abe5b6737a7c3558e32df4ee63">00186</a>         <span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTRcArray.html">PTRcArray</a>&amp; <a class="code" href="classxyzzy_1_1PTRcArray.html#a55aeb7abe5b6737a7c3558e32df4ee63">operator=</a>(<span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTRcArray.html">PTRcArray</a> &amp;r) {
-<a name="l00187"></a>00187             <span class="keywordflow">if</span> (<span class="keyword">this</span> != &amp;r) {
-<a name="l00188"></a>00188                 <a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a> = r.<a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>;
-<a name="l00189"></a>00189             }
-<a name="l00190"></a>00190             <span class="keywordflow">return</span> *<span class="keyword">this</span>;
+<a name="l00167"></a>00167 
+<a name="l00168"></a><a class="code" href="classxyzzy_1_1PTArray.html#aa87a99105e404085c8c052e47d022589">00168</a>         <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classxyzzy_1_1PTArray.html#aa87a99105e404085c8c052e47d022589">copy</a>(<a class="code" href="classxyzzy_1_1PTSlist.html">PTSlist&lt;T&gt;</a> *from, <a class="code" href="classxyzzy_1_1PTArray.html" title="Type-specific array with bounds checking.">PTArray</a> *to) {
+<a name="l00169"></a>00169             <a class="code" href="classxyzzy_1_1PTArray.html#ac6e32f8d77fe7e77c4c7e94036cc7ce4">copy</a>(*from, *to);
+<a name="l00170"></a>00170         }
+<a name="l00171"></a>00171 
+<a name="l00172"></a>00172     <span class="keyword">private</span>:
+<a name="l00173"></a><a class="code" href="classxyzzy_1_1PTArray.html#af04b09011d632994c73a25325c17687b">00173</a>         T *<a class="code" href="classxyzzy_1_1PTArray.html#af04b09011d632994c73a25325c17687b">mp_ar</a>;
+<a name="l00174"></a>00174 
+<a name="l00175"></a><a class="code" href="classxyzzy_1_1PTArray.html#adeda91a91cc680de91250c18f81ac63b">00175</a>         <span class="keywordtype">void</span> <a class="code" href="classxyzzy_1_1PTArray.html#adeda91a91cc680de91250c18f81ac63b">copy</a>(<span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTArray.html" title="Type-specific array with bounds checking.">PTArray</a> &amp;from) {
+<a name="l00176"></a>00176             <a class="code" href="classxyzzy_1_1PTArray.html#ac6e32f8d77fe7e77c4c7e94036cc7ce4">copy</a>(from, *<span class="keyword">this</span>);
+<a name="l00177"></a>00177         }
+<a name="l00178"></a>00178     };
+<a name="l00179"></a>00179 
+<a name="l00180"></a>00180     <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;
+<a name="l00181"></a><a class="code" href="classxyzzy_1_1PTRcArray.html">00181</a>     <span class="keyword">class </span><a class="code" href="classxyzzy_1_1PTRcArray.html">PTRcArray</a> {
+<a name="l00182"></a>00182     <span class="keyword">public</span>:
+<a name="l00183"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#a70914b5f1f7bd1afe76f2535babdbc8e">00183</a>         <span class="keyword">typedef</span> <a class="code" href="classxyzzy_1_1TArray.html#a1c9c1a9ac93d6bfab01de9ce69c69ed3">TArray::len_t</a> <a class="code" href="classxyzzy_1_1PTRcArray.html#a70914b5f1f7bd1afe76f2535babdbc8e">len_t</a>;
+<a name="l00184"></a>00184 
+<a name="l00185"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#a4236896382719366f543d948191a90db">00185</a>         <span class="keyword">explicit</span> <a class="code" href="classxyzzy_1_1PTRcArray.html#a4236896382719366f543d948191a90db">PTRcArray</a>()
+<a name="l00186"></a>00186         : <a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>(0) {
+<a name="l00187"></a>00187         }
+<a name="l00188"></a>00188 
+<a name="l00189"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#a90e32d0f2198ae57da35ceb5d66bd791">00189</a>         <a class="code" href="classxyzzy_1_1PTRcArray.html#a4236896382719366f543d948191a90db">PTRcArray</a>(<a class="code" href="classxyzzy_1_1PTArray.html" title="Type-specific array with bounds checking.">PTArray&lt;T&gt;</a> *p)
+<a name="l00190"></a>00190         : <a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>(p) {
 <a name="l00191"></a>00191         }
 <a name="l00192"></a>00192 
-<a name="l00193"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#a1dac8c97fcede3367d2bfba6c2de22f5">00193</a>         <a class="code" href="classxyzzy_1_1PTRcArray.html#a70914b5f1f7bd1afe76f2535babdbc8e">len_t</a> <a class="code" href="classxyzzy_1_1PTRcArray.html#a1dac8c97fcede3367d2bfba6c2de22f5">length</a>()<span class="keyword"> const </span>{
-<a name="l00194"></a>00194             <span class="keywordflow">return</span> <a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>-&gt;length();
+<a name="l00193"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#a53c7190a11ce8c932846984f4561f40e">00193</a>         <a class="code" href="classxyzzy_1_1PTRcArray.html#a4236896382719366f543d948191a90db">PTRcArray</a>(<span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTRcArray.html">PTRcArray</a> &amp;r)
+<a name="l00194"></a>00194         : <a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>(r.<a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>) {
 <a name="l00195"></a>00195         }
 <a name="l00196"></a>00196 
-<a name="l00197"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#a9f7384ac22fdb394a5dbbab583ee3192">00197</a>         T&amp; <a class="code" href="classxyzzy_1_1PTRcArray.html#a9f7384ac22fdb394a5dbbab583ee3192">operator[]</a>(<a class="code" href="classxyzzy_1_1PTRcArray.html#a70914b5f1f7bd1afe76f2535babdbc8e">len_t</a> ix) {
-<a name="l00198"></a>00198             <span class="keywordflow">return</span> <a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>-&gt;operator[](ix);
-<a name="l00199"></a>00199         }
-<a name="l00200"></a>00200 
-<a name="l00201"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#a54f7d222fde8313ef03364f4df277bd8">00201</a>         <span class="keyword">const</span> T&amp; <a class="code" href="classxyzzy_1_1PTRcArray.html#a54f7d222fde8313ef03364f4df277bd8">operator[]</a>(<a class="code" href="classxyzzy_1_1PTRcArray.html#a70914b5f1f7bd1afe76f2535babdbc8e">len_t</a> ix)<span class="keyword"> const </span>{
-<a name="l00202"></a>00202             <span class="keywordflow">return</span> <a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>-&gt;operator[](ix);
-<a name="l00203"></a>00203         }
-<a name="l00204"></a>00204 
-<a name="l00205"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#a558b6c984f57c7673420769136e2123d">00205</a>         <span class="keywordtype">bool</span> <a class="code" href="classxyzzy_1_1PTRcArray.html#a558b6c984f57c7673420769136e2123d">isNull</a>()<span class="keyword"> const </span>{
-<a name="l00206"></a>00206             <span class="keywordflow">return</span> <a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>.<a class="code" href="classxyzzy_1_1PTRcPtr.html#a572574159b8bd74554fe7bcd8d15b35d">isNull</a>();
-<a name="l00207"></a>00207         }
-<a name="l00208"></a>00208 
-<a name="l00209"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#aba1faeadce921fa27ae828c3d9e48aeb">00209</a>         <span class="keywordtype">bool</span> <a class="code" href="classxyzzy_1_1PTRcArray.html#aba1faeadce921fa27ae828c3d9e48aeb">isValid</a>()<span class="keyword"> const </span>{
-<a name="l00210"></a>00210             <span class="keywordflow">return</span> !<a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>.<a class="code" href="classxyzzy_1_1PTRcPtr.html#a572574159b8bd74554fe7bcd8d15b35d">isNull</a>();
-<a name="l00211"></a>00211         }
-<a name="l00212"></a>00212 
-<a name="l00213"></a>00213     <span class="keyword">private</span>:
-<a name="l00214"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">00214</a>         <a class="code" href="classxyzzy_1_1PTRcPtr.html">PTRcPtr&lt;PTArray&lt;T&gt;</a> &gt; <a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>;
-<a name="l00215"></a>00215     };
-<a name="l00216"></a>00216 };
-<a name="l00217"></a>00217 
-<a name="l00218"></a>00218 <span class="preprocessor">#endif  //_xyzzy_array_hxx_</span>
+<a name="l00197"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#a55aeb7abe5b6737a7c3558e32df4ee63">00197</a>         <span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTRcArray.html">PTRcArray</a>&amp; <a class="code" href="classxyzzy_1_1PTRcArray.html#a55aeb7abe5b6737a7c3558e32df4ee63">operator=</a>(<span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTRcArray.html">PTRcArray</a> &amp;r) {
+<a name="l00198"></a>00198             <span class="keywordflow">if</span> (<span class="keyword">this</span> != &amp;r) {
+<a name="l00199"></a>00199                 <a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a> = r.<a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>;
+<a name="l00200"></a>00200             }
+<a name="l00201"></a>00201             <span class="keywordflow">return</span> *<span class="keyword">this</span>;
+<a name="l00202"></a>00202         }
+<a name="l00203"></a>00203 
+<a name="l00204"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#a1dac8c97fcede3367d2bfba6c2de22f5">00204</a>         <a class="code" href="classxyzzy_1_1PTRcArray.html#a70914b5f1f7bd1afe76f2535babdbc8e">len_t</a> <a class="code" href="classxyzzy_1_1PTRcArray.html#a1dac8c97fcede3367d2bfba6c2de22f5">length</a>()<span class="keyword"> const </span>{
+<a name="l00205"></a>00205             <span class="keywordflow">return</span> <a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>-&gt;length();
+<a name="l00206"></a>00206         }
+<a name="l00207"></a>00207 
+<a name="l00208"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#a9f7384ac22fdb394a5dbbab583ee3192">00208</a>         T&amp; <a class="code" href="classxyzzy_1_1PTRcArray.html#a9f7384ac22fdb394a5dbbab583ee3192">operator[]</a>(<a class="code" href="classxyzzy_1_1PTRcArray.html#a70914b5f1f7bd1afe76f2535babdbc8e">len_t</a> ix) {
+<a name="l00209"></a>00209             <span class="keywordflow">return</span> <a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>-&gt;operator[](ix);
+<a name="l00210"></a>00210         }
+<a name="l00211"></a>00211 
+<a name="l00212"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#a54f7d222fde8313ef03364f4df277bd8">00212</a>         <span class="keyword">const</span> T&amp; <a class="code" href="classxyzzy_1_1PTRcArray.html#a54f7d222fde8313ef03364f4df277bd8">operator[]</a>(<a class="code" href="classxyzzy_1_1PTRcArray.html#a70914b5f1f7bd1afe76f2535babdbc8e">len_t</a> ix)<span class="keyword"> const </span>{
+<a name="l00213"></a>00213             <span class="keywordflow">return</span> <a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>-&gt;operator[](ix);
+<a name="l00214"></a>00214         }
+<a name="l00215"></a>00215 
+<a name="l00216"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#a558b6c984f57c7673420769136e2123d">00216</a>         <span class="keywordtype">bool</span> <a class="code" href="classxyzzy_1_1PTRcArray.html#a558b6c984f57c7673420769136e2123d">isNull</a>()<span class="keyword"> const </span>{
+<a name="l00217"></a>00217             <span class="keywordflow">return</span> <a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>.<a class="code" href="classxyzzy_1_1PTRcPtr.html#a572574159b8bd74554fe7bcd8d15b35d">isNull</a>();
+<a name="l00218"></a>00218         }
+<a name="l00219"></a>00219 
+<a name="l00220"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#aba1faeadce921fa27ae828c3d9e48aeb">00220</a>         <span class="keywordtype">bool</span> <a class="code" href="classxyzzy_1_1PTRcArray.html#aba1faeadce921fa27ae828c3d9e48aeb">isValid</a>()<span class="keyword"> const </span>{
+<a name="l00221"></a>00221             <span class="keywordflow">return</span> !<a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>.<a class="code" href="classxyzzy_1_1PTRcPtr.html#a572574159b8bd74554fe7bcd8d15b35d">isNull</a>();
+<a name="l00222"></a>00222         }
+<a name="l00223"></a>00223 
+<a name="l00224"></a>00224     <span class="keyword">private</span>:
+<a name="l00225"></a><a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">00225</a>         <a class="code" href="classxyzzy_1_1PTRcPtr.html">PTRcPtr&lt;PTArray&lt;T&gt;</a> &gt; <a class="code" href="classxyzzy_1_1PTRcArray.html#a54d407ba876dc4a2b5efc7b05e8b0c27">m_ar</a>;
+<a name="l00226"></a>00226     };
+<a name="l00227"></a>00227 };
+<a name="l00228"></a>00228 
+<a name="l00229"></a>00229 <span class="preprocessor">#endif  //_xyzzy_array_hxx_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Apr 6 2012 17:15:09 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 23 2012 08:14:07 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

@@ -129,14 +129,19 @@ Inheritance diagram for vnl::Module:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:ab8aa757e97c28aecb024d867c367f019"><td class="memItemLeft" align="right" valign="top">typedef map&lt; string, TRcWire &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#ab8aa757e97c28aecb024d867c367f019">t_wiresByName</a></td></tr>
+<tr class="memitem:ab6483d74a9e90e82d21a96a00bce90ea"><td class="memItemLeft" align="right" valign="top">typedef map&lt; string, TRcWire &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#ab6483d74a9e90e82d21a96a00bce90ea">t_wiresByName</a></td></tr>
 <tr class="memitem:a1d5249f2275fa4656b9bb5f8ac59aad4"><td class="memItemLeft" align="right" valign="top">typedef list&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a1d5249f2275fa4656b9bb5f8ac59aad4">t_portDeclOrder</a></td></tr>
 <tr class="memitem:ac2144558bee9545bcee506a390cc36f9"><td class="memItemLeft" align="right" valign="top">typedef list&lt; TRcPort &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#ac2144558bee9545bcee506a390cc36f9">t_ports</a></td></tr>
-<tr class="memitem:a182b68e1e9d6c4c2e962a938486a7ac3"><td class="memItemLeft" align="right" valign="top">typedef map&lt; string, TRcCell &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a182b68e1e9d6c4c2e962a938486a7ac3">t_cellsByName</a></td></tr>
+<tr class="memitem:afa3dfeb7450ae9defdbee544387fbbaa"><td class="memItemLeft" align="right" valign="top">typedef map&lt; string, TRcCell &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#afa3dfeb7450ae9defdbee544387fbbaa">t_cellsByName</a></td></tr>
+<tr class="memitem:a128b680475706ad360995cc265311bd9"><td class="memItemLeft" align="right" valign="top">typedef map&lt; string, unsigned &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a128b680475706ad360995cc265311bd9">t_unresolvedCntByName</a></td></tr>
+<tr class="memitem:a131807df78b014ecd7fc1e4a7d957f4c"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classxyzzy_1_1PTRcPtr.html">PTRcPtr</a><br class="typebreak"/>
+&lt; <a class="el" href="classvnl_1_1Module.html#a128b680475706ad360995cc265311bd9">t_unresolvedCntByName</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a131807df78b014ecd7fc1e4a7d957f4c">trc_unresolvedCntByName</a></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2ba79293bce1baec9893be62a8ab713e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a2ba79293bce1baec9893be62a8ab713e">Module</a> (string nm)</td></tr>
 <tr class="memitem:a617bbaec81ec6b2d79fbc242037c55d0"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a617bbaec81ec6b2d79fbc242037c55d0">getName</a> () const </td></tr>
+<tr class="memitem:a5a2616098250a823040b03ae48362a77"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvnl_1_1Module.html#a131807df78b014ecd7fc1e4a7d957f4c">trc_unresolvedCntByName</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a5a2616098250a823040b03ae48362a77">link</a> (const TRcObject &amp;lib, unsigned strength=1)</td></tr>
+<tr class="memitem:a5c536c0c6b641dfdb58f2593116cd666"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvnl_1_1Module.html#a131807df78b014ecd7fc1e4a7d957f4c">trc_unresolvedCntByName</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a5c536c0c6b641dfdb58f2593116cd666">link</a> (const TRcObject &amp;lib1, const TRcObject &amp;lib2, unsigned strength=1)</td></tr>
 <tr class="memitem:ae935401cfabc112b049ce4ef3e86a6a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#ae935401cfabc112b049ce4ef3e86a6a6">appendPortDecl</a> (string nm)</td></tr>
 <tr class="memitem:a37abfbb26d593d5b1a55730130360fd2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a37abfbb26d593d5b1a55730130360fd2">appendPortDecl</a> (TRcPortBus &amp;bus)</td></tr>
 <tr class="memitem:a02dedf21101e89af82d3dc474793b145"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a02dedf21101e89af82d3dc474793b145">appendPortDecl</a> (TRcPort &amp;port)</td></tr>
@@ -154,10 +159,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6677dab50cbd1565aed9ff0814707602"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a6677dab50cbd1565aed9ff0814707602">isHierarchical</a> () const </td></tr>
 <tr class="memitem:a05991e4918499760c2f2e3583f343736"><td class="memItemLeft" align="right" valign="top">const TRcPort&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a05991e4918499760c2f2e3583f343736">getPort</a> (string nm) const </td></tr>
 <tr class="memitem:a49ea35687bcd193122773cb08dd82b5b"><td class="memItemLeft" align="right" valign="top">TRcPort&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a49ea35687bcd193122773cb08dd82b5b">getPort</a> (string nm)</td></tr>
-<tr class="memitem:a4db3d060cfaf99ce123d586f067a6f93"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvnl_1_1Module.html#a182b68e1e9d6c4c2e962a938486a7ac3">t_cellsByName</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a4db3d060cfaf99ce123d586f067a6f93">getCellsByName</a> ()</td></tr>
-<tr class="memitem:a1d53a158376538c1f558b9c081a1cb93"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classvnl_1_1Module.html#a182b68e1e9d6c4c2e962a938486a7ac3">t_cellsByName</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a1d53a158376538c1f558b9c081a1cb93">getCellsByName</a> () const </td></tr>
-<tr class="memitem:a3c4f9aa2a52a8e3172457889ecd5985f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvnl_1_1Module.html#ab8aa757e97c28aecb024d867c367f019">t_wiresByName</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a3c4f9aa2a52a8e3172457889ecd5985f">getWiresByName</a> ()</td></tr>
-<tr class="memitem:aa43ceb4281500559d3ff7ed4dd37d132"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classvnl_1_1Module.html#ab8aa757e97c28aecb024d867c367f019">t_wiresByName</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#aa43ceb4281500559d3ff7ed4dd37d132">getWiresByName</a> () const </td></tr>
+<tr class="memitem:a4db3d060cfaf99ce123d586f067a6f93"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvnl_1_1Module.html#afa3dfeb7450ae9defdbee544387fbbaa">t_cellsByName</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a4db3d060cfaf99ce123d586f067a6f93">getCellsByName</a> ()</td></tr>
+<tr class="memitem:a1d53a158376538c1f558b9c081a1cb93"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classvnl_1_1Module.html#afa3dfeb7450ae9defdbee544387fbbaa">t_cellsByName</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a1d53a158376538c1f558b9c081a1cb93">getCellsByName</a> () const </td></tr>
+<tr class="memitem:a3c4f9aa2a52a8e3172457889ecd5985f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvnl_1_1Module.html#ab6483d74a9e90e82d21a96a00bce90ea">t_wiresByName</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a3c4f9aa2a52a8e3172457889ecd5985f">getWiresByName</a> ()</td></tr>
+<tr class="memitem:aa43ceb4281500559d3ff7ed4dd37d132"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classvnl_1_1Module.html#ab6483d74a9e90e82d21a96a00bce90ea">t_wiresByName</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#aa43ceb4281500559d3ff7ed4dd37d132">getWiresByName</a> () const </td></tr>
 <tr class="memitem:a3905e48c9619ae36bb634a77f67b9743"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a3905e48c9619ae36bb634a77f67b9743">getPortsInDeclOrder</a> (<a class="el" href="classvnl_1_1Module.html#ac2144558bee9545bcee506a390cc36f9">t_ports</a> &amp;ports) const </td></tr>
 <tr class="memitem:a26915eb618499f053fc404078f04f6fa"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a26915eb618499f053fc404078f04f6fa">isLibCell</a> () const </td></tr>
 <tr class="memitem:abf7194f834d9c94be5e64bc8a1798723"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#abf7194f834d9c94be5e64bc8a1798723">~Module</a> ()</td></tr>
@@ -172,9 +177,9 @@ Private Member Functions</h2></td></tr>
 <tr class="memitem:a13e9df18073234790e570d737fc85f3f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a13e9df18073234790e570d737fc85f3f">replace</a> (TRcPort &amp;from, TRcWire &amp;to)</td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a58bfb95f4092b7e38e44c45492f03cf1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvnl_1_1Module.html#ab8aa757e97c28aecb024d867c367f019">t_wiresByName</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a58bfb95f4092b7e38e44c45492f03cf1">m_wiresByName</a></td></tr>
+<tr class="memitem:a58bfb95f4092b7e38e44c45492f03cf1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvnl_1_1Module.html#ab6483d74a9e90e82d21a96a00bce90ea">t_wiresByName</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a58bfb95f4092b7e38e44c45492f03cf1">m_wiresByName</a></td></tr>
 <tr class="memitem:a6e3a25fd8e91a85f50c96680038ca741"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvnl_1_1Module.html#a1d5249f2275fa4656b9bb5f8ac59aad4">t_portDeclOrder</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a6e3a25fd8e91a85f50c96680038ca741">m_portDeclOrder</a></td></tr>
-<tr class="memitem:aeefa658d955b5e27601e717c15501b62"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvnl_1_1Module.html#a182b68e1e9d6c4c2e962a938486a7ac3">t_cellsByName</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#aeefa658d955b5e27601e717c15501b62">m_cellsByName</a></td></tr>
+<tr class="memitem:aeefa658d955b5e27601e717c15501b62"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvnl_1_1Module.html#afa3dfeb7450ae9defdbee544387fbbaa">t_cellsByName</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#aeefa658d955b5e27601e717c15501b62">m_cellsByName</a></td></tr>
 <tr class="memitem:a4a3d869d44a2aba42ccccba725f967ed"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Module.html#a4a3d869d44a2aba42ccccba725f967ed">m_name</a></td></tr>
 <tr><td colspan="2"><h2><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
@@ -187,12 +192,12 @@ Friends</h2></td></tr>
 <div class="textblock">
 <p>Definition at line <a class="el" href="module_8hxx_source.html#l00038">38</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 </div><hr/><h2>Member Typedef Documentation</h2>
-<a class="anchor" id="a182b68e1e9d6c4c2e962a938486a7ac3"></a>
+<a class="anchor" id="afa3dfeb7450ae9defdbee544387fbbaa"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef map&lt;string,TRcCell&gt; <a class="el" href="classvnl_1_1Module.html#a182b68e1e9d6c4c2e962a938486a7ac3">vnl::Module::t_cellsByName</a></td>
+          <td class="memname">typedef map&lt;string, TRcCell&gt; <a class="el" href="classvnl_1_1Module.html#afa3dfeb7450ae9defdbee544387fbbaa">vnl::Module::t_cellsByName</a></td>
         </tr>
       </table>
 </div>
@@ -232,18 +237,48 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab8aa757e97c28aecb024d867c367f019"></a>
+<a class="anchor" id="a128b680475706ad360995cc265311bd9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef map&lt;string,TRcWire&gt; <a class="el" href="classvnl_1_1Module.html#ab8aa757e97c28aecb024d867c367f019">vnl::Module::t_wiresByName</a></td>
+          <td class="memname">typedef map&lt;string, unsigned&gt; <a class="el" href="classvnl_1_1Module.html#a128b680475706ad360995cc265311bd9">vnl::Module::t_unresolvedCntByName</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00044">44</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab6483d74a9e90e82d21a96a00bce90ea"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef map&lt;string, TRcWire&gt; <a class="el" href="classvnl_1_1Module.html#ab6483d74a9e90e82d21a96a00bce90ea">vnl::Module::t_wiresByName</a></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Definition at line <a class="el" href="module_8hxx_source.html#l00040">40</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a131807df78b014ecd7fc1e4a7d957f4c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="classxyzzy_1_1PTRcPtr.html">PTRcPtr</a>&lt;<a class="el" href="classvnl_1_1Module.html#a128b680475706ad360995cc265311bd9">t_unresolvedCntByName</a>&gt; <a class="el" href="classvnl_1_1Module.html#a131807df78b014ecd7fc1e4a7d957f4c">vnl::Module::trc_unresolvedCntByName</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00045">45</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 
 </div>
 </div>
@@ -263,7 +298,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00035">35</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00038">38</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -281,7 +316,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00173">173</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00176">176</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -301,7 +336,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00167">167</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00170">170</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -320,7 +355,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00155">155</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00158">158</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -346,7 +381,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00046">46</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00049">49</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -372,7 +407,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00139">139</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00142">142</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -398,7 +433,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00147">147</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00150">150</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -434,7 +469,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8hxx_source.html#l00147">147</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00170">170</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 
 </div>
 </div>
@@ -453,7 +488,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8hxx_source.html#l00150">150</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00174">174</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 
 </div>
 </div>
@@ -462,7 +497,7 @@ Friends</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvnl_1_1Module.html#a182b68e1e9d6c4c2e962a938486a7ac3">t_cellsByName</a>&amp; <a class="el" href="classvnl_1_1Module.html#a4db3d060cfaf99ce123d586f067a6f93">vnl::Module::getCellsByName</a> </td>
+          <td class="memname"><a class="el" href="classvnl_1_1Module.html#afa3dfeb7450ae9defdbee544387fbbaa">t_cellsByName</a>&amp; <a class="el" href="classvnl_1_1Module.html#a4db3d060cfaf99ce123d586f067a6f93">vnl::Module::getCellsByName</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -471,7 +506,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8hxx_source.html#l00125">125</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00148">148</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 
 </div>
 </div>
@@ -480,7 +515,7 @@ Friends</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classvnl_1_1Module.html#a182b68e1e9d6c4c2e962a938486a7ac3">t_cellsByName</a>&amp; <a class="el" href="classvnl_1_1Module.html#a4db3d060cfaf99ce123d586f067a6f93">vnl::Module::getCellsByName</a> </td>
+          <td class="memname">const <a class="el" href="classvnl_1_1Module.html#afa3dfeb7450ae9defdbee544387fbbaa">t_cellsByName</a>&amp; <a class="el" href="classvnl_1_1Module.html#a4db3d060cfaf99ce123d586f067a6f93">vnl::Module::getCellsByName</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -489,7 +524,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8hxx_source.html#l00129">129</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00152">152</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 
 </div>
 </div>
@@ -508,7 +543,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8hxx_source.html#l00106">106</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00128">128</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 
 </div>
 </div>
@@ -527,7 +562,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8hxx_source.html#l00109">109</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00132">132</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 
 </div>
 </div>
@@ -549,7 +584,7 @@ Friends</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classvnl_1_1Object.html#a6051bd03d341c78d5d07d89fd0428eb8">vnl::Object</a>.</p>
 
-<p>Definition at line <a class="el" href="module_8hxx_source.html#l00047">47</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00049">49</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 
 </div>
 </div>
@@ -576,7 +611,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns:</dt><dd>port by name (or .isNull() if not found). </dd></dl>
 
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00113">113</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00116">116</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -595,7 +630,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00106">106</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00109">109</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -621,7 +656,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00118">118</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00121">121</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -645,7 +680,7 @@ Friends</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classvnl_1_1LibCell.html#a90147774ee51029862202d0ece4ea61d">vnl::LibCell</a>.</p>
 
-<p>Definition at line <a class="el" href="module_8hxx_source.html#l00170">170</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00194">194</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 
 </div>
 </div>
@@ -672,7 +707,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns:</dt><dd>wire or isNull() if not found. </dd></dl>
 
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00055">55</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00058">58</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -691,7 +726,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00065">65</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00068">68</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -700,7 +735,7 @@ Friends</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvnl_1_1Module.html#ab8aa757e97c28aecb024d867c367f019">t_wiresByName</a>&amp; <a class="el" href="classvnl_1_1Module.html#a3c4f9aa2a52a8e3172457889ecd5985f">vnl::Module::getWiresByName</a> </td>
+          <td class="memname"><a class="el" href="classvnl_1_1Module.html#ab6483d74a9e90e82d21a96a00bce90ea">t_wiresByName</a>&amp; <a class="el" href="classvnl_1_1Module.html#a3c4f9aa2a52a8e3172457889ecd5985f">vnl::Module::getWiresByName</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -709,7 +744,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8hxx_source.html#l00133">133</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00156">156</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 
 </div>
 </div>
@@ -718,7 +753,7 @@ Friends</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classvnl_1_1Module.html#ab8aa757e97c28aecb024d867c367f019">t_wiresByName</a>&amp; <a class="el" href="classvnl_1_1Module.html#a3c4f9aa2a52a8e3172457889ecd5985f">vnl::Module::getWiresByName</a> </td>
+          <td class="memname">const <a class="el" href="classvnl_1_1Module.html#ab6483d74a9e90e82d21a96a00bce90ea">t_wiresByName</a>&amp; <a class="el" href="classvnl_1_1Module.html#a3c4f9aa2a52a8e3172457889ecd5985f">vnl::Module::getWiresByName</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -727,7 +762,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8hxx_source.html#l00137">137</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00160">160</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 
 </div>
 </div>
@@ -754,7 +789,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns:</dt><dd>true if instance exists. </dd></dl>
 
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00162">162</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00165">165</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -792,7 +827,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns:</dt><dd>true if port is declared. </dd></dl>
 
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00070">70</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00073">73</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -821,7 +856,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00083">83</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00086">86</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -859,7 +894,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns:</dt><dd>true if pwire is declared. </dd></dl>
 
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00101">101</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00104">104</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -888,7 +923,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00088">88</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00091">91</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -906,7 +941,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8hxx_source.html#l00113">113</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00136">136</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 
 </div>
 </div>
@@ -926,7 +961,90 @@ Friends</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classvnl_1_1LibCell.html#aa30e4d53ce05b55cd69b763356256e56">vnl::LibCell</a>.</p>
 
-<p>Definition at line <a class="el" href="module_8hxx_source.html#l00154">154</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00178">178</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5a2616098250a823040b03ae48362a77"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvnl_1_1Module.html#a131807df78b014ecd7fc1e4a7d957f4c">Module::trc_unresolvedCntByName</a> <a class="el" href="classvnl_1_1Module.html#a5a2616098250a823040b03ae48362a77">vnl::Module::link</a> </td>
+          <td>(</td>
+          <td class="paramtype">const TRcObject &amp;&#160;</td>
+          <td class="paramname"><em>lib</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>strength</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Link module by resolving all module references. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lib</td><td>reference to TRcLibrary of designs to link against. </td></tr>
+    <tr><td class="paramname">strength</td><td>link strength: 1 indicates to only resolve references. &gt;1 to check pin reference/widths too. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns:</dt><dd>map of unresolved module counts. </dd></dl>
+
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00248">248</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5c536c0c6b641dfdb58f2593116cd666"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvnl_1_1Module.html#a131807df78b014ecd7fc1e4a7d957f4c">Module::trc_unresolvedCntByName</a> <a class="el" href="classvnl_1_1Module.html#a5a2616098250a823040b03ae48362a77">vnl::Module::link</a> </td>
+          <td>(</td>
+          <td class="paramtype">const TRcObject &amp;&#160;</td>
+          <td class="paramname"><em>lib1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const TRcObject &amp;&#160;</td>
+          <td class="paramname"><em>lib2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>strength</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Link module by resolving all module references. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lib1</td><td>reference to 1st TRcLibrary to link against. </td></tr>
+    <tr><td class="paramname">lib2</td><td>reference to 2nd TRcLibrary to link against. </td></tr>
+    <tr><td class="paramname">strength</td><td>link strength: 1 indicates to only resolve references. &gt;1 to check pin reference/widths too. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns:</dt><dd>map of unresolved module counts. </dd></dl>
+
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00236">236</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -963,7 +1081,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00129">129</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00132">132</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -979,7 +1097,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8hxx_source.html#l00180">180</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00204">204</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 
 </div>
 </div>
@@ -989,13 +1107,13 @@ Friends</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvnl_1_1Module.html#a182b68e1e9d6c4c2e962a938486a7ac3">t_cellsByName</a> <a class="el" href="classvnl_1_1Module.html#aeefa658d955b5e27601e717c15501b62">vnl::Module::m_cellsByName</a><code> [private]</code></td>
+          <td class="memname"><a class="el" href="classvnl_1_1Module.html#afa3dfeb7450ae9defdbee544387fbbaa">t_cellsByName</a> <a class="el" href="classvnl_1_1Module.html#aeefa658d955b5e27601e717c15501b62">vnl::Module::m_cellsByName</a><code> [private]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8hxx_source.html#l00163">163</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00187">187</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 
 </div>
 </div>
@@ -1010,7 +1128,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8hxx_source.html#l00165">165</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00189">189</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 
 </div>
 </div>
@@ -1025,7 +1143,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8hxx_source.html#l00162">162</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00186">186</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 
 </div>
 </div>
@@ -1034,13 +1152,13 @@ Friends</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvnl_1_1Module.html#ab8aa757e97c28aecb024d867c367f019">t_wiresByName</a> <a class="el" href="classvnl_1_1Module.html#a58bfb95f4092b7e38e44c45492f03cf1">vnl::Module::m_wiresByName</a><code> [private]</code></td>
+          <td class="memname"><a class="el" href="classvnl_1_1Module.html#ab6483d74a9e90e82d21a96a00bce90ea">t_wiresByName</a> <a class="el" href="classvnl_1_1Module.html#a58bfb95f4092b7e38e44c45492f03cf1">vnl::Module::m_wiresByName</a><code> [private]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8hxx_source.html#l00161">161</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00185">185</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 
 </div>
 </div>
@@ -1059,7 +1177,7 @@ Friends</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classvnl_1_1LibCell.html#aa7c81cc4474621718b3f5be084cf39c4">vnl::LibCell</a>.</p>
 
-<p>Definition at line <a class="el" href="module_8hxx_source.html#l00182">182</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00206">206</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 
 </div>
 </div>
@@ -1071,7 +1189,7 @@ Friends</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Apr 6 2012 17:15:09 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 23 2012 08:14:07 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

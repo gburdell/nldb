@@ -92,13 +92,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Defines</a>  </div>
+<a href="#define-members">Defines</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">vnl/module.cxx File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="assert_8hxx_source.html">xyzzy/assert.hxx</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="xyzzy_2src_2xyzzy_2util_8hxx_source.html">xyzzy/util.hxx</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="module_8hxx_source.html">vnl/module.hxx</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="library_8hxx_source.html">vnl/library.hxx</a>&quot;</code><br/>
 </div>
 <p><a href="module_8cxx_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -109,6 +113,13 @@ Namespaces</h2></td></tr>
 <tr><td colspan="2"><h2><a name="define-members"></a>
 Defines</h2></td></tr>
 <tr class="memitem:a3ee9aeb548293d00ea8f2acae49966d2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="module_8cxx.html#a3ee9aeb548293d00ea8f2acae49966d2">UNCONST</a>&#160;&#160;&#160;const_cast&lt;Module*&gt;(this)</td></tr>
+<tr><td colspan="2"><h2><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a53f0792918ead411fab1fbbf4bab8798"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a53f0792918ead411fab1fbbf4bab8798">vnl::wlink</a> (Module &amp;m, Module::trc_unresolvedCntByName &amp;unresolved, const TRcLibrary(&amp;libs)[NLIBS], unsigned strength, unsigned &amp;cnt)</td></tr>
+<tr><td colspan="2"><h2><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a1db5c21aa6b2e88cfc031d865efa7206"><td class="memItemLeft" align="right" valign="top">static map&lt; string, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a1db5c21aa6b2e88cfc031d865efa7206">vnl::stDidModuleNames</a></td></tr>
+<tr class="memitem:a2b7e90d28fb692b882e5de3904c37b82"><td class="memItemLeft" align="right" valign="top">static const unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a2b7e90d28fb692b882e5de3904c37b82">vnl::NLIBS</a> = 2</td></tr>
 </table>
 <hr/><h2>Define Documentation</h2>
 <a class="anchor" id="a3ee9aeb548293d00ea8f2acae49966d2"></a>
@@ -122,7 +133,7 @@ Defines</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00030">30</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00031">31</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -130,7 +141,7 @@ Defines</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Apr 6 2012 17:15:09 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 23 2012 08:14:07 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

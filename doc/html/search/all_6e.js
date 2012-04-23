@@ -5,6 +5,7 @@ var searchData=
   ['newstringobj',['newStringObj',['../namespacevnltcl.html#afa1950da027a7fbdb54947b36d5f842a',1,'vnltcl::newStringObj(bool b)'],['../namespacevnltcl.html#ac1bc6dffe5fead56165d5eba0fe835ff',1,'vnltcl::newStringObj(string s)']]],
   ['nexttoken',['nextToken',['../classvnl_1_1Lexer.html#a59c2568f8e3357ff502f7b2ed4981a03',1,'vnl::Lexer::nextToken()'],['../classslf_1_1Lexer.html#a8759d9794fac6eef13e749bfe1a27b1d',1,'slf::Lexer::nextToken()'],['../classslf_1_1Parser.html#a7d978c276d4a388e3f970de7b31f12cb',1,'slf::Parser::nextToken()']]],
   ['nl',['nl',['../classvnl_1_1Writer_1_1Impl.html#a9fad417484fb07a49eae292eca8654a7',1,'vnl::Writer::Impl']]],
+  ['nlibs',['NLIBS',['../namespacevnl.html#a2b7e90d28fb692b882e5de3904c37b82',1,'vnl']]],
   ['nlsh_5fappinit',['Nlsh_AppInit',['../tclbridge_8cxx.html#aa07274487c57ed0328811a38a2fa4973',1,'tclbridge.cxx']]],
   ['nlshdupintrepproc',['NlshDupIntRepProc',['../tclbridge_8cxx.html#a3ce435371ade83b041f9300faeec5e76',1,'NlshDupIntRepProc():&#160;tclbridge.cxx'],['../tclbridge_8cxx.html#a50e971f38da3e1a813c35d849f640043',1,'NlshDupIntRepProc(Tcl_Obj *srcPtr, Tcl_Obj *dupPtr):&#160;tclbridge.cxx']]],
   ['nlshfreeintrepproc',['NlshFreeIntRepProc',['../tclbridge_8cxx.html#a56cfc97aaef737e50107124cf2cf2987',1,'NlshFreeIntRepProc():&#160;tclbridge.cxx'],['../tclbridge_8cxx.html#ade4b407ad0ca43c1bc618890d4ba1513',1,'NlshFreeIntRepProc(Tcl_Obj *objPtr):&#160;tclbridge.cxx']]],
