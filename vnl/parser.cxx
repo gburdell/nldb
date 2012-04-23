@@ -562,7 +562,7 @@ namespace vnl {
         TRcConnList lhs = expression(mod);
         expectAccept(Token::eEq);
         TRcConnList rhs = expression(mod);
-        rhs = toAsgnRhs(rhs);   //wrap rhs eles in AsgnRhs proxy
+        rhs = toAsgnRhs(rhs); //wrap rhs eles in AsgnRhs proxy
         expectAccept(Token::eSemi);
         unsigned n[2] = {lhs->size(), rhs->size()};
         if (n[0] != n[1]) {
@@ -650,12 +650,14 @@ int main(int argc, char *argv[]) {
         cout << "Info: " << lexer->getFname() << ": processing ..." << endl;
         Parser parser(lexer);
         parser.start(work);
-#ifdef DEBUG
-        TRcWriter writer = new Writer(string("writer.out.v"));
-        const TRcModule &mod = work->getModule(topNm);
-        writer->write(mod);
-#endif
     }
+#ifdef DEBUG
+    TRcWriter writer = new Writer(string("writer.out.v"));
+    TRcModule mod = work->getModule(topNm);
+    //ignore link result
+    mod->link(upcast(work));
+    writer->write(mod);
+#endif
     return 0;
 }
 #endif

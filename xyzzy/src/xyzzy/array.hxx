@@ -110,6 +110,17 @@ namespace xyzzy {
             }
         }
 
+        typedef PTRcPtr<std::vector<T> > TRcVector;
+        
+        TRcVector
+        toVector() const {
+            TRcVector vec = new std::vector<T>(length());
+            for (len_t i = 0; i < length(); i++) {
+                vec.asT()[i] = (*this)[i];
+            }
+            return vec;
+        }
+        
         void reset(const T val) {
             for (len_t n = 0; n < length(); n++)
                 this->operator[](n) = val;

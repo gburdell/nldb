@@ -23,11 +23,14 @@
  */
 
 #include "xyzzy/assert.hxx"
+#include "xyzzy/util.hxx"
 #include "vnl/module.hxx"
+#include "vnl/library.hxx"
 
 namespace vnl {
-
 #define UNCONST const_cast<Module*>(this)
+
+    using xyzzy::mapHasKey;
 
     static string stTypeName = "module";
     const unsigned Module::stTypeId = Object::getNextTypeId(stTypeName);
@@ -172,6 +175,81 @@ namespace vnl {
 
     Module::~Module() {
     }
+
+    /*
+     * We'll track the modules we have done, to detect loops.
+     */
+    static map<string,bool> stDidModuleNames;
+    static const unsigned NLIBS = 2;
+    /**
+     * The workhorse linker.
+     * @param m module to link.
+     * @param unresolved track unresolved references (and counts).
+     * @param libs libraries to link against (could be null()).
+     * @param strength link strength.
+     * @param cnt count times through here.
+     */
+    static 
+    void 
+    wlink(Module &m, Module::trc_unresolvedCntByName &unresolved,
+            const TRcLibrary (&libs)[NLIBS], unsigned strength, unsigned &cnt) {
+        if (0 == cnt) {
+            stDidModuleNames.clear();
+        }
+        cnt++;
+        //detect loop
+        const string nm = m.getName();
+        ASSERT_TRUE(!mapHasKey(stDidModuleNames, nm));
+        stDidModuleNames[nm] = true;
+        Module::t_cellsByName::iterator i = m.getCellsByName().begin(),
+                end = m.getCellsByName().end();
+        for (; i != end; ++i) {
+            TRcCell &inst = i->second;
+            const string &refnm = inst->getRefName();
+            if (!inst->isResolved()) {
+                TRcModule ref;
+                for (unsigned k = 0; (k < NLIBS) && ref.isNull(); k++) {
+                    if (libs[k].isValid()) {
+                        ref = libs[k]->getModule(refnm);
+                    }
+                }
+                if (ref.isValid()) {
+                    TRcObject refo = upcast(ref);
+                    inst->setRef(refo);
+                    if (ref->isHierarchical() && !mapHasKey(stDidModuleNames, refnm)) {
+                        wlink(ref.asT(), unresolved, libs, strength, cnt);
+                    }
+                } else {
+                    if (unresolved.isNull()) {
+                        unresolved = new Module::t_unresolvedCntByName();
+                    }
+                    if (!mapHasKey(unresolved.asT(), refnm)) {
+                        unresolved.asT()[refnm] = 0;
+                    }
+                    unresolved.asT()[refnm]++;
+                }
+            }
+        }
+    }
+    
+    Module::trc_unresolvedCntByName
+    Module::link(const TRcObject &lib1, const TRcObject &lib2,
+            unsigned strength) {
+        trc_unresolvedCntByName unresolved;
+        TRcLibrary libs[NLIBS];
+        libs[0] = Library::downcast(lib1);
+        if (lib2.isValid()) libs[1] = Library::downcast(lib2);
+        unsigned cnt = 0;
+        wlink(*this, unresolved, libs, strength, cnt);
+        return unresolved;
+    }
+
+    Module::trc_unresolvedCntByName
+    Module::link(const TRcObject &lib, unsigned strength) {
+        static const TRcObject stNil;
+        return link(lib, stNil, strength);
+    }
+
 
 #undef UNCONST
 };

@@ -74,6 +74,14 @@ namespace vnl {
             m_ref = ref;
         }
         
+        TRcConnsByPortName& getConns() {
+            return m_connsByPortName;
+        }
+        
+        const TRcConnsByPortName& getConns() const {
+            return m_connsByPortName;
+        }
+        
         static const TRcCell downcast(const TRcObject &r) {
             return xyzzy::downcast<Object, Cell > (r);
         }

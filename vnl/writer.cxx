@@ -132,8 +132,8 @@ namespace vnl {
             return *this;
         }
 
-        Impl& println(const string &s) {
-            print(s).flush(); //nl();
+        Impl& println(const string &s, bool force = false) {
+            print(s).flush(force); //nl();
             return *this;
         }
 
@@ -144,7 +144,7 @@ namespace vnl {
         }
 
         Impl& println() {
-            return println(cNull);
+            return println(cNull, true);
         }
 
         Impl& setPrefix(unsigned n) {
@@ -157,8 +157,8 @@ namespace vnl {
             m_os.close();
         }
 
-        Impl& flush() {
-            if (!m_oss.str().empty()) {
+        Impl& flush(bool force = false) {
+            if (force || !m_oss.str().empty()) {
                 m_os << m_oss.str();
                 nl();
             }
@@ -295,6 +295,7 @@ namespace vnl {
             if (expr.empty()) return *this;
             static const TRcWire nilw = new Wire("");
             static const TRcObject nilo = upcast(nilw);
+            static const string nulNm = " "; //a null connection
             /* push the bogus entry on so we can iterate w/o worrying about
              * the end condition.
              */
@@ -311,13 +312,18 @@ namespace vnl {
             TRcWire wire;
             for (unsigned i = 0; i < expr.size(); ++i) {
                 const TRcObject &ele = expr[i];
-                curr = ele->getName();
+                if (ele.isValid()) {
+                    curr = ele->getName();
+                    typeId = ele->getTypeId(); //Wire, Port, WireBitRef
+                } else {
+                    curr = nulNm;
+                    typeId = 0;
+                }
                 if (0 == m_config->m_compressBusConnExpr) {
                     //keep bit blasted
                     tmpRval.push_back(curr);
                     continue;
                 }
-                typeId = ele->getTypeId(); //Wire, Port, WireBitRef
                 if (WireBitRef::stTypeId != typeId) {
                     wire = Wire::downcast(ele);
                 }
@@ -387,7 +393,7 @@ namespace vnl {
                     if (0 == i) {
                         last = vi;
                     } else {
-                        const bool match = (last == vi);
+                        const bool match = (last == vi) && (vi != nulNm);
                         if (match) {
                             n++;
                         } else {
@@ -533,8 +539,35 @@ namespace vnl {
         writeInst(const TRcCell &cell) {
             print(cell->getRefName()).print(" ").print(cell->getInstName())
                     .print("(");
-            //TODO
+            const TRcConnsByPortName &connsByPinNm = cell->getConns();
+            if (connsByPinNm.isValid() && !connsByPinNm->empty()) {
+                //sort pin names
+                vector<string> pinNmOrder;
+                for (TConnsByPortName::const_iterator iter = connsByPinNm->begin();
+                        iter != connsByPinNm->end(); ++iter) {
+                    pinNmOrder.push_back(iter->first);
+                }
+                sort(pinNmOrder.begin(), pinNmOrder.end());
+                //write connect by pin name
+                bool isFirst = true;
+                for (vector<string>::const_iterator iter = pinNmOrder.begin();
+                        iter != pinNmOrder.end(); ++iter, isFirst = false) {
+                    const string nm = *iter;
+                    ostringstream oss;
+                    if (!isFirst) oss << ',';
+                    oss << '.' << nm << "(";
+                    print(oss.str());
+                    TBitConns::TRcVector connsVec = connsByPinNm->find(nm)->second.toVector();
+                    if (connsVec.isValid()) {
+                        vector<string> svec;
+                        compress(connsVec.asT(), svec);
+                        write(svec);
+                    }
+                    print(")");
+                }
+            }
             println(");");
+            return *this;
         }
 
         Impl&
@@ -542,7 +575,7 @@ namespace vnl {
             const t_cellsByName &cells = mod->getCellsByName();
             if (cells.empty()) return *this;
             setPrefix(m_config->m_instDeclIndent);
-            println("//BEGIN{{ instances (libcells, then rest)");
+            println("//BEGIN{{ instances (libcells, then other cells)");
             for (int i = 0; i < 2; i++) { //0=leaf; 1=hier
                 //iterate in instance name (sorted) order?
                 for (t_cellsByName::const_iterator iter = cells.begin();
@@ -645,7 +678,6 @@ namespace vnl {
                 //we're only interested in rhs type AsgnRhs
                 if (rhs->isType(AsgnRhs::stTypeId)) {
                     if (!mapGetVal(lhsByNm, lhsNm, entry)) {
-
                         entry = new t_lhsRhs();
                         lhsByNm[lhsNm] = entry;
                     }
@@ -765,7 +797,7 @@ namespace vnl {
             writeDecl(mod);
             writeAssigns(mod->getWiresByName());
             writeInsts(mod);
-            setPrefix(0).println("endmodule");
+            setPrefix(0).println("endmodule").println();
             return *this;
         }
     };
@@ -787,9 +819,7 @@ namespace vnl {
         Impl::trc_mods modOrder = mp_impl->getModuleDeclOrder(top, doHier);
         FOREACH(Impl::t_mods::const_iterator, modOrder->begin(), modOrder->end(),
                 mp_impl->write);
-        //TODO: print module
         mp_impl->flush();
-
         return mp_impl->m_lcnt;
     }
 

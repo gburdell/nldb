@@ -95,7 +95,7 @@ namespace xyzzy {
     inline
     bool
     mapGetVal(const PTRcPtr<std::map<K, T> > &rcm, const K &key, T &val) {
-        return mpGetVal(rcm.asT(), key, val);
+        return mapGetVal(rcm.asT(), key, val);
     }
 };
 
