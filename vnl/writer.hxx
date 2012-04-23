@@ -43,11 +43,10 @@ namespace vnl {
                     bool instTopological = false,
                     unsigned portDeclIndent = 2,
                     unsigned instDeclIndent = 2,
-                    unsigned instDeclBusConnIndent = 4,
                     unsigned wireDefnIndent = 2,
                     unsigned compressBusConnExpr = 2,
                     bool libCellStub = true,
-                    unsigned maxCharsPerLine = 80,
+                    unsigned maxCharsPerLine = 0, //7works,//80,
                     bool allowUnresolved = true
                     );
 
@@ -57,7 +56,6 @@ namespace vnl {
             const bool m_libCellStub; //write libcell interface/stub.
             const unsigned m_portDeclIndent;
             const unsigned m_instDeclIndent;
-            const unsigned m_instDeclBusConnIndent;
             const unsigned m_wireDefnIndent;
             const unsigned m_compressBusConnExpr;
             const unsigned m_maxCharsPerLine; //0 for 1 term per line

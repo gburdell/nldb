@@ -23,6 +23,7 @@
  * THE SOFTWARE.
  */
 #include <ctime>
+#include <cstring>
 #include <map>
 #include <fstream>
 #include <vector>
@@ -79,7 +80,6 @@ namespace vnl {
             bool instTopological,
             unsigned portDeclIndent,
             unsigned instDeclIndent,
-            unsigned instDeclBusConnIndent,
             unsigned wireDefnIndent,
             unsigned compressBusConnExpr,
             bool libCellStub,
@@ -92,7 +92,6 @@ namespace vnl {
     m_libCellStub(libCellStub),
     m_portDeclIndent(portDeclIndent),
     m_instDeclIndent(instDeclIndent),
-    m_instDeclBusConnIndent(instDeclBusConnIndent),
     m_wireDefnIndent(wireDefnIndent),
     m_compressBusConnExpr(compressBusConnExpr),
     m_maxCharsPerLine(maxCharsPerLine),
@@ -159,8 +158,11 @@ namespace vnl {
 
         Impl& flush(bool force = false) {
             if (force || !m_oss.str().empty()) {
-                m_os << m_oss.str();
-                nl();
+                bool isNonSpace = !isAllSpace();
+                if (isNonSpace) {
+                    m_os << m_oss.str();
+                }
+                nl(isNonSpace);
             }
             m_os.flush();
             return *this;
@@ -179,9 +181,19 @@ namespace vnl {
         ofstream m_os;
         string m_pfx;
 
-        Impl& nl() {
-            m_os << endl;
-            m_lcnt++;
+        bool isAllSpace() {
+            string s = m_oss.str();
+            for (unsigned i = 0; i < s.length(); i++) {
+                if (!isspace(s[i])) return false;
+            }
+            return true;
+        }
+
+        Impl& nl(bool doNl = true) {
+            if (doNl) {
+                m_os << endl;
+                m_lcnt++;
+            }
             m_oss.str(cNull);
             return *this;
         }
@@ -419,126 +431,11 @@ namespace vnl {
             return *this;
         }
 
-#ifdef NOPE
-
-        static void writeBusPinConn(ostream &os, TRcBus bus, CollectionIter &iter) {
-            //make sure dont ++iter on last, since caller does.
-            map<int, TRcBit> eles;
-            TRcNet net;
-            TRcPin pin;
-            TRcPort port;
-            TRcBit portBit;
-            const unsigned n = bus->size();
-            unsigned validCnt = 0;
-            for (unsigned i = n; 0 < i; i--) {
-                pin = toPin(*iter);
-                port = pin->getPort();
-                { //check:
-                    portBit = port->getBit();
-                    ASSERT_TRUE(bus->inRange(portBit->m_bit));
-                    ASSERT_TRUE(bus->m_name == portBit->m_name);
-                }
-                net = pin->getNet();
-                TRcBit bit; //allow null entries
-                if (net.isValid() && net->isAlive()) {
-                    bit = net->asBit();
-                    validCnt++;
-                }
-                eles[portBit->m_bit] = bit;
-                if (1 < i) {
-                    ++iter; //dont incr at last, since ++iter upon return
-                }
-            }
-            if (1 > validCnt) return;
-            if (0 < Writer::stConfig.m_compressBusConnExpr) {
-                vector<string> conns;
-                compress(eles, bus, conns);
-                vector<string>::const_iterator iter = conns.begin();
-                if (1 == conns.size()) {
-                    os << *iter;
-                } else {
-                    os << '{';
-                    nl(os);
-                    for (; iter != conns.end(); ++iter) {
-                        os << stInstDeclBusConnIndent << ((iter != conns.begin()) ? ',' : ' ')
-                                << *iter;
-                        nl(os);
-                    }
-                    os << stInstDeclPfx << '}';
-                }
-
-            } else {
-                os << '{';
-                nl(os);
-                TRcBit bit;
-                //left->right sweep
-                for (unsigned cnt = 0, i = bus->m_range.first; n > cnt;
-                        cnt++, i += bus->incr()) {
-                    os << stInstDeclBusConnIndent << ((0 < cnt) ? ',' : ' ');
-                    bit = eles[i];
-                    if (bit.isValid()) {
-                        os << bit;
-                    }
-                    nl(os);
-                }
-                os << stInstDeclPfx << '}';
-            }
-        }
-
-        static void writeInst(ostream &os, TRcCell inst) {
-            TRcDesign ref = inst->getRef();
-            os << stInstDeclPfx << ref->getName() << " "
-                    << inst->getName() << " (";
-            nl(os);
-            TRcCollection pins = sortByName(inst->getPins(inst));
-            PortDone portsDone;
-            TRcPin pin;
-            TRcPort port;
-            TRcNet net;
-            TRcBit bit;
-            bool isFirst = true;
-            string nm;
-            for (CollectionIter iter(*pins); iter.hasMore(); ++iter) {
-                TRcBus asBus;
-                pin = toPin(*iter);
-                port = pin->getPort();
-#ifdef VRFC_BUG_7012
-                std::cout << "\nDBG: pin: " << inst->getName() << "." << port->getName() << std::endl;
-#endif
-                if (port->isBus()) {
-                    asBus = port->getRange();
-                    nm = asBus->m_name;
-                } else {
-                    nm = port->getName();
-                }
-                if (portsDone.find(nm) == portsDone.end()) {
-                    os << stInstDeclPfx << (isFirst ? ' ' : ',')
-                            << '.' << nm + "(";
-                    if (asBus.isValid()) {
-                        writeBusPinConn(os, asBus, iter);
-                    } else {
-                        net = pin->getNet();
-                        //TODO: where do the null nets come from, requiring isAlive()
-                        if (net.isValid() && net->isAlive()) {
-                            bit = net->asBit();
-                            os << bit;
-                        }
-                    }
-                    os << ')';
-                    nl(os);
-                    isFirst = false;
-                    portsDone[nm] = true;
-                }
-            }
-            os << stInstDeclPfx << ");";
-            nl(os);
-        }
-#endif
-
         Impl&
         writeInst(const TRcCell &cell) {
             print(cell->getRefName()).print(" ").print(cell->getInstName())
                     .print("(");
+            setPrefix(2 * m_config->m_instDeclIndent);
             const TRcConnsByPortName &connsByPinNm = cell->getConns();
             if (connsByPinNm.isValid() && !connsByPinNm->empty()) {
                 //sort pin names
@@ -566,6 +463,7 @@ namespace vnl {
                     print(")");
                 }
             }
+            setPrefix(m_config->m_instDeclIndent);
             println(");");
             return *this;
         }
