@@ -505,7 +505,7 @@ NLSH_DOTA += ../../../dist/${VARIANT}/vnl.a
 NLSH_DOTA += ../../../../xyzzy/dist/${VARIANT}/xyzzy.a
 NLSH_DOTA += ../build/${VARIANT}/libtcl8.4.a
 
-LIBS += -lstdc++
+LIBS += -lstdc++ -lm
 
 ${TCL_EXE}: ${TCLSH_OBJS} ${TCL_OBJS} ${NLSH_DOTA}
 	${CC} ${CFLAGS} ${LDFLAGS} ${TCLSH_OBJS} ${TCL_OBJS} \

@@ -154,7 +154,8 @@ extern "C" {
         Tcl_CreateObjCommand(interp, "nlsh", NlshObjCmd, NULL, NULL);
 
         {
-            static const char* const stNlshTcl = "/../../../nlsh.tcl";
+            //static const char* const stNlshTcl = "/../../../nlsh.tcl";
+            static const char* const stNlshTcl = "/../../nlsh.tcl";
             //nlsh bootstrap
             CONST char *pathName;
             pathName = Tcl_GetVar(interp, "tcl_library", TCL_GLOBAL_ONLY);

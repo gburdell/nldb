@@ -24,17 +24,20 @@ APP       := nl_shell
 LIBNM     := libtcl8.4.a
 BUILD_DIR := unix
 
+#LDFLAGS ?= -static -static-libgcc
+LDFLAGS ?= -static
 ifeq ("debug","${VARIANT}")
-	CFLAGS += -DDEBUG -g
-	STRIP =
+	CFLAGS  += -DDEBUG -g
+	LDFLAGS += -rdynamic
 endif
 ifeq ("release","${VARIANT}")
-	CFLAGS += -O3
-	STRIP = strip ${@}
+	CFLAGS  += -O3
+	LDFLAGS += -s
 endif
 ifeq ("profile","${VARIANT}")
-	CFLAGS += -DDEBUG -pg
-	STRIP =
+	#CFLAGS += -DDEBUG -pg
+	CFLAGS  += -pg
+	LDFLAGS += -rdynamic
 endif
 
 CFLAGS += -DTCL_LOCAL_APPINIT=Nlsh_AppInit
@@ -78,9 +81,8 @@ app: ${DIST_DIR}/${OS}/${APP};
 
 ${DIST_DIR}/${OS}/${APP}: _ALWAYS
 	test -d ${@D} || mkdir -p ${@D}
-	${MAKE} -C ${BUILD_DIR} ${APP} CFLAGS="${CFLAGS}" VARIANT="${VARIANT}/${OS}"
+	${MAKE} -C ${BUILD_DIR} ${APP} CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" VARIANT="${VARIANT}/${OS}"
 	mv -f ${BUILD_DIR}/${APP} ${@}
-	${STRIP}
 	
 _ALWAYS:
 

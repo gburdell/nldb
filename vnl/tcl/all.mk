@@ -32,7 +32,14 @@ else
 endif
 
 .PHONY: debug release profile clean
-debug release profile clean:
+debug release profile:
+	${MAKE} -C ../../xyzzy ${@}
+	${MAKE} -C .. ${@}
+	${MAKE} -C . ${@}
+	${MAKE} -C tcl8.4.19 ${@}
+	mv -f tcl8.4.19/dist/${@}/${OS}/nl_shell dist/${@}/${OS}
+
+clean:
 	${MAKE} -C ../../xyzzy ${@}
 	${MAKE} -C .. ${@}
 	${MAKE} -C . ${@}
