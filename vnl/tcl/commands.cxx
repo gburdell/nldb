@@ -32,6 +32,7 @@
 #include "vnl/parser.hxx"
 #include "vnl/library.hxx"
 #include "vnl/module.hxx"
+#include "slf/parser.hxx"
 //#include "cell.hxx"
 //#include "net.hxx"
 //#include "pin.hxx"
@@ -58,7 +59,7 @@ namespace vnltcl {
     typedef PTArray<string> TStringAr;
     typedef PTRcArray<string> TRcStringAr;
 
-    static const string stToolVersion = "nl_shell v2012-04-24_19.31.45";
+    static const string stToolVersion = "nl_shell v2012-04-26_15.41.33";
     static const char *stPtrPfx = "_obj";
     static const string stNilArg = "_";
     // add 2 for 0x
@@ -201,6 +202,7 @@ namespace vnltcl {
         //these are in alphabetical order
         m_cmdByName["current_design"] = &Commands::currentDesign;
         m_cmdByName["get_tool_version"] = &Commands::getToolVersion;
+        m_cmdByName["read_slf"] = &Commands::readSlf;
         m_cmdByName["read_verilog"] = &Commands::readVerilog;
         //some hidden commands
         m_cmdByName["_is_object"] = &Commands::isObject;
@@ -213,7 +215,6 @@ namespace vnltcl {
         m_cmdByName["create_cell"] = &Commands::createCell;
         m_cmdByName["create_iterator"] = &Commands::createIterator;
         m_cmdByName["create_net"] = &Commands::createNet;
-        m_cmdByName["current_design"] = &Commands::currentDesign;
         m_cmdByName["create_port"] = &Commands::createPort;
         m_cmdByName["disconnect_net"] = &Commands::disconnectNet;
         m_cmdByName["filter_collection"] = &Commands::filterCollection;
@@ -224,21 +225,16 @@ namespace vnltcl {
         m_cmdByName["get_nets"] = &Commands::getNets;
         m_cmdByName["get_pins"] = &Commands::getPins;
         m_cmdByName["get_ports"] = &Commands::getPorts;
-        m_cmdByName["get_tool_version"] = &Commands::getToolVersion;
         m_cmdByName["index_collection"] = &Commands::indexCollection;
         m_cmdByName["iterator_get_next"] = &Commands::iteratorGetNext;
         m_cmdByName["iterator_has_next"] = &Commands::iteratorHasNext;
         m_cmdByName["query_objects"] = &Commands::queryObjects;
-        m_cmdByName["read_slf"] = &Commands::readSlf;
-        m_cmdByName["read_verilog"] = &Commands::readVerilog;
         m_cmdByName["remove_cell"] = &Commands::removeCell;
         m_cmdByName["remove_from_collection"] = &Commands::removeFromCollection;
         m_cmdByName["remove_net"] = &Commands::removeNet;
         m_cmdByName["sizeof_collection"] = &Commands::sizeofCollection;
         m_cmdByName["write_verilog"] = &Commands::writeVerilog;
-        //some hidden commands
-        m_cmdByName["_is_object"] = &Commands::isObject;
-#endif
+ #endif
     }
 
     void Commands::info(string code, string s1, string s2, string s3, string s4) {
@@ -406,6 +402,30 @@ namespace vnltcl {
     }
 
     Tcl_Obj*
+    Commands::readSlf(const int argc, Tcl_Obj *CONST argv[]) throw (TclError) {
+        ASSERT_TRUE(1 == argc);
+        TRcLibrary &lib = getSlfLib();
+        TRcStringAr fnames = listAsStringAr(getInterp(), argv[0]);
+        bool ok = true;
+        for (int i = 0; ok && (i < fnames.length()); i++) {
+            if (isFileReadable(fnames[i])) {
+                slf::TRcLexer lexer = new slf::Lexer(fnames[i]);
+                slf::Parser parser(lexer);
+                parser.start(lib);
+                ok &= (0 == parser.getErrorCnt());
+            } else {
+                error("FILE-1", fnames[i], "read");
+                ok = false;
+            }
+        }
+        if (!ok) {
+            throw TclError(getInterp(), "PARSE-1", "");
+        }
+        Tcl_Obj* pobj = Tcl_NewIntObj(ok ? 1 : 0);
+        return pobj;
+    }
+
+    Tcl_Obj*
     Commands::currentDesign(const int argc, Tcl_Obj *CONST objv[]) throw (TclError) {
         ASSERT_TRUE(1 == argc);
         bool ok = true;
@@ -443,18 +463,6 @@ namespace vnltcl {
     }
 
 #ifdef TODO
-
-    Tcl_Obj*
-    Commands::readSlf(const int argc, Tcl_Obj *CONST argv[]) throw (TclError) {
-        ASSERT_TRUE(1 == argc);
-        TRcStringAr fnames = listAsStringAr(getInterp(), argv[0]);
-        TRcLibrary lib = vnltcl::Library::getDesLib();
-        bool ok = lib->readSlf(fnames);
-        if (!ok) {
-            throw TclError(getInterp(), "PARSE-1", "");
-        }
-        return Tcl_NewIntObj(ok ? 1 : 0);
-    }
 
     TRcModule
     Commands::getCurrentDesign() throw (TclError) {

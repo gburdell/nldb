@@ -26,7 +26,7 @@ TEST     =
 
 #CFLAGS := -DM32 -m32 -Isrc
 CFLAGS := -I../..
-CFLAGS += -I../../../xyzzy/src
+CFLAGS += -I../../xyzzy/src
 CFLAGS += -I./tcl8.4.19/generic
 ifeq ("debug","${VARIANT}")
 	CFLAGS += -DDEBUG -g
@@ -80,8 +80,8 @@ endif
 
 ${DIST_DIR}/${VARIANT}/${OS}/test: \
 		${DIST_DIR}/${VARIANT}/${OS}/${LIBNM}.a \
-		../xyzzy/dist/${VARIANT}/${OS}/xyzzy.a
-	g++ ${CFLAGS} -o ${@} ${<} ../xyzzy/dist/${VARIANT}/${OS}/xyzzy.a
+		../../xyzzy/dist/${VARIANT}/${OS}/xyzzy.a
+	g++ ${CFLAGS} -o ${@} ${<} ../../xyzzy/dist/${VARIANT}/${OS}/xyzzy.a
 
 .PHONY: %.objdir
 %.objdir: ${OBJ_DIR} ;

@@ -31,19 +31,21 @@ else
 	OS :=  linux
 endif
 
+LIB_DIRS := ../../xyzzy ../../slf ../../vnl ../.. . tcl8.4.19
+
 .PHONY: debug release profile clean
 debug release profile:
-	${MAKE} -C ../../xyzzy ${@}
-	${MAKE} -C .. ${@}
-	${MAKE} -C . ${@}
-	${MAKE} -C tcl8.4.19 ${@}
+	@for i in ${LIB_DIRS} ; \
+	    do \
+			${MAKE} -C $$i ${@} ; \
+	    done;
 	mv -f tcl8.4.19/dist/${@}/${OS}/nl_shell dist/${@}/${OS}
 
 clean:
-	${MAKE} -C ../../xyzzy ${@}
-	${MAKE} -C .. ${@}
-	${MAKE} -C . ${@}
-	${MAKE} -C tcl8.4.19 ${@}
+	@for i in ${LIB_DIRS} ; \
+	    do \
+			${MAKE} -C $$i ${@} ; \
+	    done;
 
 .PHONY: all
 all: debug release profile ;

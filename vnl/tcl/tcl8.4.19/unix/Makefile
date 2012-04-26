@@ -501,10 +501,12 @@ else
 
 #VARIANT passed in
 NLSH_DOTA := ../../dist/${VARIANT}/vnltcl.a
+NLSH_DOTA += ../../../../slf/dist/${VARIANT}/slf.a
 NLSH_DOTA += ../../../dist/${VARIANT}/vnl.a
 NLSH_DOTA += ../../../../xyzzy/dist/${VARIANT}/xyzzy.a
 NLSH_DOTA += ../build/${VARIANT}/libtcl8.4.a
 
+#need -lm for static link 
 LIBS += -lstdc++ -lm
 
 ${TCL_EXE}: ${TCLSH_OBJS} ${TCL_OBJS} ${NLSH_DOTA}

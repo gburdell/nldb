@@ -308,14 +308,26 @@ if {[regexp {/debug/} $::argv0]} {
 aph::addProc read_verilog {
 	{fileName+}
 	{Read verilog netlist(s) specified by 'fileName'(s).
-'fileName' ending in .gz will be gunzipped (on the fly) during processing.
 
 Return 1 on success; else 0 if any parsing error(s).
 }
 	{
 		if {[aph::parseOpts opts args]} {return}; #did help/usage
 		#make fileName separate elements
-		nlsh $opts(*command*) $fileName
+		eval nlsh $opts(*command*) $fileName
+	}
+}
+
+aph::addProc read_slf {
+	{fileName+}
+	{Read Synopsys Library File(s) specified by 'fileName'(s).
+
+Return 1 on success; else 0 if any parsing error(s).
+}
+	{
+		if {[aph::parseOpts opts args]} {return}; #did help/usage
+		#make fileName separate elements
+		eval nlsh $opts(*command*) $fileName
 	}
 }
 
