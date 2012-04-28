@@ -1,8 +1,8 @@
 //The MIT License
 //
-//nldb - c++ library to bind tcl stuff
+//vnl - verilog netlist
 //Copyright (c) 2006-2010  Karl W. Pfalzer
-//Copyright (c) 2012       George P. Burdell
+//Copyright (c) 2012-      George P. Burdell
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
 //of this software and associated documentation files (the "Software"), to deal
@@ -21,17 +21,17 @@
 //LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //THE SOFTWARE.
-#ifndef NLDB_MESSAGE_HXX
-#define	NLDB_MESSAGE_HXX
+#ifndef VNLTCL_MESSAGE_HXX
+#define	VNLTCL_MESSAGE_HXX
 
 #include <map>
 #include <cstdarg>
 #include "tcl.h"
-#include "util.hxx"
+#include "tcl/vnltcl.hxx"
 
-namespace nldb {
-    using std::map;
-    using std::va_list;
+namespace vnltcl {
+	using std::map;
+	using std::va_list;
 
     /**
      * Singleton class used for messages.
@@ -39,25 +39,22 @@ namespace nldb {
      */
     class Message {
     public:
-
-        enum EType {
-            eInfo = 0, eWarn, eError, eFatal, eLast
-        };
-
+        enum EType {eInfo=0, eWarn, eError, eFatal, eLast};
+        
         explicit Message();
 
-        void message(EType type, Tcl_Interp *interp, string code,
-                string s1, string s2 = "", string s3 = "", string s4 = "");
+        void message(EType type, Tcl_Interp *interp, string code, 
+                     string s1, string s2="", string s3="", string s4="");
+        
+        void info(string code, string s1, string s2="", string s3="", string s4="");
 
-        void info(string code, string s1, string s2 = "", string s3 = "", string s4 = "");
+        void warn(string code, string s1, string s2="", string s3="", string s4="");
 
-        void warn(string code, string s1, string s2 = "", string s3 = "", string s4 = "");
-
-        void error(Tcl_Interp *interp, string code,
-                string s1, string s2 = "", string s3 = "", string s4 = "");
-
+        void error(Tcl_Interp *interp, string code, 
+                   string s1, string s2="", string s3="", string s4="");
+        
         void error(Tcl_Interp *interp, string msg);
-
+        
         /**
          * Get formatted message.
          * @param type type of message.
@@ -65,30 +62,30 @@ namespace nldb {
          * @param s1...sn string arguments.
          * @return formatted message.
          */
-        string message(EType type, string code,
-                string s1, string s2 = "", string s3 = "", string s4 = "");
-
+        string message(EType type, string code, 
+                       string s1, string s2="", string s3="", string s4="");
+        
         void message(EType type, string msg, Tcl_Interp *interp = 0);
-
+        
         unsigned getMsgCnt(EType type) const {
             return m_msgCnts[type];
         }
-
+        
         static Message& getTheOne() {
             return stTheOne;
         }
-
+        
     private:
-        typedef map<string, string> fmtByCode_t;
-
-        fmtByCode_t m_fmtByCode;
-        unsigned m_msgCnts[eLast];
+        typedef map<string,string> fmtByCode_t;
+        
+        fmtByCode_t     m_fmtByCode;
+        unsigned        m_msgCnts[eLast];
         static const string stPfxs[];
-        static Message stTheOne;
-
+        static Message  stTheOne;
+        
         DECL_COPY_CONSTRUCTORS(Message);
     };
 }
 
-#endif	/* NLDB_MESSAGE_HXX */
+#endif	/* VNLTCL_MESSAGE_HXX */
 

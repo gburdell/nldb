@@ -29,7 +29,7 @@
 #include "vnl/cell.hxx"
 #include "vnl/wire.hxx"
 #include "vnl/pinref.hxx"
-#include "vnl/tcl/vnltcl.hxx"
+#include "tcl/vnltcl.hxx"
 
 /**
  * Scoped element objects: Cell, PinRef and Wire.

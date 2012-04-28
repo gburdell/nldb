@@ -21,28 +21,42 @@
 //LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //THE SOFTWARE.
-#ifndef VNLTCL_VNLTCL_HXX
-#define	VNLTCL_VNLTCL_HXX
+#include "tcl/iterator.hxx"
 
-//Include this file before any others in vnl/tcl/...
-
-#include <string>
-#include "xyzzy/refcnt.hxx"
-#include "vnl/vnl.hxx"
-
-#if !defined(DECL_COPY_CONSTRUCTORS)
-#define DECL_COPY_CONSTRUCTORS(_cls)   \
-	_cls(const _cls &);           \
-	_cls& operator=(const _cls &)
-#endif
-
-///All things related to tclsh UI for verilog netlist
 namespace vnltcl {
-    using std::string;
-    using xyzzy::PTRcObjPtr;
-    using vnl::Object;
-    using vnl::TRcObject;
+    unsigned Iterator::stTypeId = Object::getNextTypeId("iterator");
+
+    Iterator Iterator::stOneOf;
+    
+    /*
+     * NOTE: This constructor is used just for the private stOneOf.
+     * As shwon, the iterator itself is pure garbage; but, we need an
+     * initializer for the iterator member, so viola...
+     */
+    Iterator::Iterator()
+    : m_iter(m_iter) {
+    }
+
+    TRcObject& 
+    Iterator::getNext() {
+        static TRcObject stNullObj;
+        TRcObject &rval = stNullObj;
+        while (m_iter.hasMore()) {
+            rval = *m_iter++;
+            if (rval.isValid()) {
+                return rval;
+            }
+        }
+        return stNullObj;
+    }
+
+    Iterator::Iterator(TRcCollection &coll)
+    : m_iter(coll.asT()) {
+        //TODO setup 1st value
+    }
+
+    unsigned
+    Iterator::getTypeId() const {
+        return stTypeId;
+    }
 }
-
-#endif	/* VNLTCL_VNLTCL_HXX */
-

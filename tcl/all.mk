@@ -31,7 +31,7 @@ else
 	OS :=  linux
 endif
 
-LIB_DIRS := ../../xyzzy ../../slf ../../vnl ../.. . tcl8.4.19
+LIB_DIRS := ../xyzzy ../slf ../vnl .. . tcl8.4.19
 
 .PHONY: debug release profile clean
 debug release profile:

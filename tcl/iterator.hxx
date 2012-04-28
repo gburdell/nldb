@@ -24,8 +24,8 @@
 #ifndef VNLTCL_ITERATOR_HXX
 #define	VNLTCL_ITERATOR_HXX
 
-#include "vnl/tcl/vnltcl.hxx"
-#include "vnl/tcl/collection.hxx"
+#include "tcl/vnltcl.hxx"
+#include "tcl/collection.hxx"
 
 namespace vnltcl {
     DECL_CLASS(Iterator);

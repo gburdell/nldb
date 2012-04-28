@@ -97,7 +97,7 @@ CFLAGS			= $(CFLAGS_DEBUG)
 #CFLAGS			= $(CFLAGS_OPTIMIZE)  -pipe  -DTCL_DBGX=$(TCL_DBGX)
 
 #gburdell
-CFLAGS += -DTCL_LOCAL_APPINIT=Nldbsh_AppInit
+CFLAGS += -DTCL_LOCAL_APPINIT=Nlsh_AppInit
 
 # Flags to pass to the linker
 LDFLAGS_DEBUG		= 
@@ -499,19 +499,19 @@ tclsh: ${TCLSH_OBJS} ${TCL_LIB_FILE}
 		${CC_SEARCH_FLAGS} -o tclsh
 else
 
-LDFLAGS         += -L${JVM_ROOT}/jre/lib/amd64/server
-CC_SEARCH_FLAGS += -ljvm -static-libstdc++
-
 #VARIANT passed in
-NLDBSH_DOTA := ../../dist/${VARIANT}/nldbsh.a
-NLDBSH_DOTA += ../../../xyzzy/dist/${VARIANT}/xyzzy.a
-NLDBSH_DOTA += ../build/${VARIANT}/libtcl8.4.a
+NLSH_DOTA := ../../dist/${VARIANT}/vnltcl.a
+NLSH_DOTA += ../../../slf/dist/${VARIANT}/slf.a
+NLSH_DOTA += ../../../vnl/dist/${VARIANT}/vnl.a
+NLSH_DOTA += ../../../xyzzy/dist/${VARIANT}/xyzzy.a
+NLSH_DOTA += ../build/${VARIANT}/libtcl8.4.a
 
-LIBS += -lstdc++
+#need -lm for static link 
+LIBS += -lstdc++ -lm
 
-${TCL_EXE}: ${TCLSH_OBJS} ${TCL_OBJS} ${NLDBSH_DOTA}
+${TCL_EXE}: ${TCLSH_OBJS} ${TCL_OBJS} ${NLSH_DOTA}
 	${CC} ${CFLAGS} ${LDFLAGS} ${TCLSH_OBJS} ${TCL_OBJS} \
-		${NLDBSH_DOTA} 								     \
+		${NLSH_DOTA} 								     \
 		${LIBS}  										 \
 		${CC_SEARCH_FLAGS} -o ${TCL_EXE}
 endif

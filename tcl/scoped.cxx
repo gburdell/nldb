@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 #include <string>
-#include "vnl/tcl/scoped.hxx"
+#include "tcl/scoped.hxx"
 
 namespace vnltcl {
     using std::string;

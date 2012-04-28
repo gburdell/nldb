@@ -1,6 +1,7 @@
 #The MIT License
 #
 #Copyright (c) 2006-2010  Karl W. Pfalzer
+#Copyright (c) 2012-      George P. Burdell
 #
 #Permission is hereby granted, free of charge, to any person obtaining a copy
 #of this software and associated documentation files (the "Software"), to deal
@@ -20,14 +21,16 @@
 #OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #THE SOFTWARE.
 
-LIBNM    = vnltcl
+JVM_ROOT ?= /usr/lib/jvm/java-6-sun-1.6.0.26
+LIBNM    = nldbsh
 SRC_DIR  = .
-TEST     =
 
-#CFLAGS := -DM32 -m32 -Isrc
-CFLAGS := -I../..
+CFLAGS := -I.
+CFLAGS += -Itcl8.4.19/generic
 CFLAGS += -I../../xyzzy/src
-CFLAGS += -I./tcl8.4.19/generic
+CFLAGS += -I${JVM_ROOT}/include
+CFLAGS += -I${JVM_ROOT}/include/linux
+
 ifeq ("debug","${VARIANT}")
 	CFLAGS += -DDEBUG -g
 endif
@@ -35,12 +38,7 @@ ifeq ("release","${VARIANT}")
 	CFLAGS += -O3
 endif
 ifeq ("profile","${VARIANT}")
-	#CFLAGS += -DDEBUG -pg
 	CFLAGS += -pg
-endif
-
-ifneq ("","${TEST}")
-	CFLAGS += -D${TEST}
 endif
 
 #
@@ -53,11 +51,7 @@ VARIANT  = debug
 OBJ_DIR  = build/${VARIANT}
 DIST_DIR = dist
 
-ifeq ("Darwin","$(shell uname)")
-	OS :=  MacOSX
-else
-	OS :=  linux
-endif
+OS :=  linux
 
 LIBDIR = ${VARIANT}/${OS}
 
@@ -70,18 +64,9 @@ O_FILES     = ${MODULES:%=${OBJ_DIR}/%.o}
 
 .PHONY: debug release profile
 debug release profile:
-	./fixToolVersion commands.cxx
 	${MAKE} ${@}.objdir VARIANT=${@}
 	@${MAKE} ${MODULES:%=%.doto} VARIANT=${@} 
 	${MAKE} ${DIST_DIR}/${@}/${OS}/${LIBNM}.a VARIANT=${@}
-ifneq ("","${TEST}")
-	${MAKE} ${DIST_DIR}/${@}/${OS}/test VARIANT=${@}
-endif
-
-${DIST_DIR}/${VARIANT}/${OS}/test: \
-		${DIST_DIR}/${VARIANT}/${OS}/${LIBNM}.a \
-		../../xyzzy/dist/${VARIANT}/${OS}/xyzzy.a
-	g++ ${CFLAGS} -o ${@} ${<} ../../xyzzy/dist/${VARIANT}/${OS}/xyzzy.a
 
 .PHONY: %.objdir
 %.objdir: ${OBJ_DIR} ;

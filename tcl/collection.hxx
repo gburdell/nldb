@@ -26,12 +26,12 @@
 
 #include "xyzzy/slist.hxx"
 #include "vnl/vnl.hxx"
-#include "vnl/tcl/vnltcl.hxx"
+#include "tcl/vnltcl.hxx"
 
 namespace vnltcl {
-	using xyzzy::PTSlist;
+    using xyzzy::PTSlist;
 
-	DECL_CLASS(Collection);
+    DECL_CLASS(Collection);
 
     typedef PTSlist<TRcObject>::Iterator CollectionIter;
 
@@ -61,7 +61,7 @@ namespace vnltcl {
          * @return true if obj added, else false.
          */
         bool add(const TRcObject &obj, bool allowHetero = false);
-        
+
         /**
          * Add collection to collection.
          * @param from object to add.
@@ -69,13 +69,13 @@ namespace vnltcl {
          * @return true if any of obj added, else false.
          */
         bool add(TRcCollection &from, bool allowHetero = false);
-        
+
         static bool isA(const TRcObject &obj) {
             return (stTypeId == obj->getTypeId());
         }
 
         static string getTypeName();
-        
+
         virtual ~Collection() {
         }
     private:
@@ -87,16 +87,16 @@ namespace vnltcl {
 
         DECL_COPY_CONSTRUCTORS(Collection);
 
-        static unsigned         stTypeId;
+        static unsigned stTypeId;
     };
-    
+
     inline TRcObject upcast(const TRcCollection &p) {
-        return xyzzy::upcast<Object,Collection> (p);
-    }    
+        return xyzzy::upcast<Object, Collection > (p);
+    }
 
     inline TRcCollection toCollection(const TRcObject &p) {
-        return xyzzy::downcast<Object,Collection> (p);
-    }    
+        return xyzzy::downcast<Object, Collection > (p);
+    }
 }
 #endif	/* VNLTCL_COLLECTION_HXX */
 

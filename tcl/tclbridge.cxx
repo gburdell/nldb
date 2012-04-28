@@ -1,42 +1,65 @@
+//The MIT License
+//
+//vnl - verilog netlist
+//Copyright (c) 2006-2010  Karl W. Pfalzer
+//Copyright (c) 2012-      George P. Burdell
+//
+//Permission is hereby granted, free of charge, to any person obtaining a copy
+//of this software and associated documentation files (the "Software"), to deal
+//in the Software without restriction, including without limitation the rights
+//to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//copies of the Software, and to permit persons to whom the Software is
+//furnished to do so, subject to the following conditions:
+//
+//The above copyright notice and this permission notice shall be included in
+//all copies or substantial portions of the Software.
+//
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//THE SOFTWARE.
 /**
  * Bridge to tcl world.
- * The otherValuePtr is to a JObject.
+ * The otherValuePtr is to a vnl::Object.
  * Much inspiration by: http://tuvalu.santafe.edu/~vince/EvoXandCpptcl.html
  */
-
 #include <string>
 #include <cstdlib>
 #include <cstdio>
 #include "tcl.h"
 #include "xyzzy/assert.hxx"
-#include "commands.hxx"
-#include "util.hxx"
+#include "vnl/vnl.hxx"
+#include "tcl/commands.hxx"
+#include "tcl/util.hxx"
 
-using nldb::TclError;
-using nldb::JObject;
+using vnltcl::TclError;
+using vnl::Object;
+using vnl::TRcObject;
 using std::string;
 
 /* Type for a pointer to a C++ object */
-Tcl_FreeInternalRepProc NldbshFreeIntRepProc;
-Tcl_DupInternalRepProc NldbshDupIntRepProc;
-Tcl_UpdateStringProc NldbshUpdateStringProc;
-Tcl_SetFromAnyProc NldbshSetFromAnyProc;
+Tcl_FreeInternalRepProc NlshFreeIntRepProc;
+Tcl_DupInternalRepProc NlshDupIntRepProc;
+Tcl_UpdateStringProc NlshUpdateStringProc;
+Tcl_SetFromAnyProc NlshSetFromAnyProc;
 
-/*extern*/ Tcl_ObjType NldbshTclObjType = {
-    (char*) "NldbshObject",
-    NldbshFreeIntRepProc,
-    NldbshDupIntRepProc,
-    NldbshUpdateStringProc,
-    NldbshSetFromAnyProc
+/*extern*/ Tcl_ObjType NlshTclObjType = {
+    (char*) "NlshObject",
+    NlshFreeIntRepProc,
+    NlshDupIntRepProc,
+    NlshUpdateStringProc,
+    NlshSetFromAnyProc
 };
 
-namespace nldb {
+namespace vnltcl {
 
     static void initApp() {
         //Tcl initialization
-        Tcl_RegisterObjType(&NldbshTclObjType);
-        Jni *pjni = new Jni(getenv("NLSH_JOPTS"), '^');
-        Commands::getTheOne().setObjType(NldbshTclObjType).setJni(pjni);
+        Tcl_RegisterObjType(&NlshTclObjType);
+        Commands::getTheOne().setObjType(NlshTclObjType);
     }
 }
 
@@ -46,35 +69,30 @@ namespace nldb {
  * @param objPtr pointer containing string representation.
  * @return 
  */
-int NldbshSetFromAnyProc(Tcl_Interp* interp, Tcl_Obj *objPtr) {
-    if (objPtr->typePtr == &NldbshTclObjType) {
+void NlshUpdateStringProc(Tcl_Obj *objPtr) {
+    TRcObject* pobj = (TRcObject*)objPtr->internalRep.otherValuePtr;
+    Tcl_SetStringObj(objPtr, vnltcl::Commands::getTheOne().ptrToString(pobj), -1);
+}
+
+void NlshDupIntRepProc(Tcl_Obj* srcPtr, Tcl_Obj *dupPtr) {
+    TRcObject *pOrig = (TRcObject*)srcPtr->internalRep.otherValuePtr;
+    TRcObject *pDup = new TRcObject(*pOrig);
+    dupPtr->internalRep.otherValuePtr = pDup;
+    dupPtr->typePtr = &NlshTclObjType;
+}
+
+void NlshFreeIntRepProc(Tcl_Obj *objPtr) {
+    TRcObject *p = (TRcObject*)objPtr->internalRep.otherValuePtr;
+    delete p;
+}
+int NlshSetFromAnyProc(Tcl_Interp* interp, Tcl_Obj *objPtr) {
+    if (objPtr->typePtr == &NlshTclObjType) {
         return TCL_OK;
     }
     /*TODO: not clear when this situation occurs: i.e., when a string
      * value exists, but the backing object does not.
      */
     ASSERT_NEVER;
-}
-
-/**
- * Create a valid string representation from an object's internal representation.
- * @param objPtr pointer to object's internal representation.
- */
-void NldbshUpdateStringProc(Tcl_Obj *objPtr) {
-    const JObject* pobj = reinterpret_cast<const JObject*> (objPtr->internalRep.otherValuePtr);
-    //From tcl docs, this should copy the string val; so dont need to alloc here.
-    Tcl_SetStringObj(objPtr, pobj->objAsString().c_str(), -1);
-}
-
-void NldbshDupIntRepProc(Tcl_Obj* srcPtr, Tcl_Obj *dupPtr) {
-    const JObject *pOrig = reinterpret_cast<const JObject*> (srcPtr->internalRep.otherValuePtr);
-    dupPtr->internalRep.otherValuePtr = new JObject(*pOrig);
-    dupPtr->typePtr = &NldbshTclObjType;
-}
-
-void NldbshFreeIntRepProc(Tcl_Obj *objPtr) {
-    JObject *p = reinterpret_cast<JObject*> (objPtr->internalRep.otherValuePtr);
-    delete p;
 }
 
 /**
@@ -92,7 +110,7 @@ void NldbshFreeIntRepProc(Tcl_Obj *objPtr) {
 //TODO: see Example 44–8 The BlobCmd command procedure in 
 //C programming in Tcl book for excellent example of subcommands
 
-int NldbshObjCmd(ClientData clientData, Tcl_Interp *interp,
+int NlshObjCmd(ClientData clientData, Tcl_Interp *interp,
         const int objc, Tcl_Obj *CONST objv[]) {
 
     if (2 > objc) {
@@ -101,7 +119,7 @@ int NldbshObjCmd(ClientData clientData, Tcl_Interp *interp,
     }
     Tcl_Obj *pobj = 0;
     try {
-        pobj = nldb::Commands::getTheOne().dispatch(interp, objc, objv);
+        pobj = vnltcl::Commands::getTheOne().dispatch(interp, objc, objv);
     } catch (TclError err) {
         return TCL_ERROR;
     }
@@ -119,7 +137,7 @@ int NldbshObjCmd(ClientData clientData, Tcl_Interp *interp,
  */
 extern "C" {
 
-    int Nldbsh_AppInit(Tcl_Interp *interp) {
+    int Nlsh_AppInit(Tcl_Interp *interp) {
         //Loads in init.tcl
         if (Tcl_Init(interp) == TCL_ERROR) {
             return TCL_ERROR;
@@ -127,20 +145,21 @@ extern "C" {
         /*
          * Initialize nlsh side of things.
          */
-        nldb::initApp();
+        vnltcl::initApp();
         /*
          * Call Tcl_CreateObjCommand for application-specific commands, if
          * they weren't already created by the init procedures called above.
          */
-        //TODO: nldb is bridge/single command
-        Tcl_CreateObjCommand(interp, "nldb", NldbshObjCmd, NULL, NULL);
+        //TODO: nlsh is bridge/single command
+        Tcl_CreateObjCommand(interp, "nlsh", NlshObjCmd, NULL, NULL);
 
         {
-            static const char* const stNldbshTcl = "/../../../nlsh.tcl";
+            //static const char* const stNlshTcl = "/../../../nlsh.tcl";
+            static const char* const stNlshTcl = "/../../nlsh.tcl";
             //nlsh bootstrap
             CONST char *pathName;
             pathName = Tcl_GetVar(interp, "tcl_library", TCL_GLOBAL_ONLY);
-            string rpn = (string) pathName + stNldbshTcl;
+            string rpn = (string) pathName + stNlshTcl;
             char* canon = realpath(rpn.c_str(), 0);
             bool ok = (Tcl_EvalFile(interp, canon) == TCL_OK);
             free(canon);

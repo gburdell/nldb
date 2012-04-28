@@ -10,7 +10,7 @@ namespace eval aph {
 	variable  commands {}
 
 	proc isObject {x} {
-		nldb _is_object $x
+		nlsh _is_object $x
 	}
 
 	proc help {args} {
@@ -276,7 +276,7 @@ $infoByNameOpt(${cmdNm},*help*)\n"
 	}
 }
 
-namespace eval nldb::_priv {
+namespace eval nlsh::_priv {
 
 proc helloWorld {} {
 
@@ -288,8 +288,8 @@ proc helloWorld {} {
 	if {0 != $::tcl_interactive} {
 		puts {# nl_shell is an application which extends Tcl 8.4.
 # Thus, all Tcl 8.4 commands are available, plus the addition
-# of commands to support netlist analysis.  Type "help" for
-# details.
+# of commands to support netlist manipulation.
+# Type "help" for details.
 }
 	}
 }
@@ -308,14 +308,26 @@ if {[regexp {/debug/} $::argv0]} {
 aph::addProc read_verilog {
 	{fileName+}
 	{Read verilog netlist(s) specified by 'fileName'(s).
-'fileName' ending in .gz will be gunzipped (on the fly) during processing.
 
-Return 1 on success; else 0 if any parsing error(s).
+Return 0 on success; else 1 if any parsing error(s).
 }
 	{
 		if {[aph::parseOpts opts args]} {return}; #did help/usage
 		#make fileName separate elements
-		eval nldb $opts(*command*) $fileName
+		eval nlsh $opts(*command*) $fileName
+	}
+}
+
+aph::addProc read_slf {
+	{fileName+}
+	{Read Synopsys Library File(s) specified by 'fileName'(s).
+
+Return 0 on success; else 1 if any parsing error(s).
+}
+	{
+		if {[aph::parseOpts opts args]} {return}; #did help/usage
+		#make fileName separate elements
+		eval nlsh $opts(*command*) $fileName
 	}
 }
 
@@ -324,7 +336,7 @@ aph::addProc get_tool_version {
 	{Return nl_shell tool version.}
 	{
 		if {[aph::parseOpts opts args]} {return}; #did help/usage
-		nldb $opts(*command*); #no arguments
+		nlsh $opts(*command*); #no arguments
 	}
 }
 
@@ -337,4 +349,4 @@ proc help {args} {
 }
 
 
-nldb::_priv::helloWorld
+nlsh::_priv::helloWorld
