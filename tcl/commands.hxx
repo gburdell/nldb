@@ -31,12 +31,14 @@
 #include "vnl/vnl.hxx"
 #include "vnl/library.hxx"
 #include "tcl/vnltcl.hxx"
+#include "tcl/nlshobjs.hxx"
 #include "tcl/util.hxx"
 #include "tcl/collection.hxx"
 #include "tcl/iterator.hxx"
 
 namespace vnltcl {
     using vnl::TRcModule;
+    //TODO: move TRcLibrary to NlshLibrary
     using vnl::TRcLibrary;
     using std::map;
 
@@ -57,7 +59,7 @@ namespace vnltcl {
         struct State {
             TRcLibrary m_designLib;
             TRcLibrary m_slfLib;
-            TRcModule m_currDesn;
+            TRcNlshDesign m_currDesn;
         };
 
         static Commands& getTheOne() {
@@ -84,14 +86,14 @@ namespace vnltcl {
          * @param p
          * @return 
          */
-        char* ptrToString(const TRcObject *p);
+        char* ptrToString(const TRcNlshObject *p);
 
         /**
          * Create Tcl object.
          * @param ref reference to object.
          * @return tcl object.
          */
-        Tcl_Obj* createTclObj(TRcObject ref);
+        Tcl_Obj* createTclObj(TRcNlshObject ref);
 
         Tcl_Obj* createTclObj(TRcCollection coll) {
             return createTclObj(upcast(coll));
@@ -104,7 +106,7 @@ namespace vnltcl {
          * @param interp interpreter to use.
          * @param argc number of arguments.
          * @param argv arguments.
-         * @return result or 0 if error. 
+         * @return result or TCL_ERROR if error. 
          */
         Tcl_Obj* dispatch(Tcl_Interp *interp, const int argc, Tcl_Obj *CONST argv[])
         throw (TclError);
@@ -120,16 +122,17 @@ namespace vnltcl {
     private:
         /**
          * Return current design; else error if not set.
+         * @param errIfNotSet true if throw error if current design not set.
          * @return current design.
          */
-        TRcModule getCurrentDesign() throw (TclError);
+        TRcNlshDesign getCurrentDesign(bool errIfNotSet = true) throw (TclError);
 
         /**
          * Get object from Tcl side.
          * @param p tcl object.
          * @return ana Object.
          */
-        TRcObject getObject(Tcl_Obj *p) throw (TclError);
+        TRcNlshObject getObject(Tcl_Obj *p) throw (TclError);
 
 		/**
          * Return collection of objects with getName() matching regular expression.
@@ -146,7 +149,7 @@ namespace vnltcl {
         TRcCollection matchByNameColl(TRcCollection coll, Tcl_Obj *CONST rex, bool useFullNm = false) throw (TclError);
 
         /**
-         * Tcl_Obj->TRcObject->TRc(Derived_type).
+         * Tcl_Obj->TRcNlshObject->TRc(Derived_type).
          * @param obj
          * @return reference counted derived type.
          */
@@ -193,10 +196,19 @@ namespace vnltcl {
         Tcl_Obj* readVerilog(const int argc, Tcl_Obj *CONST argv[]) throw (TclError);
 
         /**
+         * Link current design.
+         * @param argc expect 0.
+         * @param argv not used.
+         * @return flat list of {refName cnt ...} of unresolved references
+         * and their count(s).
+         */
+        Tcl_Obj* link(const int argc, Tcl_Obj *CONST argv[]) throw (TclError);
+
+        /**
          * Read liberty files.
          * @param argc expect 1.
          * @param argv [0]=tcl list of file(s) to read.
-         * @return 1 on success; 0 on fail.
+         * @return TCL_OK on success; TCL_ERROR on fail.
          */
         Tcl_Obj* readSlf(const int argc, Tcl_Obj *CONST argv[]) throw (TclError);
 
@@ -325,7 +337,7 @@ namespace vnltcl {
          * Return iterator object's getNext() value.
          * @param argc expect 1.
          * @param argv [0]=iterator object.
-         * @return tcl TRcObject value.
+         * @return tcl TRcNlshObject value.
          */
         Tcl_Obj* iteratorGetNext(const int argc, Tcl_Obj *CONST argv[]) throw (TclError);
 
@@ -341,7 +353,7 @@ namespace vnltcl {
          * Create cell in current design.
          * @param argc expect 2.
          * @param argv [0] = cell name; [1] = reference name.
-         * @return 1 on success; 0 on fail.
+         * @return TCL_OK on success; TCL_ERROR on fail.
          */
         Tcl_Obj* createCell(const int argc, Tcl_Obj *CONST argv[]) throw (TclError);
 
@@ -349,7 +361,7 @@ namespace vnltcl {
          * Link cell(s) to new reference.
          * @param argc expect 2.
          * @param argv [0] = cell collection; [1] = reference name.
-         * @return 1 on success; 0 on fail.
+         * @return TCL_OK on success; TCL_ERROR on fail.
          */
         Tcl_Obj* changeLink(const int argc, Tcl_Obj *CONST argv[]) throw (TclError);
 
@@ -357,7 +369,7 @@ namespace vnltcl {
          * Create net in current design.
          * @param argc expect 1.
          * @param argv [0] = net name.
-         * @return 1 on success; 0 on fail.
+         * @return TCL_OK on success; TCL_ERROR on fail.
          */
         Tcl_Obj* createNet(const int argc, Tcl_Obj *CONST argv[]) throw (TclError);
 
@@ -366,7 +378,7 @@ namespace vnltcl {
          * @param argc expect 2.
          * @param argv [0] = port name.
          * @param argv [1] = direction: in|out|inout
-         * @return 1 on success; 0 on fail.
+         * @return TCL_OK on success; TCL_ERROR on fail.
          */
         Tcl_Obj* createPort(const int argc, Tcl_Obj *CONST argv[]) throw (TclError);
 
@@ -374,7 +386,7 @@ namespace vnltcl {
          * Remove cell in current design.
          * @param argc expect 1.
          * @param argv [0] = cell name.
-         * @return 1 on success; 0 on fail.
+         * @return TCL_OK on success; TCL_ERROR on fail.
          */
         Tcl_Obj* removeCell(const int argc, Tcl_Obj *CONST argv[]) throw (TclError);
 
@@ -382,7 +394,7 @@ namespace vnltcl {
          * Remove net in current design.
          * @param argc expect 1.
          * @param argv [0] = net name.
-         * @return 1 on success; 0 on fail.
+         * @return TCL_OK on success; TCL_ERROR on fail.
          */
         Tcl_Obj* removeNet(const int argc, Tcl_Obj *CONST argv[]) throw (TclError);
 
@@ -399,7 +411,7 @@ namespace vnltcl {
          * Write netlist.
          * @param argc expect 3.
          * @param argv [0] = -hierarchical; [1] = designNm; [2] = outFname.
-         * @return 1 on success; 0 on fail;
+         * @return TCL_OK on success; TCL_ERROR on fail;
          */
         Tcl_Obj* writeVerilog(const int argc, Tcl_Obj *CONST argv[]) throw (TclError);
 
@@ -433,7 +445,7 @@ namespace vnltcl {
          * @param insert true on insert; false on remove.
          * @param type cell | net | ...
          * @param objNm name of object being manipulated.
-         * @return 1 on success; 0 on fail.
+         * @return TCL_OK on success; TCL_ERROR on fail.
          */
         Tcl_Obj* validate(bool ok, bool insert, string type, string objNm);
 
@@ -441,7 +453,7 @@ namespace vnltcl {
          * Check if arg is an ana::Object.
          * @param argc expect 1
          * @param argv
-         * @return !=0 if argument is (based on) ana::Object
+         * @return TCL_OK if argument is (based on) ana::Object
          */
         Tcl_Obj* isObject(const int argc, Tcl_Obj *CONST argv[]) throw (TclError);
 
@@ -482,12 +494,12 @@ namespace vnltcl {
     getSlfLib(bool createIfNull = true);
 
     inline
-    TRcModule&
+    TRcNlshDesign&
     getCurrentDesign() {
         return Commands::getTheOne().getState().m_currDesn;
     }
 
-    TRcModule&
+    TRcNlshDesign&
     setCurrentDesign(TRcModule &mod);
 }
 

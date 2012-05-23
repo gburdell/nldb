@@ -72,6 +72,10 @@ namespace vnl {
         
         virtual ~Port();
 
+        virtual unsigned getTypeId() const {
+            return stTypeId;
+        }
+
         static const unsigned stTypeId;
         
     protected:
@@ -87,10 +91,6 @@ namespace vnl {
 
         //Not allowed
         COPY_CONSTRUCTOR_DECL(Port);
-
-        virtual unsigned getTypeId() const {
-            return stTypeId;
-        }
     };
 
     inline

@@ -37,7 +37,7 @@ namespace vnltcl {
      * Do NOT confuse w/ the TCollectionIter which is used
      * internally.
      */
-    class Iterator : public Object {
+    class Iterator : public NlshObject {
     public:
         /**
          * Create iterator over collection.
@@ -53,16 +53,18 @@ namespace vnltcl {
             return m_iter.hasMore();
         }
         
-        TRcObject& getNext();
+        TRcNlshObject& getNext();
         
-        static bool isA(const TRcObject &obj) {
+        static bool isA(const TRcNlshObject &obj) {
             //NOTE: make sure you call base class, else get infinite loop.
-            return stOneOf.Object::isA(obj);
+            return stOneOf.NlshObject::isA(obj);
         }
 
         static string getTypeName() {
-            return stOneOf.Object::getTypeName();
+            return stOneOf.NlshObject::getTypeName();
         }
+        
+        TRcAttrVal getAttrVal(const string &name) const throw (AttrException);
         
         virtual ~Iterator() {
         }
@@ -86,12 +88,12 @@ namespace vnltcl {
         CollectionIter m_iter;
     };
     
-    inline TRcObject upcast(const TRcIterator &p) {
-        return xyzzy::upcast<Object,Iterator> (p);
+    inline TRcNlshObject upcast(const TRcIterator &p) {
+        return xyzzy::upcast<NlshObject,Iterator> (p);
     }    
 
-    inline TRcIterator toIterator(const TRcObject &p) {
-        return xyzzy::downcast<Object,Iterator> (p);
+    inline TRcIterator toIterator(const TRcNlshObject &p) {
+        return xyzzy::downcast<NlshObject,Iterator> (p);
     }    
 }
 

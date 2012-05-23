@@ -23,7 +23,7 @@
 //THE SOFTWARE.
 /**
  * Bridge to tcl world.
- * The otherValuePtr is to a vnl::Object.
+ * The otherValuePtr is to a vnl::NlshObject.
  * Much inspiration by: http://tuvalu.santafe.edu/~vince/EvoXandCpptcl.html
  */
 #include <string>
@@ -32,12 +32,13 @@
 #include "tcl.h"
 #include "xyzzy/assert.hxx"
 #include "vnl/vnl.hxx"
+#include "tcl/nlshobjs.hxx"
 #include "tcl/commands.hxx"
 #include "tcl/util.hxx"
 
 using vnltcl::TclError;
-using vnl::Object;
-using vnl::TRcObject;
+using vnltcl::NlshObject;
+using vnltcl::TRcNlshObject;
 using std::string;
 
 /* Type for a pointer to a C++ object */
@@ -70,19 +71,19 @@ namespace vnltcl {
  * @return 
  */
 void NlshUpdateStringProc(Tcl_Obj *objPtr) {
-    TRcObject* pobj = (TRcObject*)objPtr->internalRep.otherValuePtr;
+    TRcNlshObject* pobj = (TRcNlshObject*)objPtr->internalRep.otherValuePtr;
     Tcl_SetStringObj(objPtr, vnltcl::Commands::getTheOne().ptrToString(pobj), -1);
 }
 
 void NlshDupIntRepProc(Tcl_Obj* srcPtr, Tcl_Obj *dupPtr) {
-    TRcObject *pOrig = (TRcObject*)srcPtr->internalRep.otherValuePtr;
-    TRcObject *pDup = new TRcObject(*pOrig);
+    TRcNlshObject *pOrig = (TRcNlshObject*)srcPtr->internalRep.otherValuePtr;
+    TRcNlshObject *pDup = new TRcNlshObject(*pOrig);
     dupPtr->internalRep.otherValuePtr = pDup;
     dupPtr->typePtr = &NlshTclObjType;
 }
 
 void NlshFreeIntRepProc(Tcl_Obj *objPtr) {
-    TRcObject *p = (TRcObject*)objPtr->internalRep.otherValuePtr;
+    TRcNlshObject *p = (TRcNlshObject*)objPtr->internalRep.otherValuePtr;
     delete p;
 }
 int NlshSetFromAnyProc(Tcl_Interp* interp, Tcl_Obj *objPtr) {
@@ -168,6 +169,16 @@ extern "C" {
             }
         }
 
+        //Create global var versions of TCL_OK and TCL_ERROR
+        {
+            const char buf[2] = {'0'+TCL_OK, '\0'};
+            ASSERT_TRUE(NULL != Tcl_SetVar(interp, "TCL_OK", &buf[0], TCL_GLOBAL_ONLY));
+        }
+        {
+            const char buf[2] = {'0'+TCL_ERROR, '\0'};
+            ASSERT_TRUE(NULL != Tcl_SetVar(interp, "TCL_ERROR", &buf[0], TCL_GLOBAL_ONLY));
+        }
+        
         /*
          * Specify a user-specific startup file to invoke if the application
          * is run interactively.  Typically the startup file is "~/.apprc"

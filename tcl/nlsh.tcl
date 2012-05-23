@@ -309,7 +309,7 @@ aph::addProc read_verilog {
 	{fileName+}
 	{Read verilog netlist(s) specified by 'fileName'(s).
 
-Return 0 on success; else 1 if any parsing error(s).
+Return TCL_OK on success; else TCL_ERROR if any parsing error(s).
 }
 	{
 		if {[aph::parseOpts opts args]} {return}; #did help/usage
@@ -322,7 +322,7 @@ aph::addProc read_slf {
 	{fileName+}
 	{Read Synopsys Library File(s) specified by 'fileName'(s).
 
-Return 0 on success; else 1 if any parsing error(s).
+Return TCL_OK on success; else TCL_ERROR if any parsing error(s).
 }
 	{
 		if {[aph::parseOpts opts args]} {return}; #did help/usage
@@ -340,6 +340,34 @@ aph::addProc get_tool_version {
 	}
 }
 
+aph::addProc current_design {
+	designName?
+	{Set current design, if 'designName' specified.  Return current design name.}
+	{
+		if {[aph::parseOpts opts args]} {return}; #did help/usage
+		nlsh $opts(*command*) $designName
+	}
+}
+
+aph::addProc link {
+	{}
+	{Link current design.
+Return {} (empty list) on success.
+Return flat list of {refNm1 n1 ... refNmn nn} indicating n unresolved
+references, where each entry 'refNmi ni' is a pair indicating (unresolved)
+reference name 'refNmi' and the number of instances referring to it 'ni'.
+Such as list can be used directly to initialize a map of unresolved
+reference count 'ni' by name 'refNmi', as in
+
+array set unresolvedByName [link]
+parray unresolvedByName
+}
+	{
+		if {[aph::parseOpts opts args]} {return}; #did help/usage
+		nlsh $opts(*command*)
+	}
+}
+
 proc is_object {x} {
 	aph::isObject $x
 }
@@ -347,6 +375,5 @@ proc is_object {x} {
 proc help {args} {
 	aph::help
 }
-
 
 nlsh::_priv::helloWorld

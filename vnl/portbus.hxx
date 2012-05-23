@@ -64,7 +64,6 @@ namespace vnl {
         }
 
         static const unsigned stTypeId;
-
     };
 
     inline

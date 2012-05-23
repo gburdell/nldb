@@ -27,7 +27,7 @@
 namespace vnltcl {
     static const string stTypeName = "collection";
     
-    unsigned Collection::stTypeId = Object::getNextTypeId(stTypeName);
+    unsigned Collection::stTypeId = NlshObject::getNextTypeId(stTypeName);
     
     string Collection::getTypeName() {
         return stTypeName;
@@ -40,7 +40,7 @@ namespace vnltcl {
         add(base);
     }
 
-    Collection::Collection(const TRcObject &scalar) {
+    Collection::Collection(const TRcNlshObject &scalar) {
         ASSERT_TRUE(! Collection::isA(scalar));        
         add(scalar);
     }
@@ -51,7 +51,7 @@ namespace vnltcl {
     }
 
     bool
-    Collection::add(const TRcObject &item, bool allowHetero) {
+    Collection::add(const TRcNlshObject &item, bool allowHetero) {
         bool ok = allowHetero || isEmpty();
         if (!ok) {
             //can only add the same thing
@@ -72,4 +72,8 @@ namespace vnltcl {
         return rval;
     }
 
+    TRcAttrVal 
+    Collection::getAttrVal(const string &name) const throw (AttrException) {
+        ASSERT_NEVER;
+    }
 }

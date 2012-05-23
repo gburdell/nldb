@@ -28,7 +28,9 @@
 #include <map>
 #include <utility>
 #include <list>
+#include "xyzzy/assert.hxx"
 #include "tcl/vnltcl.hxx"
+#include "tcl8.4.19/generic/tcl.h"
 
 namespace vnltcl {
     using std::string;
@@ -37,6 +39,7 @@ namespace vnltcl {
     using std::list;
     using xyzzy::TRcObj;
     using xyzzy::PTRcObjPtr;
+    using xyzzy::PTRcPtr;
 
     class AttrVal;
 
@@ -59,7 +62,7 @@ namespace vnltcl {
 
         explicit AttrVal(int v);
 
-        explicit AttrVal(string v);
+        explicit AttrVal(const string &v);
 
         explicit AttrVal(double v);
 
@@ -72,6 +75,8 @@ namespace vnltcl {
         string getTypeName() const {
             return stTypeName[m_type];
         }
+
+        string asString() const;
 
         //Allow default copy constructors.
 
@@ -93,7 +98,7 @@ namespace vnltcl {
 
             //Unions cant have members w/ constructors (i.e., string).
 
-            Val(string v) {
+            Val(const string & v) {
                 mp_string = new string(v);
             }
 
@@ -126,85 +131,67 @@ namespace vnltcl {
     };
 
     /**
-     * Object types with attributes "has-a" AttrHandler.
+     * AttrHandler class provides attribute services.
      */
-    class AttrHandler;
-
-    /**
-     * A reference counted AttrVal type.
-     */
-    typedef PTRcObjPtr<AttrHandler> TRcAttrHandler;
-
-    class AttrHandler : public TRcObj {
-    public:
-        class IProvider;
-
+    class AttrHandler {
+    protected:
         explicit AttrHandler();
+
+    public:
+        typedef AttrVal::EType EType;
+
+        /// Pointer to class function which implements attribute(s)
+        typedef TRcAttrVal(AttrHandler::*HandlerPtr)(const string &attrNm) const;
 
         /**
          * Return true if attribute name defined.
          * @param nm attribute name.
          * @return true if attribute name defined.
          */
-        bool defined(string nm) const;
+        bool defined(const string &nm) const;
 
         /**
          * Get attribute value.
          * @param nm attribute name.
-         * @param obj get attribute of this object.
          * @return value or throw AttrException.
          */
-        TRcAttrVal getVal(string nm, TRcObject obj) const throw (AttrException);
+        TRcAttrVal getVal(const string &nm) const throw (AttrException);
 
-        AttrVal::EType getType(string nm) const throw (AttrException);
+        virtual TRcAttrVal defaultGetVal(const string &nm) const throw (AttrException);
+
+        EType getType(const string &nm) const throw (AttrException);
 
         /**
          * Add attribute provider.
          * @param nm attribute name to add.
-         * @param type
-         * @param provider
+         * @param type type of attribute.
+         * @param func pointer to class method which handles this attribute.
+         *              A null/0 value will invoke the defaultGetVal method.
          * @throw AttrException if nm is duplicate.
          */
-        void addAttr(string nm, AttrVal::EType type, IProvider *provider) throw (AttrException);
+        void addAttr(const string &nm, EType type, HandlerPtr func = 0) throw (AttrException);
 
         typedef pair<string, string> NameType;
         typedef list<NameType> NameTypeList;
+        typedef PTRcPtr<NameTypeList> TRcNameTypeList;
 
         /**
          * Get list of attribute info: name, type.
          * @param info list to add info.
-         * @return number of elements added.
+         * @return attribute info.
          */
-        int getAttrs(NameTypeList &info);
+        TRcNameTypeList getAttrs() const;
 
-        /**
-         * Interface of an attribute provider.
-         */
-        class IProvider {
-        private:
-            /**
-             * Get attribute value of object.
-             * @param nm attribute name.
-             * @param obj get attribute of this object.
-             * @return value.
-             */
-            virtual TRcAttrVal getVal(string nm, TRcObject obj) const;
+    protected:
+        typedef pair<AttrVal::EType, HandlerPtr> Info;
+        typedef map<string, Info> HandlerMap;
 
-            explicit IProvider();
+        HandlerMap m_infoByName;
 
-            virtual ~IProvider() = 0;
+        const Info& getInfo(string nm) const throw (AttrException);
 
-            //AttrHandler calls getVal().
-            friend class AttrHandler;
-        };
-
-    private:
-        typedef pair<AttrVal::EType, IProvider*> Info;
-        typedef map<string, Info> ProviderMap;
-
-        ProviderMap m_infoByName;
-
-        Info getInfo(string nm) const throw (AttrException);
+        virtual ~AttrHandler() {
+        }
 
         //Cannot copy
         DECL_COPY_CONSTRUCTORS(AttrHandler);

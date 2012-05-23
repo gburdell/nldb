@@ -31,7 +31,7 @@ namespace vnltcl {
     static const string stScopedCellName = "scopedCell";
     static const string stScopedWireName = "scopedWire";
     static const string stScopedPinRefName = "scopedPinRef";
-    const unsigned ScopeLink::stTypeId = Object::getNextTypeId(stScopeLink);
+    const unsigned ScopeLink::stTypeId = NlshObject::getNextTypeId(stScopeLink);
     template<> const unsigned ScopeEle<TRcCell>::stTypeId = ScopeEle<TRcCell>::getNextTypeId(stScopedCellName);
     template<> const unsigned ScopeEle<TRcWire>::stTypeId = ScopeEle<TRcWire>::getNextTypeId(stScopedWireName);
     template<> const unsigned ScopeEle<TRcPinRef>::stTypeId = ScopeEle<TRcPinRef>::getNextTypeId(stScopedPinRefName);

@@ -24,7 +24,7 @@
 #include "tcl/iterator.hxx"
 
 namespace vnltcl {
-    unsigned Iterator::stTypeId = Object::getNextTypeId("iterator");
+    unsigned Iterator::stTypeId = NlshObject::getNextTypeId("iterator");
 
     Iterator Iterator::stOneOf;
     
@@ -37,10 +37,10 @@ namespace vnltcl {
     : m_iter(m_iter) {
     }
 
-    TRcObject& 
+    TRcNlshObject& 
     Iterator::getNext() {
-        static TRcObject stNullObj;
-        TRcObject &rval = stNullObj;
+        static TRcNlshObject stNullObj;
+        TRcNlshObject &rval = stNullObj;
         while (m_iter.hasMore()) {
             rval = *m_iter++;
             if (rval.isValid()) {
@@ -58,5 +58,10 @@ namespace vnltcl {
     unsigned
     Iterator::getTypeId() const {
         return stTypeId;
+    }
+    
+    TRcAttrVal 
+    Iterator::getAttrVal(const string &name) const throw (AttrException) {
+        ASSERT_NEVER;
     }
 }

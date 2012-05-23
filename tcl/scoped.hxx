@@ -30,6 +30,7 @@
 #include "vnl/wire.hxx"
 #include "vnl/pinref.hxx"
 #include "tcl/vnltcl.hxx"
+#include "tcl/nlshobjs.hxx"
 
 /**
  * Scoped element objects: Cell, PinRef and Wire.
@@ -47,7 +48,7 @@ namespace vnltcl {
 
     typedef PTRcObjPtr<ScopeLink> TRcScopeLink;
 
-    class ScopeLink : virtual public Object {
+    class ScopeLink : virtual public NlshObject {
     public:
         explicit ScopeLink();
 
@@ -78,7 +79,7 @@ namespace vnltcl {
     };
 
     template<class T>
-    class ScopeEle : virtual public Object, public ScopeLink {
+    class ScopeEle : virtual public NlshObject, public ScopeLink {
     public:
 
         explicit ScopeEle(TRcScopeLink &parent, T& ele)

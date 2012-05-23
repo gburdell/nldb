@@ -42,6 +42,7 @@ namespace vnltcl {
         m_fmtByCode["ATTR-1"]  = "'%s' attribute not valid for '%s' type object";
         m_fmtByCode["COLL-1"]  = "'%s' >= %s (length of collection)";
         m_fmtByCode["DES-1"]   = "current_design is not set";
+        m_fmtByCode["DES-2"]   = "design '%s' does not exist in design library";
         m_fmtByCode["EDIT-1"]  = "unable to insert %s '%s' into design '%s'";
         m_fmtByCode["EDIT-2"]  = "insert %s '%s' into design '%s'";
         m_fmtByCode["EDIT-3"]  = "unable to remove %s '%s' from design '%s'";

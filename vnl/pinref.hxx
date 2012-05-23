@@ -76,11 +76,19 @@ namespace vnl {
         string getFullName(string sep = "/") const;
 
         /**
-         * Get full pin name.
+         * Get pin name.
          * @return pin name including bit-select.
          */
         string getBitNm() const;
 
+        /**
+         * Get pin name.
+         * @return pin name with optional bit-select.
+         */
+        string getName() const {
+            return getBitNm();
+        }
+        
         unsigned getLbOffset() const {
             return m_lbOffset;
         }

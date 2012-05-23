@@ -21,10 +21,13 @@
 //LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //THE SOFTWARE.
-#include "attribute.hxx"
+#include "xyzzy/util.hxx"
+#include "tcl/attribute.hxx"
 
 namespace vnltcl {
-    
+    using xyzzy::mapGetVal;
+    using xyzzy::mapHasKey;
+
     const string AttrVal::stTypeName[4] = {
         "int", "string", "double", "bool"
     };
@@ -33,36 +36,42 @@ namespace vnltcl {
     const string AttrException::DUP_ATTR = "duplicate attribute";
 
     AttrVal::AttrVal(int v)
-    :   m_type(eInt),
-        m_val(v)
-    {}
+    : m_type(eInt),
+    m_val(v) {
+    }
 
-    AttrVal::AttrVal(string v)
-    :   m_type(eString),
-        m_val(v)
-    {}
+    AttrVal::AttrVal(const string &v)
+    : m_type(eString),
+    m_val(v) {
+    }
 
     AttrVal::AttrVal(double v)
-    :   m_type(eDouble),
-        m_val(v)
-    {}
+    : m_type(eDouble),
+    m_val(v) {
+    }
 
     AttrVal::AttrVal(bool v)
-    :   m_type(eBool),
-        m_val(v)
-    {}
+    : m_type(eBool),
+    m_val(v) {
+    }
+
+    string
+    AttrVal::asString() const {
+        ASSERT_TRUE(eString == getType());
+        return *(m_val.mp_string);
+    }
 
     AttrVal::~AttrVal() {
         if (eString == m_type) {
             delete m_val.mp_string;
         }
     }
-    
-    int
-    AttrHandler::getAttrs(NameTypeList &linfo) {
-        int cnt = 0;
-        ProviderMap::const_iterator iter = m_infoByName.begin();
-        const ProviderMap::const_iterator end = m_infoByName.end();
+
+    AttrHandler::TRcNameTypeList
+    AttrHandler::getAttrs() const {
+        TRcNameTypeList linfo = new NameTypeList();
+        HandlerMap::const_iterator iter = m_infoByName.begin();
+        const HandlerMap::const_iterator end = m_infoByName.end();
         string name;
         Info info;
         NameType nameType;
@@ -70,50 +79,59 @@ namespace vnltcl {
             name = iter->first;
             info = iter->second;
             nameType = std::make_pair(name, AttrVal::stTypeName[info.first]);
-            linfo.push_back(nameType);
-            cnt++;
+            linfo->push_back(nameType);
         }
-        return cnt;
+        return linfo;
     }
 
-    AttrHandler::AttrHandler()
-    {}
+    AttrHandler::AttrHandler() {
+    }
 
-    AttrHandler::Info
+    const AttrHandler::Info&
     AttrHandler::getInfo(string nm) const throw (AttrException) {
-        if (! defined(nm)) {
+        if (!defined(nm)) {
             throw AttrException(nm, AttrException::BAD_ATTR);
         }
-        Info info = const_cast<AttrHandler*>(this)->m_infoByName[nm];
-        return info;
-    }
-    
-    bool 
-    AttrHandler::defined(string nm) const {
-        return (m_infoByName.end() != m_infoByName.find(nm));
+        return const_cast<AttrHandler*>(this)->m_infoByName[nm];
     }
 
-    TRcAttrVal 
-    AttrHandler::getVal(string nm, TRcObject obj) const throw (AttrException) {
-        Info info = getInfo(nm);
-        TRcAttrVal val = info.second->getVal(nm, obj);
+    bool
+    AttrHandler::defined(const string &nm) const {
+        return mapHasKey(m_infoByName, nm);
+    }
+
+    TRcAttrVal
+    AttrHandler::getVal(const string &nm) const throw (AttrException) {
+        TRcAttrVal val;
+        HandlerPtr fptr = getInfo(nm).second;
+        if (0 != fptr) {
+            val = (this->*fptr)(nm);
+        } else {
+            val = defaultGetVal(nm);
+        }
+        //verify we get type expected
+        ASSERT_TRUE(val->getType() == getType(nm));
         return val;
     }
 
-    AttrVal::EType 
-    AttrHandler::getType(string nm) const throw (AttrException) {
+    AttrVal::EType
+    AttrHandler::getType(const string &nm) const throw (AttrException) {
         Info info = getInfo(nm);
         return info.first;
     }
 
-    void 
-    AttrHandler::addAttr(string nm, AttrVal::EType type, IProvider *provider) throw (AttrException) {
+    void
+    AttrHandler::addAttr(const string &nm, AttrVal::EType type, HandlerPtr func) throw (AttrException) {
         if (defined(nm)) {
             throw AttrException(nm, AttrException::DUP_ATTR);
         }
-        Info info = std::make_pair(type, provider);
+        Info info = std::make_pair(type, func);
         m_infoByName[nm] = info;
     }
- 
+
+    TRcAttrVal
+    AttrHandler::defaultGetVal(const string &nm) const throw (AttrException) {
+        ASSERT_NEVER;
+    }
 }
 

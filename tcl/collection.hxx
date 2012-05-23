@@ -27,18 +27,19 @@
 #include "xyzzy/slist.hxx"
 #include "vnl/vnl.hxx"
 #include "tcl/vnltcl.hxx"
+#include "tcl/nlshobjs.hxx"
 
 namespace vnltcl {
     using xyzzy::PTSlist;
 
     DECL_CLASS(Collection);
 
-    typedef PTSlist<TRcObject>::Iterator CollectionIter;
+    typedef PTSlist<TRcNlshObject>::Iterator CollectionIter;
 
     /**
-     * A collection of TRcObject.
+     * A collection of TRcNlshObject.
      */
-    class Collection : public Object, public PTSlist<TRcObject> {
+    class Collection : public NlshObject, public PTSlist<TRcNlshObject> {
     public:
         explicit Collection();
 
@@ -46,7 +47,7 @@ namespace vnltcl {
          * Create collection of 1 scalar (not collection) element.
          * @param scalar scalar element to initialize collection.
          */
-        explicit Collection(const TRcObject &scalar);
+        explicit Collection(const TRcNlshObject &scalar);
 
         /**
          * Create collection as copy of existing collection.
@@ -60,7 +61,7 @@ namespace vnltcl {
          * @param allowHetero set true to allow heterogeneous collection.
          * @return true if obj added, else false.
          */
-        bool add(const TRcObject &obj, bool allowHetero = false);
+        bool add(const TRcNlshObject &obj, bool allowHetero = false);
 
         /**
          * Add collection to collection.
@@ -70,7 +71,7 @@ namespace vnltcl {
          */
         bool add(TRcCollection &from, bool allowHetero = false);
 
-        static bool isA(const TRcObject &obj) {
+        static bool isA(const TRcNlshObject &obj) {
             return (stTypeId == obj->getTypeId());
         }
 
@@ -78,6 +79,9 @@ namespace vnltcl {
 
         virtual ~Collection() {
         }
+        
+        TRcAttrVal getAttrVal(const string &name) const throw (AttrException);
+        
     private:
         /**
          * Get typeId for this class.
@@ -90,12 +94,12 @@ namespace vnltcl {
         static unsigned stTypeId;
     };
 
-    inline TRcObject upcast(const TRcCollection &p) {
-        return xyzzy::upcast<Object, Collection > (p);
+    inline TRcNlshObject upcast(const TRcCollection &p) {
+        return xyzzy::upcast<NlshObject, Collection > (p);
     }
 
-    inline TRcCollection toCollection(const TRcObject &p) {
-        return xyzzy::downcast<Object, Collection > (p);
+    inline TRcCollection toCollection(const TRcNlshObject &p) {
+        return xyzzy::downcast<NlshObject, Collection > (p);
     }
 }
 #endif	/* VNLTCL_COLLECTION_HXX */
