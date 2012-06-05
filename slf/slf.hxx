@@ -72,8 +72,9 @@ namespace slf {
     //The following used to build up AST.
     DECL_CLASS(LibraryEle);
     DECL_CLASS(KeyValue); //subclass of LibraryEle;
-    DECL_CLASS(LibCell); //subclass of LibraryEle;
+    DECL_CLASS(LibCell);  //subclass of LibraryEle;
 
+    DECL_CLASS_SIMPLE_RC(LibrarySet);
     DECL_CLASS_SIMPLE_RC(Bus);
     DECL_CLASS_SIMPLE_RC(ValueSet);
     DECL_CLASS_SIMPLE_RC(ValueType);

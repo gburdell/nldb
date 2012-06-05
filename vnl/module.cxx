@@ -26,6 +26,7 @@
 #include "xyzzy/util.hxx"
 #include "vnl/module.hxx"
 #include "vnl/library.hxx"
+#include "asgnrhs.hxx"
 
 namespace vnl {
 #define UNCONST const_cast<Module*>(this)
@@ -179,8 +180,10 @@ namespace vnl {
     /*
      * We'll track the modules we have done, to detect loops.
      */
-    static map<string,bool> stDidModuleNames;
-    static const unsigned NLIBS = 2;
+    static map<string, bool> stDidModuleNames;
+
+    typedef list<TRcLibrary> t_libs;
+
     /**
      * The workhorse linker.
      * @param m module to link.
@@ -189,10 +192,11 @@ namespace vnl {
      * @param strength link strength.
      * @param cnt count times through here.
      */
-    static 
-    void 
+    static
+    void
     wlink(Module &m, Module::trc_unresolvedCntByName &unresolved,
-            const TRcLibrary (&libs)[NLIBS], unsigned strength, unsigned &cnt) {
+            const t_libs &libs, unsigned strength, unsigned &cnt) {
+        typedef vnl::t_libs::const_iterator t_libIter;
         if (0 == cnt) {
             stDidModuleNames.clear();
         }
@@ -208,9 +212,10 @@ namespace vnl {
             const string &refnm = inst->getRefName();
             if (!inst->isResolved()) {
                 TRcModule ref;
-                for (unsigned k = 0; (k < NLIBS) && ref.isNull(); k++) {
-                    if (libs[k].isValid()) {
-                        ref = libs[k]->getModule(refnm);
+                for (t_libIter iter = libs.begin(); (iter != libs.end()) && ref.isNull(); ++iter) {
+                    const TRcLibrary &lib = *iter;
+                    if (lib.isValid()) {
+                        ref = lib->getModule(refnm);
                     }
                 }
                 if (ref.isValid()) {
@@ -231,25 +236,28 @@ namespace vnl {
             }
         }
     }
-    
+
     Module::trc_unresolvedCntByName
-    Module::link(const TRcObject &lib1, const TRcObject &lib2,
-            unsigned strength) {
+    Module::link(const Module::t_libObjs &libObjs, unsigned strength) {
+        //get list of TRcLibrary
+        vnl::t_libs libs;
+        t_libObjs::const_iterator iter = libObjs.begin();
+        for (; iter != libObjs.end(); ++iter) {
+            TRcLibrary clib = Library::downcast(*iter);
+            libs.push_back(clib);
+        }
         trc_unresolvedCntByName unresolved;
-        TRcLibrary libs[NLIBS];
-        libs[0] = Library::downcast(lib1);
-        if (lib2.isValid()) libs[1] = Library::downcast(lib2);
         unsigned cnt = 0;
         wlink(*this, unresolved, libs, strength, cnt);
         return unresolved;
     }
 
-    Module::trc_unresolvedCntByName
+    Module::trc_unresolvedCntByName 
     Module::link(const TRcObject &lib, unsigned strength) {
-        static const TRcObject stNil;
-        return link(lib, stNil, strength);
+        t_libObjs libObjs;
+        libObjs.push_back(lib);
+        return link(libObjs, strength);
     }
-
 
 #undef UNCONST
 };

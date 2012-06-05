@@ -63,7 +63,7 @@ namespace vnltcl {
     typedef PTArray<string> TStringAr;
     typedef PTRcArray<string> TRcStringAr;
 
-    static const string stToolVersion = "nl_shell v2012-05-23_15.00.10";
+    static const string stToolVersion = "nl_shell v2012-06-05_10.15.04";
     static const char *stPtrPfx = "_obj";
     static const string stNilArg = "_";
     // add 2 for 0x
@@ -127,13 +127,7 @@ namespace vnltcl {
         //1st try designs
         TRcModule ref = lib->getModule(refnm);
         if (ref.isNull()) {
-            lib = getSlfLib();
-            if (lib.isValid()) {
-                ref = lib->getModule(refnm);
-            }
-            if (ref.isNull()) {
-                throw TclError(interp, "OBJ-1", "reference", refnm);
-            }
+            throw TclError(interp, "OBJ-1", "reference", refnm);
         }
         TRcNlshDesign dsgn;
         if (ref.isValid()) {
@@ -186,11 +180,11 @@ namespace vnltcl {
 
     //extern
 
-    TRcLibrary&
-    getSlfLib(bool createIfNull) {
-        TRcLibrary &lib = Commands::getTheOne().getState().m_slfLib;
+    TRcLibrarySet&
+    getSlfLibs(bool createIfNull) {
+        TRcLibrarySet &lib = Commands::getTheOne().getState().m_slfLib;
         if (lib.isNull() && createIfNull) {
-            lib = new vnl::Library("slf");
+            lib = new slf::LibrarySet();
         }
         return lib;
     }
@@ -443,7 +437,7 @@ namespace vnltcl {
     Tcl_Obj*
     Commands::readSlf(const int argc, Tcl_Obj *CONST argv[]) throw (TclError) {
         ASSERT_TRUE(1 == argc);
-        TRcLibrary &lib = getSlfLib();
+        TRcLibrarySet &lib = getSlfLibs();
         TRcStringAr fnames = listAsStringAr(getInterp(), argv[0]);
         bool ok = true;
         for (int i = 0; ok && (i < fnames.length()); i++) {
@@ -500,9 +494,10 @@ namespace vnltcl {
     Commands::link(const int argc, Tcl_Obj *CONST argv[]) throw (TclError) {
         ASSERT_TRUE(0 == argc);
         TRcNlshDesign currd = getCurrentDesign();
-        TRcObject dlib = upcast(getDesignLib(false)),
-                slib = upcast(getSlfLib(false));
-        vnl::Module::trc_unresolvedCntByName unresolved = currd->asModule()->link(dlib, slib);
+        list<TRcObject> libs;
+        unsigned cnt = getState().getLibs(libs);
+        ASSERT_TRUE(0 < cnt);
+        vnl::Module::trc_unresolvedCntByName unresolved = currd->asModule()->link(libs);
         ostringstream oss;
         if (unresolved.isValid()) {
             for (vnl::Module::t_unresolvedCntByName::const_iterator iter = unresolved->begin();
@@ -526,4 +521,18 @@ namespace vnltcl {
         return Tcl_NewIntObj(isObj ? 1 : 0);
     }
 
+    unsigned
+    Commands::State::getLibs(list<TRcObject> &libs) {
+        libs.clear();
+        TRcObject libObj = upcast(m_designLib);
+        libs.push_back(libObj);
+        if (m_slfLib.isValid()) {
+            slf::LibrarySet::t_libByName::iterator iter = m_slfLib->getEntries().begin();
+            for (; iter != m_slfLib->getEntries().end(); ++iter) {
+                libObj = upcast(iter->second);
+                libs.push_back(libObj);
+            }
+        }
+        return libs.size();
+    }
 }

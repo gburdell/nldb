@@ -43,6 +43,7 @@ namespace vnl {
         typedef map<string, TRcCell> t_cellsByName;
         typedef map<string, unsigned> t_unresolvedCntByName;
         typedef PTRcPtr<t_unresolvedCntByName> trc_unresolvedCntByName;
+        typedef list<TRcObject> t_libObjs;  //TRcObject base of TRcLibrary
 
         explicit Module(string nm);
 
@@ -52,23 +53,21 @@ namespace vnl {
 
         /**
          * Link module by resolving all module references.
-         * @param lib reference to TRcLibrary of designs to link against.
+         * @param libs reference to list of libs to link against (in order).
+         * @param strength link strength: 1 indicates to only resolve references.
+         *                 >1 to check pin reference/widths too.
+         * @return map of unresolved module counts.
+         */
+        trc_unresolvedCntByName link(const t_libObjs &libs, unsigned strength = 1) ;
+
+        /**
+         * Link module by resolving all module references.
+         * @param lib reference to lib to link against.
          * @param strength link strength: 1 indicates to only resolve references.
          *                 >1 to check pin reference/widths too.
          * @return map of unresolved module counts.
          */
         trc_unresolvedCntByName link(const TRcObject &lib, unsigned strength = 1) ;
-
-        /**
-         * Link module by resolving all module references.
-         * @param lib1 reference to 1st TRcLibrary to link against.
-         * @param lib2 reference to 2nd TRcLibrary to link against.
-         * @param strength link strength: 1 indicates to only resolve references.
-         *                 >1 to check pin reference/widths too.
-         * @return map of unresolved module counts.
-         */
-        trc_unresolvedCntByName link(const TRcObject &lib1, const TRcObject &lib2,
-                unsigned strength = 1) ;
 
         /**
          * Port is declared, but not defined.

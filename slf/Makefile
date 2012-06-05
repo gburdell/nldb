@@ -25,8 +25,18 @@ LIBNM    = slf
 SRC_DIR  = .
 TEST     =
 
+ifeq ("Darwin","$(shell uname)")
+	OS :=  MacOSX
+else
+	OS :=  linux
+endif
+
 CFLAGS := -I.. -I../xyzzy/src
-LDFLAGS ?= -static
+ifeq ("MacOSX","${OS}")
+    LDFLAGS ?=
+else
+    LDFLAGS ?= -static
+endif
 ifeq ("debug","${VARIANT}")
 	CFLAGS  += -DDEBUG -g
 	LDFLAGS += -rdynamic
@@ -53,12 +63,6 @@ endif
 VARIANT  = debug
 OBJ_DIR  = build/${VARIANT}
 DIST_DIR = dist
-
-ifeq ("Darwin","$(shell uname)")
-	OS :=  MacOSX
-else
-	OS :=  linux
-endif
 
 LIBDIR = ${VARIANT}/${OS}
 

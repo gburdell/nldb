@@ -26,6 +26,7 @@
 
 #include <string>
 #include <map>
+#include <list>
 #include "tcl.h"
 #include "xyzzy/refcnt.hxx"
 #include "vnl/vnl.hxx"
@@ -35,12 +36,15 @@
 #include "tcl/util.hxx"
 #include "tcl/collection.hxx"
 #include "tcl/iterator.hxx"
+#include "slf/libraryset.hxx"
 
 namespace vnltcl {
     using vnl::TRcModule;
     //TODO: move TRcLibrary to NlshLibrary
     using vnl::TRcLibrary;
+    using slf::TRcLibrarySet;
     using std::map;
+    using std::list;
 
     class Commands;
 
@@ -58,8 +62,15 @@ namespace vnltcl {
          */
         struct State {
             TRcLibrary m_designLib;
-            TRcLibrary m_slfLib;
+            TRcLibrarySet m_slfLib;
             TRcNlshDesign m_currDesn;
+            
+            /**
+             * Get libraries in order: designLib, slfLibs.
+             * @param libs clear and populate with libraries.
+             * @return number of total libraries.
+             */
+            unsigned getLibs(list<TRcObject> &libs);
         };
 
         static Commands& getTheOne() {
@@ -490,8 +501,8 @@ namespace vnltcl {
     TRcLibrary&
     getDesignLib(bool createIfNull = true);
 
-    TRcLibrary&
-    getSlfLib(bool createIfNull = true);
+    TRcLibrarySet&
+    getSlfLibs(bool createIfNull = true);
 
     inline
     TRcNlshDesign&

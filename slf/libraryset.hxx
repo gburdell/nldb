@@ -22,36 +22,51 @@
  * THE SOFTWARE.
  */
 #if !defined(_slf_libraryset_hxx_)
-#    define  _slf_libraryset_hxx_
+#define  _slf_libraryset_hxx_
 
 #include <map>
 #include "vnl/library.hxx"
+#include "vnl/libcell.hxx"
 #include "slf/slf.hxx"
 
 namespace slf {
     using std::map;
+    using std::pair;
     using vnl::TRcLibrary;
-    
+
     /**
-     * Container for named libraries.
+     * Container for named libraries (of LibCell).
      */
     class LibrarySet : virtual public TRcObj {
     public:
-        explicit LibrarySet() {}
+        typedef pair<TRcLibrary, TRcLibCell> t_libAndCell;
+        typedef map<string, TRcLibrary> t_libByName;
         
+        explicit LibrarySet() {
+        }
+
         /**
          * Add library to this set.
          * @param lib library to add.
          */
         void addLibrary(TRcLibrary &lib);
-        
+
+        bool hasLibCell(string nm) const;
+
+        /**
+         * Get 1st occurrence of libcell.
+         * @param name of libcell.
+         * @return library/libcell.
+         */
+        t_libAndCell getLibCell(string name);
+
         /**
          * Check if named library already exists.
          * @param library name.
          * @return true if library by nm already exists.
          */
         bool hasLibrary(const string &nm) const;
-        
+
         /**
          * Check if library by same name exists.
          * @param lib check if another library with this lib's name exists.
@@ -60,13 +75,18 @@ namespace slf {
         bool hasLibrary(const TRcLibrary &lib) const {
             return hasLibrary(lib->getName());
         }
+
+        t_libByName& getEntries() {
+            return m_libsByName;
+        }
         
-        virtual ~LibrarySet() {}
-        
+        virtual ~LibrarySet() {
+        }
+
     private:
         ///Libraries by name.
-        map<string, TRcLibrary> m_libByName;
-        
+        t_libByName m_libsByName;
+
         //Not allowed
         COPY_CONSTRUCTOR_DECL(LibrarySet);
     };

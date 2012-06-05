@@ -37,6 +37,7 @@
 
 namespace slf {
     using std::endl;
+    using vnl::Library;
 
     static const string cArea = "area";
     static const string cArray = "array";
@@ -142,12 +143,12 @@ namespace slf {
     }
 
     void
-    Parser::start(TRcLibrary &lib) {
-        sourceText(lib);
+    Parser::start(TRcLibrarySet &libSet) {
+        sourceText(libSet);
     }
 
     void
-    Parser::sourceText(TRcLibrary &lib) throw (unsigned) {
+    Parser::sourceText(TRcLibrarySet &libSet) throw (unsigned) {
         TRcToken libnmTok;
         try {
             while (la(0)->getType() == Token::eLibrary) {
@@ -163,6 +164,16 @@ namespace slf {
                 }
                 accept();
                 expectAccept(Token::eRParen);
+                TRcLibrary lib;
+                {
+                    string libNm = libnmTok->getText();
+                    if (libnmTok->isType(Token::eString)) {
+                        libNm = rmEnclQuotes(libNm);
+                    }
+                    lib = new Library(libNm);
+                    //TODO: check for libNm already in libSet
+                    libSet->addLibrary(lib);
+                }
                 //initialize for library-scope busses
                 m_libBusTypes = new t_busTypes();
                 expectAccept(Token::eLCurly);
@@ -539,23 +550,24 @@ namespace slf {
 
 #include <iostream>
 #include "vnl/parser.hxx"
+#include "slf/libraryset.hxx"
 
 using namespace std;
 using namespace slf;
-using vnl::Library;
-using vnl::TRcLibrary;
+using slf::LibrarySet;
+using slf::TRcLibrarySet;
 
 int main(int argc, char *argv[]) {
     ASSERT_TRUE(2 <= argc);
     TRcToken tok;
     TRcLocation loc;
     TRcLexer lexer;
-    TRcLibrary work = new Library();
+    TRcLibrarySet libSet = new LibrarySet();
     for (int i = 1; i < argc; i++) {
         lexer = new Lexer(argv[i]);
         //cout << "Info: " << lexer->getFname() << ": processing ..." << endl;
         Parser parser(lexer);
-        parser.start(work);
+        parser.start(libSet);
     }
     return 0;
 }

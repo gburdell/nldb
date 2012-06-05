@@ -36,10 +36,7 @@
 #include "slf/slf.hxx"
 #include "slf/lexer.hxx"
 #include "slf/bus.hxx"
-//#include "slf/library.hxx"
-//#include "slf/module.hxx"
-//#include "slf/bus.hxx"
-//#include "slf/constref.hxx"
+#include "slf/libraryset.hxx"
 
 namespace slf {
     using std::deque;
@@ -54,7 +51,7 @@ namespace slf {
 
         explicit Parser(TRcLexer &lexer);
 
-        void start(TRcLibrary &lib);
+        void start(TRcLibrarySet &libSet);
 
         unsigned getErrorCnt() const {
             return m_errCnt;
@@ -120,7 +117,7 @@ namespace slf {
         //
         //Nonterminals
         //
-        void sourceText(TRcLibrary &lib) throw (unsigned);
+        void sourceText(TRcLibrarySet &libSet) throw (unsigned);
 
         pair<TRcLibraryEle,TRcValueSet> libraryEle(TRcLibrary &lib) throw (unsigned);
 
