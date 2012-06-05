@@ -130,6 +130,7 @@ Classes</h2></td></tr>
 Typedefs</h2></td></tr>
 <tr class="memitem:a36fc7cf8d0a9994b5e20afa070d97142"><td class="memItemLeft" align="right" valign="top">typedef map&lt; string, <a class="el" href="classvnl_1_1Token.html#a5901ede3a31e4cb480e43ac8ca2c29e0">Token::EType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a36fc7cf8d0a9994b5e20afa070d97142">t_keywordMap</a></td></tr>
 <tr class="memitem:ad0751f0192e68f7ffa1cd79878cc1e8e"><td class="memItemLeft" align="right" valign="top">typedef map&lt; <a class="el" href="classvnl_1_1Token.html#a5901ede3a31e4cb480e43ac8ca2c29e0">Token::EType</a>, string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#ad0751f0192e68f7ffa1cd79878cc1e8e">t_tokenTextMap</a></td></tr>
+<tr class="memitem:add96c2e8318aa7bc61a52b5a0871c5cc"><td class="memItemLeft" align="right" valign="top">typedef list&lt; TRcLibrary &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#add96c2e8318aa7bc61a52b5a0871c5cc">t_libs</a></td></tr>
 <tr class="memitem:abe77be6bedc667117a16e97c6c7593e6"><td class="memItemLeft" align="right" valign="top">typedef map&lt; unsigned, string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#abe77be6bedc667117a16e97c6c7593e6">TRttiMap</a></td></tr>
 <tr class="memitem:a3bb183ef88806ddd31ccec0258769afc"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classxyzzy_1_1PTRcPtr.html">PTRcPtr</a>&lt; <a class="el" href="classvnl_1_1Token.html">Token</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a3bb183ef88806ddd31ccec0258769afc">TRcToken</a></td></tr>
 <tr class="memitem:ac5a7d8b5171cf560dcb0c95176741f47"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classxyzzy_1_1PTRcPtr.html">PTRcPtr</a>&lt; <a class="el" href="classvnl_1_1Location.html">Location</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#ac5a7d8b5171cf560dcb0c95176741f47">TRcLocation</a></td></tr>
@@ -164,7 +165,7 @@ Functions</h2></td></tr>
 <tr class="memitem:adf8c9395472d2de3150089729641c964"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#adf8c9395472d2de3150089729641c964">message</a> (<a class="el" href="classvnl_1_1Message.html#a442e7774663d8f0b4dd8a1458ba1ad0f">Message::EType</a> type, string code, string s1=&quot;&quot;, string s2=&quot;&quot;, string s3=&quot;&quot;, string s4=&quot;&quot;)</td></tr>
 <tr class="memitem:abcf03a3e680fc0e01bf07cc39bbcd76c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#abcf03a3e680fc0e01bf07cc39bbcd76c">info</a> (string code, string s1, string s2, string s3, string s4)</td></tr>
 <tr class="memitem:aec4719bb899441316f7d824499faba2c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#aec4719bb899441316f7d824499faba2c">error</a> (string code, string s1, string s2, string s3, string s4)</td></tr>
-<tr class="memitem:a53f0792918ead411fab1fbbf4bab8798"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a53f0792918ead411fab1fbbf4bab8798">wlink</a> (<a class="el" href="classvnl_1_1Module.html">Module</a> &amp;m, <a class="el" href="classvnl_1_1Module.html#a131807df78b014ecd7fc1e4a7d957f4c">Module::trc_unresolvedCntByName</a> &amp;unresolved, const TRcLibrary(&amp;libs)[<a class="el" href="namespacevnl.html#a2b7e90d28fb692b882e5de3904c37b82">NLIBS</a>], unsigned strength, unsigned &amp;cnt)</td></tr>
+<tr class="memitem:a31b998e0eaad1d4ee18917b406d84754"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a31b998e0eaad1d4ee18917b406d84754">wlink</a> (<a class="el" href="classvnl_1_1Module.html">Module</a> &amp;m, <a class="el" href="classvnl_1_1Module.html#a131807df78b014ecd7fc1e4a7d957f4c">Module::trc_unresolvedCntByName</a> &amp;unresolved, const <a class="el" href="namespacevnl.html#add96c2e8318aa7bc61a52b5a0871c5cc">t_libs</a> &amp;libs, unsigned strength, unsigned &amp;cnt)</td></tr>
 <tr class="memitem:a7b827be0b398510bc5c63ba9e6c84a64"><td class="memItemLeft" align="right" valign="top">const TRcObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a7b827be0b398510bc5c63ba9e6c84a64">upcast</a> (const TRcModule &amp;p)</td></tr>
 <tr class="memitem:a0346b9c4e837fa0c4abbbf50ff5df7df"><td class="memItemLeft" align="right" valign="top">TRcObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a0346b9c4e837fa0c4abbbf50ff5df7df">upcast</a> (TRcModule &amp;p)</td></tr>
 <tr class="memitem:ad9c74aa3c12c38523bdf550038d9c0d3"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classvnl_1_1Port.html#aa83de896aeeec435365cb106468cc7ce">Port::EDirection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#ad9c74aa3c12c38523bdf550038d9c0d3">getDirection</a> (<a class="el" href="classvnl_1_1Token.html#a5901ede3a31e4cb480e43ac8ca2c29e0">Token::EType</a> type)</td></tr>
@@ -219,12 +220,11 @@ Functions</h2></td></tr>
 <tr class="memitem:a8b0f7a5fb79ce818c5f827cc2eef7832"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a8b0f7a5fb79ce818c5f827cc2eef7832">currentTime</a> ()</td></tr>
 <tr><td colspan="2"><h2><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:acf79541a0cd338b315bbf08ed9b6b42f"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#acf79541a0cd338b315bbf08ed9b6b42f">stTypeName</a> = &quot;asgnrhs&quot;</td></tr>
+<tr class="memitem:aca6e9c3b95e40642fc313e7f3b723c02"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#aca6e9c3b95e40642fc313e7f3b723c02">stTypeName</a> = &quot;asgnrhs&quot;</td></tr>
 <tr class="memitem:acdbe21cb81545eabaf793d62c68daf0d"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespacevnl.html#a36fc7cf8d0a9994b5e20afa070d97142">t_keywordMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#acdbe21cb81545eabaf793d62c68daf0d">stKeywordMap</a></td></tr>
 <tr class="memitem:a7b366461f17939945a240e0be84d3697"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespacevnl.html#ad0751f0192e68f7ffa1cd79878cc1e8e">t_tokenTextMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a7b366461f17939945a240e0be84d3697">stTokenTextMap</a></td></tr>
 <tr class="memitem:a131b664e57f99adb8ce6bc13ee3785b5"><td class="memItemLeft" align="right" valign="top">ostream *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a131b664e57f99adb8ce6bc13ee3785b5">stpOS</a> [] = {&amp;cout, &amp;cout, &amp;cerr, &amp;cerr}</td></tr>
-<tr class="memitem:a1db5c21aa6b2e88cfc031d865efa7206"><td class="memItemLeft" align="right" valign="top">static map&lt; string, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a1db5c21aa6b2e88cfc031d865efa7206">stDidModuleNames</a></td></tr>
-<tr class="memitem:a2b7e90d28fb692b882e5de3904c37b82"><td class="memItemLeft" align="right" valign="top">static const unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#a2b7e90d28fb692b882e5de3904c37b82">NLIBS</a> = 2</td></tr>
+<tr class="memitem:aaed299e679b078ce723f8b73a6a96e7e"><td class="memItemLeft" align="right" valign="top">static map&lt; string, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevnl.html#aaed299e679b078ce723f8b73a6a96e7e">stDidModuleNames</a></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>All things related to verilog netlist. </p>
@@ -241,6 +241,21 @@ Variables</h2></td></tr>
 <div class="memdoc">
 
 <p>Definition at line <a class="el" href="vnl_2lexer_8cxx_source.html#l00034">34</a> of file <a class="el" href="vnl_2lexer_8cxx_source.html">lexer.cxx</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="add96c2e8318aa7bc61a52b5a0871c5cc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef list&lt;TRcLibrary&gt; <a class="el" href="namespacevnl.html#add96c2e8318aa7bc61a52b5a0871c5cc">vnl::t_libs</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00185">185</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -459,7 +474,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="writer_8cxx_source.html#l00052">52</a> of file <a class="el" href="writer_8cxx_source.html">writer.cxx</a>.</p>
+<p>Definition at line <a class="el" href="writer_8cxx_source.html#l00053">53</a> of file <a class="el" href="writer_8cxx_source.html">writer.cxx</a>.</p>
 
 </div>
 </div>
@@ -579,7 +594,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="writer_8cxx_source.html#l00068">68</a> of file <a class="el" href="writer_8cxx_source.html">writer.cxx</a>.</p>
+<p>Definition at line <a class="el" href="writer_8cxx_source.html#l00069">69</a> of file <a class="el" href="writer_8cxx_source.html">writer.cxx</a>.</p>
 
 </div>
 </div>
@@ -1175,7 +1190,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="portbus_8hxx_source.html#l00071">71</a> of file <a class="el" href="portbus_8hxx_source.html">portbus.hxx</a>.</p>
+<p>Definition at line <a class="el" href="portbus_8hxx_source.html#l00070">70</a> of file <a class="el" href="portbus_8hxx_source.html">portbus.hxx</a>.</p>
 
 </div>
 </div>
@@ -1310,7 +1325,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="writer_8cxx_source.html#l00058">58</a> of file <a class="el" href="writer_8cxx_source.html">writer.cxx</a>.</p>
+<p>Definition at line <a class="el" href="writer_8cxx_source.html#l00059">59</a> of file <a class="el" href="writer_8cxx_source.html">writer.cxx</a>.</p>
 
 </div>
 </div>
@@ -1405,7 +1420,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="portbus_8hxx_source.html#l00083">83</a> of file <a class="el" href="portbus_8hxx_source.html">portbus.hxx</a>.</p>
+<p>Definition at line <a class="el" href="portbus_8hxx_source.html#l00082">82</a> of file <a class="el" href="portbus_8hxx_source.html">portbus.hxx</a>.</p>
 
 </div>
 </div>
@@ -1424,7 +1439,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="portbus_8hxx_source.html#l00087">87</a> of file <a class="el" href="portbus_8hxx_source.html">portbus.hxx</a>.</p>
+<p>Definition at line <a class="el" href="portbus_8hxx_source.html#l00086">86</a> of file <a class="el" href="portbus_8hxx_source.html">portbus.hxx</a>.</p>
 
 </div>
 </div>
@@ -1557,7 +1572,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="portbus_8hxx_source.html#l00075">75</a> of file <a class="el" href="portbus_8hxx_source.html">portbus.hxx</a>.</p>
+<p>Definition at line <a class="el" href="portbus_8hxx_source.html#l00074">74</a> of file <a class="el" href="portbus_8hxx_source.html">portbus.hxx</a>.</p>
 
 </div>
 </div>
@@ -1595,7 +1610,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="portbus_8hxx_source.html#l00079">79</a> of file <a class="el" href="portbus_8hxx_source.html">portbus.hxx</a>.</p>
+<p>Definition at line <a class="el" href="portbus_8hxx_source.html#l00078">78</a> of file <a class="el" href="portbus_8hxx_source.html">portbus.hxx</a>.</p>
 
 </div>
 </div>
@@ -1732,44 +1747,6 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a069ddf1a041ee8c4372280aa0989f2b9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const TRcObject <a class="el" href="namespacevnl.html#aee0af4ad98952d4946146fb8fe2ffec4">vnl::upcast</a> </td>
-          <td>(</td>
-          <td class="paramtype">const TRcPinRef &amp;&#160;</td>
-          <td class="paramname"><em>p</em></td><td>)</td>
-          <td><code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00113">113</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ab451082b0a23479505a1a806edffb064"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TRcObject <a class="el" href="namespacevnl.html#aee0af4ad98952d4946146fb8fe2ffec4">vnl::upcast</a> </td>
-          <td>(</td>
-          <td class="paramtype">TRcPinRef &amp;&#160;</td>
-          <td class="paramname"><em>p</em></td><td>)</td>
-          <td><code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00117">117</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="aadb9bcd1d0f52ff42217576f25e85d97"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1789,14 +1766,14 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a39f30c36b602d4d6129de5f259938b52"></a>
+<a class="anchor" id="a069ddf1a041ee8c4372280aa0989f2b9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">const TRcObject <a class="el" href="namespacevnl.html#aee0af4ad98952d4946146fb8fe2ffec4">vnl::upcast</a> </td>
           <td>(</td>
-          <td class="paramtype">const TRcCell &amp;&#160;</td>
+          <td class="paramtype">const TRcPinRef &amp;&#160;</td>
           <td class="paramname"><em>p</em></td><td>)</td>
           <td><code> [inline]</code></td>
         </tr>
@@ -1804,7 +1781,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00122">122</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00121">121</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
 
 </div>
 </div>
@@ -1827,6 +1804,44 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ab451082b0a23479505a1a806edffb064"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TRcObject <a class="el" href="namespacevnl.html#aee0af4ad98952d4946146fb8fe2ffec4">vnl::upcast</a> </td>
+          <td>(</td>
+          <td class="paramtype">TRcPinRef &amp;&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00125">125</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a39f30c36b602d4d6129de5f259938b52"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const TRcObject <a class="el" href="namespacevnl.html#aee0af4ad98952d4946146fb8fe2ffec4">vnl::upcast</a> </td>
+          <td>(</td>
+          <td class="paramtype">const TRcCell &amp;&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00126">126</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a50a2dc92668b8a0062b495042505ff9d"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1842,7 +1857,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00125">125</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00129">129</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
 
 </div>
 </div>
@@ -1975,7 +1990,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8hxx_source.html#l00210">210</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00209">209</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 
 </div>
 </div>
@@ -1994,16 +2009,16 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="module_8hxx_source.html#l00214">214</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8hxx_source.html#l00213">213</a> of file <a class="el" href="module_8hxx_source.html">module.hxx</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a53f0792918ead411fab1fbbf4bab8798"></a>
+<a class="anchor" id="a31b998e0eaad1d4ee18917b406d84754"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">static void <a class="el" href="namespacevnl.html#a53f0792918ead411fab1fbbf4bab8798">vnl::wlink</a> </td>
+          <td class="memname">static void <a class="el" href="namespacevnl.html#a31b998e0eaad1d4ee18917b406d84754">vnl::wlink</a> </td>
           <td>(</td>
           <td class="paramtype">Module &amp;&#160;</td>
           <td class="paramname"><em>m</em>, </td>
@@ -2017,8 +2032,8 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const TRcLibrary(&amp;)&#160;</td>
-          <td class="paramname"><em>libs</em>[NLIBS], </td>
+          <td class="paramtype">const t_libs &amp;&#160;</td>
+          <td class="paramname"><em>libs</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -2052,38 +2067,23 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00194">194</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
+<p>Definition at line <a class="el" href="module_8cxx_source.html#l00197">197</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Variable Documentation</h2>
-<a class="anchor" id="a2b7e90d28fb692b882e5de3904c37b82"></a>
+<a class="anchor" id="aaed299e679b078ce723f8b73a6a96e7e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const unsigned <a class="el" href="namespacevnl.html#a2b7e90d28fb692b882e5de3904c37b82">vnl::NLIBS</a> = 2<code> [static]</code></td>
+          <td class="memname">map&lt;string, bool&gt; <a class="el" href="namespacevnl.html#aaed299e679b078ce723f8b73a6a96e7e">vnl::stDidModuleNames</a><code> [static]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Definition at line <a class="el" href="module_8cxx_source.html#l00183">183</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a1db5c21aa6b2e88cfc031d865efa7206"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">map&lt;string,bool&gt; <a class="el" href="namespacevnl.html#a1db5c21aa6b2e88cfc031d865efa7206">vnl::stDidModuleNames</a><code> [static]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Definition at line <a class="el" href="module_8cxx_source.html#l00182">182</a> of file <a class="el" href="module_8cxx_source.html">module.cxx</a>.</p>
 
 </div>
 </div>
@@ -2132,12 +2132,12 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="acf79541a0cd338b315bbf08ed9b6b42f"></a>
+<a class="anchor" id="aca6e9c3b95e40642fc313e7f3b723c02"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">string <a class="el" href="namespacevnl.html#acf79541a0cd338b315bbf08ed9b6b42f">vnl::stTypeName</a> = &quot;asgnrhs&quot;<code> [static]</code></td>
+          <td class="memname">static string <a class="el" href="namespacevnl.html#aca6e9c3b95e40642fc313e7f3b723c02">vnl::stTypeName</a> = &quot;asgnrhs&quot;<code> [static]</code></td>
         </tr>
       </table>
 </div>
@@ -2151,7 +2151,7 @@ Variables</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 23 2012 08:14:07 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jun 5 2012 12:03:10 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

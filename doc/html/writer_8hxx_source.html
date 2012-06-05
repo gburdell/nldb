@@ -131,62 +131,60 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00035"></a>00035     <span class="keyword">public</span>:
 <a name="l00036"></a>00036 
 <a name="l00040"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html">00040</a>         <span class="keyword">struct </span><a class="code" href="structvnl_1_1Writer_1_1Config.html">Config</a> {
-<a name="l00041"></a>00041             <span class="keyword">explicit</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#a420bb79c5c463d5a2f6f3606c68f01d7">Config</a>(<span class="keywordtype">bool</span> ansiPortDecl = <span class="keyword">false</span>,
+<a name="l00041"></a>00041             <span class="keyword">explicit</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#a6fb92c5dde797d16178246c0004ca3dd">Config</a>(<span class="keywordtype">bool</span> ansiPortDecl = <span class="keyword">false</span>,
 <a name="l00042"></a>00042                     <span class="keywordtype">bool</span> topModuleLast = <span class="keyword">true</span>,
 <a name="l00043"></a>00043                     <span class="keywordtype">bool</span> instTopological = <span class="keyword">false</span>,
 <a name="l00044"></a>00044                     <span class="keywordtype">unsigned</span> portDeclIndent = 2,
 <a name="l00045"></a>00045                     <span class="keywordtype">unsigned</span> instDeclIndent = 2,
-<a name="l00046"></a>00046                     <span class="keywordtype">unsigned</span> instDeclBusConnIndent = 4,
-<a name="l00047"></a>00047                     <span class="keywordtype">unsigned</span> wireDefnIndent = 2,
-<a name="l00048"></a>00048                     <span class="keywordtype">unsigned</span> compressBusConnExpr = 2,
-<a name="l00049"></a>00049                     <span class="keywordtype">bool</span> libCellStub = <span class="keyword">true</span>,
-<a name="l00050"></a>00050                     <span class="keywordtype">unsigned</span> maxCharsPerLine = 80,
-<a name="l00051"></a>00051                     <span class="keywordtype">bool</span> allowUnresolved = <span class="keyword">true</span>
-<a name="l00052"></a>00052                     );
-<a name="l00053"></a>00053 
-<a name="l00054"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#a25d58fe351105d963bccaa5abe5ce425">00054</a>             <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#a25d58fe351105d963bccaa5abe5ce425">m_ansiPortDecl</a>;
-<a name="l00055"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#a68ec058fbe81237ac3de42740ad65e83">00055</a>             <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#a68ec058fbe81237ac3de42740ad65e83">m_topModuleLast</a>; <span class="comment">//else first</span>
-<a name="l00056"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#ac20603a730f1ffc6ca990709ba16484f">00056</a>             <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#ac20603a730f1ffc6ca990709ba16484f">m_instTopological</a>; <span class="comment">//else leaf, hier, alphabetically.</span>
-<a name="l00057"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#ab005f4886474ef81f00a01527e4bd324">00057</a>             <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#ab005f4886474ef81f00a01527e4bd324">m_libCellStub</a>; <span class="comment">//write libcell interface/stub.</span>
-<a name="l00058"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#a0c4deae4a5c50b26a74597704399eff1">00058</a>             <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#a0c4deae4a5c50b26a74597704399eff1">m_portDeclIndent</a>;
-<a name="l00059"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#a4dbcd097a8e9c255c74ee9eba6d4ef7e">00059</a>             <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#a4dbcd097a8e9c255c74ee9eba6d4ef7e">m_instDeclIndent</a>;
-<a name="l00060"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#a23ac90da81ab4a6263c33ab24801f43a">00060</a>             <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#a23ac90da81ab4a6263c33ab24801f43a">m_instDeclBusConnIndent</a>;
-<a name="l00061"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#af19286799af50ad9f9d59c6db50d6957">00061</a>             <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#af19286799af50ad9f9d59c6db50d6957">m_wireDefnIndent</a>;
-<a name="l00062"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#a59f745e25d00f0d940b1be4eef40edb5">00062</a>             <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#a59f745e25d00f0d940b1be4eef40edb5">m_compressBusConnExpr</a>;
-<a name="l00063"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#a2475954e0888553927ffaad7a8afb722">00063</a>             <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#a2475954e0888553927ffaad7a8afb722">m_maxCharsPerLine</a>; <span class="comment">//0 for 1 term per line</span>
-<a name="l00064"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#add4d84cc471da4eaf224cba2b711993e">00064</a>             <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#add4d84cc471da4eaf224cba2b711993e">m_allowUnresolved</a>;
-<a name="l00065"></a>00065         };
-<a name="l00066"></a>00066 
-<a name="l00067"></a><a class="code" href="classvnl_1_1Writer.html#a4c119844291f4fef3a3cbf7e654a10c9">00067</a>         <span class="keyword">typedef</span> <a class="code" href="classxyzzy_1_1PTRcPtr.html">PTRcPtr&lt;Config&gt;</a> <a class="code" href="classvnl_1_1Writer.html#a4c119844291f4fef3a3cbf7e654a10c9">TRcConfig</a>;
-<a name="l00068"></a><a class="code" href="classvnl_1_1Writer.html#adc3c6117e33e3d8f1022713a6b7d3558">00068</a>         <span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span>   <a class="code" href="classvnl_1_1Writer.html#adc3c6117e33e3d8f1022713a6b7d3558">t_lineCnt</a>;
-<a name="l00069"></a>00069 
-<a name="l00076"></a>00076         <span class="keyword">explicit</span> <a class="code" href="classvnl_1_1Writer.html#ad8040670ea25e6df6a9f6b3142ef84ef">Writer</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;fname, <span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcConfig</a> &amp;cfg = <a class="code" href="classvnl_1_1Writer.html#a5861eaba97e53ce519fc39acef812d52">stDefaultConfig</a>)
-<a name="l00077"></a>00077         throw (<span class="keywordtype">bool</span>);
-<a name="l00078"></a>00078 
-<a name="l00086"></a>00086         <a class="code" href="classvnl_1_1Writer.html#adc3c6117e33e3d8f1022713a6b7d3558">t_lineCnt</a> <a class="code" href="classvnl_1_1Writer.html#a123bd1db07c3258120e1d0d338560645">write</a>(const TRcModule &amp;top, <span class="keywordtype">bool</span> doHier=true) throw (<span class="keywordtype">bool</span>);
+<a name="l00046"></a>00046                     <span class="keywordtype">unsigned</span> wireDefnIndent = 2,
+<a name="l00047"></a>00047                     <span class="keywordtype">unsigned</span> compressBusConnExpr = 2,
+<a name="l00048"></a>00048                     <span class="keywordtype">bool</span> libCellStub = <span class="keyword">true</span>,
+<a name="l00049"></a>00049                     <span class="keywordtype">unsigned</span> maxCharsPerLine = 0, <span class="comment">//7works,//80,</span>
+<a name="l00050"></a>00050                     <span class="keywordtype">bool</span> allowUnresolved = <span class="keyword">true</span>
+<a name="l00051"></a>00051                     );
+<a name="l00052"></a>00052 
+<a name="l00053"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#a25d58fe351105d963bccaa5abe5ce425">00053</a>             <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#a25d58fe351105d963bccaa5abe5ce425">m_ansiPortDecl</a>;
+<a name="l00054"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#a68ec058fbe81237ac3de42740ad65e83">00054</a>             <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#a68ec058fbe81237ac3de42740ad65e83">m_topModuleLast</a>; <span class="comment">//else first</span>
+<a name="l00055"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#ac20603a730f1ffc6ca990709ba16484f">00055</a>             <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#ac20603a730f1ffc6ca990709ba16484f">m_instTopological</a>; <span class="comment">//else leaf, hier, alphabetically.</span>
+<a name="l00056"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#ab005f4886474ef81f00a01527e4bd324">00056</a>             <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#ab005f4886474ef81f00a01527e4bd324">m_libCellStub</a>; <span class="comment">//write libcell interface/stub.</span>
+<a name="l00057"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#a0c4deae4a5c50b26a74597704399eff1">00057</a>             <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#a0c4deae4a5c50b26a74597704399eff1">m_portDeclIndent</a>;
+<a name="l00058"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#a4dbcd097a8e9c255c74ee9eba6d4ef7e">00058</a>             <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#a4dbcd097a8e9c255c74ee9eba6d4ef7e">m_instDeclIndent</a>;
+<a name="l00059"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#af19286799af50ad9f9d59c6db50d6957">00059</a>             <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#af19286799af50ad9f9d59c6db50d6957">m_wireDefnIndent</a>;
+<a name="l00060"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#a59f745e25d00f0d940b1be4eef40edb5">00060</a>             <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#a59f745e25d00f0d940b1be4eef40edb5">m_compressBusConnExpr</a>;
+<a name="l00061"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#a2475954e0888553927ffaad7a8afb722">00061</a>             <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#a2475954e0888553927ffaad7a8afb722">m_maxCharsPerLine</a>; <span class="comment">//0 for 1 term per line</span>
+<a name="l00062"></a><a class="code" href="structvnl_1_1Writer_1_1Config.html#add4d84cc471da4eaf224cba2b711993e">00062</a>             <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="structvnl_1_1Writer_1_1Config.html#add4d84cc471da4eaf224cba2b711993e">m_allowUnresolved</a>;
+<a name="l00063"></a>00063         };
+<a name="l00064"></a>00064 
+<a name="l00065"></a><a class="code" href="classvnl_1_1Writer.html#a4c119844291f4fef3a3cbf7e654a10c9">00065</a>         <span class="keyword">typedef</span> <a class="code" href="classxyzzy_1_1PTRcPtr.html">PTRcPtr&lt;Config&gt;</a> <a class="code" href="classvnl_1_1Writer.html#a4c119844291f4fef3a3cbf7e654a10c9">TRcConfig</a>;
+<a name="l00066"></a><a class="code" href="classvnl_1_1Writer.html#adc3c6117e33e3d8f1022713a6b7d3558">00066</a>         <span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span>   <a class="code" href="classvnl_1_1Writer.html#adc3c6117e33e3d8f1022713a6b7d3558">t_lineCnt</a>;
+<a name="l00067"></a>00067 
+<a name="l00074"></a>00074         <span class="keyword">explicit</span> <a class="code" href="classvnl_1_1Writer.html#ad8040670ea25e6df6a9f6b3142ef84ef">Writer</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;fname, <span class="keyword">const</span> <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcConfig</a> &amp;cfg = <a class="code" href="classvnl_1_1Writer.html#a5861eaba97e53ce519fc39acef812d52">stDefaultConfig</a>)
+<a name="l00075"></a>00075         throw (<span class="keywordtype">bool</span>);
+<a name="l00076"></a>00076 
+<a name="l00084"></a>00084         <a class="code" href="classvnl_1_1Writer.html#adc3c6117e33e3d8f1022713a6b7d3558">t_lineCnt</a> <a class="code" href="classvnl_1_1Writer.html#a123bd1db07c3258120e1d0d338560645">write</a>(const TRcModule &amp;top, <span class="keywordtype">bool</span> doHier=true) throw (<span class="keywordtype">bool</span>);
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086         virtual ~<a class="code" href="classvnl_1_1Writer.html">Writer</a>();
 <a name="l00087"></a>00087 
-<a name="l00088"></a>00088         virtual ~<a class="code" href="classvnl_1_1Writer.html">Writer</a>();
-<a name="l00089"></a>00089 
-<a name="l00090"></a>00090     private:
-<a name="l00091"></a><a class="code" href="classvnl_1_1Writer.html#a5861eaba97e53ce519fc39acef812d52">00091</a>         static <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcConfig</a> <a class="code" href="classvnl_1_1Writer.html#a5861eaba97e53ce519fc39acef812d52">stDefaultConfig</a>;
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093         <span class="comment">//Not allowed</span>
-<a name="l00094"></a>00094         <a class="code" href="classvnl_1_1Writer.html#a80c276caa9a0c743992449df4aa7c377">COPY_CONSTRUCTOR_DECL</a>(Writer);
-<a name="l00095"></a>00095 
-<a name="l00096"></a><a class="code" href="classvnl_1_1Writer.html#ae708b2c3f144ba0c31bb444c4efe8ccf">00096</a>         class <a class="code" href="classvnl_1_1Writer_1_1Impl.html">Impl</a>;
-<a name="l00097"></a>00097         friend class Impl;
-<a name="l00098"></a><a class="code" href="classvnl_1_1Writer.html#ac6e7fd37639cc90b2a5d8735e1d94dea">00098</a>         Impl *<a class="code" href="classvnl_1_1Writer.html#ac6e7fd37639cc90b2a5d8735e1d94dea">mp_impl</a>;
-<a name="l00099"></a>00099     };
-<a name="l00100"></a>00100 }
-<a name="l00101"></a>00101 
-<a name="l00102"></a>00102 <span class="preprocessor">#endif</span>
-<a name="l00103"></a>00103 <span class="preprocessor"></span>
-<a name="l00104"></a>00104 
+<a name="l00088"></a>00088     private:
+<a name="l00089"></a><a class="code" href="classvnl_1_1Writer.html#a5861eaba97e53ce519fc39acef812d52">00089</a>         static <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcConfig</a> <a class="code" href="classvnl_1_1Writer.html#a5861eaba97e53ce519fc39acef812d52">stDefaultConfig</a>;
+<a name="l00090"></a>00090 
+<a name="l00091"></a>00091         <span class="comment">//Not allowed</span>
+<a name="l00092"></a>00092         <a class="code" href="classvnl_1_1Writer.html#a80c276caa9a0c743992449df4aa7c377">COPY_CONSTRUCTOR_DECL</a>(Writer);
+<a name="l00093"></a>00093 
+<a name="l00094"></a><a class="code" href="classvnl_1_1Writer.html#ae708b2c3f144ba0c31bb444c4efe8ccf">00094</a>         class <a class="code" href="classvnl_1_1Writer_1_1Impl.html">Impl</a>;
+<a name="l00095"></a>00095         friend class Impl;
+<a name="l00096"></a><a class="code" href="classvnl_1_1Writer.html#ac6e7fd37639cc90b2a5d8735e1d94dea">00096</a>         Impl *<a class="code" href="classvnl_1_1Writer.html#ac6e7fd37639cc90b2a5d8735e1d94dea">mp_impl</a>;
+<a name="l00097"></a>00097     };
+<a name="l00098"></a>00098 }
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100 <span class="preprocessor">#endif</span>
+<a name="l00101"></a>00101 <span class="preprocessor"></span>
+<a name="l00102"></a>00102 
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 23 2012 08:14:07 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jun 5 2012 12:03:10 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

@@ -9,7 +9,6 @@ var searchData=
   ['tbitvec',['TBitVec',['../classxyzzy_1_1TBitVec.html',1,'xyzzy']]],
   ['tbitvec64',['TBitVec64',['../classxyzzy_1_1TBitVec64.html',1,'xyzzy']]],
   ['tbvbase',['TBvBase',['../classxyzzy_1_1TBvBase.html',1,'xyzzy']]],
-  ['tclerror',['TclError',['../classvnltcl_1_1TclError.html',1,'vnltcl']]],
   ['tclientsocket',['TClientSocket',['../classxyzzy_1_1TClientSocket.html',1,'xyzzy']]],
   ['tdeltadouble',['TDeltaDouble',['../classxyzzy_1_1TDeltaDouble.html',1,'xyzzy']]],
   ['tdynamiccastexception',['TDynamicCastException',['../classxyzzy_1_1TDynamicCastException.html',1,'xyzzy']]],

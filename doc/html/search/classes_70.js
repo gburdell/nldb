@@ -24,7 +24,6 @@ var searchData=
   ['ptrcarray',['PTRcArray',['../classxyzzy_1_1PTRcArray.html',1,'xyzzy']]],
   ['ptrcarray_3c_20trcvaluetype_20_3e',['PTRcArray< TRcValueType >',['../classxyzzy_1_1PTRcArray.html',1,'xyzzy']]],
   ['ptrcobjptr',['PTRcObjPtr',['../classxyzzy_1_1PTRcObjPtr.html',1,'xyzzy']]],
-  ['ptrcobjptr_3c_20scopelink_20_3e',['PTRcObjPtr< ScopeLink >',['../classxyzzy_1_1PTRcObjPtr.html',1,'xyzzy']]],
   ['ptrcptr',['PTRcPtr',['../classxyzzy_1_1PTRcPtr.html',1,'xyzzy']]],
   ['ptrcptr_3c_20lexer_20_3e',['PTRcPtr< Lexer >',['../classxyzzy_1_1PTRcPtr.html',1,'xyzzy']]],
   ['ptrcptr_3c_20location_20_3e',['PTRcPtr< Location >',['../classxyzzy_1_1PTRcPtr.html',1,'xyzzy']]],
@@ -39,6 +38,5 @@ var searchData=
   ['ptshmobjar',['PTShmObjAr',['../classxyzzy_1_1PTShmObjAr.html',1,'xyzzy']]],
   ['ptslist',['PTSlist',['../classxyzzy_1_1PTSlist.html',1,'xyzzy']]],
   ['ptslist_3c_20double_20_3e',['PTSlist< double >',['../classxyzzy_1_1PTSlist.html',1,'xyzzy']]],
-  ['ptslist_3c_20trcobject_20_3e',['PTSlist< TRcObject >',['../classxyzzy_1_1PTSlist.html',1,'xyzzy']]],
   ['ptslistarray',['PTSlistArray',['../classxyzzy_1_1PTSlistArray.html',1,'xyzzy']]]
 ];

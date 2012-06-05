@@ -135,6 +135,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5a7cd1f5ef2fa6c734f2026f30a66ca2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Cell.html#a5a7cd1f5ef2fa6c734f2026f30a66ca2">setRef</a> (TRcObject &amp;ref)</td></tr>
 <tr class="memitem:a987ae7edc441822627430fa0aa04dd85"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacevnl.html#ab3d5f0f65811e794e0fb7d255b61b924">TRcConnsByPortName</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Cell.html#a987ae7edc441822627430fa0aa04dd85">getConns</a> ()</td></tr>
 <tr class="memitem:a97de46e0df77b6ae5c665ff5287cc06b"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespacevnl.html#ab3d5f0f65811e794e0fb7d255b61b924">TRcConnsByPortName</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Cell.html#a97de46e0df77b6ae5c665ff5287cc06b">getConns</a> () const </td></tr>
+<tr class="memitem:a01f9b9fc25b2273975cdb94c58142af2"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Cell.html#a01f9b9fc25b2273975cdb94c58142af2">getName</a> () const </td></tr>
 <tr class="memitem:ae2bbd00a81ec1faee5f1d84bc01f40b4"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Cell.html#ae2bbd00a81ec1faee5f1d84bc01f40b4">~Cell</a> ()</td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -154,7 +155,7 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a6cde8c6ed7a4a1fe1d487dd1c4e92b83"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacevnl.html#ab3d5f0f65811e794e0fb7d255b61b924">TRcConnsByPortName</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Cell.html#a6cde8c6ed7a4a1fe1d487dd1c4e92b83">m_connsByPortName</a></td></tr>
 <tr><td colspan="2"><h2><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
-<tr class="memitem:a1ba5365a18c5470bd1fdf51239b959f5"><td class="memItemLeft" align="right" valign="top">static const unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Cell.html#a1ba5365a18c5470bd1fdf51239b959f5">stTypeId</a> = <a class="el" href="classvnl_1_1Object.html#a280fd33b2298cb2ba0d8195b883b4709">Object::getNextTypeId</a>(<a class="el" href="namespacevnl.html#acf79541a0cd338b315bbf08ed9b6b42f">stTypeName</a>)</td></tr>
+<tr class="memitem:a1ba5365a18c5470bd1fdf51239b959f5"><td class="memItemLeft" align="right" valign="top">static const unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1Cell.html#a1ba5365a18c5470bd1fdf51239b959f5">stTypeId</a> = <a class="el" href="classvnl_1_1Object.html#a280fd33b2298cb2ba0d8195b883b4709">Object::getNextTypeId</a>(<a class="el" href="namespacevnl.html#aca6e9c3b95e40642fc313e7f3b723c02">stTypeName</a>)</td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock">
@@ -246,7 +247,7 @@ Static Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00085">85</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00089">89</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
 
 </div>
 </div>
@@ -265,7 +266,7 @@ Static Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00088">88</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00092">92</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
 
 </div>
 </div>
@@ -320,6 +321,28 @@ Static Private Attributes</h2></td></tr>
 <div class="memdoc">
 
 <p>Definition at line <a class="el" href="cell_8hxx_source.html#l00047">47</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a01f9b9fc25b2273975cdb94c58142af2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="classvnl_1_1Cell.html#a01f9b9fc25b2273975cdb94c58142af2">vnl::Cell::getName</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [inline, virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>(Almost) every object (instance) should have a name. </p>
+<dl class="section return"><dt>Returns:</dt><dd>name of (instance) object. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classvnl_1_1Object.html#a6051bd03d341c78d5d07d89fd0428eb8">vnl::Object</a>.</p>
+
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00085">85</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
 
 </div>
 </div>
@@ -379,7 +402,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classvnl_1_1Object.html#a33bba15e3a5ed8c0ccb93a08ac5bbb9c">vnl::Object</a>.</p>
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00115">115</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00119">119</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
 
 </div>
 </div>
@@ -516,7 +539,7 @@ Static Private Attributes</h2></td></tr>
 <div class="memdoc">
 <p>Map of pin connections by pin/port name. Each entry is an array, where [0] is connection to left-most bit of pin. NOTE: If no connections, as in ".p()", the array has length==0. </p>
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00108">108</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00112">112</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
 
 </div>
 </div>
@@ -531,7 +554,7 @@ Static Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00095">95</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00099">99</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
 
 </div>
 </div>
@@ -547,7 +570,7 @@ Static Private Attributes</h2></td></tr>
 <div class="memdoc">
 <p>Can't use TRcModule since <a class="el" href="classvnl_1_1Cell.html">Cell</a> includes/need <a class="el" href="classvnl_1_1Module.html">Module</a>, and <a class="el" href="classvnl_1_1Module.html">Module</a> includes/needs <a class="el" href="classvnl_1_1Cell.html">Cell</a>. </p>
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00100">100</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00104">104</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
 
 </div>
 </div>
@@ -562,7 +585,7 @@ Static Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00095">95</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00099">99</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
 
 </div>
 </div>
@@ -571,7 +594,7 @@ Static Private Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const unsigned <a class="el" href="classvnl_1_1Cell.html#a1ba5365a18c5470bd1fdf51239b959f5">vnl::Cell::stTypeId</a> = <a class="el" href="classvnl_1_1Object.html#a280fd33b2298cb2ba0d8195b883b4709">Object::getNextTypeId</a>(<a class="el" href="namespacevnl.html#acf79541a0cd338b315bbf08ed9b6b42f">stTypeName</a>)<code> [static, private]</code></td>
+          <td class="memname">const unsigned <a class="el" href="classvnl_1_1Cell.html#a1ba5365a18c5470bd1fdf51239b959f5">vnl::Cell::stTypeId</a> = <a class="el" href="classvnl_1_1Object.html#a280fd33b2298cb2ba0d8195b883b4709">Object::getNextTypeId</a>(<a class="el" href="namespacevnl.html#aca6e9c3b95e40642fc313e7f3b723c02">stTypeName</a>)<code> [static, private]</code></td>
         </tr>
       </table>
 </div>
@@ -579,7 +602,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classvnl_1_1Object.html#a4d775f7f57d28a98e65fc9f465780408">vnl::Object</a>.</p>
 
-<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00119">119</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
+<p>Definition at line <a class="el" href="cell_8hxx_source.html#l00123">123</a> of file <a class="el" href="cell_8hxx_source.html">cell.hxx</a>.</p>
 
 </div>
 </div>
@@ -591,7 +614,7 @@ Static Private Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 23 2012 08:14:07 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jun 5 2012 12:03:10 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

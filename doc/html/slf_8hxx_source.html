@@ -127,7 +127,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00031"></a>00031 <span class="preprocessor">#include &quot;<a class="code" href="array_8hxx.html">xyzzy/array.hxx</a>&quot;</span>
 <a name="l00032"></a>00032 <span class="preprocessor">#include &quot;<a class="code" href="slist_8hxx.html">xyzzy/slist.hxx</a>&quot;</span>
 <a name="l00033"></a>00033 <span class="preprocessor">#include &quot;<a class="code" href="exception_8hxx.html">xyzzy/exception.hxx</a>&quot;</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include &quot;<a class="code" href="xyzzy_2src_2xyzzy_2util_8hxx.html">xyzzy/util.hxx</a>&quot;</span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include &quot;<a class="code" href="util_8hxx.html">xyzzy/util.hxx</a>&quot;</span>
 <a name="l00035"></a>00035 
 <a name="l00036"></a>00036 <span class="preprocessor">#if !defined(DECL_CLASS)</span>
 <a name="l00037"></a><a class="code" href="slf_8hxx.html#a271ac3cedb76c6b228bbf13a2c15e827">00037</a> <span class="preprocessor"></span><span class="preprocessor">#define DECL_CLASS(_cls)                \</span>
@@ -167,33 +167,34 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00072"></a>00072     <span class="comment">//The following used to build up AST.</span>
 <a name="l00073"></a>00073     <a class="code" href="namespaceslf.html#ae81f854d52bb190679745608e4763971">DECL_CLASS</a>(LibraryEle);
 <a name="l00074"></a>00074     <a class="code" href="namespaceslf.html#ae81f854d52bb190679745608e4763971">DECL_CLASS</a>(KeyValue); <span class="comment">//subclass of LibraryEle;</span>
-<a name="l00075"></a>00075     <a class="code" href="namespaceslf.html#ae81f854d52bb190679745608e4763971">DECL_CLASS</a>(LibCell); <span class="comment">//subclass of LibraryEle;</span>
+<a name="l00075"></a>00075     <a class="code" href="namespaceslf.html#ae81f854d52bb190679745608e4763971">DECL_CLASS</a>(LibCell);  <span class="comment">//subclass of LibraryEle;</span>
 <a name="l00076"></a>00076 
-<a name="l00077"></a>00077     <a class="code" href="namespaceslf.html#a0035b4d355fdbf879cf661c675d4a553">DECL_CLASS_SIMPLE_RC</a>(Bus);
-<a name="l00078"></a>00078     <a class="code" href="namespaceslf.html#a0035b4d355fdbf879cf661c675d4a553">DECL_CLASS_SIMPLE_RC</a>(ValueSet);
-<a name="l00079"></a>00079     <a class="code" href="namespaceslf.html#a0035b4d355fdbf879cf661c675d4a553">DECL_CLASS_SIMPLE_RC</a>(ValueType);
-<a name="l00080"></a>00080     <a class="code" href="namespaceslf.html#a0035b4d355fdbf879cf661c675d4a553">DECL_CLASS_SIMPLE_RC</a>(ValueTypeList);
-<a name="l00081"></a>00081     <a class="code" href="namespaceslf.html#a0035b4d355fdbf879cf661c675d4a553">DECL_CLASS_SIMPLE_RC</a>(Expr);
-<a name="l00082"></a>00082     <a class="code" href="namespaceslf.html#a0035b4d355fdbf879cf661c675d4a553">DECL_CLASS_SIMPLE_RC</a>(ExprVal);
-<a name="l00083"></a>00083     <a class="code" href="namespaceslf.html#a0035b4d355fdbf879cf661c675d4a553">DECL_CLASS_SIMPLE_RC</a>(ExprOp);
-<a name="l00084"></a>00084     <a class="code" href="namespaceslf.html#a0035b4d355fdbf879cf661c675d4a553">DECL_CLASS_SIMPLE_RC</a>(Number);
-<a name="l00085"></a>00085 
-<a name="l00086"></a><a class="code" href="classslf_1_1DebugOstream.html">00086</a>     <span class="keyword">class </span><a class="code" href="classslf_1_1DebugOstream.html">DebugOstream</a> : <span class="keyword">public</span> ostream {
-<a name="l00087"></a>00087     <span class="keyword">public</span>:
-<a name="l00088"></a>00088 
-<a name="l00089"></a><a class="code" href="classslf_1_1DebugOstream.html#a5f554e5e18169200ce4198238d7f1e6c">00089</a>         <span class="keyword">explicit</span> <a class="code" href="classslf_1_1DebugOstream.html#a5f554e5e18169200ce4198238d7f1e6c">DebugOstream</a>(ostream &amp;os) : ostream(os.rdbuf()) {
-<a name="l00090"></a>00090         }
-<a name="l00091"></a>00091     };
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093     <span class="keyword">extern</span> DebugOstream &amp;<a class="code" href="namespaceslf.html#aadc91da0052dc4c7a296f5f4152e4d63">dbgOs</a>;
-<a name="l00094"></a>00094 }
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096 <span class="preprocessor">#endif</span>
+<a name="l00077"></a>00077     <a class="code" href="namespaceslf.html#a0035b4d355fdbf879cf661c675d4a553">DECL_CLASS_SIMPLE_RC</a>(LibrarySet);
+<a name="l00078"></a>00078     <a class="code" href="namespaceslf.html#a0035b4d355fdbf879cf661c675d4a553">DECL_CLASS_SIMPLE_RC</a>(Bus);
+<a name="l00079"></a>00079     <a class="code" href="namespaceslf.html#a0035b4d355fdbf879cf661c675d4a553">DECL_CLASS_SIMPLE_RC</a>(ValueSet);
+<a name="l00080"></a>00080     <a class="code" href="namespaceslf.html#a0035b4d355fdbf879cf661c675d4a553">DECL_CLASS_SIMPLE_RC</a>(ValueType);
+<a name="l00081"></a>00081     <a class="code" href="namespaceslf.html#a0035b4d355fdbf879cf661c675d4a553">DECL_CLASS_SIMPLE_RC</a>(ValueTypeList);
+<a name="l00082"></a>00082     <a class="code" href="namespaceslf.html#a0035b4d355fdbf879cf661c675d4a553">DECL_CLASS_SIMPLE_RC</a>(Expr);
+<a name="l00083"></a>00083     <a class="code" href="namespaceslf.html#a0035b4d355fdbf879cf661c675d4a553">DECL_CLASS_SIMPLE_RC</a>(ExprVal);
+<a name="l00084"></a>00084     <a class="code" href="namespaceslf.html#a0035b4d355fdbf879cf661c675d4a553">DECL_CLASS_SIMPLE_RC</a>(ExprOp);
+<a name="l00085"></a>00085     <a class="code" href="namespaceslf.html#a0035b4d355fdbf879cf661c675d4a553">DECL_CLASS_SIMPLE_RC</a>(Number);
+<a name="l00086"></a>00086 
+<a name="l00087"></a><a class="code" href="classslf_1_1DebugOstream.html">00087</a>     <span class="keyword">class </span><a class="code" href="classslf_1_1DebugOstream.html">DebugOstream</a> : <span class="keyword">public</span> ostream {
+<a name="l00088"></a>00088     <span class="keyword">public</span>:
+<a name="l00089"></a>00089 
+<a name="l00090"></a><a class="code" href="classslf_1_1DebugOstream.html#a5f554e5e18169200ce4198238d7f1e6c">00090</a>         <span class="keyword">explicit</span> <a class="code" href="classslf_1_1DebugOstream.html#a5f554e5e18169200ce4198238d7f1e6c">DebugOstream</a>(ostream &amp;os) : ostream(os.rdbuf()) {
+<a name="l00091"></a>00091         }
+<a name="l00092"></a>00092     };
+<a name="l00093"></a>00093 
+<a name="l00094"></a>00094     <span class="keyword">extern</span> DebugOstream &amp;<a class="code" href="namespaceslf.html#aadc91da0052dc4c7a296f5f4152e4d63">dbgOs</a>;
+<a name="l00095"></a>00095 }
+<a name="l00096"></a>00096 
+<a name="l00097"></a>00097 <span class="preprocessor">#endif</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 23 2012 08:14:06 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jun 5 2012 12:03:10 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

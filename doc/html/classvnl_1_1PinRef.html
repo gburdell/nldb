@@ -134,6 +134,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7a86924bbb91307188928b6d31b0d87b"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1PinRef.html#a7a86924bbb91307188928b6d31b0d87b">getPortNm</a> () const </td></tr>
 <tr class="memitem:a689703e594fcf20a3e06d9a951b0cb0b"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1PinRef.html#a689703e594fcf20a3e06d9a951b0cb0b">getFullName</a> (string sep=&quot;/&quot;) const </td></tr>
 <tr class="memitem:a323747dc8e09f617facd6e66536db203"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1PinRef.html#a323747dc8e09f617facd6e66536db203">getBitNm</a> () const </td></tr>
+<tr class="memitem:a10c6438a0c2824d927940070f251459b"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1PinRef.html#a10c6438a0c2824d927940070f251459b">getName</a> () const </td></tr>
 <tr class="memitem:addf22209d9d51d9ee3746c267bab3957"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1PinRef.html#addf22209d9d51d9ee3746c267bab3957">getLbOffset</a> () const </td></tr>
 <tr class="memitem:a340501431a0c700443f4bce319cfbc71"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1PinRef.html#a340501431a0c700443f4bce319cfbc71">~PinRef</a> ()</td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
@@ -142,7 +143,7 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:acc7c09dd354acd38554411c9524bb91b"><td class="memItemLeft" align="right" valign="top">static TRcPinRef&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1PinRef.html#acc7c09dd354acd38554411c9524bb91b">downcast</a> (TRcObject &amp;r)</td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a3d445c26ebca1c54be87e2a92a77cb47"><td class="memItemLeft" align="right" valign="top">static const unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1PinRef.html#a3d445c26ebca1c54be87e2a92a77cb47">stTypeId</a> = <a class="el" href="classvnl_1_1Object.html#a280fd33b2298cb2ba0d8195b883b4709">Object::getNextTypeId</a>(<a class="el" href="namespacevnl.html#acf79541a0cd338b315bbf08ed9b6b42f">stTypeName</a>)</td></tr>
+<tr class="memitem:a3d445c26ebca1c54be87e2a92a77cb47"><td class="memItemLeft" align="right" valign="top">static const unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1PinRef.html#a3d445c26ebca1c54be87e2a92a77cb47">stTypeId</a> = <a class="el" href="classvnl_1_1Object.html#a280fd33b2298cb2ba0d8195b883b4709">Object::getNextTypeId</a>(<a class="el" href="namespacevnl.html#aca6e9c3b95e40642fc313e7f3b723c02">stTypeName</a>)</td></tr>
 <tr><td colspan="2"><h2><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:aa1d7591ff2e2901dbe2cf15df4923b71"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvnl_1_1PinRef.html#aa1d7591ff2e2901dbe2cf15df4923b71">COPY_CONSTRUCTOR_DECL</a> (<a class="el" href="classvnl_1_1PinRef.html">PinRef</a>)</td></tr>
@@ -253,7 +254,7 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00088">88</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
+<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00096">96</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
 
 </div>
 </div>
@@ -272,7 +273,7 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00092">92</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
+<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00100">100</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
 
 </div>
 </div>
@@ -289,7 +290,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Get full pin name. </p>
+<p>Get pin name. </p>
 <dl class="section return"><dt>Returns:</dt><dd>pin name including bit-select. </dd></dl>
 
 <p>Definition at line <a class="el" href="pinref_8cxx_source.html#l00058">58</a> of file <a class="el" href="pinref_8cxx_source.html">pinref.cxx</a>.</p>
@@ -385,7 +386,29 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00084">84</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
+<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00092">92</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a10c6438a0c2824d927940070f251459b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="classvnl_1_1PinRef.html#a10c6438a0c2824d927940070f251459b">vnl::PinRef::getName</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [inline, virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Get pin name. </p>
+<dl class="section return"><dt>Returns:</dt><dd>pin name with optional bit-select. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classvnl_1_1Object.html#a6051bd03d341c78d5d07d89fd0428eb8">vnl::Object</a>.</p>
+
+<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00088">88</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
 
 </div>
 </div>
@@ -463,7 +486,7 @@ Private Attributes</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classvnl_1_1Object.html#a33bba15e3a5ed8c0ccb93a08ac5bbb9c">vnl::Object</a>.</p>
 
-<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00108">108</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
+<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00116">116</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
 
 </div>
 </div>
@@ -479,7 +502,7 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00101">101</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
+<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00109">109</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
 
 </div>
 </div>
@@ -494,7 +517,7 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00103">103</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
+<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00111">111</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
 
 </div>
 </div>
@@ -509,7 +532,7 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00102">102</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
+<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00110">110</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
 
 </div>
 </div>
@@ -518,7 +541,7 @@ Private Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const unsigned <a class="el" href="classvnl_1_1PinRef.html#a3d445c26ebca1c54be87e2a92a77cb47">vnl::PinRef::stTypeId</a> = <a class="el" href="classvnl_1_1Object.html#a280fd33b2298cb2ba0d8195b883b4709">Object::getNextTypeId</a>(<a class="el" href="namespacevnl.html#acf79541a0cd338b315bbf08ed9b6b42f">stTypeName</a>)<code> [static]</code></td>
+          <td class="memname">const unsigned <a class="el" href="classvnl_1_1PinRef.html#a3d445c26ebca1c54be87e2a92a77cb47">vnl::PinRef::stTypeId</a> = <a class="el" href="classvnl_1_1Object.html#a280fd33b2298cb2ba0d8195b883b4709">Object::getNextTypeId</a>(<a class="el" href="namespacevnl.html#aca6e9c3b95e40642fc313e7f3b723c02">stTypeName</a>)<code> [static]</code></td>
         </tr>
       </table>
 </div>
@@ -526,7 +549,7 @@ Private Attributes</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classvnl_1_1Object.html#a4d775f7f57d28a98e65fc9f465780408">vnl::Object</a>.</p>
 
-<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00098">98</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
+<p>Definition at line <a class="el" href="pinref_8hxx_source.html#l00106">106</a> of file <a class="el" href="pinref_8hxx_source.html">pinref.hxx</a>.</p>
 
 </div>
 </div>
@@ -538,7 +561,7 @@ Private Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 23 2012 08:14:07 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jun 5 2012 12:03:10 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

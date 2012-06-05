@@ -161,47 +161,51 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00082"></a>00082             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1Cell.html#a6cde8c6ed7a4a1fe1d487dd1c4e92b83">m_connsByPortName</a>;
 <a name="l00083"></a>00083         }
 <a name="l00084"></a>00084         
-<a name="l00085"></a><a class="code" href="classvnl_1_1Cell.html#ab7442c6a56ed02cfe23037e1280e9287">00085</a>         <span class="keyword">static</span> <span class="keyword">const</span> TRcCell <a class="code" href="classvnl_1_1Cell.html#ab7442c6a56ed02cfe23037e1280e9287">downcast</a>(<span class="keyword">const</span> TRcObject &amp;r) {
-<a name="l00086"></a>00086             <span class="keywordflow">return</span> xyzzy::downcast&lt;Object, Cell &gt; (r);
+<a name="l00085"></a><a class="code" href="classvnl_1_1Cell.html#a01f9b9fc25b2273975cdb94c58142af2">00085</a>         <span class="keywordtype">string</span> <a class="code" href="classvnl_1_1Cell.html#a01f9b9fc25b2273975cdb94c58142af2">getName</a>()<span class="keyword"> const </span>{
+<a name="l00086"></a>00086             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1Cell.html#abb2491fe509457854d99bd87a645e59e">m_instNm</a>;
 <a name="l00087"></a>00087         }
-<a name="l00088"></a><a class="code" href="classvnl_1_1Cell.html#a358a9067a0bdda897ab574f3aefa9924">00088</a>         <span class="keyword">static</span> TRcCell <a class="code" href="classvnl_1_1Cell.html#a358a9067a0bdda897ab574f3aefa9924">downcast</a>(TRcObject &amp;r) {
-<a name="l00089"></a>00089             <span class="keywordflow">return</span> xyzzy::downcast&lt;Object, Cell &gt; (r);
-<a name="l00090"></a>00090         }
-<a name="l00091"></a>00091 
-<a name="l00092"></a>00092         <span class="keyword">virtual</span> <a class="code" href="classvnl_1_1Cell.html#ae2bbd00a81ec1faee5f1d84bc01f40b4">~Cell</a>();
-<a name="l00093"></a>00093 
-<a name="l00094"></a>00094     <span class="keyword">private</span>:
-<a name="l00095"></a><a class="code" href="classvnl_1_1Cell.html#a93e58e00e3185fdd0b8fd8d55b982fce">00095</a>         <span class="keywordtype">string</span>      <a class="code" href="classvnl_1_1Cell.html#a93e58e00e3185fdd0b8fd8d55b982fce">m_refNm</a>, <a class="code" href="classvnl_1_1Cell.html#abb2491fe509457854d99bd87a645e59e">m_instNm</a>;
-<a name="l00100"></a><a class="code" href="classvnl_1_1Cell.html#a7863bf7abfab817dfd1dca8521a624ef">00100</a>         TRcObject   <a class="code" href="classvnl_1_1Cell.html#a7863bf7abfab817dfd1dca8521a624ef">m_ref</a>; <span class="comment">//upcast from TRcModule (or Libcell)</span>
-<a name="l00101"></a>00101         
-<a name="l00108"></a><a class="code" href="classvnl_1_1Cell.html#a6cde8c6ed7a4a1fe1d487dd1c4e92b83">00108</a>         <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcConnsByPortName</a>      <a class="code" href="classvnl_1_1Cell.html#a6cde8c6ed7a4a1fe1d487dd1c4e92b83">m_connsByPortName</a>;
-<a name="l00109"></a>00109 
-<a name="l00110"></a>00110         <span class="comment">//Not allowed</span>
-<a name="l00111"></a>00111         <a class="code" href="classvnl_1_1Cell.html#a32726d740471931d6a19e197fef585ab">COPY_CONSTRUCTOR_DECL</a>(<a class="code" href="classvnl_1_1Cell.html">Cell</a>);
-<a name="l00112"></a>00112 
-<a name="l00113"></a>00113         <span class="keywordtype">void</span> <a class="code" href="classvnl_1_1Cell.html#a3b1cbb7bb32e3398fc251e29924f2dc5">init</a>();
-<a name="l00114"></a>00114         
-<a name="l00115"></a><a class="code" href="classvnl_1_1Cell.html#ab18bf0bc9bef79f3427b4dc05364d058">00115</a>         <span class="keyword">virtual</span> <span class="keywordtype">unsigned</span> <a class="code" href="classvnl_1_1Cell.html#ab18bf0bc9bef79f3427b4dc05364d058">getTypeId</a>()<span class="keyword"> const </span>{
-<a name="l00116"></a>00116             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1Cell.html#a1ba5365a18c5470bd1fdf51239b959f5">stTypeId</a>;
-<a name="l00117"></a>00117         }
-<a name="l00118"></a>00118 
-<a name="l00119"></a><a class="code" href="classvnl_1_1Cell.html#a1ba5365a18c5470bd1fdf51239b959f5">00119</a>         <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="classvnl_1_1Cell.html#a1ba5365a18c5470bd1fdf51239b959f5">stTypeId</a>;
-<a name="l00120"></a>00120     };
-<a name="l00121"></a>00121 
-<a name="l00122"></a><a class="code" href="namespacevnl.html#a39f30c36b602d4d6129de5f259938b52">00122</a>     <span class="keyword">inline</span> <span class="keyword">const</span> TRcObject <a class="code" href="namespacevnl.html#aee0af4ad98952d4946146fb8fe2ffec4">upcast</a>(<span class="keyword">const</span> TRcCell &amp;p) {
-<a name="l00123"></a>00123         <span class="keywordflow">return</span> xyzzy::upcast&lt;Object, Cell &gt; (p);
-<a name="l00124"></a>00124     }
-<a name="l00125"></a><a class="code" href="namespacevnl.html#a50a2dc92668b8a0062b495042505ff9d">00125</a>     <span class="keyword">inline</span> TRcObject <a class="code" href="namespacevnl.html#aee0af4ad98952d4946146fb8fe2ffec4">upcast</a>(TRcCell &amp;p) {
-<a name="l00126"></a>00126         <span class="keywordflow">return</span> xyzzy::upcast&lt;Object, Cell &gt; (p);
-<a name="l00127"></a>00127     }
-<a name="l00128"></a>00128 }
-<a name="l00129"></a>00129 
-<a name="l00130"></a>00130 <span class="preprocessor">#endif</span>
+<a name="l00088"></a>00088         
+<a name="l00089"></a><a class="code" href="classvnl_1_1Cell.html#ab7442c6a56ed02cfe23037e1280e9287">00089</a>         <span class="keyword">static</span> <span class="keyword">const</span> TRcCell <a class="code" href="classvnl_1_1Cell.html#ab7442c6a56ed02cfe23037e1280e9287">downcast</a>(<span class="keyword">const</span> TRcObject &amp;r) {
+<a name="l00090"></a>00090             <span class="keywordflow">return</span> xyzzy::downcast&lt;Object, Cell &gt; (r);
+<a name="l00091"></a>00091         }
+<a name="l00092"></a><a class="code" href="classvnl_1_1Cell.html#a358a9067a0bdda897ab574f3aefa9924">00092</a>         <span class="keyword">static</span> TRcCell <a class="code" href="classvnl_1_1Cell.html#a358a9067a0bdda897ab574f3aefa9924">downcast</a>(TRcObject &amp;r) {
+<a name="l00093"></a>00093             <span class="keywordflow">return</span> xyzzy::downcast&lt;Object, Cell &gt; (r);
+<a name="l00094"></a>00094         }
+<a name="l00095"></a>00095 
+<a name="l00096"></a>00096         <span class="keyword">virtual</span> <a class="code" href="classvnl_1_1Cell.html#ae2bbd00a81ec1faee5f1d84bc01f40b4">~Cell</a>();
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098     <span class="keyword">private</span>:
+<a name="l00099"></a><a class="code" href="classvnl_1_1Cell.html#a93e58e00e3185fdd0b8fd8d55b982fce">00099</a>         <span class="keywordtype">string</span>      <a class="code" href="classvnl_1_1Cell.html#a93e58e00e3185fdd0b8fd8d55b982fce">m_refNm</a>, <a class="code" href="classvnl_1_1Cell.html#abb2491fe509457854d99bd87a645e59e">m_instNm</a>;
+<a name="l00104"></a><a class="code" href="classvnl_1_1Cell.html#a7863bf7abfab817dfd1dca8521a624ef">00104</a>         TRcObject   <a class="code" href="classvnl_1_1Cell.html#a7863bf7abfab817dfd1dca8521a624ef">m_ref</a>; <span class="comment">//upcast from TRcModule (or Libcell)</span>
+<a name="l00105"></a>00105         
+<a name="l00112"></a><a class="code" href="classvnl_1_1Cell.html#a6cde8c6ed7a4a1fe1d487dd1c4e92b83">00112</a>         <a class="code" href="classxyzzy_1_1PTRcPtr.html">TRcConnsByPortName</a>      <a class="code" href="classvnl_1_1Cell.html#a6cde8c6ed7a4a1fe1d487dd1c4e92b83">m_connsByPortName</a>;
+<a name="l00113"></a>00113 
+<a name="l00114"></a>00114         <span class="comment">//Not allowed</span>
+<a name="l00115"></a>00115         <a class="code" href="classvnl_1_1Cell.html#a32726d740471931d6a19e197fef585ab">COPY_CONSTRUCTOR_DECL</a>(<a class="code" href="classvnl_1_1Cell.html">Cell</a>);
+<a name="l00116"></a>00116 
+<a name="l00117"></a>00117         <span class="keywordtype">void</span> <a class="code" href="classvnl_1_1Cell.html#a3b1cbb7bb32e3398fc251e29924f2dc5">init</a>();
+<a name="l00118"></a>00118         
+<a name="l00119"></a><a class="code" href="classvnl_1_1Cell.html#ab18bf0bc9bef79f3427b4dc05364d058">00119</a>         <span class="keyword">virtual</span> <span class="keywordtype">unsigned</span> <a class="code" href="classvnl_1_1Cell.html#ab18bf0bc9bef79f3427b4dc05364d058">getTypeId</a>()<span class="keyword"> const </span>{
+<a name="l00120"></a>00120             <span class="keywordflow">return</span> <a class="code" href="classvnl_1_1Cell.html#a1ba5365a18c5470bd1fdf51239b959f5">stTypeId</a>;
+<a name="l00121"></a>00121         }
+<a name="l00122"></a>00122 
+<a name="l00123"></a><a class="code" href="classvnl_1_1Cell.html#a1ba5365a18c5470bd1fdf51239b959f5">00123</a>         <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="classvnl_1_1Cell.html#a1ba5365a18c5470bd1fdf51239b959f5">stTypeId</a>;
+<a name="l00124"></a>00124     };
+<a name="l00125"></a>00125 
+<a name="l00126"></a><a class="code" href="namespacevnl.html#a39f30c36b602d4d6129de5f259938b52">00126</a>     <span class="keyword">inline</span> <span class="keyword">const</span> TRcObject <a class="code" href="namespacevnl.html#aee0af4ad98952d4946146fb8fe2ffec4">upcast</a>(<span class="keyword">const</span> TRcCell &amp;p) {
+<a name="l00127"></a>00127         <span class="keywordflow">return</span> xyzzy::upcast&lt;Object, Cell &gt; (p);
+<a name="l00128"></a>00128     }
+<a name="l00129"></a><a class="code" href="namespacevnl.html#a50a2dc92668b8a0062b495042505ff9d">00129</a>     <span class="keyword">inline</span> TRcObject <a class="code" href="namespacevnl.html#aee0af4ad98952d4946146fb8fe2ffec4">upcast</a>(TRcCell &amp;p) {
+<a name="l00130"></a>00130         <span class="keywordflow">return</span> xyzzy::upcast&lt;Object, Cell &gt; (p);
+<a name="l00131"></a>00131     }
+<a name="l00132"></a>00132 }
+<a name="l00133"></a>00133 
+<a name="l00134"></a>00134 <span class="preprocessor">#endif</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 23 2012 08:14:06 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jun 5 2012 12:03:10 for nldb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

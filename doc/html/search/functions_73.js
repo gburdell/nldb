@@ -1,13 +1,9 @@
 var searchData=
 [
-  ['scopeele',['ScopeEle',['../classvnltcl_1_1ScopeEle.html#ad3520f5f141f14dabc38e19e23360398',1,'vnltcl::ScopeEle::ScopeEle(TRcScopeLink &amp;parent, T &amp;ele)'],['../classvnltcl_1_1ScopeEle.html#a56e6beb3355de4594c5cef44582a7995',1,'vnltcl::ScopeEle::ScopeEle(T &amp;ele)']]],
-  ['scopelink',['ScopeLink',['../classvnltcl_1_1ScopeLink.html#a071f8d07f4c0824b87cd069a52db35ba',1,'vnltcl::ScopeLink::ScopeLink()'],['../classvnltcl_1_1ScopeLink.html#a814bf1e8942737f48f01e7b07005810f',1,'vnltcl::ScopeLink::ScopeLink(TRcScopeLink &amp;parent)']]],
   ['send',['send',['../classxyzzy_1_1TSocket_1_1Connection.html#af554a493711a09b213af66611d8f3493',1,'xyzzy::TSocket::Connection::send()'],['../classxyzzy_1_1TClientSocket.html#a1e7c610034f4ecb15912ffafdf91bbfc',1,'xyzzy::TClientSocket::send()']]],
   ['set',['set',['../classvnl_1_1Port.html#abb3582a6fcae81496a8058673a0961be',1,'vnl::Port']]],
   ['setarea',['setArea',['../classvnl_1_1LibCell.html#ac50daa1b1bd4f06fdb2fd0a6b89ac872',1,'vnl::LibCell']]],
   ['setcelltype',['setCellType',['../classslf_1_1LibCell.html#aaa1761bf5354ce7b1c41ab13d674f6fd',1,'slf::LibCell']]],
-  ['setcurrentdesign',['setCurrentDesign',['../namespacevnltcl.html#adc2a321e251d7928d533b9488eed109a',1,'vnltcl']]],
-  ['setobjtype',['setObjType',['../classvnltcl_1_1Commands.html#a5a15c1722f6217038f6c334c2adc3a93',1,'vnltcl::Commands']]],
   ['setopinfunction',['setOpinFunction',['../classvnl_1_1LibCell.html#a5e7cc13aa82e6a99c62162957bee10b9',1,'vnl::LibCell']]],
   ['setparm',['setParm',['../classxyzzy_1_1TStringTmpl.html#a4c16be308403347881a61589a8d57c41',1,'xyzzy::TStringTmpl']]],
   ['setprefix',['setPrefix',['../classvnl_1_1Writer_1_1Impl.html#a6313f183e6295c5c4695d2e4ae52b572',1,'vnl::Writer::Impl']]],
@@ -15,12 +11,10 @@ var searchData=
   ['setstream',['setStream',['../classxyzzy_1_1TMessage.html#a164e26360b24df7a4d75ac8879bb8625',1,'xyzzy::TMessage']]],
   ['settrace',['setTrace',['../classxyzzy_1_1TDeltaDouble.html#ad6de2df88a0123b8c98f18a568526f3d',1,'xyzzy::TDeltaDouble']]],
   ['setval',['setVal',['../classxyzzy_1_1PTFixedPtBase.html#a30356049121372733e11a6522e1222a7',1,'xyzzy::PTFixedPtBase']]],
-  ['sizeofcollection',['sizeofCollection',['../classvnltcl_1_1Commands.html#a4b1683e5ff95c0832036648de6871ed8',1,'vnltcl::Commands']]],
   ['slurpuntil',['slurpUntil',['../classvnl_1_1Parser.html#ae7848f44fb4c02c975faf38c9fd84666',1,'vnl::Parser::slurpUntil()'],['../classslf_1_1Parser.html#ac27bc407e0a8fbb6e4e4ba7fff9f08dd',1,'slf::Parser::slurpUntil()']]],
-  ['sourcetext',['sourceText',['../classslf_1_1Parser.html#abb4e57f472a7c04f70e98561fbd82d84',1,'slf::Parser']]],
+  ['sourcetext',['sourceText',['../classslf_1_1Parser.html#a874f9f8ad02b10dac64084890a8b6629',1,'slf::Parser']]],
   ['stallones',['stAllOnes',['../classxyzzy_1_1PTBitVecMethods.html#a04973426a60657e02befc8693e3def69',1,'xyzzy::PTBitVecMethods::stAllOnes'],['../classxyzzy_1_1PTBitVecMethods.html#ac950508d637413a69481fdf7cd1c47ca',1,'xyzzy::PTBitVecMethods::stAllOnes']]],
-  ['start',['start',['../classvnl_1_1Parser.html#ac01b161b9d8ddd509bf49264996df57c',1,'vnl::Parser::start()'],['../classslf_1_1Parser.html#afc6ef4b7ae4caab038d5c46f6f1123c2',1,'slf::Parser::start()']]],
+  ['start',['start',['../classvnl_1_1Parser.html#ac01b161b9d8ddd509bf49264996df57c',1,'vnl::Parser::start()'],['../classslf_1_1Parser.html#a31b4f20eda6297da17f5b003aa3cb7f5',1,'slf::Parser::start()']]],
   ['stmaxbits',['stMaxBits',['../classxyzzy_1_1PTBitVecMethods.html#ae0853b7f937f4ae1764091debf3a172a',1,'xyzzy::PTBitVecMethods::stMaxBits'],['../classxyzzy_1_1PTBitVecMethods.html#a4bec04126dd652d0e4ebc41178bdc581',1,'xyzzy::PTBitVecMethods::stMaxBits']]],
-  ['stringx',['stringx',['../classslf_1_1Lexer.html#a5581dc75f0d544ff775ae6244574dc31',1,'slf::Lexer']]],
-  ['sttypeid',['stTypeId',['../classvnltcl_1_1ScopeEle.html#af8983f3b5a345b1b48a57778eaf44b60',1,'vnltcl::ScopeEle::stTypeId'],['../classvnltcl_1_1ScopeEle.html#a0323c40b6c44951a41f93d71dbe8201f',1,'vnltcl::ScopeEle::stTypeId'],['../classvnltcl_1_1ScopeEle.html#a9f365e1e7c9d4597447c84444a7af57a',1,'vnltcl::ScopeEle::stTypeId']]]
+  ['stringx',['stringx',['../classslf_1_1Lexer.html#a5581dc75f0d544ff775ae6244574dc31',1,'slf::Lexer']]]
 ];
