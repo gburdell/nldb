@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['scoped_2ecxx',['scoped.cxx',['../scoped_8cxx.html',1,'']]],
+  ['scoped_2ehxx',['scoped.hxx',['../scoped_8hxx.html',1,'']]],
   ['semaphore_2ecxx',['semaphore.cxx',['../semaphore_8cxx.html',1,'']]],
   ['semaphore_2ehxx',['semaphore.hxx',['../semaphore_8hxx.html',1,'']]],
   ['shmalloc_2ecxx',['shmalloc.cxx',['../shmalloc_8cxx.html',1,'']]],

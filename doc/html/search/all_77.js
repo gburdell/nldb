@@ -1,9 +1,10 @@
 var searchData=
 [
   ['wait',['wait',['../classxyzzy_1_1TSemaphore.html#a3f488621486c21122163b0c35cdd86b2',1,'xyzzy::TSemaphore']]],
+  ['warn',['warn',['../classvnltcl_1_1Commands.html#abe7a3bb4d15e4a4cbaae10f9742d77cf',1,'vnltcl::Commands::warn()'],['../classvnltcl_1_1Message.html#a7dc0d14471e2431e6f371f0eeaf28c10',1,'vnltcl::Message::warn()']]],
   ['whitespace',['whiteSpace',['../classvnl_1_1Lexer.html#ade0146949cd4ee52546cceb934aa1784',1,'vnl::Lexer::whiteSpace()'],['../classslf_1_1Lexer.html#ad6e7ac4918633aacc408dc7e9335ec9b',1,'slf::Lexer::whiteSpace()']]],
-  ['wire',['Wire',['../classvnl_1_1Wire.html',1,'vnl']]],
   ['wire',['Wire',['../classvnl_1_1Wire.html#acdc32e269d9aab2606fede3c11ec1a26',1,'vnl::Wire']]],
+  ['wire',['Wire',['../classvnl_1_1Wire.html',1,'vnl']]],
   ['wire_2ecxx',['wire.cxx',['../wire_8cxx.html',1,'']]],
   ['wire_2ehxx',['wire.hxx',['../wire_8hxx.html',1,'']]],
   ['wirebitref',['WireBitRef',['../classvnl_1_1WireBitRef.html#a89cb5ace7348044720421c0ea2ac33e3',1,'vnl::WireBitRef']]],
@@ -23,8 +24,9 @@ var searchData=
   ['writeinst',['writeInst',['../classvnl_1_1Writer_1_1Impl.html#a6d9b18f0320539bee12a37644a6447d3',1,'vnl::Writer::Impl']]],
   ['writeinsts',['writeInsts',['../classvnl_1_1Writer_1_1Impl.html#a79f2163c5616df698b60929b07183fbc',1,'vnl::Writer::Impl']]],
   ['writeports',['writePorts',['../classvnl_1_1Writer_1_1Impl.html#a305cf578a3f3aa2a1f474b7f3930e2e2',1,'vnl::Writer::Impl']]],
-  ['writer',['Writer',['../classvnl_1_1Writer.html',1,'vnl']]],
   ['writer',['Writer',['../classvnl_1_1Writer_1_1Impl.html#ab699d593c3b9dee1ed8d700a93d70700',1,'vnl::Writer::Impl::Writer()'],['../classvnl_1_1Writer.html#ad8040670ea25e6df6a9f6b3142ef84ef',1,'vnl::Writer::Writer()']]],
+  ['writer',['Writer',['../classvnl_1_1Writer.html',1,'vnl']]],
   ['writer_2ecxx',['writer.cxx',['../writer_8cxx.html',1,'']]],
-  ['writer_2ehxx',['writer.hxx',['../writer_8hxx.html',1,'']]]
+  ['writer_2ehxx',['writer.hxx',['../writer_8hxx.html',1,'']]],
+  ['writeverilog',['writeVerilog',['../classvnltcl_1_1Commands.html#a8ab692e62e3d94b5ba3e47e3b464da35',1,'vnltcl::Commands']]]
 ];
