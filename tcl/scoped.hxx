@@ -69,13 +69,13 @@ namespace vnltcl {
         virtual ~ScopeLink() {
         }
 
+        static const unsigned stTypeId;
+
     private:
         TRcScopeLink m_parent;
 
         //Not allowed
         COPY_CONSTRUCTOR_DECL(ScopeLink);
-
-        static const unsigned stTypeId;
     };
 
     template<class T>
@@ -101,13 +101,13 @@ namespace vnltcl {
         virtual ~ScopeEle() {
         }
 
+        static const unsigned stTypeId;
+
     private:
         T m_ele;
 
         //Not allowed
         COPY_CONSTRUCTOR_DECL(ScopeEle);
-
-        static const unsigned stTypeId;
     };
 
     /* Scoped elements.
@@ -123,8 +123,7 @@ namespace vnltcl {
     typedef PTRcObjPtr<ScopedWire> TRcScopedWire;
     typedef PTRcObjPtr<ScopedPinRef> TRcScopedPinRef;
 
-    //Convert a parent link to its actual ScopedCell.
-
+    ///Convert a parent link to its actual ScopedCell.
     inline
     TRcScopedCell asScopedCell(const TRcScopeLink &link) {
         return xyzzy::downcast<ScopeLink, ScopedCell > (link);
