@@ -26,7 +26,7 @@
 #include "vnl/vnl.hxx"
 
 namespace vnl {
-
+    
     unsigned
     length(unsigned lb, unsigned rb) {
         return 1 + ((lb < rb) ? (rb - lb) : (lb - rb));

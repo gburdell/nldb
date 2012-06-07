@@ -24,7 +24,9 @@
 #ifndef VNLTCL_NLSHOBJS_HXX
 #define	VNLTCL_NLSHOBJS_HXX
 
+#include <list>
 #include "xyzzy/refcnt.hxx"
+#include "xyzzy/array.hxx"
 #include "tcl/attribute.hxx"
 #include "vnl/module.hxx"
 #include "vnl/port.hxx"
@@ -32,19 +34,26 @@
 #include "vnl/pinref.hxx"
 
 namespace vnltcl {
+    using std::list;
     using xyzzy::PTRcObjPtr;
+    using xyzzy::PTArray;
     using vnl::Object;
     using vnl::TRcObject;
     using vnl::Module;
     using vnl::Port;
+    using vnl::TRcWire;
     using vnl::Cell;
+    using vnl::TRcCell;
     using vnl::PinRef;
+    using vnl::TRcPinRef;
 
     DECL_CLASS(NlshObject);
     DECL_CLASS(NlshDesign);
     DECL_CLASS(NlshPort);
     DECL_CLASS(NlshCell);
     DECL_CLASS(NlshPin);
+    DECL_CLASS(NlshWire); //a different object than Port (it has scope)
+    DECL_CLASS(ScopeLink);
 
     /**
      * Interface to be implemented by object types manipulated by tcl side.
@@ -70,6 +79,14 @@ namespace vnltcl {
      * NlshObject is base of proxy objects manipulated by tcl side.
      */
     class NlshObject : public Object, public IAttribute {
+    protected:
+
+        explicit NlshObject() {
+        }
+
+        virtual ~NlshObject() {
+        }
+
     public:
 
         bool isA(const TRcNlshObject &o) const {
@@ -92,14 +109,6 @@ namespace vnltcl {
             return xyzzy::upcast<Object, NlshObject > (p);
         }
 
-    protected:
-
-        explicit NlshObject() {
-        }
-
-        virtual ~NlshObject() {
-        }
-
     private:
         //Cannot copy
         DECL_COPY_CONSTRUCTORS(NlshObject);
@@ -119,8 +128,6 @@ namespace vnltcl {
             return stTypeId;
         }
 
-        static const unsigned stTypeId;
-
     protected:
 
         explicit PTNlshObject(t_rcObj &rcobj) : m_obj(rcobj) {
@@ -129,11 +136,13 @@ namespace vnltcl {
         virtual ~PTNlshObject() {
         }
 
-        t_rcObj m_obj;
+        t_rcObj& m_obj;
 
     private:
         //Cannot copy
         DECL_COPY_CONSTRUCTORS(PTNlshObject);
+
+        static const unsigned stTypeId;
     };
 
     class NlshDesign : public PTNlshObject<Module> {
@@ -188,56 +197,86 @@ namespace vnltcl {
         DECL_COPY_CONSTRUCTORS(NlshPort);
     };
 
-    class NlshCell : public PTNlshObject<Cell> {
+    /*
+     * Cell, PinRef and Wire are instanced based; so we need scoping mechanism.
+     */
+    class NlshCell : public NlshObject {
     public:
-
-        explicit NlshCell(t_rcObj &obj)
-        : PTNlshObject<Cell>(obj) {
-        }
-
-        //Specialization needs to implement.
+        typedef list<TRcCell>   t_hier;
+        
+        explicit NlshCell(const t_hier &hier)
+        : m_hier(hier) {}
+        
         TRcAttrVal getAttrVal(const string &name) const throw (AttrException);
-
-        t_rcObj& asCell() {
-            return m_obj;
+        
+        bool isHierarchical() const {
+            return (0 < m_hier.length());
         }
 
-        const t_rcObj& asCell() const {
-            return m_obj;
-        }
-
-        virtual ~NlshCell() {
-        }
-
+        ~NlshCell() {}
+        
     private:
+        PTArray<TRcCell>        m_hier;
+
         //Cannot copy
         DECL_COPY_CONSTRUCTORS(NlshCell);
+
+        static const unsigned stTypeId;
     };
-
-    class NlshPin : public PTNlshObject<PinRef> {
+    
+    class NlshPin : public NlshObject {
     public:
-
-        explicit NlshPin(t_rcObj &obj)
-        : PTNlshObject<PinRef>(obj) {
-        }
-
-        //Specialization needs to implement.
+        explicit NlshPin(TRcNlshCell &hier, TRcPinRef &pin)
+        : m_hier(hier), m_pin(pin) {}
+        
+        explicit NlshPin(NlshCell::t_hier &hier, TRcPinRef &pin)
+        : m_hier(new NlshCell(hier)), m_pin(pin) {}
+        
         TRcAttrVal getAttrVal(const string &name) const throw (AttrException);
-
-        t_rcObj& asPinRef() {
-            return m_obj;
+        
+        bool isHierarchical() const {
+            return (m_hier.isValid() && m_hier->isHierarchical());
         }
 
-        const t_rcObj& asPinRef() const {
-            return m_obj;
-        }
-
-        virtual ~NlshPin() {
-        }
-
+        ~NlshPin() {}
+        
     private:
+        TRcNlshCell     m_hier;
+        TRcPinRef       m_pin;
+        
         //Cannot copy
         DECL_COPY_CONSTRUCTORS(NlshPin);
+
+        static const unsigned stTypeId;
+    };
+
+    class NlshWire : public NlshObject {
+    public:
+        explicit NlshWire(TRcWire &wire)
+        : m_wire(wire) {}
+
+        explicit NlshWire(TRcNlshCell &hier, TRcWire &wire)
+        : m_hier(hier), m_wire(wire) {}
+        
+        explicit NlshWire(NlshCell::t_hier &hier, TRcWire &wire)
+        : m_hier(new NlshCell(hier)), m_wire(wire) {}
+        
+        TRcAttrVal getAttrVal(const string &name) const throw (AttrException);
+
+        bool isHierarchical() const {
+            return (m_hier.isValid() && m_hier->isHierarchical());
+        }
+
+        ~NlshWire() {}
+        
+    private:
+        TRcNlshCell     m_hier;
+        TRcWire         m_wire;
+        
+        //Cannot copy
+        DECL_COPY_CONSTRUCTORS(NlshWire);
+
+        static const unsigned stTypeId;
     };
 }
 

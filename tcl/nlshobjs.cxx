@@ -26,8 +26,8 @@
 namespace vnltcl {
     template<> const unsigned PTNlshObject<Module>::stTypeId = Object::getNextTypeId("design");
     template<> const unsigned PTNlshObject<Port>::stTypeId = Object::getNextTypeId("port");
-    template<> const unsigned PTNlshObject<Cell>::stTypeId = Object::getNextTypeId("cell");
-    template<> const unsigned PTNlshObject<PinRef>::stTypeId = Object::getNextTypeId("pin");
+    const unsigned NlshCell::stTypeId = Object::getNextTypeId("cell");
+    const unsigned NlshPin::stTypeId = Object::getNextTypeId("pin");
 
     //attribute names
     static const string cName = "name";
