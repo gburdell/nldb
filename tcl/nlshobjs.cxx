@@ -21,23 +21,29 @@
 //LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //THE SOFTWARE.
+#include <sstream>
 #include "tcl/nlshobjs.hxx"
 
 namespace vnltcl {
+    using std::ostringstream;
+    
     template<> const unsigned PTNlshObject<Module>::stTypeId = Object::getNextTypeId("design");
     template<> const unsigned PTNlshObject<Port>::stTypeId = Object::getNextTypeId("port");
     const unsigned NlshCell::stTypeId = Object::getNextTypeId("cell");
     const unsigned NlshPin::stTypeId = Object::getNextTypeId("pin");
 
+    //TODO: kee[ hierSep in sync w/ tcl side
+    static const string cHierSep = "/";
+    
     //attribute names
-    static const string cName = "name";
     static const string cIsHierarchical = "is_hierarchical";
+    static const string cFullName = "full_name";
+    static const string cName = "name";
 
     ///Provide an implementation of attribute handlers for each type.
 
     class DesignHandler : public AttrHandler {
     public:
-
         explicit DesignHandler() : mp_mod(0) {
             addAttr(cName, AttrVal::eString, static_cast<HandlerPtr> (&DesignHandler::name));
             addAttr(cIsHierarchical, AttrVal::eBool, static_cast<HandlerPtr> (&DesignHandler::isHierarchical));
@@ -68,7 +74,6 @@ namespace vnltcl {
 
     class PortHandler : public AttrHandler {
     public:
-
         explicit PortHandler() : mp_port(0) {
             addAttr(cName, AttrVal::eString, static_cast<HandlerPtr> (&PortHandler::name));
             //add more attributes ...
@@ -92,6 +97,42 @@ namespace vnltcl {
         DECL_COPY_CONSTRUCTORS(PortHandler);
     };
 
+    class CellHandler : public AttrHandler {
+    public:
+        explicit CellHandler() : mp_cell(0) {
+            addAttr(cFullName, AttrVal::eString, static_cast<HandlerPtr> (&CellHandler::fullName));
+            addAttr(cName, AttrVal::eString, static_cast<HandlerPtr> (&CellHandler::name));
+            //add more attributes ...
+        }
+
+        TRcAttrVal fullName(const string &) const {
+            ostringstream oss;
+            const NlshCell::t_hier &hier = mp_cell->m_hier;
+            for (unsigned i = 0; i < hier.length(); i++) {
+                if (0 < i) oss << cHierSep;
+                oss << hier[i]->getName();
+            }
+            return new AttrVal(oss.str());
+        }
+
+        TRcAttrVal name(const string &) const {
+            return new AttrVal(mp_cell->m_hier.end()->getName());
+        }
+
+        TRcAttrVal getVal(const string &nm, const NlshCell *p) throw (AttrException) {
+            mp_cell = p;
+            return AttrHandler::getVal(nm);
+        }
+
+        ~CellHandler() {}
+        
+    private:
+        const NlshCell *mp_cell;
+
+        //Cannot copy
+        DECL_COPY_CONSTRUCTORS(CellHandler);
+    };
+
     TRcAttrVal
     NlshDesign::getAttrVal(const string &nm) const throw (AttrException) {
         static DesignHandler *stHandler = new DesignHandler();
@@ -101,6 +142,12 @@ namespace vnltcl {
     TRcAttrVal
     NlshPort::getAttrVal(const string &nm) const throw (AttrException) {
         static PortHandler *stHandler = new PortHandler();
+        return stHandler->getVal(nm, this);
+    }
+
+    TRcAttrVal
+    NlshCell::getAttrVal(const string &nm) const throw (AttrException) {
+        static CellHandler *stHandler = new CellHandler();
         return stHandler->getVal(nm, this);
     }
 }

@@ -368,6 +368,34 @@ parray unresolvedByName
 	}
 }
 
+aph::addProc get_cells {
+    {-hierarchical? -filter:fexpr? regex?=.+?}
+    {Get cells of current design.
+Return collection of cells.
+Options are processed in the following order:
+
+  -hierarchical  Creates collection of all cells found in depth-first
+                 search of current design.
+
+                 If -hierarchical is not specified, a collection of
+                 only children cells of current design is created. 
+
+  regex          A regular expression (default: .+) applied to the tail
+                 name of all candidate cells (the cell set created
+                 by use (or not) of the -hierarchical option).
+
+  -filter fexpr  The filter expression 'fexpr' is applied to the resultant
+                 set.  Cell with 'fexpr' true will be returned in final
+                 collection.
+}
+    {
+        if {[aph::parseOpts opts args]} {return}; #did help/usage
+        aph::checkExpr $fexpr attrName op rex
+        nlsh $opts(*command*) $hierarchical $filter $attrName $op $rex $regex
+    }
+}
+
+
 proc is_object {x} {
 	aph::isObject $x
 }

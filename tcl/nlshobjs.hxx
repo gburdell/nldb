@@ -202,9 +202,9 @@ namespace vnltcl {
      */
     class NlshCell : public NlshObject {
     public:
-        typedef list<TRcCell>   t_hier;
+        typedef list<TRcCell>   t_cells;
         
-        explicit NlshCell(const t_hier &hier)
+        explicit NlshCell(const t_cells &hier)
         : m_hier(hier) {}
         
         TRcAttrVal getAttrVal(const string &name) const throw (AttrException);
@@ -216,10 +216,15 @@ namespace vnltcl {
         ~NlshCell() {}
         
     private:
-        PTArray<TRcCell>        m_hier;
+        typedef PTArray<TRcCell> t_hier;
+        
+        t_hier  m_hier;
 
         //Cannot copy
         DECL_COPY_CONSTRUCTORS(NlshCell);
+        
+        ///Attribute handler is our friend.
+        friend class CellHandler;
 
         static const unsigned stTypeId;
     };
@@ -229,7 +234,7 @@ namespace vnltcl {
         explicit NlshPin(TRcNlshCell &hier, TRcPinRef &pin)
         : m_hier(hier), m_pin(pin) {}
         
-        explicit NlshPin(NlshCell::t_hier &hier, TRcPinRef &pin)
+        explicit NlshPin(NlshCell::t_cells &hier, TRcPinRef &pin)
         : m_hier(new NlshCell(hier)), m_pin(pin) {}
         
         TRcAttrVal getAttrVal(const string &name) const throw (AttrException);
@@ -258,7 +263,7 @@ namespace vnltcl {
         explicit NlshWire(TRcNlshCell &hier, TRcWire &wire)
         : m_hier(hier), m_wire(wire) {}
         
-        explicit NlshWire(NlshCell::t_hier &hier, TRcWire &wire)
+        explicit NlshWire(NlshCell::t_cells &hier, TRcWire &wire)
         : m_hier(new NlshCell(hier)), m_wire(wire) {}
         
         TRcAttrVal getAttrVal(const string &name) const throw (AttrException);

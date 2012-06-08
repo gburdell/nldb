@@ -146,6 +146,15 @@ namespace xyzzy {
             return mp_ar[checkIx(ix)];
         }
 
+        ///Return last element.
+        T& end() {
+            return mp_ar[length()-1];
+        }
+
+        const T& end() const {
+            return mp_ar[length()-1];
+        }
+
         ~PTArray() {
             delete [] mp_ar;
         }
