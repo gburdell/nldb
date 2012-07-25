@@ -22,6 +22,8 @@
 
 #Build nl_shell
 
+export TCL_ROOT = ${PWD}/tcl8.4.19
+
 VARIANT  := debug
 DIST_DIR := dist
 

@@ -47,7 +47,7 @@ namespace vnl {
 
         explicit Module(string nm);
 
-        string getName() const {
+        string getName(bool unused = false) const {
             return m_name;
         }
 

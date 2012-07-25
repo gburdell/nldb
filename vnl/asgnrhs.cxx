@@ -23,6 +23,7 @@
  * THE SOFTWARE.
  */
 
+#include "xyzzy/assert.hxx"
 #include "vnl/asgnrhs.hxx"
 #include "vnl/port.hxx"
 #include "vnl/wirebitref.hxx"
@@ -50,6 +51,12 @@ namespace vnl {
         } else {
             ASSERT_NEVER;
         }
+    }
+
+    string
+    AsgnRhs::getName(bool unused) const {
+        ASSERT_NEVER;
+        return "";
     }
 
     AsgnRhs::~AsgnRhs() {

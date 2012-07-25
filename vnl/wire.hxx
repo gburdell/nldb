@@ -55,7 +55,7 @@ namespace vnl {
             return (getName() == stConstNm[1]);
         }
 
-        virtual string getName() const {
+        virtual string getName(bool unused = false) const {
             return m_name;
         }
 

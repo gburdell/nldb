@@ -26,25 +26,29 @@
 
 namespace vnltcl {
     static const string stTypeName = "collection";
-    
+
     unsigned Collection::stTypeId = NlshObject::getNextTypeId(stTypeName);
-    
+
     string Collection::getTypeName() {
         return stTypeName;
     }
-    
-    Collection::Collection() {    
+
+    Collection::Collection() {
     }
-    
+
+    Collection::Collection(const list<TRcNlshObject> &from)
+    : PTSlist<TRcNlshObject>(from) {
+    }
+
     Collection::Collection(TRcCollection &base) {
         add(base);
     }
 
     Collection::Collection(const TRcNlshObject &scalar) {
-        ASSERT_TRUE(! Collection::isA(scalar));        
+        ASSERT_TRUE(!Collection::isA(scalar));
         add(scalar);
     }
-    
+
     unsigned
     Collection::getTypeId() const {
         return stTypeId;
@@ -72,7 +76,7 @@ namespace vnltcl {
         return rval;
     }
 
-    TRcAttrVal 
+    TRcAttrVal
     Collection::getAttrVal(const string &name) const throw (AttrException) {
         ASSERT_NEVER;
     }

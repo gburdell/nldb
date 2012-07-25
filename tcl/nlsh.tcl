@@ -276,6 +276,7 @@ $infoByNameOpt(${cmdNm},*help*)\n"
 	}
 }
 
+namespace eval nlsh {variable lastval {}}
 namespace eval nlsh::_priv {
 
 proc helloWorld {} {
@@ -340,6 +341,75 @@ aph::addProc get_tool_version {
 	}
 }
 
+aph::addProc get_attribute {
+	{coll name}
+	{Return list of values for each attribute 'name' of collection 'coll'.
+If attribute 'name' does not exist for an element of 'coll', then '{}'
+is returned.
+}
+	{
+		if {[aph::parseOpts opts args]} {return}; #did help/usage
+		nlsh $opts(*command*) $coll $name
+	}
+}
+
+aph::addProc sizeof_collection {
+	coll
+	{Return size of ('coll') collection.
+}
+	{
+		if {[aph::parseOpts opts args]} {return}; #did help/usage
+		nlsh $opts(*command*) $coll
+	}
+}
+
+aph::addProc add_to_collection {
+	{coll toAdd}
+	{Add 'toAdd' (collection) to existing collection 'coll'.
+Return new collection.}
+	{
+		if {[aph::parseOpts opts args]} {return}; #did help/usage
+		nlsh $opts(*command*) $coll $toAdd
+	}
+}
+
+aph::addProc remove_from_collection {
+	{coll toRemove}
+	{Return new collection: ('coll' - 'toRemove').}
+	{
+		if {[aph::parseOpts opts args]} {return}; #did help/usage
+		nlsh $opts(*command*) $coll $toRemove
+	}
+}
+
+aph::addProc append_to_collection {
+	{-unique? varNm toAdd}
+{Append elements of 'toAdd' (collection) to existing collection 
+named by 'varNm' or create collection if one not exist.  
+Specify '-unique' to append elements (in 'toAdd') 
+only if they do not already exist.
+Return collection.}
+	{
+		if {[aph::parseOpts opts args]} {return}; #did help/usage
+		#varNm references an existing collection or none yet
+		upvar $varNm coll
+		if {![info exists coll]} {
+			set coll {}
+		}
+		set coll [nlsh $opts(*command*) $unique $coll $toAdd]
+	}
+}
+aph::addProc filter_collection {
+	{coll fexpr}
+	{Filter collection.}
+	{
+		if {[aph::parseOpts opts args]} {return}; #did help/usage
+		aph::checkExpr $fexpr attrName op rex
+		nlsh $opts(*command*) $coll $attrName $op $rex
+	}
+}
+
+
 aph::addProc current_design {
 	designName?
 	{Set current design, if 'designName' specified.  Return current design name.}
@@ -352,19 +422,26 @@ aph::addProc current_design {
 aph::addProc link {
 	{}
 	{Link current design.
-Return {} (empty list) on success.
-Return flat list of {refNm1 n1 ... refNmn nn} indicating n unresolved
-references, where each entry 'refNmi ni' is a pair indicating (unresolved)
-reference name 'refNmi' and the number of instances referring to it 'ni'.
-Such as list can be used directly to initialize a map of unresolved
-reference count 'ni' by name 'refNmi', as in
 
-array set unresolvedByName [link]
-parray unresolvedByName
+Return TCL_OK on success; else TCL_ERROR if any unresolved reference(s).
+
+If any unresolved references, set ::nlsh::lastval
+as an array/map of unresolved instance count(s) by reference name.
+Such can be used as:
+
+    parray ::nlsh::lastval
 }
 	{
 		if {[aph::parseOpts opts args]} {return}; #did help/usage
-		nlsh $opts(*command*)
+	    set r [nlsh $opts(*command*)]
+        if {1 > [llength $r]} {
+            return $::TCL_OK
+        }
+        catch {
+            unset ::nlsh::lastval             
+            array set ::nlsh::lastval $r
+        }
+        return $::TCL_ERROR
 	}
 }
 

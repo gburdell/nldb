@@ -21,10 +21,13 @@
 //LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //THE SOFTWARE.
+#include <ostream>
+#include <sstream>
 #include "xyzzy/util.hxx"
 #include "tcl/attribute.hxx"
 
 namespace vnltcl {
+    using std::ostringstream;
     using xyzzy::mapGetVal;
     using xyzzy::mapHasKey;
 
@@ -34,7 +37,7 @@ namespace vnltcl {
 
     const string AttrException::BAD_ATTR = "invalid attribute";
     const string AttrException::DUP_ATTR = "duplicate attribute";
-
+    
     AttrVal::AttrVal(int v)
     : m_type(eInt),
     m_val(v) {
@@ -57,8 +60,25 @@ namespace vnltcl {
 
     string
     AttrVal::asString() const {
-        ASSERT_TRUE(eString == getType());
-        return *(m_val.mp_string);
+        static const string cBools[] = {"false", "true"};
+        string s;
+        switch (getType()) {
+            case eString:
+                s = *(m_val.mp_string);
+                break;
+            case eBool:
+                s = (m_val.m_bool ? cBools[1] : cBools[0]);
+                break;
+            default:
+                ostringstream os;
+                if (eInt == getType()) {
+                    os << m_val.m_int;
+                } else {
+                    os << m_val.m_double;
+                }
+                s = os.str();
+        }
+        return s;
     }
 
     AttrVal::~AttrVal() {
@@ -92,7 +112,7 @@ namespace vnltcl {
         if (!defined(nm)) {
             throw AttrException(nm, AttrException::BAD_ATTR);
         }
-        return const_cast<AttrHandler*>(this)->m_infoByName[nm];
+        return const_cast<AttrHandler*> (this)->m_infoByName[nm];
     }
 
     bool
@@ -103,14 +123,16 @@ namespace vnltcl {
     TRcAttrVal
     AttrHandler::getVal(const string &nm) const throw (AttrException) {
         TRcAttrVal val;
-        HandlerPtr fptr = getInfo(nm).second;
-        if (0 != fptr) {
-            val = (this->*fptr)(nm);
-        } else {
-            val = defaultGetVal(nm);
+        if (defined(nm)) {
+            HandlerPtr fptr = getInfo(nm).second;
+            if (0 != fptr) {
+                val = (this->*fptr)(nm);
+            } else {
+                val = defaultGetVal(nm);
+            }
+            //verify we get type expected
+            ASSERT_TRUE(val->getType() == getType(nm));
         }
-        //verify we get type expected
-        ASSERT_TRUE(val->getType() == getType(nm));
         return val;
     }
 

@@ -48,7 +48,7 @@ namespace vnltcl {
         m_fmtByCode["EDIT-3"]  = "unable to remove %s '%s' from design '%s'";
         m_fmtByCode["EDIT-4"]  = "remove %s '%s' from design '%s'";
         m_fmtByCode["FILE-1"]  = "%s: cannot %s file";
-        m_fmtByCode["LINK-1"]  = "'%s' reference unresolved";
+        m_fmtByCode["LINK-1"]  = "%s reference(s) to '%s' unresolved";
         m_fmtByCode["OBJ-1"]   = "%s '%s' does not exist in current design";
         m_fmtByCode["OBJ-2"]   = "'%s' does not refer to an object";
         m_fmtByCode["OBJ-3"]   = "'%s' is not '%s' type object";
@@ -57,6 +57,7 @@ namespace vnltcl {
         m_fmtByCode["OBJ-6"]   = "expected collection of size 1";
         m_fmtByCode["OPTS-1"]  = "'%s' and '%s' options are mutually exclusive";
         m_fmtByCode["PARSE-1"] = "cannot continue due to previous error(s)";
+        m_fmtByCode["REX-1"] = "while parsing regex '%s': %s";
         m_fmtByCode["VLOGO-1"] = "write design '%s' to netlist '%s'";
     }
     

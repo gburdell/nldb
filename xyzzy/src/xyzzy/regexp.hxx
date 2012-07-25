@@ -40,11 +40,14 @@ namespace xyzzy {
     
     class TRegExp {
     public:
+        TRegExp() {}
+
         /**
          * A regular expression.
          * @param rex regular expression.
+         * @throw error message.
          */
-        explicit TRegExp(string rex);
+        TRegExp(string rex) throw (const string&);
         
         /**
          * Check if this regular expression matches.
@@ -52,6 +55,10 @@ namespace xyzzy {
          * @return true if regular expression matches s.
          */
         bool match(string s) const;
+        
+        //allow copy constructors
+
+        virtual ~TRegExp();
         
     private:
         void *mp_rex;

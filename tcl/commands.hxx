@@ -64,7 +64,7 @@ namespace vnltcl {
             TRcLibrary m_designLib;
             TRcLibrarySet m_slfLib;
             TRcNlshDesign m_currDesn;
-            
+
             /**
              * Get libraries in order: designLib, slfLibs.
              * @param libs clear and populate with libraries.
@@ -136,7 +136,7 @@ namespace vnltcl {
          * @param errIfNotSet true if throw error if current design not set.
          * @return current design.
          */
-        TRcNlshDesign getCurrentDesign(bool errIfNotSet = true) throw (TclError);
+        TRcNlshDesign& getCurrentDesign(bool errIfNotSet = true) throw (TclError);
 
         /**
          * Get object from Tcl side.
@@ -145,7 +145,7 @@ namespace vnltcl {
          */
         TRcNlshObject getObject(Tcl_Obj *p) throw (TclError);
 
-		/**
+        /**
          * Return collection of objects with getName() matching regular expression.
          * @param coll superset collection to filter by getName().
          * @param rex regular expression.
@@ -153,7 +153,7 @@ namespace vnltcl {
          * @return tcl/object collection filtered by getName().
          */
         Tcl_Obj* matchByName(TRcCollection coll, Tcl_Obj *CONST rex, bool useFullNm = false) throw (TclError);
-        
+
         /**
          * Same as matchByName, but returns collection.
          */
@@ -468,6 +468,15 @@ namespace vnltcl {
          */
         Tcl_Obj* isObject(const int argc, Tcl_Obj *CONST argv[]) throw (TclError);
 
+        TRcLibrary&
+        getDesignLib(bool createIfNull = true);
+
+        TRcLibrarySet&
+        getSlfLibs(bool createIfNull = true);
+
+        void
+        setCurrentDesign(TRcModule &mod);
+
         explicit Commands();
 
         DECL_COPY_CONSTRUCTORS(Commands);
@@ -492,26 +501,12 @@ namespace vnltcl {
 
     //Convenience methods (use vnltcl::method to distinguish from same in Commands::xxx)
     //
+
     inline
     Tcl_Interp*
     getInterp() {
         return Commands::getTheOne().getInterp();
     }
-
-    TRcLibrary&
-    getDesignLib(bool createIfNull = true);
-
-    TRcLibrarySet&
-    getSlfLibs(bool createIfNull = true);
-
-    inline
-    TRcNlshDesign&
-    getCurrentDesign() {
-        return Commands::getTheOne().getState().m_currDesn;
-    }
-
-    TRcNlshDesign&
-    setCurrentDesign(TRcModule &mod);
 }
 
 #endif	/* VNLTCL_COMMANDS_HXX */

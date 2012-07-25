@@ -103,7 +103,7 @@ namespace vnl {
          * Get bit name.
          * @return bit name.
          */
-        string getName() const {
+        string getName(bool unused = false) const {
             return toString();
         }
 

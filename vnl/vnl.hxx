@@ -124,10 +124,12 @@ namespace vnl {
         }
 
         /**
-         * (Almost) every object (instance) should have a name.
+         * Every subclass encapsulates in object instance.
+         * @param full set true to return full name (as opposed to short).
+         * If full=true and no full name is available/valid, return short name.
          * @return name of (instance) object.
          */
-        virtual string getName() const;
+        virtual string getName(bool full = false) const = 0;
         
         /**
          * Get typeId for this class.

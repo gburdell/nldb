@@ -56,6 +56,13 @@ namespace vnl {
         static TRcWireBus downcast(TRcObject &r) {
             return xyzzy::downcast<Object, WireBus > (r);
         }
+        
+        /**
+         * Get name of bus.
+         * @param full set true to get full name with bus spec.
+         * @return 'name' if full==false, else 'name[n:m]' if full==true.
+         */
+        string getName(bool full = false) const;
 
         virtual ~WireBus();
 

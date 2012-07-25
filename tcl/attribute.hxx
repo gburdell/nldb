@@ -153,7 +153,7 @@ namespace vnltcl {
         /**
          * Get attribute value.
          * @param nm attribute name.
-         * @return value or throw AttrException.
+         * @return value or null object if !defined() or throw AttrException.
          */
         TRcAttrVal getVal(const string &nm) const throw (AttrException);
 

@@ -85,8 +85,8 @@ namespace vnl {
          * Get pin name.
          * @return pin name with optional bit-select.
          */
-        string getName() const {
-            return getBitNm();
+        string getName(bool full = false) const {
+            return (full) ? getFullName() : getBitNm();
         }
         
         unsigned getLbOffset() const {

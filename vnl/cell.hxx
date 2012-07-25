@@ -82,7 +82,7 @@ namespace vnl {
             return m_connsByPortName;
         }
         
-        string getName() const {
+        string getName(bool unused = false) const {
             return m_instNm;
         }
         

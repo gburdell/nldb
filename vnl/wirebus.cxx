@@ -65,6 +65,15 @@ namespace vnl {
         return os;
     }
 
+    string
+    WireBus::getName(bool full) const {
+        string s = Wire::getName();
+        if (full) {
+            s += Bus::getName();
+        }
+        return s;
+    }
+    
     WireBus::~WireBus() {
     }
 

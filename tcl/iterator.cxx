@@ -30,7 +30,7 @@ namespace vnltcl {
     
     /*
      * NOTE: This constructor is used just for the private stOneOf.
-     * As shwon, the iterator itself is pure garbage; but, we need an
+     * As shown, the iterator itself is pure garbage; but, we need an
      * initializer for the iterator member, so viola...
      */
     Iterator::Iterator()
@@ -41,8 +41,8 @@ namespace vnltcl {
     Iterator::getNext() {
         static TRcNlshObject stNullObj;
         TRcNlshObject &rval = stNullObj;
-        while (m_iter.hasMore()) {
-            rval = *m_iter++;
+        for (; m_iter.hasMore(); ++m_iter) {
+            rval = *m_iter;
             if (rval.isValid()) {
                 return rval;
             }
@@ -52,7 +52,6 @@ namespace vnltcl {
 
     Iterator::Iterator(TRcCollection &coll)
     : m_iter(coll.asT()) {
-        //TODO setup 1st value
     }
 
     unsigned

@@ -27,6 +27,7 @@
 #include <list>
 #include "xyzzy/refcnt.hxx"
 #include "xyzzy/array.hxx"
+#include "xyzzy/slist.hxx"
 #include "tcl/attribute.hxx"
 #include "vnl/module.hxx"
 #include "vnl/port.hxx"
@@ -36,7 +37,9 @@
 namespace vnltcl {
     using std::list;
     using xyzzy::PTRcObjPtr;
+    using xyzzy::PTRcPtr;
     using xyzzy::PTArray;
+    using xyzzy::PTSlist;
     using vnl::Object;
     using vnl::TRcObject;
     using vnl::Module;
@@ -53,7 +56,8 @@ namespace vnltcl {
     DECL_CLASS(NlshCell);
     DECL_CLASS(NlshPin);
     DECL_CLASS(NlshWire); //a different object than Port (it has scope)
-    DECL_CLASS(ScopeLink);
+
+    typedef PTSlist<TRcNlshObject> t_nlshObjList;
 
     /**
      * Interface to be implemented by object types manipulated by tcl side.
@@ -108,7 +112,14 @@ namespace vnltcl {
         static TRcObject upcast(TRcNlshObject &p) {
             return xyzzy::upcast<Object, NlshObject > (p);
         }
+        
+        virtual string getName(bool full = false) const;
 
+        virtual bool operator==(const TRcNlshObject &c) const;
+        
+        virtual bool operator!=(const TRcNlshObject &c) const {
+            return !operator==(c);
+        }
     private:
         //Cannot copy
         DECL_COPY_CONSTRUCTORS(NlshObject);
@@ -128,6 +139,12 @@ namespace vnltcl {
             return stTypeId;
         }
 
+        typedef PTRcObjPtr<PTNlshObject<T> > t_rc;
+        
+        static const t_rc downcast(const TRcNlshObject &r) {
+            return xyzzy::downcast<NlshObject, PTNlshObject<T> > (r);
+        }
+
     protected:
 
         explicit PTNlshObject(t_rcObj &rcobj) : m_obj(rcobj) {
@@ -136,7 +153,7 @@ namespace vnltcl {
         virtual ~PTNlshObject() {
         }
 
-        t_rcObj& m_obj;
+        t_rcObj m_obj;
 
     private:
         //Cannot copy
@@ -162,6 +179,16 @@ namespace vnltcl {
         const t_rcObj& asModule() const {
             return m_obj;
         }
+
+        /**
+         * Get list of cells.
+         * @param coll add to this collection.
+         * @param tailRex regular expression to qualify tail of cell name.
+         *                Matches are added.
+         * @param hier true if breadth-first hierarchical; else just children.
+         * @return list of cells.
+         */
+        void getCells(PTSlist<TRcNlshObject> &coll, const string &tailRex, bool hier = false);
 
         virtual ~NlshDesign() {
         }
@@ -202,53 +229,59 @@ namespace vnltcl {
      */
     class NlshCell : public NlshObject {
     public:
-        typedef list<TRcCell>   t_cells;
-        
-        explicit NlshCell(const t_cells &hier)
-        : m_hier(hier) {}
-        
+        typedef list<TRcCell> t_cells;
+
+         explicit NlshCell(const t_cells &hier)
+        : m_hier(hier) {
+        }
+
         TRcAttrVal getAttrVal(const string &name) const throw (AttrException);
-        
+
         bool isHierarchical() const {
             return (0 < m_hier.length());
         }
 
-        ~NlshCell() {}
-        
+        ~NlshCell() {
+        }
+
     private:
         typedef PTArray<TRcCell> t_hier;
-        
-        t_hier  m_hier;
+
+        t_hier m_hier;
 
         //Cannot copy
         DECL_COPY_CONSTRUCTORS(NlshCell);
-        
+
         ///Attribute handler is our friend.
         friend class CellHandler;
 
         static const unsigned stTypeId;
     };
-    
+
     class NlshPin : public NlshObject {
     public:
+
         explicit NlshPin(TRcNlshCell &hier, TRcPinRef &pin)
-        : m_hier(hier), m_pin(pin) {}
-        
+        : m_hier(hier), m_pin(pin) {
+        }
+
         explicit NlshPin(NlshCell::t_cells &hier, TRcPinRef &pin)
-        : m_hier(new NlshCell(hier)), m_pin(pin) {}
-        
+        : m_hier(new NlshCell(hier)), m_pin(pin) {
+        }
+
         TRcAttrVal getAttrVal(const string &name) const throw (AttrException);
-        
+
         bool isHierarchical() const {
             return (m_hier.isValid() && m_hier->isHierarchical());
         }
 
-        ~NlshPin() {}
-        
+        ~NlshPin() {
+        }
+
     private:
-        TRcNlshCell     m_hier;
-        TRcPinRef       m_pin;
-        
+        TRcNlshCell m_hier;
+        TRcPinRef m_pin;
+
         //Cannot copy
         DECL_COPY_CONSTRUCTORS(NlshPin);
 
@@ -257,32 +290,61 @@ namespace vnltcl {
 
     class NlshWire : public NlshObject {
     public:
+
         explicit NlshWire(TRcWire &wire)
-        : m_wire(wire) {}
+        : m_wire(wire) {
+        }
 
         explicit NlshWire(TRcNlshCell &hier, TRcWire &wire)
-        : m_hier(hier), m_wire(wire) {}
-        
+        : m_hier(hier), m_wire(wire) {
+        }
+
         explicit NlshWire(NlshCell::t_cells &hier, TRcWire &wire)
-        : m_hier(new NlshCell(hier)), m_wire(wire) {}
-        
+        : m_hier(new NlshCell(hier)), m_wire(wire) {
+        }
+
         TRcAttrVal getAttrVal(const string &name) const throw (AttrException);
 
         bool isHierarchical() const {
             return (m_hier.isValid() && m_hier->isHierarchical());
         }
 
-        ~NlshWire() {}
-        
+        ~NlshWire() {
+        }
+
     private:
-        TRcNlshCell     m_hier;
-        TRcWire         m_wire;
-        
+        TRcNlshCell m_hier;
+        TRcWire m_wire;
+
         //Cannot copy
         DECL_COPY_CONSTRUCTORS(NlshWire);
 
         static const unsigned stTypeId;
     };
+
+    inline const TRcNlshObject upcast(const TRcNlshPort &p) {
+        return xyzzy::upcast<NlshObject, NlshPort > (p);
+    }
+
+    inline TRcNlshObject upcast(TRcNlshPort &p) {
+        return xyzzy::upcast<NlshObject, NlshPort > (p);
+    }
+
+    inline const TRcNlshObject upcast(const TRcNlshCell &p) {
+        return xyzzy::upcast<NlshObject, NlshCell > (p);
+    }
+
+    inline TRcNlshObject upcast(TRcNlshCell &p) {
+        return xyzzy::upcast<NlshObject, NlshCell > (p);
+    }
+
+    inline bool operator==(const TRcNlshObject &a, const TRcNlshObject &b) {
+        return a->operator ==(b);
+    }
+    
+    inline bool operator!=(const TRcNlshObject &a, const TRcNlshObject &b) {
+        return a->operator !=(b);
+    }
 }
 
 #endif	/* VNLTCL_NLSHOBJS_HXX */

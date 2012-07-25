@@ -58,6 +58,8 @@ namespace vnl {
             return xyzzy::downcast<Object, AsgnRhs > (r);
         }
 
+        string getName(bool unused = false) const;
+        
         virtual ~AsgnRhs();
 
         virtual unsigned getTypeId() const {

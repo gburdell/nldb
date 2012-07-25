@@ -24,8 +24,9 @@
 #if	!defined(_xyzzy_slist_hxx_)
 #define  _xyzzy_slist_hxx_
 
-namespace xyzzy {
+#include <list>
 
+namespace xyzzy {
     class TSlist {
     public:
 
@@ -56,8 +57,9 @@ namespace xyzzy {
     template<typename T>
     class PTSlist : public TSlist {
     public:
+        class Iterator;
 
-        PTSlist()
+        explicit PTSlist()
         : TSlist(),
         mp_head(0),
         mp_tail(0) {
@@ -76,6 +78,27 @@ namespace xyzzy {
         };
 
     public:
+
+        ///copy constructor
+        PTSlist(const PTSlist<T> &from) {
+            copy(from);
+        }
+        
+        PTSlist(const std::list<T> &from) {
+            copy(from);
+        }
+        
+        PTSlist<T>& operator=(const PTSlist<T> &from) {
+            erase();
+            copy(from);
+            return *this;
+        }
+
+        PTSlist<T>& operator=(const std::list<T> &from) {
+            erase();
+            copy(from);
+            return *this;
+        }
 
         T peek() const {
             return mp_head->m_dat;
@@ -117,7 +140,6 @@ namespace xyzzy {
         }
 
         /// Erase all elements.
-
         void erase() {
             erase(mp_head);
             delete mp_head;
@@ -131,6 +153,18 @@ namespace xyzzy {
         Ele *mp_head;
         Ele *mp_tail;
 
+        void copy(const PTSlist<T> &from) {
+            for (Iterator i = from; i.hasMore(); ++i) {
+                append(*i);
+            }
+        }
+
+        void copy(const std::list<T> &from) {
+            for (typename std::list<T>::const_iterator i = from.begin(); i != from.end(); ++i) {
+                append(const_cast<T&>(*i));
+            }
+        }
+        
         /// Erase elements starting AFTER start.
 
         void erase(Ele *start) {
@@ -155,11 +189,11 @@ namespace xyzzy {
         class Iterator {
         public:
 
-            Iterator(PTSlist &list)
+            explicit Iterator(PTSlist &list)
             : mp_curr(list.mp_head) {
             }
 
-            Iterator(const Iterator &iter)
+            explicit Iterator(const Iterator &iter)
             : mp_curr(iter.mp_curr) {
             }
 

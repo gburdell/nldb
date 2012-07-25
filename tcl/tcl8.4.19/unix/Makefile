@@ -180,7 +180,8 @@ SHELL			= /bin/sh
 INSTALL_STRIP_PROGRAM   = -s
 INSTALL_STRIP_LIBRARY   = -S -S
 
-THIS_ROOT = $(abspath ${CURDIR}/..)
+#THIS_ROOT = $(abspath ${CURDIR}/..)
+THIS_ROOT ?= ${TCL_ROOT}
 INSTALL			= ${THIS_ROOT}/unix/install-sh -c
 INSTALL_PROGRAM		= ${INSTALL}
 INSTALL_LIBRARY		= ${INSTALL}

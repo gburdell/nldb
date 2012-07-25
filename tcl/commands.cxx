@@ -30,6 +30,7 @@
 //
 #include "xyzzy/assert.hxx"
 #include "xyzzy/array.hxx"
+#include "xyzzy/regexp.hxx"
 #include "vnl/parser.hxx"
 #include "vnl/library.hxx"
 #include "vnl/module.hxx"
@@ -52,18 +53,17 @@ namespace vnltcl {
     using std::ostringstream;
     using xyzzy::PTArray;
     using xyzzy::PTRcArray;
+    using xyzzy::TRegExp;
+    using xyzzy::TRcRegExp;
     using vnl::TRcLibrary;
     using vnl::Module;
     using vnl::TRcModule;
     using vnl::TRcPort;
-    using vnltcl::TRcCollection;
-    using vnltcl::TRcIterator;
-    using vnltcl::Message;
 
     typedef PTArray<string> TStringAr;
     typedef PTRcArray<string> TRcStringAr;
 
-    static const string stToolVersion = "nl_shell v2012-06-07_20.25.20";
+    static const string stToolVersion = "nl_shell v2012-07-18_18.20.58";
     static const char *stPtrPfx = "_obj";
     static const string stNilArg = "_";
     // add 2 for 0x
@@ -136,66 +136,34 @@ namespace vnltcl {
         return dsgn;
     }
 
-#ifdef TODO
-
     static
     TRcCollection
     filter(TRcCollection &coll, const int argc, Tcl_Obj *CONST argv[]) throw (TclError) {
         ASSERT_TRUE(3 == argc);
         string attrNm = to_s(argv[0]);
         bool ifEq = (to_s(argv[1]) == "=~");
-        Tcl_RegExp re = Tcl_GetRegExpFromObj(getInterp(), argv[2], TCL_REG_ADVANCED);
-        if (NULL == re) {
-            throw TclError(); //already in interp result
+        string rexs = to_s(argv[2]);
+        TRcRegExp re;
+        TRcAttrVal attrVal;
+        bool match;
+        TRcNlshObject obj;
+        try {
+            re = new TRegExp(rexs);
+        } catch (const string &err) {
+            throw TclError(getInterp(), "REX-1", rexs, err);
         }
         TRcCollection rval = new Collection();
-        const char *pnm;
-        Tcl_Obj *tobj;
-        int match;
         for (CollectionIter iter(*coll); iter.hasMore(); ++iter) {
-            tobj = (*iter)->getAttribute(attrNm);
-            pnm = to_s(tobj).c_str();
-            match = Tcl_RegExpExec(getInterp(), re, pnm, pnm);
-            if (0 > match) {
-                throw TclError();
-            }
-            if ((ifEq && (0 < match)) || (!ifEq && (0 == match))) {
-                rval->add(*iter);
+            obj = *iter;
+            attrVal = obj->getAttrVal(attrNm);
+            if (attrVal.isValid()) {
+                match = re->match(attrVal->asString());
+                if (ifEq ? match : !match) {
+                    rval->append(obj);
+                }
             }
         }
         return rval;
-    }
-#endif
-
-    //extern
-
-    TRcLibrary&
-    getDesignLib(bool createIfNull) {
-        TRcLibrary &lib = Commands::getTheOne().getState().m_designLib;
-        if (lib.isNull() && createIfNull) {
-            lib = new vnl::Library("design");
-        }
-        return lib;
-    }
-
-    //extern
-
-    TRcLibrarySet&
-    getSlfLibs(bool createIfNull) {
-        TRcLibrarySet &lib = Commands::getTheOne().getState().m_slfLib;
-        if (lib.isNull() && createIfNull) {
-            lib = new slf::LibrarySet();
-        }
-        return lib;
-    }
-
-    //extern
-
-    TRcNlshDesign&
-    setCurrentDesign(TRcModule &mod) {
-        TRcNlshDesign &r = Commands::getTheOne().getState().m_currDesn;
-        r = new NlshDesign(mod);
-        return r;
     }
 
     /**
@@ -208,17 +176,23 @@ namespace vnltcl {
     Commands::Commands()
     : mp_objType(0), mp_interp(0) {
         //these are in alphabetical order
+        m_cmdByName["add_to_collection"] = &Commands::addToCollection;
+        m_cmdByName["append_to_collection"] = &Commands::appendToCollection;
         m_cmdByName["current_design"] = &Commands::currentDesign;
+        m_cmdByName["filter_collection"] = &Commands::filterCollection;
+        m_cmdByName["get_attribute"] = &Commands::getAttribute;
+        m_cmdByName["get_cells"] = &Commands::getCells;
         m_cmdByName["get_ports"] = &Commands::getPorts;
         m_cmdByName["get_tool_version"] = &Commands::getToolVersion;
+        m_cmdByName["index_collection"] = &Commands::indexCollection;
         m_cmdByName["link"] = &Commands::link;
         m_cmdByName["read_slf"] = &Commands::readSlf;
         m_cmdByName["read_verilog"] = &Commands::readVerilog;
+        m_cmdByName["remove_from_collection"] = &Commands::removeFromCollection;
+        m_cmdByName["sizeof_collection"] = &Commands::sizeofCollection;
         //some hidden commands
         m_cmdByName["_is_object"] = &Commands::isObject;
 #ifdef TODO
-        m_cmdByName["add_to_collection"] = &Commands::addToCollection;
-        m_cmdByName["append_to_collection"] = &Commands::appendToCollection;
         m_cmdByName["all_connected"] = &Commands::allConnected;
         m_cmdByName["change_link"] = &Commands::changeLink;
         m_cmdByName["connect_net"] = &Commands::connectNet;
@@ -227,21 +201,15 @@ namespace vnltcl {
         m_cmdByName["create_net"] = &Commands::createNet;
         m_cmdByName["create_port"] = &Commands::createPort;
         m_cmdByName["disconnect_net"] = &Commands::disconnectNet;
-        m_cmdByName["filter_collection"] = &Commands::filterCollection;
-        m_cmdByName["get_attribute"] = &Commands::getAttribute;
-        m_cmdByName["get_cells"] = &Commands::getCells;
         m_cmdByName["get_designs"] = &Commands::getDesigns;
         m_cmdByName["get_name_eles"] = &Commands::getHierNameEles;
         m_cmdByName["get_nets"] = &Commands::getNets;
         m_cmdByName["get_pins"] = &Commands::getPins;
-        m_cmdByName["index_collection"] = &Commands::indexCollection;
         m_cmdByName["iterator_get_next"] = &Commands::iteratorGetNext;
         m_cmdByName["iterator_has_next"] = &Commands::iteratorHasNext;
         m_cmdByName["query_objects"] = &Commands::queryObjects;
         m_cmdByName["remove_cell"] = &Commands::removeCell;
-        m_cmdByName["remove_from_collection"] = &Commands::removeFromCollection;
         m_cmdByName["remove_net"] = &Commands::removeNet;
-        m_cmdByName["sizeof_collection"] = &Commands::sizeofCollection;
         m_cmdByName["write_verilog"] = &Commands::writeVerilog;
 #endif
     }
@@ -376,13 +344,36 @@ namespace vnltcl {
         return createTclObj(matchByNameColl(coll, rex, useFullNm));
     }
 
-    TRcNlshDesign
+    TRcNlshDesign&
     Commands::getCurrentDesign(bool errIfNotSet) throw (TclError) {
-        TRcNlshDesign curr = getState().m_currDesn;
+        TRcNlshDesign& curr = getState().m_currDesn;
         if (curr.isNull() && errIfNotSet) {
             throw TclError(getInterp(), "DES-1", "");
         }
         return curr;
+    }
+
+    TRcLibrary&
+    Commands::getDesignLib(bool createIfNull) {
+        TRcLibrary &lib = getState().m_designLib;
+        if (lib.isNull() && createIfNull) {
+            lib = new vnl::Library("design");
+        }
+        return lib;
+    }
+
+    TRcLibrarySet&
+    Commands::getSlfLibs(bool createIfNull) {
+        TRcLibrarySet &lib = getState().m_slfLib;
+        if (lib.isNull() && createIfNull) {
+            lib = new slf::LibrarySet();
+        }
+        return lib;
+    }
+
+    void
+    Commands::setCurrentDesign(TRcModule &mod) {
+        getState().m_currDesn = new NlshDesign(mod);
     }
 
     //BEGIN{ commands
@@ -393,6 +384,163 @@ namespace vnltcl {
      */
 
     Tcl_Obj*
+    Commands::sizeofCollection(const int argc, Tcl_Obj *CONST argv[]) throw (TclError) {
+        ASSERT_TRUE(1 == argc);
+        TRcCollection coll = asCollection(argv[0]);
+        Tcl_Obj* pobj = Tcl_NewIntObj(coll->length());
+        return pobj;
+    }
+
+    Tcl_Obj*
+    Commands::filterCollection(const int argc, Tcl_Obj *CONST argv[]) throw (TclError) {
+        ASSERT_TRUE(4 == argc);
+        TRcCollection coll = asCollection(argv[0]);
+        TRcCollection filColl = filter(coll, argc - 1, &argv[1]);
+        return createTclObj(filColl);
+    }
+
+    Tcl_Obj*
+    Commands::addToCollection(const int argc, Tcl_Obj *CONST argv[]) throw (TclError) {
+        ASSERT_TRUE(2 == argc);
+        TRcCollection base = asCollection(argv[0]);
+        TRcCollection toAdd = asCollection(argv[1]);
+        TRcCollection rval = new Collection(base);
+        for (CollectionIter iter(*toAdd); iter.hasMore(); ++iter) {
+            rval->add(*iter);
+        }
+        return createTclObj(rval);
+    }
+
+    Tcl_Obj*
+    Commands::removeFromCollection(const int argc, Tcl_Obj *CONST argv[]) throw (TclError) {
+        ASSERT_TRUE(2 == argc);
+        TRcCollection base = asCollection(argv[0]);
+        TRcCollection toRemove = asCollection(argv[1]);
+        TRcCollection rval = new Collection();
+        /**
+         * TODO: currently O(N*M); change base to map so lookup = O(1)
+         */
+        bool removeIt = false;
+        TRcNlshObject obj, has;
+        for (CollectionIter hasIter(*base); hasIter.hasMore(); ++hasIter) {
+            has = *hasIter;
+            removeIt = false;
+            for (CollectionIter iter(*toRemove); !removeIt && iter.hasMore(); ++iter) {
+                obj = *iter;
+                removeIt = (has == obj);
+            }
+            if (!removeIt) {
+                rval->add(has);
+            }
+        }
+        return createTclObj(rval);
+    }
+
+    Tcl_Obj*
+    Commands::appendToCollection(const int argc, Tcl_Obj *CONST argv[]) throw (TclError) {
+        ASSERT_TRUE(3 == argc);
+        bool unique = isEq(argv[0], "-unique");
+        TRcCollection base;
+        //TODO: not the most elegant way to detect valid collection
+        try {
+            base = asCollection(argv[1]);
+        } catch (TclError) {
+            base = new Collection();
+        }
+        /*TODO:
+         * For unique, time complexity if O(N*M), which can get large.
+         * One technique would be to convert base into hash, so can turn
+         * for loop into hash-lookup.
+         */
+        TRcCollection toAdd = asCollection(argv[2]);
+        bool addIt = false;
+        TRcNlshObject obj, has;
+        for (CollectionIter iter(*toAdd); iter.hasMore(); ++iter) {
+            obj = *iter;
+            if (unique) {
+                addIt = true;
+                for (CollectionIter hasIter(*base); addIt && hasIter.hasMore(); ++hasIter) {
+                    has = *hasIter;
+                    addIt = (has != obj);
+                }
+            }
+            if (!unique || addIt) {
+                base->add(obj);
+            }
+        }
+        return createTclObj(base);
+    }
+
+    Tcl_Obj*
+    Commands::indexCollection(const int argc, Tcl_Obj *CONST argv[]) throw (TclError) {
+        ASSERT_TRUE(2 == argc);
+        TRcCollection base = asCollection(argv[0]);
+        int index = to_i(getInterp(), argv[1]);
+        int n = base->length();
+        if (index > n - 1) {
+            throw TclError(getInterp(), "COLL-1", to_s(index), to_s(n));
+        } else if (0 > index) {
+            index = n + index; //from end
+            if (0 > index) {
+                index = 0;
+            }
+        }
+        CollectionIter iter(*base);
+        for (; (0 < index) && iter.hasMore(); ++iter, --index) {
+            //do nothing but next iteration;
+        }
+        TRcNlshObject obj = *iter;
+        return createTclObj(obj);
+    }
+
+    Tcl_Obj*
+    Commands::getAttribute(const int argc, Tcl_Obj *CONST argv[]) throw (TclError) {
+        ASSERT_TRUE(2 == argc);
+        TRcCollection coll;
+        TRcNlshObject tobj = getObject(argv[0]);
+        string attrNm = to_s(argv[1]);
+        if (Collection::isA(tobj)) {
+            coll = toCollection(tobj);
+        } else {
+            coll = new Collection();
+            coll->add(tobj);
+        }
+        Tcl_Obj *plist = Tcl_NewListObj(0, 0); //a new tcl list
+        TRcAttrVal ele;
+        Tcl_Obj *pobj;
+        static const string cNull = "";
+        for (CollectionIter iter(*coll); iter.hasMore(); ++iter) {
+            ele = (*iter)->getAttrVal(attrNm);
+            pobj = newStringObj(ele.isValid() ? ele->asString() : cNull);
+            if (TCL_OK != Tcl_ListObjAppendElement(getInterp(), plist, pobj)) {
+                throw TclError();
+            }
+        }
+        return plist;
+    }
+
+    //* Allowed options (in order):
+    //* -hierarchical? (-filter attr eq rex)? patt
+    //  ^0              ^1      ^2   ^3 ^4    ^5
+    Tcl_Obj*
+    Commands::getCells(const int argc, Tcl_Obj *CONST argv[]) throw (TclError) {
+        ASSERT_TRUE(6 == argc);
+        TRcCollection coll = new Collection();
+        string patt = to_s(argv[argc - 1]);
+        bool isHier = isEq(argv[0], stHierarchicalOpt);
+        try {
+            getCurrentDesign()->getCells(coll.asT(), patt, isHier);
+            if (isEq(argv[1], stFilterOpt)) {
+                patt = to_s(argv[4]);
+                coll = filter(coll, 3, &argv[2]);
+            }
+        } catch (const string &err) {
+            throw TclError(getInterp(), "REX-1", patt, err);
+        }
+        return createTclObj(coll);
+    }
+
+    Tcl_Obj*
     Commands::getPorts(const int argc, Tcl_Obj *CONST argv[]) throw (TclError) {
         ASSERT_TRUE(1 == argc);
         TRcNlshDesign curr = getCurrentDesign();
@@ -401,12 +549,10 @@ namespace vnltcl {
         t_ports ports;
         curr->asModule()->getPortsInDeclOrder(ports);
         TRcNlshPort port;
-        TRcNlshObject portobj;
         for (t_ports::iterator iter = ports.begin(); iter != ports.end(); ++iter) {
             port = new NlshPort(*iter);
-            portobj = xyzzy::upcast<NlshObject, NlshPort > (port);
+            allPorts->add(upcast(port));
         }
-        //TODO: add current-design ports to allPorts
         return matchByName(allPorts, argv[0]);
     }
 
@@ -503,6 +649,11 @@ namespace vnltcl {
             for (vnl::Module::t_unresolvedCntByName::const_iterator iter = unresolved->begin();
                     iter != unresolved->end(); ++iter) {
                 oss << iter->first << ' ' << iter->second << ' ';
+                {
+                    ostringstream oss;
+                    oss << iter->second;
+                    error("LINK-1", oss.str(), iter->first);
+                }
             }
         }
         return Tcl_NewStringObj(oss.str().c_str(), -1);

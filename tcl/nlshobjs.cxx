@@ -22,28 +22,51 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //THE SOFTWARE.
 #include <sstream>
+#include "xyzzy/regexp.hxx"
 #include "tcl/nlshobjs.hxx"
 
 namespace vnltcl {
     using std::ostringstream;
-    
+    using xyzzy::TRegExp;
+
     template<> const unsigned PTNlshObject<Module>::stTypeId = Object::getNextTypeId("design");
     template<> const unsigned PTNlshObject<Port>::stTypeId = Object::getNextTypeId("port");
     const unsigned NlshCell::stTypeId = Object::getNextTypeId("cell");
     const unsigned NlshPin::stTypeId = Object::getNextTypeId("pin");
 
-    //TODO: kee[ hierSep in sync w/ tcl side
+    //TODO: keep hierSep in sync w/ tcl side
     static const string cHierSep = "/";
-    
-    //attribute names
-    static const string cIsHierarchical = "is_hierarchical";
-    static const string cFullName = "full_name";
-    static const string cName = "name";
 
+    //attribute names
+    static const string cFullName = "full_name";
+    static const string cIsHierarchical = "is_hierarchical";
+    static const string cIsLibCell = "is_libcell";
+    static const string cIsResolved = "is_resolved";
+    static const string cName = "name";
+    static const string cRefName = "ref_name";
+
+    bool
+    NlshObject::operator ==(const TRcNlshObject& c) const {
+        return getName(true) == c->getName(true);
+    }
+    
+    string 
+    NlshObject::getName(bool full) const {
+        TRcAttrVal aval;
+        if (full) {
+            aval = getAttrVal(cFullName);
+        } 
+        if (!full || aval.isNull()) {
+            aval = getAttrVal(cName);
+        }
+        return aval->asString();
+    }
+    
     ///Provide an implementation of attribute handlers for each type.
 
     class DesignHandler : public AttrHandler {
     public:
+
         explicit DesignHandler() : mp_mod(0) {
             addAttr(cName, AttrVal::eString, static_cast<HandlerPtr> (&DesignHandler::name));
             addAttr(cIsHierarchical, AttrVal::eBool, static_cast<HandlerPtr> (&DesignHandler::isHierarchical));
@@ -63,8 +86,9 @@ namespace vnltcl {
             return AttrHandler::getVal(nm);
         }
 
-        ~DesignHandler() {}
-        
+        ~DesignHandler() {
+        }
+
     private:
         const NlshDesign *mp_mod;
 
@@ -74,6 +98,7 @@ namespace vnltcl {
 
     class PortHandler : public AttrHandler {
     public:
+
         explicit PortHandler() : mp_port(0) {
             addAttr(cName, AttrVal::eString, static_cast<HandlerPtr> (&PortHandler::name));
             //add more attributes ...
@@ -88,8 +113,9 @@ namespace vnltcl {
             return AttrHandler::getVal(nm);
         }
 
-        ~PortHandler() {}
-        
+        ~PortHandler() {
+        }
+
     private:
         const NlshPort *mp_port;
 
@@ -99,10 +125,15 @@ namespace vnltcl {
 
     class CellHandler : public AttrHandler {
     public:
+
         explicit CellHandler() : mp_cell(0) {
             addAttr(cFullName, AttrVal::eString, static_cast<HandlerPtr> (&CellHandler::fullName));
+            addAttr(cIsHierarchical, AttrVal::eBool, static_cast<HandlerPtr> (&CellHandler::isHierarchical));
+            addAttr(cIsLibCell, AttrVal::eBool, static_cast<HandlerPtr> (&CellHandler::isLibCell));
+            addAttr(cIsResolved, AttrVal::eBool, static_cast<HandlerPtr> (&CellHandler::isResolved));
             addAttr(cName, AttrVal::eString, static_cast<HandlerPtr> (&CellHandler::name));
-            //add more attributes ...
+            addAttr(cRefName, AttrVal::eString, static_cast<HandlerPtr> (&CellHandler::refName));
+             //add more attributes ...
         }
 
         TRcAttrVal fullName(const string &) const {
@@ -115,8 +146,26 @@ namespace vnltcl {
             return new AttrVal(oss.str());
         }
 
+        TRcAttrVal isHierarchical(const string &) const {
+            const TRcCell &cell = mp_cell->m_hier.end();
+            TRcAttrVal isHier = new AttrVal(cell->isResolved() && cell->isHierarchical());
+            return isHier;
+        }
+
+        TRcAttrVal isLibCell(const string &) const {
+            return new AttrVal(mp_cell->m_hier.end()->isLibCell());
+        }
+
+        TRcAttrVal isResolved(const string &) const {
+            return new AttrVal(mp_cell->m_hier.end()->isResolved());
+        }
+
         TRcAttrVal name(const string &) const {
             return new AttrVal(mp_cell->m_hier.end()->getName());
+        }
+
+        TRcAttrVal refName(const string &) const {
+            return new AttrVal(mp_cell->m_hier.end()->getRefName());
         }
 
         TRcAttrVal getVal(const string &nm, const NlshCell *p) throw (AttrException) {
@@ -124,8 +173,9 @@ namespace vnltcl {
             return AttrHandler::getVal(nm);
         }
 
-        ~CellHandler() {}
-        
+        ~CellHandler() {
+        }
+
     private:
         const NlshCell *mp_cell;
 
@@ -149,6 +199,38 @@ namespace vnltcl {
     NlshCell::getAttrVal(const string &nm) const throw (AttrException) {
         static CellHandler *stHandler = new CellHandler();
         return stHandler->getVal(nm, this);
+    }
+
+    static
+    void depthFirst(const vnl::TRcModule &vmod, const NlshCell::t_cells &pfx,
+            t_nlshObjList &coll, bool hier, const TRegExp &trex) {
+        typedef vnl::Module::t_cellsByName::iterator t_iter;
+        vnl::Module::t_cellsByName cellsByName = vmod->getCellsByName();
+        //create full path here and push/pop as we iterate
+        NlshCell::t_cells path(pfx);
+        TRcNlshCell cell;
+        for (t_iter i = cellsByName.begin(); i != cellsByName.end(); ++i) {
+            vnl::TRcCell &vcell = i->second;
+            path.push_back(vcell);
+            //keep cell if tail matches
+            if (trex.match(vcell->getName())) {
+                cell = new NlshCell(path);
+                coll.append(vnltcl::upcast(cell));
+            }
+            if (hier) {
+                if (vcell->isHierarchical() && vcell->getRef().isValid()) {
+                    depthFirst(vcell->getRef(), path, coll, hier, trex);
+                }
+            }
+            path.pop_back();
+        }
+    }
+
+    void
+    NlshDesign::getCells(t_nlshObjList &coll, const string &tailRex, bool hier) {
+        NlshCell::t_cells path;
+        TRegExp trex(tailRex);
+        depthFirst(asModule(), path, coll, hier, trex);
     }
 }
 

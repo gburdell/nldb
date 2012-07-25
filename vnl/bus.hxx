@@ -87,6 +87,10 @@ namespace vnl {
         
         string toString(string nm = "") const;
         
+        string getName(bool unsed = false) const {
+            return toString();
+        }
+        
         /**
          * Check if bus is in range by this bus.
          * @param b bus to check.

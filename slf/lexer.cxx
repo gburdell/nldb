@@ -270,7 +270,7 @@ namespace slf {
 
     TRcToken
     Lexer::ident() { //or keyword
-        //('a'..'z'|'A'..'Z'|'_') _ ('a'..'z'|'A'..'Z'|'_'|'0'..'9'|'.'|'/')*
+        //('a'..'z'|'A'..'Z'|'_') _ ('a'..'z'|'A'..'Z'|'_'|'0'..'9'|'.'|'/'|'+'|'-')*
         m_type = Token::eIdent;
         unsigned col = m_col;
         m_pos = 0;
@@ -282,6 +282,8 @@ namespace slf {
             }
             if (isalnum(m_ch) ||
                     ('_' == m_ch) ||
+                    ('+' == m_ch) ||
+                    ('-' == m_ch) ||
                     ('.' == m_ch) ||
                     ('/' == m_ch) //Yuk! really allowed in ident
                     ) {
@@ -343,7 +345,7 @@ namespace slf {
         //enter on - | digit
 
         //Use state to track lexer
-        //(INTEGER) ('.' (DIGIT)+)? (('e'|'E') ('-')? (DIGIT)+)?
+        //(INTEGER) ('.' (DIGIT)+)? (('e'|'E') ('-'|'+')? (DIGIT)+)?
         //state: s0  s1  s2          s3        s4     s5
 
         enum EState {
@@ -392,7 +394,7 @@ namespace slf {
                 case s3:
                     if (isdigit(m_ch)) {
                         state = s5;
-                    } else if ('-' == m_ch) {
+                    } else if (('-' == m_ch) || ('+' == m_ch)) {
                         state = s4;
                     } else {
                         syntaxErr = true;

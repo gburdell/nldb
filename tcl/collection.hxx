@@ -24,12 +24,14 @@
 #ifndef VNLTCL_COLLECTION_HXX
 #define	VNLTCL_COLLECTION_HXX
 
+#include <list>
 #include "xyzzy/slist.hxx"
 #include "vnl/vnl.hxx"
 #include "tcl/vnltcl.hxx"
 #include "tcl/nlshobjs.hxx"
 
 namespace vnltcl {
+    using std::list;
     using xyzzy::PTSlist;
 
     DECL_CLASS(Collection);
@@ -39,10 +41,16 @@ namespace vnltcl {
     /**
      * A collection of TRcNlshObject.
      */
-    class Collection : public NlshObject, public PTSlist<TRcNlshObject> {
+    class Collection : public NlshObject, public t_nlshObjList {
     public:
         explicit Collection();
 
+        /**
+         * Create collection as copy of existing collection.
+         * @param from initialize with elements from this list.
+         */
+        explicit Collection(const list<TRcNlshObject> &from);
+        
         /**
          * Create collection of 1 scalar (not collection) element.
          * @param scalar scalar element to initialize collection.

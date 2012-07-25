@@ -23,6 +23,7 @@
 //THE SOFTWARE.
 
 #include <map>
+#include "xyzzy/assert.hxx"
 #include "vnl/vnl.hxx"
 
 namespace vnl {
@@ -70,11 +71,6 @@ namespace vnl {
     string
     Object::getTypeName() const {
         return getRttiMap()[getTypeId()];
-    }
-
-    string
-    Object::getName() const {
-        return "*Object::default_name*";
     }
 
 }

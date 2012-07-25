@@ -37,13 +37,27 @@ namespace xyzzy {
         return (regex_t*)p;
     }
     
-    TRegExp::TRegExp(string rex) {
+    TRegExp::TRegExp(string rex) throw (const string&) {
+        static const unsigned N = 128;
+        static char buf[N];
         mp_rex = new regex_t();
-        ASSERT_TRUE(0 == regcomp(asP(mp_rex), rex.c_str(), REG_EXTENDED | REG_NOSUB));
+        int code;
+        code = regcomp(asP(mp_rex), rex.c_str(), REG_EXTENDED | REG_NOSUB);
+        if (0 != code) {                
+            regerror(code, asP(mp_rex), &buf[0], N);
+            static string emsg;
+            emsg = buf;
+            throw emsg;
+        }
     }
     
     bool 
     TRegExp::match(string s) const {
-        return (0 == regexec(asP(mp_rex), s.c_str(), 0, NULL, 0));
+        const char *p = s.c_str();
+        return (0 == regexec(asP(mp_rex), p, 0, NULL, 0));
+    }
+    
+    TRegExp::~TRegExp() {
+        regfree(asP(mp_rex));
     }
 }
