@@ -59,7 +59,10 @@ namespace slf {
             for (unsigned i = 0; i < length(); ++i) {
                 const TRcKeyValue &kv = (*this)[i];
                 const string &key = kv->getKey();
-                ASSERT_TRUE(allowDups || !mapHasKey(kvmap.asT(), key));
+                if (!allowDups) {
+                    bool hasKey = mapHasKey(kvmap.asT(), key);
+                    ASSERT_TRUE(!hasKey);
+                }
                 kvmap.asT()[key] = kv;
             }
         }

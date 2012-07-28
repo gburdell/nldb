@@ -74,7 +74,9 @@ namespace slf {
             dbgOs << "DBG: addTiming {" << std::endl;
             dbgOs << kv->getValSet() << " }" << std::endl;
 #endif
-            ValueSet::trc_kvByKey rcvbk = kv->getValSet()->asMap();
+            //allowDups in asMap for
+            //pin group statements (see sec 3.2 in Liberty Spec)
+            ValueSet::trc_kvByKey rcvbk = kv->getValSet()->asMap(true);
             if (mapGetVal(rcvbk, cRelatedPin, inKv) && 
                     mapGetVal(rcvbk, cTimingSense, unateKv)) {
                 string in = inKv->getVal()->asIdent();

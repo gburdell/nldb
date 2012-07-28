@@ -60,7 +60,7 @@ namespace slf {
         time_t m_start;
 
         //Used while building token
-        const static int N = 1024;
+        const static int N = 1<<20; //1024;
         PTArray<char> m_buf;
         unsigned m_pos;
         EType m_type;
