@@ -181,6 +181,9 @@ INSTALL_STRIP_PROGRAM   = -s
 INSTALL_STRIP_LIBRARY   = -S -S
 
 #THIS_ROOT = $(abspath ${CURDIR}/..)
+ifndef TCL_ROOT
+$(error "TCL_ROOT not defined")
+endif
 THIS_ROOT ?= ${TCL_ROOT}
 INSTALL			= ${THIS_ROOT}/unix/install-sh -c
 INSTALL_PROGRAM		= ${INSTALL}

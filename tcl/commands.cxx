@@ -63,7 +63,7 @@ namespace vnltcl {
     typedef PTArray<string> TStringAr;
     typedef PTRcArray<string> TRcStringAr;
 
-    static const string stToolVersion = "nl_shell v2012-07-26_16.20.00";
+    static const string stToolVersion = "nl_shell v2014-12-03_09.54.09";
     static const char *stPtrPfx = "_obj";
     static const string stNilArg = "_";
     // add 2 for 0x
